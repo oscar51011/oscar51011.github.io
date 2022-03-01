@@ -78,7 +78,7 @@
 <span id="more"></span>
 
 <h3 id="安裝主題-Next"><a href="#安裝主題-Next" class="headerlink" title="安裝主題 Next"></a>安裝主題 Next</h3><ol>
-<li><p>Github clone hexo-theme-next project - <a href="hexo-theme-next">點我前往</a></p>
+<li><p>Github clone hexo-theme-next project - <a href="https://github.com/theme-next/hexo-theme-next">點我前往</a></p>
 </li>
 <li><p>在 themes folder 底下建立 next 資料夾並將上述下載的資料 copy 進該資料夾</p>
 </li>
