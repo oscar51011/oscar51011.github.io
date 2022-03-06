@@ -1,57 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>使用 utterances 在 Hexo 實現留言板功能</title>
-    <url>/2022/03/04/hexo-message-board-utterances/</url>
-    <content><![CDATA[<p>留言版在一般的部落格中一個常見的功能，既然使用Github製作了自己的部落格<br>順勢找了一些文章來新增這個功能</p>
-<p>在參閱了許多 blogger 的文章後發現，比較常用的有以下兩種:</p>
-<ul>
-<li>Disqus<ul>
-<li>需要去 Disqus 官網註冊 - <a href="https://disqus.com/">點我前往</a></li>
-</ul>
-</li>
-<li>utterances<ul>
-<li>與 Github Issues 做連結</li>
-<li>需要登入 Github 才能夠進行留言</li>
-</ul>
-</li>
-</ul>
-<p>目前是打算使用 utterances 來實作 部落格的留言版</p>
-<span id="more"></span>
-
-<h3 id="整合-utterances"><a href="#整合-utterances" class="headerlink" title="整合 utterances"></a>整合 utterances</h3><ol>
-<li>Github 建立 Repository</li>
-<li>安裝 utterances - <a href="https://github.com/apps/utterances">點我前往</a></li>
-</ol>
-<p><img src="https://bnz05pap002files.storage.live.com/y4mf3VZ_TrvLMIzOAvwD5scehh0uCIPUsahla1ouyxXnWeuuT5H3ukvDP7hV0gVb_0gnlFJTWeW9UWGP5LXPyQTBd60fbKgxDlDQK2ADWYI5nD6b0pkEd3hfZjLFwEUWurbgWomh3aeF0BWUvSalsrsnPvcz2e_eKp3TjFC4M0aqJI5wZ9FJsnf7SILGMbJzgbp?width=660&height=261&cropmode=none"><br>3. 取得授權，並選擇 步驟1 的 Repository</p>
-<p><img src="https://bnz05pap002files.storage.live.com/y4mB7qi6p5Kb5d77Slb0G_jLXcoBZ6yepW2pKcSxd3Ih7_gQ4SDxI9vNpA-6V9wp_RnBN59jH0ziNmpluQFQDjnM92bizO_e_2jLgYQRxeFb7ps9tjvCvauX62h5gJLcvQsa34THbIPo5P6HAZmuIwMlGX5dwFnHIl9fLbX-dITsVKucorwYtuIJ2I8kmzdq_B5?width=480&height=660&cropmode=none"><br>4. 填寫對應的 configuration EX: Repository , Blog Post &amp; issue Mapping , Theme …etc</p>
-<p><img src="https://bnz05pap002files.storage.live.com/y4mZW8hAhicSL9Xi4l83gr-741kqXgXqCBnmEDZ5a_ZVaCNUbsZQGTl456l7dxJUszLljpSitj43aRmX3fA0OUM58mYxGTvKuc0wL0VW-9OPS6YAn1Uz9FqzK0Q8YSWOpCQBiDHVMFUb6E5olX7bVBc-vy_rP5gqLV5Kt1WPC8gXKKIKqjtSVCpSzI9LB2H49DI?width=660&height=622&cropmode=none"><br>5. 在 theme 的 _config.yml 新增參數 (blog 目前是使用 next themes)</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># utterances by 2022-03-04</span></span><br><span class="line"><span class="attr">utterances:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-
-<ol start="6">
-<li>在主題底下 <code>themes\next\layout\_partials</code> 的 comments.swig 中 新增其 srcipt<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="string">新增至</span> &#123;<span class="string">%-</span> <span class="string">if</span> <span class="string">page.comments</span> <span class="string">%</span>&#125; <span class="string">後面</span></span><br><span class="line"></span><br><span class="line">&#123;<span class="string">%</span> <span class="string">if</span> <span class="string">theme.utterances.enable</span> <span class="string">%</span>&#125;</span><br><span class="line">    <span class="string">&lt;div</span> <span class="string">class=&quot;comments&quot;</span> <span class="string">id=&quot;comments&gt;</span></span><br><span class="line">        <span class="string">↓</span> <span class="string">複製上面步驟4</span> <span class="string">utterances</span> <span class="string">中產生的</span> <span class="string">script</span></span><br><span class="line">        <span class="string">&lt;script</span> <span class="string">src=&quot;https://utteranc.es/client.js&quot;</span></span><br><span class="line">            <span class="string">...</span></span><br><span class="line">        <span class="string">&lt;/script&gt;</span></span><br><span class="line">    <span class="string">&lt;/div&gt;</span></span><br><span class="line">  &#123;<span class="string">%-</span> <span class="string">endif</span> <span class="string">%</span>&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
-<li>即可看到留言板出現在文章內了</li>
-</ol>
-<p><img src="https://bnz05pap002files.storage.live.com/y4mi1owUcX16kQYG0y6amhW5TXqG8FlrfdD5PLc08FS7crQCBUFyU0TUJQbw3YSzu8UeSz_ajqZQDOWdxIo5PwIx-HUr_r2__1nn9taGWzzXCWokVufwsWZHApHEC3maMsGRKJxd5Pf3sdT0cW0qVg7dCYdt6IdQ9ie2Z2uetNM-dX_S54E9U7_qVpFRhuWp_wy?width=660&height=313&cropmode=none"></p>
-<h3 id="如何讓留言板不要出現"><a href="#如何讓留言板不要出現" class="headerlink" title="如何讓留言板不要出現"></a>如何讓留言板不要出現</h3><p>因為分類&#x2F;標籤等頁面通常不需要有連言功能<br>在 markdown 的 Front-matter 把 comments 關閉</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">tags</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2022-03-01 20:10:05</span></span><br><span class="line"><span class="attr">type:</span> <span class="string">&quot;tags&quot;</span></span><br><span class="line"><span class="attr">comments:</span> <span class="literal">false</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
-<li><a href="https://annkuoq.github.io/blog/2020-03-09-add-utterances-comment-widget-to-hexo/">在 Hexo 安裝 utterances 留言版</a></li>
-<li><a href="https://medium.com/starbugs/gatsby-%E7%94%A8-utterances-%E6%9B%BF-gatsby-%E7%9A%84-blog-%E7%B6%B2%E7%AB%99%E7%94%B3%E8%A3%9D-github-issue-%E7%95%99%E8%A8%80%E5%8A%9F%E8%83%BD-e8593318e5a3">Gatsby | 用 utterances 替 Gatsby 的 Blog 網站申裝 GitHub Issue 留言功能</a></li>
-<li><a href="https://blog.kyomind.tw/hexo-blog-reply/">Hexo：新增 utterances 留言板與方案選擇思路</a></li>
-<li><a href="https://utteranc.es/">utterances </a></li>
-<li><a href="https://kidneyweakx.com/2019/19log-1026-hexo-com.html">Hexo Next 主題增加評論系統 utterances</a></li>
-</ol>
-]]></content>
-      <categories>
-        <category>blog</category>
-      </categories>
-      <tags>
-        <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>利用Hexo + Github.io 建立自己的Blog</title>
     <url>/2022/03/01/hexo-github-blog-initial/</url>
     <content><![CDATA[<p>Hexo 為一個 Blog Framework ，基於 NodeJs 語言所開發 (支援 Markdown 語法)</p>
@@ -113,6 +62,57 @@
 <li><a href="https://github.com/hexojs/hexo">Hexo Github</a> <br></li>
 <li><a href="https://hexo.io/zh-tw/docs/commands">Hexo 常用指令</a> <br></li>
 <li><a href="https://ithelp.ithome.com.tw/articles/10280954?sc=iThomeR">[Day31] Hexo x GitHub Pages 打造個人部落格</a> <br></li>
+</ol>
+]]></content>
+      <categories>
+        <category>blog</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用 utterances 在 Hexo 實現留言板功能</title>
+    <url>/2022/03/04/hexo-message-board-utterances/</url>
+    <content><![CDATA[<p>留言版在一般的部落格中一個常見的功能，既然使用Github製作了自己的部落格<br>順勢找了一些文章來新增這個功能</p>
+<p>在參閱了許多 blogger 的文章後發現，比較常用的有以下兩種:</p>
+<ul>
+<li>Disqus<ul>
+<li>需要去 Disqus 官網註冊 - <a href="https://disqus.com/">點我前往</a></li>
+</ul>
+</li>
+<li>utterances<ul>
+<li>與 Github Issues 做連結</li>
+<li>需要登入 Github 才能夠進行留言</li>
+</ul>
+</li>
+</ul>
+<p>目前是打算使用 utterances 來實作 部落格的留言版</p>
+<span id="more"></span>
+
+<h3 id="整合-utterances"><a href="#整合-utterances" class="headerlink" title="整合 utterances"></a>整合 utterances</h3><ol>
+<li>Github 建立 Repository</li>
+<li>安裝 utterances - <a href="https://github.com/apps/utterances">點我前往</a></li>
+</ol>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mf3VZ_TrvLMIzOAvwD5scehh0uCIPUsahla1ouyxXnWeuuT5H3ukvDP7hV0gVb_0gnlFJTWeW9UWGP5LXPyQTBd60fbKgxDlDQK2ADWYI5nD6b0pkEd3hfZjLFwEUWurbgWomh3aeF0BWUvSalsrsnPvcz2e_eKp3TjFC4M0aqJI5wZ9FJsnf7SILGMbJzgbp?width=660&height=261&cropmode=none"><br>3. 取得授權，並選擇 步驟1 的 Repository</p>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mB7qi6p5Kb5d77Slb0G_jLXcoBZ6yepW2pKcSxd3Ih7_gQ4SDxI9vNpA-6V9wp_RnBN59jH0ziNmpluQFQDjnM92bizO_e_2jLgYQRxeFb7ps9tjvCvauX62h5gJLcvQsa34THbIPo5P6HAZmuIwMlGX5dwFnHIl9fLbX-dITsVKucorwYtuIJ2I8kmzdq_B5?width=480&height=660&cropmode=none"><br>4. 填寫對應的 configuration EX: Repository , Blog Post &amp; issue Mapping , Theme …etc</p>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mZW8hAhicSL9Xi4l83gr-741kqXgXqCBnmEDZ5a_ZVaCNUbsZQGTl456l7dxJUszLljpSitj43aRmX3fA0OUM58mYxGTvKuc0wL0VW-9OPS6YAn1Uz9FqzK0Q8YSWOpCQBiDHVMFUb6E5olX7bVBc-vy_rP5gqLV5Kt1WPC8gXKKIKqjtSVCpSzI9LB2H49DI?width=660&height=622&cropmode=none"><br>5. 在 theme 的 _config.yml 新增參數 (blog 目前是使用 next themes)</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># utterances by 2022-03-04</span></span><br><span class="line"><span class="attr">utterances:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>在主題底下 <code>themes\next\layout\_partials</code> 的 comments.swig 中 新增其 srcipt<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="string">新增至</span> &#123;<span class="string">%-</span> <span class="string">if</span> <span class="string">page.comments</span> <span class="string">%</span>&#125; <span class="string">後面</span></span><br><span class="line"></span><br><span class="line">&#123;<span class="string">%</span> <span class="string">if</span> <span class="string">theme.utterances.enable</span> <span class="string">%</span>&#125;</span><br><span class="line">    <span class="string">&lt;div</span> <span class="string">class=&quot;comments&quot;</span> <span class="string">id=&quot;comments&gt;</span></span><br><span class="line">        <span class="string">↓</span> <span class="string">複製上面步驟4</span> <span class="string">utterances</span> <span class="string">中產生的</span> <span class="string">script</span></span><br><span class="line">        <span class="string">&lt;script</span> <span class="string">src=&quot;https://utteranc.es/client.js&quot;</span></span><br><span class="line">            <span class="string">...</span></span><br><span class="line">        <span class="string">&lt;/script&gt;</span></span><br><span class="line">    <span class="string">&lt;/div&gt;</span></span><br><span class="line">  &#123;<span class="string">%-</span> <span class="string">endif</span> <span class="string">%</span>&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li>即可看到留言板出現在文章內了</li>
+</ol>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mi1owUcX16kQYG0y6amhW5TXqG8FlrfdD5PLc08FS7crQCBUFyU0TUJQbw3YSzu8UeSz_ajqZQDOWdxIo5PwIx-HUr_r2__1nn9taGWzzXCWokVufwsWZHApHEC3maMsGRKJxd5Pf3sdT0cW0qVg7dCYdt6IdQ9ie2Z2uetNM-dX_S54E9U7_qVpFRhuWp_wy?width=660&height=313&cropmode=none"></p>
+<h3 id="如何讓留言板不要出現"><a href="#如何讓留言板不要出現" class="headerlink" title="如何讓留言板不要出現"></a>如何讓留言板不要出現</h3><p>因為分類&#x2F;標籤等頁面通常不需要有連言功能<br>在 markdown 的 Front-matter 把 comments 關閉</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">tags</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2022-03-01 20:10:05</span></span><br><span class="line"><span class="attr">type:</span> <span class="string">&quot;tags&quot;</span></span><br><span class="line"><span class="attr">comments:</span> <span class="literal">false</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
+<li><a href="https://annkuoq.github.io/blog/2020-03-09-add-utterances-comment-widget-to-hexo/">在 Hexo 安裝 utterances 留言版</a></li>
+<li><a href="https://medium.com/starbugs/gatsby-%E7%94%A8-utterances-%E6%9B%BF-gatsby-%E7%9A%84-blog-%E7%B6%B2%E7%AB%99%E7%94%B3%E8%A3%9D-github-issue-%E7%95%99%E8%A8%80%E5%8A%9F%E8%83%BD-e8593318e5a3">Gatsby | 用 utterances 替 Gatsby 的 Blog 網站申裝 GitHub Issue 留言功能</a></li>
+<li><a href="https://blog.kyomind.tw/hexo-blog-reply/">Hexo：新增 utterances 留言板與方案選擇思路</a></li>
+<li><a href="https://utteranc.es/">utterances </a></li>
+<li><a href="https://kidneyweakx.com/2019/19log-1026-hexo-com.html">Hexo Next 主題增加評論系統 utterances</a></li>
 </ol>
 ]]></content>
       <categories>
