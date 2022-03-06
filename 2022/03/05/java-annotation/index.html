@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"oscar51011.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Java 從 JDK5 開使支援了 Annotation 功能，可以提供在編譯時期提示 or 執行時期讀取的資訊。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java Annotation(標註)">
+<meta property="og:url" content="https://oscar51011.github.io/2022/03/05/java-annotation/index.html">
+<meta property="og:site_name" content="Kai&#39;s Blog">
+<meta property="og:description" content="Java 從 JDK5 開使支援了 Annotation 功能，可以提供在編譯時期提示 or 執行時期讀取的資訊。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-03-05T14:36:36.000Z">
+<meta property="article:modified_time" content="2022-03-06T09:41:29.004Z">
+<meta property="article:author" content="oscar51011">
+<meta property="article:tag" content="java">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://oscar51011.github.io/2022/03/05/java-annotation/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Java Annotation(標註) | Kai's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Kai's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://oscar51011.github.io/2022/03/05/java-annotation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="oscar51011">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Kai's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Java Annotation(標註)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-03-05 22:36:36" itemprop="dateCreated datePublished" datetime="2022-03-05T22:36:36+08:00">2022-03-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-03-06 17:41:29" itemprop="dateModified" datetime="2022-03-06T17:41:29+08:00">2022-03-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Java 從 JDK5 開使支援了 Annotation 功能，可以提供在編譯時期提示 or 執行時期讀取的資訊。</p>
+<span id="more"></span>
+
+<h3 id="標準標註"><a href="#標準標註" class="headerlink" title="標準標註"></a>標準標註</h3><ol>
+<li>@override : 提供 compiler 提醒被標註的 method 必須為 父類別 or 介面所定義之方法</li>
+<li>@Deprecated : 提供 compiler 提醒被標註的 method 已經過時，建議不要再呼叫它</li>
+<li>@SuppressWarnings: 抑制警告訊息 ( 可使用參數 value &#x3D; { args1, args2 …etc } 定義抑制警告類型 )</li>
+<li>@FunctionalInterface: 協助檢查 interface 是否滿足 lambda 的型態 ( 為 java8 時所新增 )</li>
+</ol>
+<h3 id="元標註-meta-annotation"><a href="#元標註-meta-annotation" class="headerlink" title="元標註(meta-annotation)"></a>元標註(meta-annotation)</h3><p>標註使用 meta-annotation 為其他 annotation 做說明<br>meta-annotation 種類如下:</p>
+<ol>
+<li>@Target: 限定 Annotation 使用位置 ( ElementType )</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ANNOTATION_TYPE: meta-annotation為此類型，用來修飾註解</span><br><span class="line">METHOD: 修飾 method EX: springMVC 的 <span class="meta">@GATEMAPPING</span></span><br><span class="line">TYPE: 修飾class, interface, <span class="keyword">enum</span>, annotation  EX: java8 的 <span class="meta">@FunctionalInterface</span></span><br><span class="line">FIELD: 修飾成員變數 EX: java.persistence 的 <span class="meta">@Column</span> </span><br><span class="line">PARAMETER: 修飾方法參數 EX: springMVC 的 <span class="meta">@PathVariable</span></span><br><span class="line">CONSTRUCTOR: 修飾構造器 EX: spring 的 <span class="meta">@Autowired</span></span><br><span class="line">LOCAL_VARIABLE: 修飾區域變數 EX: spring 檢核參數的 <span class="meta">@NotNull</span> 可以用在多個場域</span><br><span class="line">PACKAGE: 修飾 <span class="keyword">package</span> </span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>@Retention: 定義了 Annotation 生命週期 ( RetentionPolicy )</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SOURCE: 只會出現在程式碼中，編譯後不會出現在class檔中 </span><br><span class="line">CLASS: 出現在程式碼中，且會編譯進class檔中，但運行期無任何效果 ( 此類型為 <span class="keyword">default</span> )</span><br><span class="line">RUNTIME: 從程式碼至到運行期間都會存在，可以使用 Reflection 機制取得 annotation 的訊息</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li><p>@Documented: 使用 javadoc 命令生成API檔案時，如要要將標注資料加入文檔，才需要加上此註解</p>
+</li>
+<li><p>@Inherited: 具有繼承性，代表子類別可以拿到父類別的註解訊息<br>※ 只有 class-level annotation 可以使用, method-level 則無法</p>
+</li>
+<li><p>@Repeatable (java1.8新增): 在 JDK8 之前，annotation 某個位置只能出現一次，不能重複使用；但這個功能可以讓 annotation 在同個地方出現多次</p>
+</li>
+</ol>
+<h3 id="自定義標註"><a href="#自定義標註" class="headerlink" title="自定義標註"></a>自定義標註</h3><ul>
+<li>需要使用 <em><strong>@interface</strong></em></li>
+<li>定義屬性，若命名為 value 時，使用時可省略屬性名稱</li>
+<li>屬性需有預設值時，可以使用 <em><strong>default</strong></em> 關鍵字</li>
+<li>欲在執行時期取得 標註資訊，可使用 <em><strong>java Reflection 機制</strong></em></li>
+</ul>
+<p>自定義 annotation 範例:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">@Target(ElementType.METHOD)</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> CustomAnnotation &#123;</span><br><span class="line"></span><br><span class="line">	String[] value();</span><br><span class="line"></span><br><span class="line">	String <span class="title function_">message</span><span class="params">()</span> <span class="keyword">default</span> <span class="string">&quot;none&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用一個 Main 方法 利用 Java Reflaction 取得 Annotation 的值</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">AnnotationMain</span> &#123;</span><br><span class="line">	</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> NoSuchMethodException, SecurityException &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="type">AnnotationMain</span> <span class="variable">main</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">AnnotationMain</span>();</span><br><span class="line">        main.test();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@CustomAnnotation(value = &#123;&quot;test&quot;, &quot;test2&quot;&#125;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">test</span><span class="params">()</span> <span class="keyword">throws</span> NoSuchMethodException, SecurityException &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 使用反射機制取得 method 上的標註</span></span><br><span class="line">        <span class="type">CustomAnnotation</span> <span class="variable">customAnnotation</span> <span class="operator">=</span> AnnotationMain.class.getMethod(<span class="string">&quot;test&quot;</span>).getAnnotation(CustomAnnotation.class);</span><br><span class="line">        </span><br><span class="line">        String[] values = customAnnotation.value();</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 取得 value</span></span><br><span class="line">        System.out.println(<span class="string">&quot;value:&quot;</span>);</span><br><span class="line">        <span class="keyword">for</span>(String value: values) </span><br><span class="line">            System.out.println(value);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 取得 messsage</span></span><br><span class="line">        System.out.println(<span class="string">&quot;message: &quot;</span> + customAnnotation.message());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>執行後會印出相對應的結果，印出 標註上的 value清單 &amp; message 的預設值 none</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">value:</span><br><span class="line">test</span><br><span class="line">test2</span><br><span class="line">message: none</span><br></pre></td></tr></table></figure>
+
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
+<li><a target="_blank" rel="noopener" href="https://kucw.github.io/blog/2018/6/java-annotation/">古古’s Blog Java - annotation 的使用</a></li>
+<li><a target="_blank" rel="noopener" href="https://openhome.cc/Gossip/Java/Annotation.html">常用標準標註</a></li>
+<li><a target="_blank" rel="noopener" href="https://openhome.cc/Gossip/Java/CustomizeAnnotation.html">自訂標註</a></li>
+<li><a target="_blank" rel="noopener" href="https://openhome.cc/Gossip/Java/ReadAnnotation.html">讀取標註資訊</a></li>
+<li><a target="_blank" rel="noopener" href="https://openhome.cc/Gossip/CodeData/JDK8/Annotation.html">【JDK8】Annotation 功能增強</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/java/" rel="tag"># java</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/03/04/hexo-message-board-utterances/" rel="prev" title="使用 utterances 在 Hexo 實現留言板功能">
+      <i class="fa fa-chevron-left"></i> 使用 utterances 在 Hexo 實現留言板功能
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+  
+    <div class="comments" calss="comments">
+      <script src="https://utteranc.es/client.js"
+          repo="oscar51011/oscar51011.github.io.comment"
+          issue-term="pathname"
+          theme="github-light"
+          crossorigin="anonymous"
+          async>
+      </script>
+    </div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%99%E6%BA%96%E6%A8%99%E8%A8%BB"><span class="nav-number">1.</span> <span class="nav-text">標準標註</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%83%E6%A8%99%E8%A8%BB-meta-annotation"><span class="nav-number">2.</span> <span class="nav-text">元標註(meta-annotation)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E7%BE%A9%E6%A8%99%E8%A8%BB"><span class="nav-number">3.</span> <span class="nav-text">自定義標註</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">oscar51011</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">oscar51011</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
