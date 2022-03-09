@@ -1,6 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Hexo 主題 - NEXT &amp; 新增文章搜尋功能</title>
+    <url>/2022/03/02/hexo-next-theme/</url>
+    <content><![CDATA[<p>紀錄一下，Blog中選定的主題 Next 的安裝經過 &amp; 新增搜尋功能</p>
+<span id="more"></span>
+
+<h3 id="安裝主題-Next"><a href="#安裝主題-Next" class="headerlink" title="安裝主題 Next"></a>安裝主題 Next</h3><ol>
+<li><p>Github clone hexo-theme-next project - <a href="https://github.com/theme-next/hexo-theme-next">點我前往</a></p>
+</li>
+<li><p>在 themes folder 底下建立 next 資料夾並將上述下載的資料 copy 進該資料夾</p>
+</li>
+<li><p>修改 根目錄 的 _config.xml 內容，從預設的 landscape 改成 next</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Extensions</span></span><br><span class="line"><span class="comment">## Plugins: https://hexo.io/plugins/</span></span><br><span class="line"><span class="comment">## Themes: https://hexo.io/themes/</span></span><br><span class="line"><span class="attr">theme:</span> <span class="string">next</span></span><br></pre></td></tr></table></figure></li>
+<li><p>設定檔有2個，一個是配製 Hexo設定，另一個是針對 Next 主題進行配置</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="string">根目錄:</span> <span class="string">_config.yml</span></span><br><span class="line"><span class="string">Next主題:</span> <span class="string">themes/_config.yml</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Next 主題底下有 4種樣式 (設定於 themes 底下的 _config.xml)</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Schemes</span></span><br><span class="line"><span class="comment">#scheme: Muse</span></span><br><span class="line"><span class="attr">scheme:</span> <span class="string">Mist</span></span><br><span class="line"><span class="comment">#scheme: Pisces</span></span><br><span class="line"><span class="comment">#scheme: Gemini</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="開啟-分類-x2F-標籤-功能"><a href="#開啟-分類-x2F-標籤-功能" class="headerlink" title="開啟 分類 &#x2F; 標籤 功能"></a>開啟 分類 &#x2F; 標籤 功能</h3><ul>
+<li>新增 layout 為 page 的文章 ( 一般文章預設為 post)<br><code>hexo new page categories</code> ( type 為 “categories” )<br><code>hexo new page tags</code> ( type 為 “tags” )</li>
+<li>一般文章撰寫時於文章 Front-matter 定義 分類 &#x2F; 標籤 屬性<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">Hexo</span> <span class="string">主題</span> <span class="bullet">-</span> <span class="string">NEXT</span> <span class="string">&amp;</span> <span class="string">新增文章搜尋功能</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2022-03-02 06:55:34</span></span><br><span class="line"><span class="attr">tags:</span> </span><br><span class="line"><span class="bullet">-</span> <span class="string">hexo</span></span><br><span class="line"><span class="attr">categories:</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">blog</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure></li>
+<li>開啟 Next 主題 menu 得以顯示於介面<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">home:</span> <span class="string">/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-home</span></span><br><span class="line">  <span class="comment"># about: /about/ || fa fa-user</span></span><br><span class="line">  <span class="attr">tags:</span> <span class="string">/tags/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-tags</span></span><br><span class="line">  <span class="attr">categories:</span> <span class="string">/categories/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-th</span></span><br><span class="line">  <span class="attr">archives:</span> <span class="string">/archives/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-archive</span></span><br><span class="line">  <span class="comment">#schedule: /schedule/ || fa fa-calendar</span></span><br><span class="line">  <span class="comment">#sitemap: /sitemap.xml || fa fa-sitemap</span></span><br><span class="line">  <span class="comment">#commonweal: /404/ || fa fa-heartbeat</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="新增-搜尋功能"><a href="#新增-搜尋功能" class="headerlink" title="新增 搜尋功能"></a>新增 搜尋功能</h3><ol>
+<li>下載套件 <code>npm install hexo-generator-searchdb --save</code></li>
+<li>根目錄 _config.xml 新增設定<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment">#Local Search / created by 2022-03-02</span></span><br><span class="line"><span class="attr">search:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">path:</span> <span class="string">search.xml</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">field:</span> <span class="string">post</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">format:</span> <span class="string">html</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">content:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure></li>
+<li>主題目錄 _config.xml 開啟 local_search 功能<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Local Search</span></span><br><span class="line"><span class="comment"># Dependencies: https://github.com/theme-next/hexo-generator-searchdb</span></span><br><span class="line"><span class="attr">local_search:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="新增-文章閱讀進度-功能"><a href="#新增-文章閱讀進度-功能" class="headerlink" title="新增 文章閱讀進度 功能"></a>新增 文章閱讀進度 功能</h3><p>將 scrollpercent 從 false 改成 true</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">back2top:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># Back to top in sidebar.</span></span><br><span class="line">  <span class="attr">sidebar:</span> <span class="literal">false</span></span><br><span class="line">  <span class="comment"># Scroll percent label in b2t button.</span></span><br><span class="line">  <span class="attr">scrollpercent:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<p>效果如下:</p>
+<p><img src="https://bnz05pap002files.storage.live.com/y4m1yGLaD3UGbwtXQPefduFnckR3CCidf2SWItddjqzSCA3KdyVLMXnZpx-If2Tl3tWkszjYeEMyotdRXWNIo_iQY_INtR5O0J48eqrMs_1nY9WVie0VKY4hJXYo208GuzkoFHi84ZTce-qnv7Bb6I_Hql7VNLpeIWiQOmib2hAYjdqnt-aDFR2FmDO-C_PuLxP?width=233&height=256&cropmode=none" alt="hexo_page_scrollpercent.png"></p>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
+<li><a href="https://github.com/theme-next/hexo-generator-searchdb">Github Repository : hexo-generator-searchdb</a></li>
+<li><a href="https://ithelp.ithome.com.tw/articles/10248214">(20) 試著學 Hexo - NexT 主題篇 - 可以安裝的套件</a></li>
+<li><a href="https://blog.csdn.net/as480133937/article/details/100138838">Hexo-Next 主题博客个性化配置超详细，超全面(两万字)</a></li>
+<li><a href="https://ithelp.ithome.com.tw/articles/10257569">建立自己Blog系列(三) Hexo next theme 介紹</a></li>
+<li><a href="https://github.com/theme-next/hexo-theme-next">Github Repository : hexo-theme-next</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>blog</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>利用Hexo + Github.io 建立自己的Blog</title>
     <url>/2022/03/01/hexo-github-blog-initial/</url>
     <content><![CDATA[<p>Hexo 為一個 Blog Framework ，基於 NodeJs 語言所開發 (支援 Markdown 語法)</p>
@@ -72,62 +120,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Jenkins 安裝教學</title>
-    <url>/2022/03/06/jenkins-initial/</url>
-    <content><![CDATA[<p>Jenkins 為一個持續化整合工具，由 Java 語言所撰寫，並支援許多套件做整合 ( ex : Maven , Gradle )<br>可用於自動化的持續整合(CI) &amp; 持續部署(CD) 。</p>
-<span id="more"></span>
-
-<h3 id="Local安裝前置作業"><a href="#Local安裝前置作業" class="headerlink" title="Local安裝前置作業"></a>Local安裝前置作業</h3><ol>
-<li>準備一台 Linux 主機 (Virtual Mechine )</li>
-<li>安裝 docker ( Optional: docker-compose )</li>
-</ol>
-<h3 id="使用-docker-安裝-Jenkins"><a href="#使用-docker-安裝-Jenkins" class="headerlink" title="使用 docker 安裝 Jenkins"></a>使用 docker 安裝 Jenkins</h3><ol>
-<li><p>使用 docker 下載 docker images<br><code>docker pull jenkins/jenkins:latest</code></p>
-</li>
-<li><p>使用指令啟動 docker container (指定 port 為 18080)</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker run -u root -d --name myjenkins -p 18080:8080 -p 50000:50000 -v jenkins_home:/var/jenkins_home jenkins/jenkins:latest</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">jenkins 8080 port 為 預設WEB介面 , 50000 port 為 jenkins Agent</span></span><br></pre></td></tr></table></figure>
-
-</li>
-<li><p>啟動後，輸入網址 - <em><strong>{VM IP}:18080</strong></em> 進入 Jenkins 初始畫面</p>
-</li>
-</ol>
-<p><img src="https://bnz05pap002files.storage.live.com/y4mcApoPeOBRDSLJEBnroNaVPjG4VXCzXgQE45FfB0tkD7UrSdMfMLj4HdOgOXg9XPBZMM5YXqvCb_EM3e9WNQUbLwWa3lib_ENDaVotBtrkb0AbhH30jFmqy0BsJwPnZ_4OGRuV8P1YwDXipLFgnYICSA8CsgOhy37Ejok5wMbdd9rsjKlcNwd1R9RGKll56So?width=256&height=139&cropmode=none" alt="Jenkins_initial"></p>
-<ol start="4">
-<li><p>進入 container 中取得安裝的預設密碼</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta"># </span><span class="language-bash">進入 container</span></span><br><span class="line">docker exec -it &#123;container name&#125; /bin/bash</span><br><span class="line"><span class="meta"># </span><span class="language-bash">顯示預設密碼</span></span><br><span class="line">cat /var/jenkins_home/secrets/initialAdminPassword</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>選擇客製化套件安裝 ( 選擇左邊預設全裝)</p>
-</li>
-</ol>
-<p><img src="https://bnz05pap002files.storage.live.com/y4m5nGIeTsyu5iUN2_CGgA4rinujnsw-iQP5TPJ3XwPTOZ65LirQh1oX1jnbkjK07WOWnwC1uYPEZiWuo3huJZA89zN-fmlAygcYUTcWxkygkcUKTLnyNr-JOqoeNhjg3zNZup70RBayB_MxeVqQkX9oopysyxBkOm_mq0PmXAG_6YfI93JBQS7moB_zadgAE9Z?width=256&height=139&cropmode=none" alt="jenkins_plugin_setting"></p>
-<ol start="6">
-<li>創建Admin 的 帳號&#x2F;密碼</li>
-</ol>
-<p><img src="https://bnz05pap002files.storage.live.com/y4mtzgP0W95pMW1ZWyEC4VcuZHCPR-z42TbjNnNDrpfHoRRtbo7Vo7awco05KH6Ezgujl_oPsAu05rsRrbq5Uz7xGW3Wy4HeOkjeka4OZkdqwqvvhLwzOM9xDGfSdlZYKBpXBaOMpG1kSzooQKri0dhz9mZkdEirCcxFOclaBX2MAgOn9zD35F8UrcY37lsnNyj?width=256&height=138&cropmode=none" alt="createAdminUser.png"></p>
-<ol start="7">
-<li>儲存設定後，即可進入首頁</li>
-</ol>
-<p><img src="https://bnz05pap002files.storage.live.com/y4mOu7W-A_TyloArSKH_UydXT4L7FCHHvSyJwK567rbLYlHkvS3B3kuJIWvqMMHNOCfFpW8JBUHFpE5DE7lndEBw09bgzyGPhLuoez0tzwKgjNhh_3JK_bWIaxOBr7XwJM5exakUtoiSE9RZEZXqRtekj3hHCQzFWg6A27FkL5ZRuS_YpZBtBhp86dNX2gDYz3A?width=256&height=134&cropmode=none" alt="homePage"></p>
-<h3 id="使用-docker-compose-安裝-Jenkins"><a href="#使用-docker-compose-安裝-Jenkins" class="headerlink" title="使用 docker-compose 安裝 Jenkins"></a>使用 docker-compose 安裝 Jenkins</h3><ol>
-<li>撰寫 docker-compose.yml<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;2&#x27;</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">	<span class="attr">jenkins:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">jenkins/jenkins</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">jenkins</span></span><br><span class="line">    <span class="attr">privileged:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">user:</span> <span class="string">root</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">18080</span><span class="string">:8080</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">50000</span><span class="string">:50000</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">JAVA_OPTS:</span> <span class="string">-Xmx2048m</span> <span class="string">-Djava.awt.headless=true</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/var/jenkins_home:/var/jenkins_home</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/var/run/docker.sock:/var/run/docker.sock</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">$&#123;HOME&#125;/.ssh:/root/.ssh:ro</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">$&#123;HOME&#125;/.npmrc:/root/.npmrc</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">$&#123;HOME&#125;/.m2:/root/.m2</span></span><br></pre></td></tr></table></figure></li>
-<li>啟動 dokcer-compose<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker-compose up</span><br></pre></td></tr></table></figure></li>
-</ol>
-<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
-<li><a href="https://ithelp.ithome.com.tw/articles/10202465">day05_docker04_Jenkins</a></li>
-<li><a href="https://iter01.com/553208.html">三十二張圖告訴你，Jenkins構建Spring Boot 有多簡單~
-</a></li>
-<li><a href="https://tomgregory.com/building-a-spring-boot-application-in-docker-and-jenkins/">Building a Spring Boot application in Docker and Jenkins (part 2 of microservice devops series)</a></li>
-</ol>
-]]></content>
-      <categories>
-        <category>jenkins</category>
-      </categories>
-      <tags>
-        <tag>docker</tag>
-        <tag>jenkins</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>使用 utterances 在 Hexo 實現留言板功能</title>
     <url>/2022/03/04/hexo-message-board-utterances/</url>
     <content><![CDATA[<p>留言版在一般的部落格中一個常見的功能，既然使用Github製作了自己的部落格<br>順勢找了一些文章來新增這個功能</p>
@@ -169,54 +161,6 @@
 <li><a href="https://blog.kyomind.tw/hexo-blog-reply/">Hexo：新增 utterances 留言板與方案選擇思路</a></li>
 <li><a href="https://utteranc.es/">utterances </a></li>
 <li><a href="https://kidneyweakx.com/2019/19log-1026-hexo-com.html">Hexo Next 主題增加評論系統 utterances</a></li>
-</ol>
-]]></content>
-      <categories>
-        <category>blog</category>
-      </categories>
-      <tags>
-        <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hexo 主題 - NEXT &amp; 新增文章搜尋功能</title>
-    <url>/2022/03/02/hexo-next-theme/</url>
-    <content><![CDATA[<p>紀錄一下，Blog中選定的主題 Next 的安裝經過 &amp; 新增搜尋功能</p>
-<span id="more"></span>
-
-<h3 id="安裝主題-Next"><a href="#安裝主題-Next" class="headerlink" title="安裝主題 Next"></a>安裝主題 Next</h3><ol>
-<li><p>Github clone hexo-theme-next project - <a href="https://github.com/theme-next/hexo-theme-next">點我前往</a></p>
-</li>
-<li><p>在 themes folder 底下建立 next 資料夾並將上述下載的資料 copy 進該資料夾</p>
-</li>
-<li><p>修改 根目錄 的 _config.xml 內容，從預設的 landscape 改成 next</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Extensions</span></span><br><span class="line"><span class="comment">## Plugins: https://hexo.io/plugins/</span></span><br><span class="line"><span class="comment">## Themes: https://hexo.io/themes/</span></span><br><span class="line"><span class="attr">theme:</span> <span class="string">next</span></span><br></pre></td></tr></table></figure></li>
-<li><p>設定檔有2個，一個是配製 Hexo設定，另一個是針對 Next 主題進行配置</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="string">根目錄:</span> <span class="string">_config.yml</span></span><br><span class="line"><span class="string">Next主題:</span> <span class="string">themes/_config.yml</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Next 主題底下有 4種樣式 (設定於 themes 底下的 _config.xml)</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Schemes</span></span><br><span class="line"><span class="comment">#scheme: Muse</span></span><br><span class="line"><span class="attr">scheme:</span> <span class="string">Mist</span></span><br><span class="line"><span class="comment">#scheme: Pisces</span></span><br><span class="line"><span class="comment">#scheme: Gemini</span></span><br></pre></td></tr></table></figure></li>
-</ol>
-<h3 id="開啟-分類-x2F-標籤-功能"><a href="#開啟-分類-x2F-標籤-功能" class="headerlink" title="開啟 分類 &#x2F; 標籤 功能"></a>開啟 分類 &#x2F; 標籤 功能</h3><ul>
-<li>新增 layout 為 page 的文章 ( 一般文章預設為 post)<br><code>hexo new page categories</code> ( type 為 “categories” )<br><code>hexo new page tags</code> ( type 為 “tags” )</li>
-<li>一般文章撰寫時於文章 Front-matter 定義 分類 &#x2F; 標籤 屬性<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">Hexo</span> <span class="string">主題</span> <span class="bullet">-</span> <span class="string">NEXT</span> <span class="string">&amp;</span> <span class="string">新增文章搜尋功能</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2022-03-02 06:55:34</span></span><br><span class="line"><span class="attr">tags:</span> </span><br><span class="line"><span class="bullet">-</span> <span class="string">hexo</span></span><br><span class="line"><span class="attr">categories:</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">blog</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure></li>
-<li>開啟 Next 主題 menu 得以顯示於介面<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">home:</span> <span class="string">/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-home</span></span><br><span class="line">  <span class="comment"># about: /about/ || fa fa-user</span></span><br><span class="line">  <span class="attr">tags:</span> <span class="string">/tags/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-tags</span></span><br><span class="line">  <span class="attr">categories:</span> <span class="string">/categories/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-th</span></span><br><span class="line">  <span class="attr">archives:</span> <span class="string">/archives/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-archive</span></span><br><span class="line">  <span class="comment">#schedule: /schedule/ || fa fa-calendar</span></span><br><span class="line">  <span class="comment">#sitemap: /sitemap.xml || fa fa-sitemap</span></span><br><span class="line">  <span class="comment">#commonweal: /404/ || fa fa-heartbeat</span></span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="新增-搜尋功能"><a href="#新增-搜尋功能" class="headerlink" title="新增 搜尋功能"></a>新增 搜尋功能</h3><ol>
-<li>下載套件 <code>npm install hexo-generator-searchdb --save</code></li>
-<li>根目錄 _config.xml 新增設定<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment">#Local Search / created by 2022-03-02</span></span><br><span class="line"><span class="attr">search:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">path:</span> <span class="string">search.xml</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">field:</span> <span class="string">post</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">format:</span> <span class="string">html</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">content:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure></li>
-<li>主題目錄 _config.xml 開啟 local_search 功能<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Local Search</span></span><br><span class="line"><span class="comment"># Dependencies: https://github.com/theme-next/hexo-generator-searchdb</span></span><br><span class="line"><span class="attr">local_search:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure></li>
-</ol>
-<h3 id="新增-文章閱讀進度-功能"><a href="#新增-文章閱讀進度-功能" class="headerlink" title="新增 文章閱讀進度 功能"></a>新增 文章閱讀進度 功能</h3><p>將 scrollpercent 從 false 改成 true</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">back2top:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># Back to top in sidebar.</span></span><br><span class="line">  <span class="attr">sidebar:</span> <span class="literal">false</span></span><br><span class="line">  <span class="comment"># Scroll percent label in b2t button.</span></span><br><span class="line">  <span class="attr">scrollpercent:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-<p>效果如下:</p>
-<p><img src="https://bnz05pap002files.storage.live.com/y4m1yGLaD3UGbwtXQPefduFnckR3CCidf2SWItddjqzSCA3KdyVLMXnZpx-If2Tl3tWkszjYeEMyotdRXWNIo_iQY_INtR5O0J48eqrMs_1nY9WVie0VKY4hJXYo208GuzkoFHi84ZTce-qnv7Bb6I_Hql7VNLpeIWiQOmib2hAYjdqnt-aDFR2FmDO-C_PuLxP?width=233&height=256&cropmode=none" alt="hexo_page_scrollpercent.png"></p>
-<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
-<li><a href="https://github.com/theme-next/hexo-generator-searchdb">Github Repository : hexo-generator-searchdb</a></li>
-<li><a href="https://ithelp.ithome.com.tw/articles/10248214">(20) 試著學 Hexo - NexT 主題篇 - 可以安裝的套件</a></li>
-<li><a href="https://blog.csdn.net/as480133937/article/details/100138838">Hexo-Next 主题博客个性化配置超详细，超全面(两万字)</a></li>
-<li><a href="https://ithelp.ithome.com.tw/articles/10257569">建立自己Blog系列(三) Hexo next theme 介紹</a></li>
-<li><a href="https://github.com/theme-next/hexo-theme-next">Github Repository : hexo-theme-next</a></li>
 </ol>
 ]]></content>
       <categories>
@@ -285,6 +229,123 @@
       </categories>
       <tags>
         <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Jenkins 安裝教學</title>
+    <url>/2022/03/06/jenkins-initial/</url>
+    <content><![CDATA[<p>Jenkins 為一個持續化整合工具，由 Java 語言所撰寫，並支援許多套件做整合 ( ex : Maven , Gradle )<br>可用於自動化的持續整合(CI) &amp; 持續部署(CD) 。</p>
+<span id="more"></span>
+
+<h3 id="Local安裝前置作業"><a href="#Local安裝前置作業" class="headerlink" title="Local安裝前置作業"></a>Local安裝前置作業</h3><ol>
+<li>準備一台 Linux 主機 (Virtual Mechine )</li>
+<li>安裝 docker ( Optional: docker-compose )</li>
+</ol>
+<h3 id="使用-docker-安裝-Jenkins"><a href="#使用-docker-安裝-Jenkins" class="headerlink" title="使用 docker 安裝 Jenkins"></a>使用 docker 安裝 Jenkins</h3><ol>
+<li><p>使用 docker 下載 docker images<br><code>docker pull jenkins/jenkins:latest</code></p>
+</li>
+<li><p>使用指令啟動 docker container (指定 port 為 18080)</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker run -u root -d --name myjenkins -p 18080:8080 -p 50000:50000 -v jenkins_home:/var/jenkins_home jenkins/jenkins:latest</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">jenkins 8080 port 為 預設WEB介面 , 50000 port 為 jenkins Agent</span></span><br></pre></td></tr></table></figure>
+
+</li>
+<li><p>啟動後，輸入網址 - <em><strong>{VM IP}:18080</strong></em> 進入 Jenkins 初始畫面</p>
+</li>
+</ol>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mcApoPeOBRDSLJEBnroNaVPjG4VXCzXgQE45FfB0tkD7UrSdMfMLj4HdOgOXg9XPBZMM5YXqvCb_EM3e9WNQUbLwWa3lib_ENDaVotBtrkb0AbhH30jFmqy0BsJwPnZ_4OGRuV8P1YwDXipLFgnYICSA8CsgOhy37Ejok5wMbdd9rsjKlcNwd1R9RGKll56So?width=256&height=139&cropmode=none" alt="Jenkins_initial"></p>
+<ol start="4">
+<li><p>進入 container 中取得安裝的預設密碼</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta"># </span><span class="language-bash">進入 container</span></span><br><span class="line">docker exec -it &#123;container name&#125; /bin/bash</span><br><span class="line"><span class="meta"># </span><span class="language-bash">顯示預設密碼</span></span><br><span class="line">cat /var/jenkins_home/secrets/initialAdminPassword</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>選擇客製化套件安裝 ( 選擇左邊預設全裝)</p>
+</li>
+</ol>
+<p><img src="https://bnz05pap002files.storage.live.com/y4m5nGIeTsyu5iUN2_CGgA4rinujnsw-iQP5TPJ3XwPTOZ65LirQh1oX1jnbkjK07WOWnwC1uYPEZiWuo3huJZA89zN-fmlAygcYUTcWxkygkcUKTLnyNr-JOqoeNhjg3zNZup70RBayB_MxeVqQkX9oopysyxBkOm_mq0PmXAG_6YfI93JBQS7moB_zadgAE9Z?width=256&height=139&cropmode=none" alt="jenkins_plugin_setting"></p>
+<ol start="6">
+<li>創建Admin 的 帳號&#x2F;密碼</li>
+</ol>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mtzgP0W95pMW1ZWyEC4VcuZHCPR-z42TbjNnNDrpfHoRRtbo7Vo7awco05KH6Ezgujl_oPsAu05rsRrbq5Uz7xGW3Wy4HeOkjeka4OZkdqwqvvhLwzOM9xDGfSdlZYKBpXBaOMpG1kSzooQKri0dhz9mZkdEirCcxFOclaBX2MAgOn9zD35F8UrcY37lsnNyj?width=256&height=138&cropmode=none" alt="createAdminUser.png"></p>
+<ol start="7">
+<li>儲存設定後，即可進入首頁</li>
+</ol>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mOu7W-A_TyloArSKH_UydXT4L7FCHHvSyJwK567rbLYlHkvS3B3kuJIWvqMMHNOCfFpW8JBUHFpE5DE7lndEBw09bgzyGPhLuoez0tzwKgjNhh_3JK_bWIaxOBr7XwJM5exakUtoiSE9RZEZXqRtekj3hHCQzFWg6A27FkL5ZRuS_YpZBtBhp86dNX2gDYz3A?width=256&height=134&cropmode=none" alt="homePage"></p>
+<h3 id="使用-docker-compose-安裝-Jenkins"><a href="#使用-docker-compose-安裝-Jenkins" class="headerlink" title="使用 docker-compose 安裝 Jenkins"></a>使用 docker-compose 安裝 Jenkins</h3><ol>
+<li>撰寫 docker-compose.yml<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;2&#x27;</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">	<span class="attr">jenkins:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">jenkins/jenkins</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">jenkins</span></span><br><span class="line">    <span class="attr">privileged:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">user:</span> <span class="string">root</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">18080</span><span class="string">:8080</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">50000</span><span class="string">:50000</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">JAVA_OPTS:</span> <span class="string">-Xmx2048m</span> <span class="string">-Djava.awt.headless=true</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/var/jenkins_home:/var/jenkins_home</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/var/run/docker.sock:/var/run/docker.sock</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">$&#123;HOME&#125;/.ssh:/root/.ssh:ro</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">$&#123;HOME&#125;/.npmrc:/root/.npmrc</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">$&#123;HOME&#125;/.m2:/root/.m2</span></span><br></pre></td></tr></table></figure></li>
+<li>啟動 dokcer-compose<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker-compose up</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
+<li><a href="https://ithelp.ithome.com.tw/articles/10202465">day05_docker04_Jenkins</a></li>
+<li><a href="https://iter01.com/553208.html">三十二張圖告訴你，Jenkins構建Spring Boot 有多簡單~
+</a></li>
+<li><a href="https://tomgregory.com/building-a-spring-boot-application-in-docker-and-jenkins/">Building a Spring Boot application in Docker and Jenkins (part 2 of microservice devops series)</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>jenkins</category>
+      </categories>
+      <tags>
+        <tag>docker</tag>
+        <tag>jenkins</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用 Springboot + Mockito 完成單元測試</title>
+    <url>/2022/03/09/springboot-mockito-mock-test/</url>
+    <content><![CDATA[<p>Mockito 為一個廣泛使用的測試框架，當開發時如果有遇到依賴注入的情境時，往往都會啟動Server，注入實體來進行測試，但這樣的方式即為整合測試 ; 因為當 A 服務呼叫 B 服務，如果 B 服務的內容每次都不一樣，這樣會造成測試結果往往會失敗。</p>
+<p>Mock 測試即為建立假的物件 ; 以 A 服務 呼叫 B 服務來說，我們把 B 服務做 mock，讓回傳的結果固定，就可以專心測試 A 服務的 情境，而不會因為 B 來影響每一次測試的結果</p>
+<span id="more"></span>
+
+<p>單元測試分成三個步驟:</p>
+<ol>
+<li>Arrange : 準備資料</li>
+<li>Act : 執行並回傳結果</li>
+<li>Assert : 驗證結果</li>
+</ol>
+<h3 id="環境準備"><a href="#環境準備" class="headerlink" title="環境準備"></a>環境準備</h3><ol>
+<li>選擇 springboot 版本 <code>2.5.2</code></li>
+<li>引入 <code>spring-boot-starter-web</code> &amp; <code>spring-boot-starter-test</code><br>在 starter-test 中即包含了 JUnit 5 &amp;　mockito 框架<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">&lt;dependencies&gt;</span><br><span class="line">  </span><br><span class="line">  	&lt;!-- web --&gt;</span><br><span class="line">  	&lt;dependency&gt;</span><br><span class="line">		&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">		&lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</span><br><span class="line">	&lt;/dependency&gt;</span><br><span class="line">	</span><br><span class="line">	&lt;!-- test framework --&gt;</span><br><span class="line">	&lt;dependency&gt;</span><br><span class="line">		&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">		&lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;</span><br><span class="line">		&lt;scope&gt;test&lt;/scope&gt;</span><br><span class="line">	&lt;/dependency&gt;</span><br><span class="line">	</span><br><span class="line">  &lt;/dependencies&gt;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="程式範例"><a href="#程式範例" class="headerlink" title="程式範例"></a>程式範例</h3><ul>
+<li>Service</li>
+</ul>
+<p>新增一個服務，用來驗證 DB 取出的 使用者是否成年 </p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 實現玩家服務</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> oscar51011</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2022年3月9日</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">PlayerServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">IPlayerService</span> &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> PlayerDao playerDao;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">isPlayerAnAdult</span><span class="params">(<span class="type">long</span> id)</span> &#123;</span><br><span class="line">		</span><br><span class="line">		<span class="type">Player</span> <span class="variable">player</span> <span class="operator">=</span> playerDao.getPlayerById(id);</span><br><span class="line">		<span class="keyword">if</span>(player == <span class="literal">null</span> ) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(<span class="string">&quot;Player Not Found!&quot;</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">if</span>(player.getAge() &gt;= <span class="number">18</span> )</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Dao</li>
+</ul>
+<p>此範例並不會真正的連線 DB，因為單元測試是要把外部相依的服務給 mock 掉，因此這裡的演示只是用 new 的形式呈現</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 實作 player DAO</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> oscar51011</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2022年3月9日</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">PlayerDaoImpl</span> <span class="keyword">implements</span> <span class="title class_">PlayerDao</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="keyword">public</span> Player <span class="title function_">getPlayerById</span><span class="params">(<span class="type">long</span> id)</span> &#123;</span><br><span class="line">		<span class="type">Player</span> <span class="variable">player</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Player</span>(<span class="string">&quot;Oscar&quot;</span>, <span class="number">19</span>);</span><br><span class="line">		<span class="keyword">return</span> player;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>Model</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 描述玩家物件</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> oscar51011</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2022年3月9日</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Player</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> String name;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">private</span> Integer age;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="title function_">Player</span><span class="params">(String name, Integer age)</span> &#123;</span><br><span class="line">		<span class="built_in">super</span>();</span><br><span class="line">		<span class="built_in">this</span>.name = name;</span><br><span class="line">		<span class="built_in">this</span>.age = age;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> String <span class="title function_">getName</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> name;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setName</span><span class="params">(String name)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.name = name;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> Integer <span class="title function_">getAge</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> age;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setAge</span><span class="params">(Integer age)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.age = age;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Unit Test</p>
+</li>
+</ul>
+<p>本次的測試分成三個情境:</p>
+<ol>
+<li>驗證 使用者如果大於 18 歲，即回傳 true</li>
+<li>驗證 使用者如果小於 18 歲，即回傳 false</li>
+<li>驗證 如果使用者不存在，則拋出例外錯誤</li>
+</ol>
+<p>此處在初始化的時候，使用 Mockito 的 <code>when</code> , <code>thenReturn</code><br>假設我傳入的參數為 1L，則回傳假的物件 new Player ，而非真正的去 DB取資料</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@ExtendWith(MockitoExtension.class)</span></span><br><span class="line"><span class="meta">@SpringBootTest</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">PlayerServiceImplTest</span> &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Mock</span></span><br><span class="line">	<span class="keyword">private</span> PlayerDao playerDao;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@InjectMocks</span></span><br><span class="line">	<span class="keyword">private</span> PlayerServiceImpl playerService;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 測試玩家大於等於18歲, 要回傳 true</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="keyword">void</span> <span class="title function_">testIsPlayerAnAdult_PlayerIsAnAdult</span><span class="params">()</span> &#123;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// Arrange</span></span><br><span class="line">		Mockito.when(playerDao.getPlayerById(<span class="number">1L</span>)).thenReturn(<span class="keyword">new</span> <span class="title class_">Player</span>(<span class="string">&quot;Oscar&quot;</span>, <span class="number">19</span>));</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// act</span></span><br><span class="line">		<span class="type">boolean</span> <span class="variable">isPlayerAnAdult</span> <span class="operator">=</span> playerService.isPlayerAnAdult(<span class="number">1L</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// assert</span></span><br><span class="line">		assertEquals(isPlayerAnAdult, <span class="literal">true</span>);</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 測試玩家小於18歲 , 要回傳 false</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="keyword">void</span> <span class="title function_">testIsPlayerAnAdult_PlayerIsNotAnAdult</span><span class="params">()</span> &#123;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// Arrange</span></span><br><span class="line">		Mockito.when(playerDao.getPlayerById(<span class="number">1L</span>)).thenReturn(<span class="keyword">new</span> <span class="title class_">Player</span>(<span class="string">&quot;Oscar&quot;</span>, <span class="number">17</span>));</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// act</span></span><br><span class="line">		<span class="type">boolean</span> <span class="variable">isPlayerAnAdult</span> <span class="operator">=</span> playerService.isPlayerAnAdult(<span class="number">1L</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// assert</span></span><br><span class="line">		assertEquals(isPlayerAnAdult, <span class="literal">false</span>);</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 測試如果找不到玩家，要拋出 Exception</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="keyword">void</span> <span class="title function_">testIsPlayerAnAdult_PlayerNotFound</span><span class="params">()</span> &#123;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// assert</span></span><br><span class="line">		assertThrows(RuntimeException.class,</span><br><span class="line">			()-&gt;&#123;</span><br><span class="line">				<span class="comment">// Arrange</span></span><br><span class="line">				Mockito.when(playerDao.getPlayerById(<span class="number">1L</span>)).thenReturn(<span class="literal">null</span>);</span><br><span class="line">				</span><br><span class="line">				<span class="comment">// act</span></span><br><span class="line">				playerService.isPlayerAnAdult(<span class="number">1L</span>);</span><br><span class="line">			&#125;</span><br><span class="line">		);</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>詳細範例 - <a href="https://github.com/oscar51011/springbootdemo/tree/master/testing">請點我</a></p>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference:"></a>Reference:</h3><ol>
+<li><a href="https://www.baeldung.com/mockito-mock-methods">Mockito’s Mock Methods</a></li>
+<li><a href="https://kucw.github.io/blog/2020/2/spring-unit-test-mockito">SpringBoot - 單元測試工具 Mockito</a></li>
+<li><a href="https://www.baeldung.com/junit-assert-exception">Assert an Exception is Thrown in JUnit 4 and 5</a></li>
+<li><a href="https://www.gushiciku.cn/pl/p3fg/zh-tw">有啥不同？來看看Spring Boot 基於 JUnit 5 實現單元測試</a></li>
+<li><a href="https://spring.io/blog/2019/10/16/spring-boot-2-2-0">Spring Boot 2.2.0</a></li>
+<li><a href="https://vivifish.medium.com/java-%E5%96%AE%E5%85%83%E6%B8%AC%E8%A9%A6%E5%B7%A5%E5%85%B7-mockito-e5f0ce93579d">Java Unit Test — Mockito</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>testing</category>
+      </categories>
+      <tags>
+        <tag>springboot</tag>
+        <tag>mockito</tag>
       </tags>
   </entry>
 </search>
