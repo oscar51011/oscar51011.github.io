@@ -1,176 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Java Annotation(標註)</title>
-    <url>/2022/03/05/java-annotation/</url>
-    <content><![CDATA[<p>Java 從 JDK5 開使支援了 Annotation 功能，可以提供在編譯時期提示 or 執行時期讀取的資訊。</p>
-<span id="more"></span>
-
-<h3 id="標準標註"><a href="#標準標註" class="headerlink" title="標準標註"></a>標準標註</h3><ol>
-<li>@override : 提供 compiler 提醒被標註的 method 必須為 父類別 or 介面所定義之方法</li>
-<li>@Deprecated : 提供 compiler 提醒被標註的 method 已經過時，建議不要再呼叫它</li>
-<li>@SuppressWarnings: 抑制警告訊息 ( 可使用參數 value &#x3D; { args1, args2 …etc } 定義抑制警告類型 )</li>
-<li>@FunctionalInterface: 協助檢查 interface 是否滿足 lambda 的型態 ( 為 java8 時所新增 )</li>
-</ol>
-<h3 id="元標註-meta-annotation"><a href="#元標註-meta-annotation" class="headerlink" title="元標註(meta-annotation)"></a>元標註(meta-annotation)</h3><p>標註使用 meta-annotation 為其他 annotation 做說明<br>meta-annotation 種類如下:</p>
-<ol>
-<li>@Target: 限定 Annotation 使用位置 ( ElementType )</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ANNOTATION_TYPE: meta-annotation為此類型，用來修飾註解</span><br><span class="line">METHOD: 修飾 method EX: springMVC 的 <span class="meta">@GATEMAPPING</span></span><br><span class="line">TYPE: 修飾class, interface, <span class="keyword">enum</span>, annotation  EX: java8 的 <span class="meta">@FunctionalInterface</span></span><br><span class="line">FIELD: 修飾成員變數 EX: java.persistence 的 <span class="meta">@Column</span> </span><br><span class="line">PARAMETER: 修飾方法參數 EX: springMVC 的 <span class="meta">@PathVariable</span></span><br><span class="line">CONSTRUCTOR: 修飾構造器 EX: spring 的 <span class="meta">@Autowired</span></span><br><span class="line">LOCAL_VARIABLE: 修飾區域變數 EX: spring 檢核參數的 <span class="meta">@NotNull</span> 可以用在多個場域</span><br><span class="line">PACKAGE: 修飾 <span class="keyword">package</span></span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>@Retention: 定義了 Annotation 生命週期 ( RetentionPolicy )</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">SOURCE: 只會出現在程式碼中，編譯後不會出現在class檔中 </span><br><span class="line">CLASS: 出現在程式碼中，且會編譯進class檔中，但運行期無任何效果 ( 此類型為 <span class="keyword">default</span> )</span><br><span class="line">RUNTIME: 從程式碼至到運行期間都會存在，可以使用 Reflection 機制取得 annotation 的訊息</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li><p>@Documented: 使用 javadoc 命令生成API檔案時，如要要將標注資料加入文檔，才需要加上此註解</p>
-</li>
-<li><p>@Inherited: 具有繼承性，代表子類別可以拿到父類別的註解訊息<br>※ 只有 class-level annotation 可以使用, method-level 則無法</p>
-</li>
-<li><p>@Repeatable (java1.8新增): 在 JDK8 之前，annotation 某個位置只能出現一次，不能重複使用；但這個功能可以讓 annotation 在同個地方出現多次</p>
-</li>
-</ol>
-<h3 id="自定義標註"><a href="#自定義標註" class="headerlink" title="自定義標註"></a>自定義標註</h3><ul>
-<li>需要使用 <em><strong>@interface</strong></em></li>
-<li>定義屬性，若命名為 value 時，使用時可省略屬性名稱</li>
-<li>屬性需有預設值時，可以使用 <em><strong>default</strong></em> 關鍵字</li>
-<li>欲在執行時期取得 標註資訊，可使用 <em><strong>java Reflection 機制</strong></em></li>
-</ul>
-<p>自定義 annotation 範例:</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">@Target(ElementType.METHOD)</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> CustomAnnotation &#123;</span><br><span class="line"></span><br><span class="line">	String[] value();</span><br><span class="line"></span><br><span class="line">	String <span class="title function_">message</span><span class="params">()</span> <span class="keyword">default</span> <span class="string">&quot;none&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>使用一個 Main 方法 利用 Java Reflaction 取得 Annotation 的值</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">AnnotationMain</span> &#123;</span><br><span class="line">	</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> NoSuchMethodException, SecurityException &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="type">AnnotationMain</span> <span class="variable">main</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">AnnotationMain</span>();</span><br><span class="line">        main.test();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@CustomAnnotation(value = &#123;&quot;test&quot;, &quot;test2&quot;&#125;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">test</span><span class="params">()</span> <span class="keyword">throws</span> NoSuchMethodException, SecurityException &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 使用反射機制取得 method 上的標註</span></span><br><span class="line">        <span class="type">CustomAnnotation</span> <span class="variable">customAnnotation</span> <span class="operator">=</span> AnnotationMain.class.getMethod(<span class="string">&quot;test&quot;</span>).getAnnotation(CustomAnnotation.class);</span><br><span class="line">        </span><br><span class="line">        String[] values = customAnnotation.value();</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 取得 value</span></span><br><span class="line">        System.out.println(<span class="string">&quot;value:&quot;</span>);</span><br><span class="line">        <span class="keyword">for</span>(String value: values) </span><br><span class="line">            System.out.println(value);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 取得 messsage</span></span><br><span class="line">        System.out.println(<span class="string">&quot;message: &quot;</span> + customAnnotation.message());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>執行後會印出相對應的結果，印出 標註上的 value清單 &amp; message 的預設值 none</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">value:</span><br><span class="line">test</span><br><span class="line">test2</span><br><span class="line">message: none</span><br></pre></td></tr></table></figure>
-
-<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
-<li><a href="https://kucw.github.io/blog/2018/6/java-annotation/">古古’s Blog Java - annotation 的使用</a></li>
-<li><a href="https://openhome.cc/Gossip/Java/Annotation.html">常用標準標註</a></li>
-<li><a href="https://openhome.cc/Gossip/Java/CustomizeAnnotation.html">自訂標註</a></li>
-<li><a href="https://openhome.cc/Gossip/Java/ReadAnnotation.html">讀取標註資訊</a></li>
-<li><a href="https://openhome.cc/Gossip/CodeData/JDK8/Annotation.html">【JDK8】Annotation 功能增強</a></li>
-</ol>
-]]></content>
-      <categories>
-        <category>java</category>
-      </categories>
-      <tags>
-        <tag>java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hexo 主題 - NEXT &amp; 新增文章搜尋功能</title>
-    <url>/2022/03/02/hexo-next-theme/</url>
-    <content><![CDATA[<p>紀錄一下，Blog中選定的主題 Next 的安裝經過 &amp; 新增搜尋功能</p>
-<span id="more"></span>
-
-<h3 id="安裝主題-Next"><a href="#安裝主題-Next" class="headerlink" title="安裝主題 Next"></a>安裝主題 Next</h3><ol>
-<li><p>Github clone hexo-theme-next project - <a href="https://github.com/theme-next/hexo-theme-next">點我前往</a></p>
-</li>
-<li><p>在 themes folder 底下建立 next 資料夾並將上述下載的資料 copy 進該資料夾</p>
-</li>
-<li><p>修改 根目錄 的 _config.xml 內容，從預設的 landscape 改成 next</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Extensions</span></span><br><span class="line"><span class="comment">## Plugins: https://hexo.io/plugins/</span></span><br><span class="line"><span class="comment">## Themes: https://hexo.io/themes/</span></span><br><span class="line"><span class="attr">theme:</span> <span class="string">next</span></span><br></pre></td></tr></table></figure></li>
-<li><p>設定檔有2個，一個是配製 Hexo設定，另一個是針對 Next 主題進行配置</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="string">根目錄:</span> <span class="string">_config.yml</span></span><br><span class="line"><span class="string">Next主題:</span> <span class="string">themes/_config.yml</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Next 主題底下有 4種樣式 (設定於 themes 底下的 _config.xml)</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Schemes</span></span><br><span class="line"><span class="comment">#scheme: Muse</span></span><br><span class="line"><span class="attr">scheme:</span> <span class="string">Mist</span></span><br><span class="line"><span class="comment">#scheme: Pisces</span></span><br><span class="line"><span class="comment">#scheme: Gemini</span></span><br></pre></td></tr></table></figure></li>
-</ol>
-<h3 id="開啟-分類-x2F-標籤-功能"><a href="#開啟-分類-x2F-標籤-功能" class="headerlink" title="開啟 分類 &#x2F; 標籤 功能"></a>開啟 分類 &#x2F; 標籤 功能</h3><ul>
-<li>新增 layout 為 page 的文章 ( 一般文章預設為 post)<br><code>hexo new page categories</code> ( type 為 “categories” )<br><code>hexo new page tags</code> ( type 為 “tags” )</li>
-<li>一般文章撰寫時於文章 Front-matter 定義 分類 &#x2F; 標籤 屬性<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">Hexo</span> <span class="string">主題</span> <span class="bullet">-</span> <span class="string">NEXT</span> <span class="string">&amp;</span> <span class="string">新增文章搜尋功能</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2022-03-02 06:55:34</span></span><br><span class="line"><span class="attr">tags:</span> </span><br><span class="line"><span class="bullet">-</span> <span class="string">hexo</span></span><br><span class="line"><span class="attr">categories:</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">blog</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure></li>
-<li>開啟 Next 主題 menu 得以顯示於介面<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">home:</span> <span class="string">/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-home</span></span><br><span class="line">  <span class="comment"># about: /about/ || fa fa-user</span></span><br><span class="line">  <span class="attr">tags:</span> <span class="string">/tags/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-tags</span></span><br><span class="line">  <span class="attr">categories:</span> <span class="string">/categories/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-th</span></span><br><span class="line">  <span class="attr">archives:</span> <span class="string">/archives/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-archive</span></span><br><span class="line">  <span class="comment">#schedule: /schedule/ || fa fa-calendar</span></span><br><span class="line">  <span class="comment">#sitemap: /sitemap.xml || fa fa-sitemap</span></span><br><span class="line">  <span class="comment">#commonweal: /404/ || fa fa-heartbeat</span></span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="新增-搜尋功能"><a href="#新增-搜尋功能" class="headerlink" title="新增 搜尋功能"></a>新增 搜尋功能</h3><ol>
-<li>下載套件 <code>npm install hexo-generator-searchdb --save</code></li>
-<li>根目錄 _config.xml 新增設定<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment">#Local Search / created by 2022-03-02</span></span><br><span class="line"><span class="attr">search:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">path:</span> <span class="string">search.xml</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">field:</span> <span class="string">post</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">format:</span> <span class="string">html</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">content:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure></li>
-<li>主題目錄 _config.xml 開啟 local_search 功能<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Local Search</span></span><br><span class="line"><span class="comment"># Dependencies: https://github.com/theme-next/hexo-generator-searchdb</span></span><br><span class="line"><span class="attr">local_search:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure></li>
-</ol>
-<h3 id="新增-文章閱讀進度-功能"><a href="#新增-文章閱讀進度-功能" class="headerlink" title="新增 文章閱讀進度 功能"></a>新增 文章閱讀進度 功能</h3><p>將 scrollpercent 從 false 改成 true</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">back2top:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># Back to top in sidebar.</span></span><br><span class="line">  <span class="attr">sidebar:</span> <span class="literal">false</span></span><br><span class="line">  <span class="comment"># Scroll percent label in b2t button.</span></span><br><span class="line">  <span class="attr">scrollpercent:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-<p>效果如下:</p>
-<p><img src="https://bnz05pap002files.storage.live.com/y4m1yGLaD3UGbwtXQPefduFnckR3CCidf2SWItddjqzSCA3KdyVLMXnZpx-If2Tl3tWkszjYeEMyotdRXWNIo_iQY_INtR5O0J48eqrMs_1nY9WVie0VKY4hJXYo208GuzkoFHi84ZTce-qnv7Bb6I_Hql7VNLpeIWiQOmib2hAYjdqnt-aDFR2FmDO-C_PuLxP?width=233&height=256&cropmode=none" alt="hexo_page_scrollpercent.png"></p>
-<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
-<li><a href="https://github.com/theme-next/hexo-generator-searchdb">Github Repository : hexo-generator-searchdb</a></li>
-<li><a href="https://ithelp.ithome.com.tw/articles/10248214">(20) 試著學 Hexo - NexT 主題篇 - 可以安裝的套件</a></li>
-<li><a href="https://blog.csdn.net/as480133937/article/details/100138838">Hexo-Next 主题博客个性化配置超详细，超全面(两万字)</a></li>
-<li><a href="https://ithelp.ithome.com.tw/articles/10257569">建立自己Blog系列(三) Hexo next theme 介紹</a></li>
-<li><a href="https://github.com/theme-next/hexo-theme-next">Github Repository : hexo-theme-next</a></li>
-</ol>
-]]></content>
-      <categories>
-        <category>blog</category>
-      </categories>
-      <tags>
-        <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用 Springboot + Mockito 完成單元測試</title>
-    <url>/2022/03/09/springboot-mockito-mock-test/</url>
-    <content><![CDATA[<p>Mockito 為一個廣泛使用的測試框架，當開發時如果有遇到依賴注入的情境時，往往都會啟動Server，注入實體來進行測試，但這樣的方式即為整合測試 ; 因為當 A 服務呼叫 B 服務，如果 B 服務的內容每次都不一樣，這樣會造成測試結果往往會失敗。</p>
-<p>Mock 測試即為建立假的物件 ; 以 A 服務 呼叫 B 服務來說，我們把 B 服務做 mock，讓回傳的結果固定，就可以專心測試 A 服務的 情境，而不會因為 B 來影響每一次測試的結果</p>
-<span id="more"></span>
-
-<p>單元測試分成三個步驟:</p>
-<ol>
-<li>Arrange : 準備資料</li>
-<li>Act : 執行並回傳結果</li>
-<li>Assert : 驗證結果</li>
-</ol>
-<h3 id="環境準備"><a href="#環境準備" class="headerlink" title="環境準備"></a>環境準備</h3><ol>
-<li>選擇 springboot 版本 <code>2.5.2</code></li>
-<li>使用 Maven - pom 檔 引入 <code>spring-boot-starter-web</code> &amp; <code>spring-boot-starter-test</code><br>在 starter-test 中即包含了 JUnit 5 &amp;　mockito 框架<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">&lt;dependencies&gt;</span><br><span class="line">  </span><br><span class="line">  	&lt;!-- web --&gt;</span><br><span class="line">  	&lt;dependency&gt;</span><br><span class="line">		&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">		&lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</span><br><span class="line">	&lt;/dependency&gt;</span><br><span class="line">	</span><br><span class="line">	&lt;!-- test framework --&gt;</span><br><span class="line">	&lt;dependency&gt;</span><br><span class="line">		&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">		&lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;</span><br><span class="line">		&lt;scope&gt;test&lt;/scope&gt;</span><br><span class="line">	&lt;/dependency&gt;</span><br><span class="line">	</span><br><span class="line">  &lt;/dependencies&gt;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
-</ol>
-<h3 id="程式範例"><a href="#程式範例" class="headerlink" title="程式範例"></a>程式範例</h3><ul>
-<li>Service</li>
-</ul>
-<p>新增一個服務，用來驗證 DB 取出的 使用者是否成年 </p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 實現玩家服務</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> oscar51011</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2022年3月9日</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">PlayerServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">IPlayerService</span> &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> PlayerDao playerDao;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">isPlayerAnAdult</span><span class="params">(<span class="type">long</span> id)</span> &#123;</span><br><span class="line">		</span><br><span class="line">		<span class="type">Player</span> <span class="variable">player</span> <span class="operator">=</span> playerDao.getPlayerById(id);</span><br><span class="line">		<span class="keyword">if</span>(player == <span class="literal">null</span> ) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(<span class="string">&quot;Player Not Found!&quot;</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">if</span>(player.getAge() &gt;= <span class="number">18</span> )</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>Dao</li>
-</ul>
-<p>此範例並不會真正的連線 DB，因為單元測試是要把外部相依的服務給 mock 掉，因此這裡的演示只是用 new 的形式呈現</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 實作 player DAO</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> oscar51011</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2022年3月9日</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">PlayerDaoImpl</span> <span class="keyword">implements</span> <span class="title class_">PlayerDao</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="keyword">public</span> Player <span class="title function_">getPlayerById</span><span class="params">(<span class="type">long</span> id)</span> &#123;</span><br><span class="line">		<span class="type">Player</span> <span class="variable">player</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Player</span>(<span class="string">&quot;Oscar&quot;</span>, <span class="number">19</span>);</span><br><span class="line">		<span class="keyword">return</span> player;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>Model</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 描述玩家物件</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> oscar51011</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2022年3月9日</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Player</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> String name;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">private</span> Integer age;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="title function_">Player</span><span class="params">(String name, Integer age)</span> &#123;</span><br><span class="line">		<span class="built_in">super</span>();</span><br><span class="line">		<span class="built_in">this</span>.name = name;</span><br><span class="line">		<span class="built_in">this</span>.age = age;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> String <span class="title function_">getName</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> name;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setName</span><span class="params">(String name)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.name = name;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> Integer <span class="title function_">getAge</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> age;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setAge</span><span class="params">(Integer age)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.age = age;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Unit Test</p>
-</li>
-</ul>
-<p>本次的測試分成三個情境:</p>
-<ol>
-<li>驗證 使用者如果大於 18 歲，即回傳 true</li>
-<li>驗證 使用者如果小於 18 歲，即回傳 false</li>
-<li>驗證 如果使用者不存在，則拋出例外錯誤</li>
-</ol>
-<p>此處在初始化的時候，使用 Mockito 的 <code>when</code> , <code>thenReturn</code><br>假設我傳入的參數為 1L，則回傳假的物件 new Player ，而非真正的去 DB取資料</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@ExtendWith(MockitoExtension.class)</span></span><br><span class="line"><span class="meta">@SpringBootTest</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">PlayerServiceImplTest</span> &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Mock</span></span><br><span class="line">	<span class="keyword">private</span> PlayerDao playerDao;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@InjectMocks</span></span><br><span class="line">	<span class="keyword">private</span> PlayerServiceImpl playerService;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 測試玩家大於等於18歲, 要回傳 true</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="keyword">void</span> <span class="title function_">testIsPlayerAnAdult_PlayerIsAnAdult</span><span class="params">()</span> &#123;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// Arrange</span></span><br><span class="line">		Mockito.when(playerDao.getPlayerById(<span class="number">1L</span>)).thenReturn(<span class="keyword">new</span> <span class="title class_">Player</span>(<span class="string">&quot;Oscar&quot;</span>, <span class="number">19</span>));</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// act</span></span><br><span class="line">		<span class="type">boolean</span> <span class="variable">isPlayerAnAdult</span> <span class="operator">=</span> playerService.isPlayerAnAdult(<span class="number">1L</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// assert</span></span><br><span class="line">		assertEquals(isPlayerAnAdult, <span class="literal">true</span>);</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 測試玩家小於18歲 , 要回傳 false</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="keyword">void</span> <span class="title function_">testIsPlayerAnAdult_PlayerIsNotAnAdult</span><span class="params">()</span> &#123;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// Arrange</span></span><br><span class="line">		Mockito.when(playerDao.getPlayerById(<span class="number">1L</span>)).thenReturn(<span class="keyword">new</span> <span class="title class_">Player</span>(<span class="string">&quot;Oscar&quot;</span>, <span class="number">17</span>));</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// act</span></span><br><span class="line">		<span class="type">boolean</span> <span class="variable">isPlayerAnAdult</span> <span class="operator">=</span> playerService.isPlayerAnAdult(<span class="number">1L</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// assert</span></span><br><span class="line">		assertEquals(isPlayerAnAdult, <span class="literal">false</span>);</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 測試如果找不到玩家，要拋出 Exception</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="keyword">void</span> <span class="title function_">testIsPlayerAnAdult_PlayerNotFound</span><span class="params">()</span> &#123;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// assert</span></span><br><span class="line">		assertThrows(RuntimeException.class,</span><br><span class="line">			()-&gt;&#123;</span><br><span class="line">				<span class="comment">// Arrange</span></span><br><span class="line">				Mockito.when(playerDao.getPlayerById(<span class="number">1L</span>)).thenReturn(<span class="literal">null</span>);</span><br><span class="line">				</span><br><span class="line">				<span class="comment">// act</span></span><br><span class="line">				playerService.isPlayerAnAdult(<span class="number">1L</span>);</span><br><span class="line">			&#125;</span><br><span class="line">		);</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>以上就是 Springboot + Mockito 的演示</p>
-<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
-<li><a href="https://www.baeldung.com/mockito-mock-methods">Mockito’s Mock Methods</a></li>
-<li><a href="https://kucw.github.io/blog/2020/2/spring-unit-test-mockito">SpringBoot - 單元測試工具 Mockito</a></li>
-<li><a href="https://www.baeldung.com/junit-assert-exception">Assert an Exception is Thrown in JUnit 4 and 5</a></li>
-<li><a href="https://www.gushiciku.cn/pl/p3fg/zh-tw">有啥不同？來看看Spring Boot 基於 JUnit 5 實現單元測試</a></li>
-<li><a href="https://spring.io/blog/2019/10/16/spring-boot-2-2-0">Spring Boot 2.2.0</a></li>
-<li><a href="https://vivifish.medium.com/java-%E5%96%AE%E5%85%83%E6%B8%AC%E8%A9%A6%E5%B7%A5%E5%85%B7-mockito-e5f0ce93579d">Java Unit Test — Mockito</a></li>
-</ol>
-]]></content>
-      <categories>
-        <category>testing</category>
-      </categories>
-      <tags>
-        <tag>springboot</tag>
-        <tag>mockito</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>利用Hexo + Github.io 建立自己的Blog</title>
     <url>/2022/03/01/hexo-github-blog-initial/</url>
     <content><![CDATA[<p>Hexo 為一個 Blog Framework ，基於 NodeJs 語言所開發 (支援 Markdown 語法)</p>
@@ -293,6 +123,67 @@
       </tags>
   </entry>
   <entry>
+    <title>Java Annotation(標註)</title>
+    <url>/2022/03/05/java-annotation/</url>
+    <content><![CDATA[<p>Java 從 JDK5 開使支援了 Annotation 功能，可以提供在編譯時期提示 or 執行時期讀取的資訊。</p>
+<span id="more"></span>
+
+<h3 id="標準標註"><a href="#標準標註" class="headerlink" title="標準標註"></a>標準標註</h3><ol>
+<li>@override : 提供 compiler 提醒被標註的 method 必須為 父類別 or 介面所定義之方法</li>
+<li>@Deprecated : 提供 compiler 提醒被標註的 method 已經過時，建議不要再呼叫它</li>
+<li>@SuppressWarnings: 抑制警告訊息 ( 可使用參數 value &#x3D; { args1, args2 …etc } 定義抑制警告類型 )</li>
+<li>@FunctionalInterface: 協助檢查 interface 是否滿足 lambda 的型態 ( 為 java8 時所新增 )</li>
+</ol>
+<h3 id="元標註-meta-annotation"><a href="#元標註-meta-annotation" class="headerlink" title="元標註(meta-annotation)"></a>元標註(meta-annotation)</h3><p>標註使用 meta-annotation 為其他 annotation 做說明<br>meta-annotation 種類如下:</p>
+<ol>
+<li>@Target: 限定 Annotation 使用位置 ( ElementType )</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ANNOTATION_TYPE: meta-annotation為此類型，用來修飾註解</span><br><span class="line">METHOD: 修飾 method EX: springMVC 的 <span class="meta">@GATEMAPPING</span></span><br><span class="line">TYPE: 修飾class, interface, <span class="keyword">enum</span>, annotation  EX: java8 的 <span class="meta">@FunctionalInterface</span></span><br><span class="line">FIELD: 修飾成員變數 EX: java.persistence 的 <span class="meta">@Column</span> </span><br><span class="line">PARAMETER: 修飾方法參數 EX: springMVC 的 <span class="meta">@PathVariable</span></span><br><span class="line">CONSTRUCTOR: 修飾構造器 EX: spring 的 <span class="meta">@Autowired</span></span><br><span class="line">LOCAL_VARIABLE: 修飾區域變數 EX: spring 檢核參數的 <span class="meta">@NotNull</span> 可以用在多個場域</span><br><span class="line">PACKAGE: 修飾 <span class="keyword">package</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>@Retention: 定義了 Annotation 生命週期 ( RetentionPolicy )</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">SOURCE: 只會出現在程式碼中，編譯後不會出現在class檔中 </span><br><span class="line">CLASS: 出現在程式碼中，且會編譯進class檔中，但運行期無任何效果 ( 此類型為 <span class="keyword">default</span> )</span><br><span class="line">RUNTIME: 從程式碼至到運行期間都會存在，可以使用 Reflection 機制取得 annotation 的訊息</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li><p>@Documented: 使用 javadoc 命令生成API檔案時，如要要將標注資料加入文檔，才需要加上此註解</p>
+</li>
+<li><p>@Inherited: 具有繼承性，代表子類別可以拿到父類別的註解訊息<br>※ 只有 class-level annotation 可以使用, method-level 則無法</p>
+</li>
+<li><p>@Repeatable (java1.8新增): 在 JDK8 之前，annotation 某個位置只能出現一次，不能重複使用；但這個功能可以讓 annotation 在同個地方出現多次</p>
+</li>
+</ol>
+<h3 id="自定義標註"><a href="#自定義標註" class="headerlink" title="自定義標註"></a>自定義標註</h3><ul>
+<li>需要使用 <em><strong>@interface</strong></em></li>
+<li>定義屬性，若命名為 value 時，使用時可省略屬性名稱</li>
+<li>屬性需有預設值時，可以使用 <em><strong>default</strong></em> 關鍵字</li>
+<li>欲在執行時期取得 標註資訊，可使用 <em><strong>java Reflection 機制</strong></em></li>
+</ul>
+<p>自定義 annotation 範例:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">@Target(ElementType.METHOD)</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> CustomAnnotation &#123;</span><br><span class="line"></span><br><span class="line">	String[] value();</span><br><span class="line"></span><br><span class="line">	String <span class="title function_">message</span><span class="params">()</span> <span class="keyword">default</span> <span class="string">&quot;none&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用一個 Main 方法 利用 Java Reflaction 取得 Annotation 的值</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">AnnotationMain</span> &#123;</span><br><span class="line">	</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> NoSuchMethodException, SecurityException &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="type">AnnotationMain</span> <span class="variable">main</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">AnnotationMain</span>();</span><br><span class="line">        main.test();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@CustomAnnotation(value = &#123;&quot;test&quot;, &quot;test2&quot;&#125;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">test</span><span class="params">()</span> <span class="keyword">throws</span> NoSuchMethodException, SecurityException &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 使用反射機制取得 method 上的標註</span></span><br><span class="line">        <span class="type">CustomAnnotation</span> <span class="variable">customAnnotation</span> <span class="operator">=</span> AnnotationMain.class.getMethod(<span class="string">&quot;test&quot;</span>).getAnnotation(CustomAnnotation.class);</span><br><span class="line">        </span><br><span class="line">        String[] values = customAnnotation.value();</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 取得 value</span></span><br><span class="line">        System.out.println(<span class="string">&quot;value:&quot;</span>);</span><br><span class="line">        <span class="keyword">for</span>(String value: values) </span><br><span class="line">            System.out.println(value);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 取得 messsage</span></span><br><span class="line">        System.out.println(<span class="string">&quot;message: &quot;</span> + customAnnotation.message());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>執行後會印出相對應的結果，印出 標註上的 value清單 &amp; message 的預設值 none</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">value:</span><br><span class="line">test</span><br><span class="line">test2</span><br><span class="line">message: none</span><br></pre></td></tr></table></figure>
+
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
+<li><a href="https://kucw.github.io/blog/2018/6/java-annotation/">古古’s Blog Java - annotation 的使用</a></li>
+<li><a href="https://openhome.cc/Gossip/Java/Annotation.html">常用標準標註</a></li>
+<li><a href="https://openhome.cc/Gossip/Java/CustomizeAnnotation.html">自訂標註</a></li>
+<li><a href="https://openhome.cc/Gossip/Java/ReadAnnotation.html">讀取標註資訊</a></li>
+<li><a href="https://openhome.cc/Gossip/CodeData/JDK8/Annotation.html">【JDK8】Annotation 功能增強</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>java</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Jenkins 安裝教學</title>
     <url>/2022/03/06/jenkins-initial/</url>
     <content><![CDATA[<p>Jenkins 為一個持續化整合工具，由 Java 語言所撰寫，並支援許多套件做整合 ( ex : Maven , Gradle )<br>可用於自動化的持續整合(CI) &amp; 持續部署(CD) 。</p>
@@ -346,6 +237,156 @@
       <tags>
         <tag>docker</tag>
         <tag>jenkins</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Springboot 讀取 properties 設定檔參數</title>
+    <url>/2022/03/11/springboot-load-properties-file/</url>
+    <content><![CDATA[<p>Springboot 在 讀取設定檔參數有 3 種方式 ( 格式有 properties &amp; yml 本篇使用 properties )<br>( Springboot 預設配置檔案位置在 <code>src/main/resources/application.properties</code>)</p>
+<p>如果需要指定 設定檔 需加上 @PropertySource 即可<br>※ 該 Annotation 只能夠指定 properties，因此如果需要指定 yml 檔需要另外實作</p>
+<p>以下來撰寫 3個方式的寫法:</p>
+<span id="more"></span>
+
+<h3 id="前置作業"><a href="#前置作業" class="headerlink" title="前置作業"></a>前置作業</h3><ol>
+<li>在預設的 application.properites 加入參數<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">project.parameter</span> = <span class="string">test</span></span><br></pre></td></tr></table></figure></li>
+<li>建立客製化的 properites : test.properties 在 <code>src/main/resources</code> 底下<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">project.parameter</span> = <span class="string">test</span></span><br></pre></td></tr></table></figure>
+<img src="https://bnz05pap002files.storage.live.com/y4mAxeVYT8ncJ7Ivjb7MJX5CoaNpca8B2VyFU2zEX6L8ccQHQjZxyGxcau8wLyqWI597-GQhpK_vpq5oHpDbu6DNSsKCP4IoVk9KOQri5l_H7DminfZi8DBxNDioEZ9RTWgpimfBU8LN-3xNPivdoLa2JR6LVa__ILGpE0RdRtelWa1C9SSPnXYatCaVbqB_bm_?width=256&height=113&cropmode=none" alt="resources.png"></li>
+</ol>
+<h3 id="1-使用-Value-Annotation-讀取檔案"><a href="#1-使用-Value-Annotation-讀取檔案" class="headerlink" title="1. 使用 @Value Annotation 讀取檔案"></a>1. 使用 @Value Annotation 讀取檔案</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="comment">//@PropertySource(&quot;classpath:test.properties&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ProjectConfig</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Value(&quot;$&#123;project.parameter&#125;&quot;)</span></span><br><span class="line">	<span class="keyword">private</span> String parameter;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> String <span class="title function_">getParameter</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> parameter;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setParameter</span><span class="params">(String parameter)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.parameter = parameter;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-使用-Enviroment-介面取得設定檔資訊"><a href="#2-使用-Enviroment-介面取得設定檔資訊" class="headerlink" title="2. 使用 Enviroment 介面取得設定檔資訊"></a>2. 使用 Enviroment 介面取得設定檔資訊</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="comment">//@PropertySource(&quot;classpath:test.properties&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ProjectEnvConfig</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">    Environment environment;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> String <span class="title function_">getParameterValue</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">value</span> <span class="operator">=</span> environment.getProperty(<span class="string">&quot;project.parameter&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-使用-ConfigurationProperties-annotation-讀取檔案"><a href="#3-使用-ConfigurationProperties-annotation-讀取檔案" class="headerlink" title="3. 使用 @ConfigurationProperties annotation 讀取檔案"></a>3. 使用 @ConfigurationProperties annotation 讀取檔案</h3><p>ConfigurationProperties 可以將設定檔 mapping 成一個實體類別<br>使用該 annotation 建議引入對應的 dependencies</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-boot-configuration-processor&lt;/artifactId&gt;</span><br><span class="line">    &lt;optional&gt;true&lt;/optional&gt;</span><br><span class="line">&lt;/dependency&gt;   </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@ConfigurationProperties(prefix = &quot;project&quot;)</span></span><br><span class="line"><span class="comment">// @PropertySource(&quot;classpath:test.properties&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ProjectConfigurationPropertiesConfig</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> String parameter;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> String <span class="title function_">getParameter</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> parameter;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setParameter</span><span class="params">(String parameter)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.parameter = parameter;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="驗證結果"><a href="#驗證結果" class="headerlink" title="驗證結果"></a>驗證結果</h3><p>使用一個簡單的整合測試來跑上述的結果查看是否可以取得設定檔的內容</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@SpringBootTest</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">DemoSettingTest</span> &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> ProjectConfig projectConfig;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> ProjectEnvConfig projectEnvConfig;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> ProjectConfigurationPropertiesConfig projectConfigurationPropertiesConfig;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="keyword">void</span> <span class="title function_">testSettingCase</span><span class="params">()</span> &#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;load @Value:&quot;</span> + projectConfig.getParameter());</span><br><span class="line">		System.out.println(<span class="string">&quot;load Enviroment interface:&quot;</span> + projectEnvConfig.getParameterValue());</span><br><span class="line">		System.out.println(<span class="string">&quot;load @ConfigurationProperties:&quot;</span> + projectConfigurationPropertiesConfig.getParameter());</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><img src="https://bnz05pap002files.storage.live.com/y4m-JMnLiItOrZFNEkD0b5sW373Q8AKyQtKXW3jXxLt3B2RkMuTv7XfmxHXiZBQ4PJIbpFwxUzYw5Mus-4QX3MZIWBOEBj3pBufCERPt0T6L-FZ9-ORRYxKKXtfD34DgicSi4d_oga5M8wj4Xt492iRlR-a9O-kppMrY5m-jDigjaJv54hQyWmv5P63KbE7sW-3?width=660&height=257&cropmode=none" alt="demo-result.png"></p>
+<h3 id="錯誤訊息"><a href="#錯誤訊息" class="headerlink" title="錯誤訊息"></a>錯誤訊息</h3><ol>
+<li>如果設定檔的參數無法對應到 java 檔的設定時，會拋出 Could not resolve placeholder xxx 的訊息<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Could not resolve placeholder &#x27;project.parameter&#x27; in value &quot;$&#123;project.parameter&#125;&quot;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
+<li><a href="https://iter01.com/587071.html">【springboot讀取配置檔案】@ConfigurationProperties、@PropertySource和@Value</a></li>
+<li><a href="https://iter01.com/515254.html">Spring Boot讀取配置檔案的幾種方式
+</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>springboot</category>
+      </categories>
+      <tags>
+        <tag>springboot</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用 Springboot + Mockito 完成單元測試</title>
+    <url>/2022/03/09/springboot-mockito-mock-test/</url>
+    <content><![CDATA[<p>Mockito 為一個廣泛使用的測試框架，當開發時如果有遇到依賴注入的情境時，往往都會啟動Server，注入實體來進行測試，但這樣的方式即為整合測試 ; 因為當 A 服務呼叫 B 服務，如果 B 服務的內容每次都不一樣，這樣會造成測試結果往往會失敗。</p>
+<p>Mock 測試即為建立假的物件 ; 以 A 服務 呼叫 B 服務來說，我們把 B 服務做 mock，讓回傳的結果固定，就可以專心測試 A 服務的 情境，而不會因為 B 來影響每一次測試的結果</p>
+<span id="more"></span>
+
+<p>單元測試分成三個步驟:</p>
+<ol>
+<li>Arrange : 準備資料</li>
+<li>Act : 執行並回傳結果</li>
+<li>Assert : 驗證結果</li>
+</ol>
+<h3 id="環境準備"><a href="#環境準備" class="headerlink" title="環境準備"></a>環境準備</h3><ol>
+<li>選擇 springboot 版本 <code>2.5.2</code></li>
+<li>使用 Maven - pom 檔 引入 <code>spring-boot-starter-web</code> &amp; <code>spring-boot-starter-test</code><br>在 starter-test 中即包含了 JUnit 5 &amp;　mockito 框架<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">&lt;dependencies&gt;</span><br><span class="line">  </span><br><span class="line">  	&lt;!-- web --&gt;</span><br><span class="line">  	&lt;dependency&gt;</span><br><span class="line">		&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">		&lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</span><br><span class="line">	&lt;/dependency&gt;</span><br><span class="line">	</span><br><span class="line">	&lt;!-- test framework --&gt;</span><br><span class="line">	&lt;dependency&gt;</span><br><span class="line">		&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">		&lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;</span><br><span class="line">		&lt;scope&gt;test&lt;/scope&gt;</span><br><span class="line">	&lt;/dependency&gt;</span><br><span class="line">	</span><br><span class="line">  &lt;/dependencies&gt;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="程式範例"><a href="#程式範例" class="headerlink" title="程式範例"></a>程式範例</h3><ul>
+<li>Service</li>
+</ul>
+<p>新增一個服務，用來驗證 DB 取出的 使用者是否成年 </p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 實現玩家服務</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> oscar51011</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2022年3月9日</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">PlayerServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">IPlayerService</span> &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> PlayerDao playerDao;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">isPlayerAnAdult</span><span class="params">(<span class="type">long</span> id)</span> &#123;</span><br><span class="line">		</span><br><span class="line">		<span class="type">Player</span> <span class="variable">player</span> <span class="operator">=</span> playerDao.getPlayerById(id);</span><br><span class="line">		<span class="keyword">if</span>(player == <span class="literal">null</span> ) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(<span class="string">&quot;Player Not Found!&quot;</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">if</span>(player.getAge() &gt;= <span class="number">18</span> )</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Dao</li>
+</ul>
+<p>此範例並不會真正的連線 DB，因為單元測試是要把外部相依的服務給 mock 掉，因此這裡的演示只是用 new 的形式呈現</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 實作 player DAO</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> oscar51011</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2022年3月9日</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">PlayerDaoImpl</span> <span class="keyword">implements</span> <span class="title class_">PlayerDao</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="keyword">public</span> Player <span class="title function_">getPlayerById</span><span class="params">(<span class="type">long</span> id)</span> &#123;</span><br><span class="line">		<span class="type">Player</span> <span class="variable">player</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Player</span>(<span class="string">&quot;Oscar&quot;</span>, <span class="number">19</span>);</span><br><span class="line">		<span class="keyword">return</span> player;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>Model</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 描述玩家物件</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> oscar51011</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2022年3月9日</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Player</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> String name;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">private</span> Integer age;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="title function_">Player</span><span class="params">(String name, Integer age)</span> &#123;</span><br><span class="line">		<span class="built_in">super</span>();</span><br><span class="line">		<span class="built_in">this</span>.name = name;</span><br><span class="line">		<span class="built_in">this</span>.age = age;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> String <span class="title function_">getName</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> name;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setName</span><span class="params">(String name)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.name = name;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> Integer <span class="title function_">getAge</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> age;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setAge</span><span class="params">(Integer age)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.age = age;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Unit Test</p>
+</li>
+</ul>
+<p>本次的測試分成三個情境:</p>
+<ol>
+<li>驗證 使用者如果大於 18 歲，即回傳 true</li>
+<li>驗證 使用者如果小於 18 歲，即回傳 false</li>
+<li>驗證 如果使用者不存在，則拋出例外錯誤</li>
+</ol>
+<p>此處在初始化的時候，使用 Mockito 的 <code>when</code> , <code>thenReturn</code><br>假設我傳入的參數為 1L，則回傳假的物件 new Player ，而非真正的去 DB取資料</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@ExtendWith(MockitoExtension.class)</span></span><br><span class="line"><span class="meta">@SpringBootTest</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">PlayerServiceImplTest</span> &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Mock</span></span><br><span class="line">	<span class="keyword">private</span> PlayerDao playerDao;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@InjectMocks</span></span><br><span class="line">	<span class="keyword">private</span> PlayerServiceImpl playerService;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 測試玩家大於等於18歲, 要回傳 true</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="keyword">void</span> <span class="title function_">testIsPlayerAnAdult_PlayerIsAnAdult</span><span class="params">()</span> &#123;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// Arrange</span></span><br><span class="line">		Mockito.when(playerDao.getPlayerById(<span class="number">1L</span>)).thenReturn(<span class="keyword">new</span> <span class="title class_">Player</span>(<span class="string">&quot;Oscar&quot;</span>, <span class="number">19</span>));</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// act</span></span><br><span class="line">		<span class="type">boolean</span> <span class="variable">isPlayerAnAdult</span> <span class="operator">=</span> playerService.isPlayerAnAdult(<span class="number">1L</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// assert</span></span><br><span class="line">		assertEquals(isPlayerAnAdult, <span class="literal">true</span>);</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 測試玩家小於18歲 , 要回傳 false</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="keyword">void</span> <span class="title function_">testIsPlayerAnAdult_PlayerIsNotAnAdult</span><span class="params">()</span> &#123;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// Arrange</span></span><br><span class="line">		Mockito.when(playerDao.getPlayerById(<span class="number">1L</span>)).thenReturn(<span class="keyword">new</span> <span class="title class_">Player</span>(<span class="string">&quot;Oscar&quot;</span>, <span class="number">17</span>));</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// act</span></span><br><span class="line">		<span class="type">boolean</span> <span class="variable">isPlayerAnAdult</span> <span class="operator">=</span> playerService.isPlayerAnAdult(<span class="number">1L</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// assert</span></span><br><span class="line">		assertEquals(isPlayerAnAdult, <span class="literal">false</span>);</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 測試如果找不到玩家，要拋出 Exception</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="keyword">void</span> <span class="title function_">testIsPlayerAnAdult_PlayerNotFound</span><span class="params">()</span> &#123;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// assert</span></span><br><span class="line">		assertThrows(RuntimeException.class,</span><br><span class="line">			()-&gt;&#123;</span><br><span class="line">				<span class="comment">// Arrange</span></span><br><span class="line">				Mockito.when(playerDao.getPlayerById(<span class="number">1L</span>)).thenReturn(<span class="literal">null</span>);</span><br><span class="line">				</span><br><span class="line">				<span class="comment">// act</span></span><br><span class="line">				playerService.isPlayerAnAdult(<span class="number">1L</span>);</span><br><span class="line">			&#125;</span><br><span class="line">		);</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>以上就是 Springboot + Mockito 的演示</p>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
+<li><a href="https://www.baeldung.com/mockito-mock-methods">Mockito’s Mock Methods</a></li>
+<li><a href="https://kucw.github.io/blog/2020/2/spring-unit-test-mockito">SpringBoot - 單元測試工具 Mockito</a></li>
+<li><a href="https://www.baeldung.com/junit-assert-exception">Assert an Exception is Thrown in JUnit 4 and 5</a></li>
+<li><a href="https://www.gushiciku.cn/pl/p3fg/zh-tw">有啥不同？來看看Spring Boot 基於 JUnit 5 實現單元測試</a></li>
+<li><a href="https://spring.io/blog/2019/10/16/spring-boot-2-2-0">Spring Boot 2.2.0</a></li>
+<li><a href="https://vivifish.medium.com/java-%E5%96%AE%E5%85%83%E6%B8%AC%E8%A9%A6%E5%B7%A5%E5%85%B7-mockito-e5f0ce93579d">Java Unit Test — Mockito</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>testing</category>
+      </categories>
+      <tags>
+        <tag>springboot</tag>
+        <tag>mockito</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo 主題 - NEXT &amp; 新增文章搜尋功能</title>
+    <url>/2022/03/02/hexo-next-theme/</url>
+    <content><![CDATA[<p>紀錄一下，Blog中選定的主題 Next 的安裝經過 &amp; 新增搜尋功能</p>
+<span id="more"></span>
+
+<h3 id="安裝主題-Next"><a href="#安裝主題-Next" class="headerlink" title="安裝主題 Next"></a>安裝主題 Next</h3><ol>
+<li><p>Github clone hexo-theme-next project - <a href="https://github.com/theme-next/hexo-theme-next">點我前往</a></p>
+</li>
+<li><p>在 themes folder 底下建立 next 資料夾並將上述下載的資料 copy 進該資料夾</p>
+</li>
+<li><p>修改 根目錄 的 _config.xml 內容，從預設的 landscape 改成 next</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Extensions</span></span><br><span class="line"><span class="comment">## Plugins: https://hexo.io/plugins/</span></span><br><span class="line"><span class="comment">## Themes: https://hexo.io/themes/</span></span><br><span class="line"><span class="attr">theme:</span> <span class="string">next</span></span><br></pre></td></tr></table></figure></li>
+<li><p>設定檔有2個，一個是配製 Hexo設定，另一個是針對 Next 主題進行配置</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="string">根目錄:</span> <span class="string">_config.yml</span></span><br><span class="line"><span class="string">Next主題:</span> <span class="string">themes/_config.yml</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Next 主題底下有 4種樣式 (設定於 themes 底下的 _config.xml)</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Schemes</span></span><br><span class="line"><span class="comment">#scheme: Muse</span></span><br><span class="line"><span class="attr">scheme:</span> <span class="string">Mist</span></span><br><span class="line"><span class="comment">#scheme: Pisces</span></span><br><span class="line"><span class="comment">#scheme: Gemini</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="開啟-分類-x2F-標籤-功能"><a href="#開啟-分類-x2F-標籤-功能" class="headerlink" title="開啟 分類 &#x2F; 標籤 功能"></a>開啟 分類 &#x2F; 標籤 功能</h3><ul>
+<li>新增 layout 為 page 的文章 ( 一般文章預設為 post)<br><code>hexo new page categories</code> ( type 為 “categories” )<br><code>hexo new page tags</code> ( type 為 “tags” )</li>
+<li>一般文章撰寫時於文章 Front-matter 定義 分類 &#x2F; 標籤 屬性<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">Hexo</span> <span class="string">主題</span> <span class="bullet">-</span> <span class="string">NEXT</span> <span class="string">&amp;</span> <span class="string">新增文章搜尋功能</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2022-03-02 06:55:34</span></span><br><span class="line"><span class="attr">tags:</span> </span><br><span class="line"><span class="bullet">-</span> <span class="string">hexo</span></span><br><span class="line"><span class="attr">categories:</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">blog</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure></li>
+<li>開啟 Next 主題 menu 得以顯示於介面<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">home:</span> <span class="string">/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-home</span></span><br><span class="line">  <span class="comment"># about: /about/ || fa fa-user</span></span><br><span class="line">  <span class="attr">tags:</span> <span class="string">/tags/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-tags</span></span><br><span class="line">  <span class="attr">categories:</span> <span class="string">/categories/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-th</span></span><br><span class="line">  <span class="attr">archives:</span> <span class="string">/archives/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-archive</span></span><br><span class="line">  <span class="comment">#schedule: /schedule/ || fa fa-calendar</span></span><br><span class="line">  <span class="comment">#sitemap: /sitemap.xml || fa fa-sitemap</span></span><br><span class="line">  <span class="comment">#commonweal: /404/ || fa fa-heartbeat</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="新增-搜尋功能"><a href="#新增-搜尋功能" class="headerlink" title="新增 搜尋功能"></a>新增 搜尋功能</h3><ol>
+<li>下載套件 <code>npm install hexo-generator-searchdb --save</code></li>
+<li>根目錄 _config.xml 新增設定<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment">#Local Search / created by 2022-03-02</span></span><br><span class="line"><span class="attr">search:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">path:</span> <span class="string">search.xml</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">field:</span> <span class="string">post</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">format:</span> <span class="string">html</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">content:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure></li>
+<li>主題目錄 _config.xml 開啟 local_search 功能<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Local Search</span></span><br><span class="line"><span class="comment"># Dependencies: https://github.com/theme-next/hexo-generator-searchdb</span></span><br><span class="line"><span class="attr">local_search:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="新增-文章閱讀進度-功能"><a href="#新增-文章閱讀進度-功能" class="headerlink" title="新增 文章閱讀進度 功能"></a>新增 文章閱讀進度 功能</h3><p>將 scrollpercent 從 false 改成 true</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">back2top:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># Back to top in sidebar.</span></span><br><span class="line">  <span class="attr">sidebar:</span> <span class="literal">false</span></span><br><span class="line">  <span class="comment"># Scroll percent label in b2t button.</span></span><br><span class="line">  <span class="attr">scrollpercent:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<p>效果如下:</p>
+<p><img src="https://bnz05pap002files.storage.live.com/y4m1yGLaD3UGbwtXQPefduFnckR3CCidf2SWItddjqzSCA3KdyVLMXnZpx-If2Tl3tWkszjYeEMyotdRXWNIo_iQY_INtR5O0J48eqrMs_1nY9WVie0VKY4hJXYo208GuzkoFHi84ZTce-qnv7Bb6I_Hql7VNLpeIWiQOmib2hAYjdqnt-aDFR2FmDO-C_PuLxP?width=233&height=256&cropmode=none" alt="hexo_page_scrollpercent.png"></p>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
+<li><a href="https://github.com/theme-next/hexo-generator-searchdb">Github Repository : hexo-generator-searchdb</a></li>
+<li><a href="https://ithelp.ithome.com.tw/articles/10248214">(20) 試著學 Hexo - NexT 主題篇 - 可以安裝的套件</a></li>
+<li><a href="https://blog.csdn.net/as480133937/article/details/100138838">Hexo-Next 主题博客个性化配置超详细，超全面(两万字)</a></li>
+<li><a href="https://ithelp.ithome.com.tw/articles/10257569">建立自己Blog系列(三) Hexo next theme 介紹</a></li>
+<li><a href="https://github.com/theme-next/hexo-theme-next">Github Repository : hexo-theme-next</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>blog</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
       </tags>
   </entry>
 </search>
