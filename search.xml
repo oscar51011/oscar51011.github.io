@@ -1,33 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Hexo 備份</title>
-    <url>/2022/03/12/hexo-git-backup/</url>
-    <content><![CDATA[<p>使用 Hexo 撰寫文章，使用 <code>hexo generate</code> 時，會將 markdown 轉換成 html<br>在 <code>hexo deploy</code> 時會把靜態資源上傳到 github ，但並不會把 .md 檔案上傳<br>這樣如果撰寫的電腦出了問題，資料就會不覆存在。</p>
-<p>網路上查詢了一下大致上的作法有 2 種:</p>
-<ol>
-<li>blog 的 repository 另開一個分支存取資源(如 Reference. 4)</li>
-<li>使用套件 hexo-git-backup</li>
-</ol>
-<p>我們使用方法2，接著是以下的配置工作</p>
+    <title>Hexo 主題 - NEXT &amp; 新增文章搜尋功能</title>
+    <url>/hexo-next-theme/</url>
+    <content><![CDATA[<p>紀錄一下，Blog中選定的主題 Next 的安裝經過 &amp; 新增搜尋功能</p>
 <span id="more"></span>
 
-<h3 id="安裝步驟"><a href="#安裝步驟" class="headerlink" title="安裝步驟"></a>安裝步驟</h3><ol>
-<li><p>進入blog的workspace &amp; 安裝套件</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hexo-git-backup --save</span><br></pre></td></tr></table></figure>
+<h3 id="安裝主題-Next"><a href="#安裝主題-Next" class="headerlink" title="安裝主題 Next"></a>安裝主題 Next</h3><ol>
+<li><p>Github clone hexo-theme-next project - <a href="https://github.com/theme-next/hexo-theme-next">點我前往</a></p>
 </li>
-<li><p>根目錄的 <code>_config.yml</code> 檔新增以下設定內容</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># setting git backup</span><br><span class="line">backup:</span><br><span class="line">  type: git</span><br><span class="line">  repository:</span><br><span class="line">    github: https://github.com/&#123;username&#125;/&#123;user&#x27;s repository&#125;</span><br></pre></td></tr></table></figure>
+<li><p>在 themes folder 底下建立 next 資料夾並將上述下載的資料 copy 進該資料夾</p>
 </li>
-<li><p>每次需要備份時，執行指令(下述兩種都可以) </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo backup</span><br><span class="line"># 簡寫</span><br><span class="line">hexo b</span><br></pre></td></tr></table></figure></li>
+<li><p>修改 根目錄 的 _config.xml 內容，從預設的 landscape 改成 next</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Extensions</span></span><br><span class="line"><span class="comment">## Plugins: https://hexo.io/plugins/</span></span><br><span class="line"><span class="comment">## Themes: https://hexo.io/themes/</span></span><br><span class="line"><span class="attr">theme:</span> <span class="string">next</span></span><br></pre></td></tr></table></figure></li>
+<li><p>設定檔有2個，一個是配製 Hexo設定，另一個是針對 Next 主題進行配置</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="string">根目錄:</span> <span class="string">_config.yml</span></span><br><span class="line"><span class="string">Next主題:</span> <span class="string">themes/_config.yml</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Next 主題底下有 4種樣式 (設定於 themes 底下的 _config.xml)</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Schemes</span></span><br><span class="line"><span class="comment">#scheme: Muse</span></span><br><span class="line"><span class="attr">scheme:</span> <span class="string">Mist</span></span><br><span class="line"><span class="comment">#scheme: Pisces</span></span><br><span class="line"><span class="comment">#scheme: Gemini</span></span><br></pre></td></tr></table></figure></li>
 </ol>
-<p>這樣每次撰寫部落格完後多此步驟就可以將 source 的文章保留下來。</p>
+<h3 id="開啟-分類-x2F-標籤-功能"><a href="#開啟-分類-x2F-標籤-功能" class="headerlink" title="開啟 分類 &#x2F; 標籤 功能"></a>開啟 分類 &#x2F; 標籤 功能</h3><ul>
+<li>新增 layout 為 page 的文章 ( 一般文章預設為 post)<br><code>hexo new page categories</code> ( type 為 “categories” )<br><code>hexo new page tags</code> ( type 為 “tags” )</li>
+<li>一般文章撰寫時於文章 Front-matter 定義 分類 &#x2F; 標籤 屬性<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">Hexo</span> <span class="string">主題</span> <span class="bullet">-</span> <span class="string">NEXT</span> <span class="string">&amp;</span> <span class="string">新增文章搜尋功能</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2022-03-02 06:55:34</span></span><br><span class="line"><span class="attr">tags:</span> </span><br><span class="line"><span class="bullet">-</span> <span class="string">hexo</span></span><br><span class="line"><span class="attr">categories:</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">blog</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure></li>
+<li>開啟 Next 主題 menu 得以顯示於介面<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">home:</span> <span class="string">/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-home</span></span><br><span class="line">  <span class="comment"># about: /about/ || fa fa-user</span></span><br><span class="line">  <span class="attr">tags:</span> <span class="string">/tags/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-tags</span></span><br><span class="line">  <span class="attr">categories:</span> <span class="string">/categories/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-th</span></span><br><span class="line">  <span class="attr">archives:</span> <span class="string">/archives/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-archive</span></span><br><span class="line">  <span class="comment">#schedule: /schedule/ || fa fa-calendar</span></span><br><span class="line">  <span class="comment">#sitemap: /sitemap.xml || fa fa-sitemap</span></span><br><span class="line">  <span class="comment">#commonweal: /404/ || fa fa-heartbeat</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="新增-搜尋功能"><a href="#新增-搜尋功能" class="headerlink" title="新增 搜尋功能"></a>新增 搜尋功能</h3><ol>
+<li>下載套件 <code>npm install hexo-generator-searchdb --save</code></li>
+<li>根目錄 _config.xml 新增設定<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment">#Local Search / created by 2022-03-02</span></span><br><span class="line"><span class="attr">search:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">path:</span> <span class="string">search.xml</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">field:</span> <span class="string">post</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">format:</span> <span class="string">html</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">content:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure></li>
+<li>主題目錄 _config.xml 開啟 local_search 功能<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Local Search</span></span><br><span class="line"><span class="comment"># Dependencies: https://github.com/theme-next/hexo-generator-searchdb</span></span><br><span class="line"><span class="attr">local_search:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="新增-文章閱讀進度-功能"><a href="#新增-文章閱讀進度-功能" class="headerlink" title="新增 文章閱讀進度 功能"></a>新增 文章閱讀進度 功能</h3><p>將 scrollpercent 從 false 改成 true</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">back2top:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># Back to top in sidebar.</span></span><br><span class="line">  <span class="attr">sidebar:</span> <span class="literal">false</span></span><br><span class="line">  <span class="comment"># Scroll percent label in b2t button.</span></span><br><span class="line">  <span class="attr">scrollpercent:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<p>效果如下:</p>
+<p><img src="https://bnz05pap002files.storage.live.com/y4m1yGLaD3UGbwtXQPefduFnckR3CCidf2SWItddjqzSCA3KdyVLMXnZpx-If2Tl3tWkszjYeEMyotdRXWNIo_iQY_INtR5O0J48eqrMs_1nY9WVie0VKY4hJXYo208GuzkoFHi84ZTce-qnv7Bb6I_Hql7VNLpeIWiQOmib2hAYjdqnt-aDFR2FmDO-C_PuLxP?width=233&height=256&cropmode=none" alt="hexo_page_scrollpercent.png"></p>
 <h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
-<li><a href="https://cheng-yi-ting.github.io/2020/02/08/2020-02-08-HexoBackup/">Hexo 備份</a></li>
-<li><a href="https://github.com/coneycode/hexo-git-backup">Github: hexo-git-backup</a></li>
-<li><a href="http://www.xiaoliblog.cn/page/hexobackup.html">hexo-git-backup 博客备份及恢复</a></li>
-<li><a href="https://cheng-yi-ting.github.io/2020/02/08/2020-02-08-HexoBackup/">使用git分支保存hexo博客源码到github</a></li>
+<li><a href="https://github.com/theme-next/hexo-generator-searchdb">Github Repository : hexo-generator-searchdb</a></li>
+<li><a href="https://ithelp.ithome.com.tw/articles/10248214">(20) 試著學 Hexo - NexT 主題篇 - 可以安裝的套件</a></li>
+<li><a href="https://blog.csdn.net/as480133937/article/details/100138838">Hexo-Next 主题博客个性化配置超详细，超全面(两万字)</a></li>
+<li><a href="https://ithelp.ithome.com.tw/articles/10257569">建立自己Blog系列(三) Hexo next theme 介紹</a></li>
+<li><a href="https://github.com/theme-next/hexo-theme-next">Github Repository : hexo-theme-next</a></li>
 </ol>
 ]]></content>
       <categories>
@@ -39,7 +50,7 @@
   </entry>
   <entry>
     <title>利用Hexo + Github.io 建立自己的Blog</title>
-    <url>/2022/03/01/hexo-github-blog-initial/</url>
+    <url>/hexo-github-blog-initial/</url>
     <content><![CDATA[<p>Hexo 為一個 Blog Framework ，基於 NodeJs 語言所開發 (支援 Markdown 語法)</p>
 <span id="more"></span>
 
@@ -109,44 +120,21 @@
       </tags>
   </entry>
   <entry>
-    <title>Hexo 主題 - NEXT &amp; 新增文章搜尋功能</title>
-    <url>/2022/03/02/hexo-next-theme/</url>
-    <content><![CDATA[<p>紀錄一下，Blog中選定的主題 Next 的安裝經過 &amp; 新增搜尋功能</p>
+    <title>Hexo 調整資料夾原始碼目錄結構</title>
+    <url>/hexo-change-page-directory/</url>
+    <content><![CDATA[<p>在預設的 Hexo 設定中，會將新的文章檔案放置於 <code>_posts</code> 的資料夾底下<br>隨的時間的推移，該資料夾會變得越來越雜亂無法管理，因此找了一下網路<br>看看有沒有甚麼方法可以做個簡單區隔，因此有的以下的調整:</p>
 <span id="more"></span>
+<h3 id="預設設定"><a href="#預設設定" class="headerlink" title="預設設定"></a>預設設定</h3><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># URL</span></span><br><span class="line"><span class="comment">## Set your site url here. For example, if you use GitHub Page, set url as &#x27;https://username.github.io/project&#x27;</span></span><br><span class="line"><span class="attr">url:</span> <span class="string">https://&#123;自定義</span> <span class="string">domain&#125;</span></span><br><span class="line"><span class="attr">permalink:</span> <span class="string">:year/:month/:day/:title/</span></span><br><span class="line"><span class="string">...</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Writing</span></span><br><span class="line"><span class="attr">new_post_name:</span> <span class="string">:title.md</span> <span class="comment"># File name of new posts</span></span><br><span class="line"><span class="attr">default_layout:</span> <span class="string">post</span></span><br><span class="line"><span class="attr">titlecase:</span> <span class="literal">false</span> <span class="comment"># Transform title into </span></span><br><span class="line"><span class="string">...</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="安裝主題-Next"><a href="#安裝主題-Next" class="headerlink" title="安裝主題 Next"></a>安裝主題 Next</h3><ol>
-<li><p>Github clone hexo-theme-next project - <a href="https://github.com/theme-next/hexo-theme-next">點我前往</a></p>
-</li>
-<li><p>在 themes folder 底下建立 next 資料夾並將上述下載的資料 copy 進該資料夾</p>
-</li>
-<li><p>修改 根目錄 的 _config.xml 內容，從預設的 landscape 改成 next</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Extensions</span></span><br><span class="line"><span class="comment">## Plugins: https://hexo.io/plugins/</span></span><br><span class="line"><span class="comment">## Themes: https://hexo.io/themes/</span></span><br><span class="line"><span class="attr">theme:</span> <span class="string">next</span></span><br></pre></td></tr></table></figure></li>
-<li><p>設定檔有2個，一個是配製 Hexo設定，另一個是針對 Next 主題進行配置</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="string">根目錄:</span> <span class="string">_config.yml</span></span><br><span class="line"><span class="string">Next主題:</span> <span class="string">themes/_config.yml</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Next 主題底下有 4種樣式 (設定於 themes 底下的 _config.xml)</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Schemes</span></span><br><span class="line"><span class="comment">#scheme: Muse</span></span><br><span class="line"><span class="attr">scheme:</span> <span class="string">Mist</span></span><br><span class="line"><span class="comment">#scheme: Pisces</span></span><br><span class="line"><span class="comment">#scheme: Gemini</span></span><br></pre></td></tr></table></figure></li>
-</ol>
-<h3 id="開啟-分類-x2F-標籤-功能"><a href="#開啟-分類-x2F-標籤-功能" class="headerlink" title="開啟 分類 &#x2F; 標籤 功能"></a>開啟 分類 &#x2F; 標籤 功能</h3><ul>
-<li>新增 layout 為 page 的文章 ( 一般文章預設為 post)<br><code>hexo new page categories</code> ( type 為 “categories” )<br><code>hexo new page tags</code> ( type 為 “tags” )</li>
-<li>一般文章撰寫時於文章 Front-matter 定義 分類 &#x2F; 標籤 屬性<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">Hexo</span> <span class="string">主題</span> <span class="bullet">-</span> <span class="string">NEXT</span> <span class="string">&amp;</span> <span class="string">新增文章搜尋功能</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2022-03-02 06:55:34</span></span><br><span class="line"><span class="attr">tags:</span> </span><br><span class="line"><span class="bullet">-</span> <span class="string">hexo</span></span><br><span class="line"><span class="attr">categories:</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">blog</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure></li>
-<li>開啟 Next 主題 menu 得以顯示於介面<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">home:</span> <span class="string">/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-home</span></span><br><span class="line">  <span class="comment"># about: /about/ || fa fa-user</span></span><br><span class="line">  <span class="attr">tags:</span> <span class="string">/tags/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-tags</span></span><br><span class="line">  <span class="attr">categories:</span> <span class="string">/categories/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-th</span></span><br><span class="line">  <span class="attr">archives:</span> <span class="string">/archives/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-archive</span></span><br><span class="line">  <span class="comment">#schedule: /schedule/ || fa fa-calendar</span></span><br><span class="line">  <span class="comment">#sitemap: /sitemap.xml || fa fa-sitemap</span></span><br><span class="line">  <span class="comment">#commonweal: /404/ || fa fa-heartbeat</span></span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="新增-搜尋功能"><a href="#新增-搜尋功能" class="headerlink" title="新增 搜尋功能"></a>新增 搜尋功能</h3><ol>
-<li>下載套件 <code>npm install hexo-generator-searchdb --save</code></li>
-<li>根目錄 _config.xml 新增設定<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment">#Local Search / created by 2022-03-02</span></span><br><span class="line"><span class="attr">search:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">path:</span> <span class="string">search.xml</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">field:</span> <span class="string">post</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">format:</span> <span class="string">html</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">content:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure></li>
-<li>主題目錄 _config.xml 開啟 local_search 功能<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Local Search</span></span><br><span class="line"><span class="comment"># Dependencies: https://github.com/theme-next/hexo-generator-searchdb</span></span><br><span class="line"><span class="attr">local_search:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure></li>
-</ol>
-<h3 id="新增-文章閱讀進度-功能"><a href="#新增-文章閱讀進度-功能" class="headerlink" title="新增 文章閱讀進度 功能"></a>新增 文章閱讀進度 功能</h3><p>將 scrollpercent 從 false 改成 true</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">back2top:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># Back to top in sidebar.</span></span><br><span class="line">  <span class="attr">sidebar:</span> <span class="literal">false</span></span><br><span class="line">  <span class="comment"># Scroll percent label in b2t button.</span></span><br><span class="line">  <span class="attr">scrollpercent:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-<p>效果如下:</p>
-<p><img src="https://bnz05pap002files.storage.live.com/y4m1yGLaD3UGbwtXQPefduFnckR3CCidf2SWItddjqzSCA3KdyVLMXnZpx-If2Tl3tWkszjYeEMyotdRXWNIo_iQY_INtR5O0J48eqrMs_1nY9WVie0VKY4hJXYo208GuzkoFHi84ZTce-qnv7Bb6I_Hql7VNLpeIWiQOmib2hAYjdqnt-aDFR2FmDO-C_PuLxP?width=233&height=256&cropmode=none" alt="hexo_page_scrollpercent.png"></p>
-<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
-<li><a href="https://github.com/theme-next/hexo-generator-searchdb">Github Repository : hexo-generator-searchdb</a></li>
-<li><a href="https://ithelp.ithome.com.tw/articles/10248214">(20) 試著學 Hexo - NexT 主題篇 - 可以安裝的套件</a></li>
-<li><a href="https://blog.csdn.net/as480133937/article/details/100138838">Hexo-Next 主题博客个性化配置超详细，超全面(两万字)</a></li>
-<li><a href="https://ithelp.ithome.com.tw/articles/10257569">建立自己Blog系列(三) Hexo next theme 介紹</a></li>
-<li><a href="https://github.com/theme-next/hexo-theme-next">Github Repository : hexo-theme-next</a></li>
+<h3 id="調整後設定"><a href="#調整後設定" class="headerlink" title="調整後設定"></a>調整後設定</h3><p>永久連結改成 name，此為 #Writing 中的 new_post_name</p>
+<p>藉由 產生的文章名稱使用 :year :month 依照年月的區分，就不會把所有的文章都全部擺在 <code>_post</code> 底下</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># URL</span></span><br><span class="line"><span class="comment">## Set your site url here. For example, if you use GitHub Page, set url as &#x27;https://username.github.io/project&#x27;</span></span><br><span class="line"><span class="attr">url:</span> <span class="string">https://&#123;自定義</span> <span class="string">domain&#125;</span></span><br><span class="line"><span class="attr">permalink:</span> <span class="string">:name/</span></span><br><span class="line"><span class="string">...</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Writing</span></span><br><span class="line"><span class="attr">new_post_name:</span> <span class="string">:year/:month/:title.md</span> <span class="comment"># File name of new posts</span></span><br><span class="line"><span class="attr">default_layout:</span> <span class="string">post</span></span><br><span class="line"><span class="attr">titlecase:</span> <span class="literal">false</span> <span class="comment"># Transform title into </span></span><br><span class="line"><span class="string">...</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="驗證結果"><a href="#驗證結果" class="headerlink" title="驗證結果"></a>驗證結果</h3><p>原本的 <code>_post</code> 底下長出了年分&amp;月份，依照發佈時間即可快速分類找到當時所寫的文章</p>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mg2gM94oI68TB6d4KRCHRGcmssTGjYIbPMsElG3Jdav9b3HE9SiSojZUNw5WnvjWEdh8OtUX-b2JStw0q_4_oUb7ZdwxZ6t5FEcIxUMrdKJlhHwsp_EVkva03IYKKA9m6gubKmSJch7Hag0VOm7h01dTGmvE-bkLm3IXhks-2dy-MJk9RwbzMGJIWvMDHiKx8?width=250&height=256&cropmode=none" alt="hexo-directory"></p>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference:"></a>Reference:</h3><ol>
+<li><a href="https://carlos.mynet.tw/%E4%BD%BF%E7%94%A8%E8%B3%87%E6%96%99%E5%A4%BE%E5%88%86%E5%B1%A4%E7%AE%A1%E7%90%86hexo%E6%96%87%E7%AB%A0%E4%B8%94%E4%B8%8D%E5%BD%B1%E9%9F%BF%E6%B0%B8%E4%B9%85%E9%80%A3%E7%B5%90/">使用資料夾分層管理Hexo文章且不影響永久連結</a></li>
+<li><a href="https://mouson.im/Notes/Hexo/make-hexo-post-category-by-folder/">Hexo - 使文章依文章分類為資料夾名稱置放</a></li>
 </ol>
 ]]></content>
       <categories>
@@ -157,59 +145,64 @@
       </tags>
   </entry>
   <entry>
-    <title>使用 utterances 在 Hexo 實現留言板功能</title>
-    <url>/2022/03/04/hexo-message-board-utterances/</url>
-    <content><![CDATA[<p>留言版在一般的部落格中一個常見的功能，既然使用Github製作了自己的部落格<br>順勢找了一些文章來新增這個功能</p>
-<p>在參閱了許多 blogger 的文章後發現，比較常用的有以下兩種:</p>
-<ul>
-<li>Disqus<ul>
-<li>需要去 Disqus 官網註冊 - <a href="https://disqus.com/">點我前往</a></li>
-</ul>
-</li>
-<li>utterances<ul>
-<li>與 Github Issues 做連結</li>
-<li>需要登入 Github 才能夠進行留言</li>
-</ul>
-</li>
-</ul>
-<p>目前是打算使用 utterances 來實作 部落格的留言版</p>
+    <title>Jenkins 安裝教學</title>
+    <url>/jenkins-initial/</url>
+    <content><![CDATA[<p>Jenkins 為一個持續化整合工具，由 Java 語言所撰寫，並支援許多套件做整合 ( ex : Maven , Gradle )<br>可用於自動化的持續整合(CI) &amp; 持續部署(CD) 。</p>
 <span id="more"></span>
 
-<h3 id="整合-utterances"><a href="#整合-utterances" class="headerlink" title="整合 utterances"></a>整合 utterances</h3><ol>
-<li>Github 建立 Repository</li>
-<li>安裝 utterances - <a href="https://github.com/apps/utterances">點我前往</a></li>
+<h3 id="Local安裝前置作業"><a href="#Local安裝前置作業" class="headerlink" title="Local安裝前置作業"></a>Local安裝前置作業</h3><ol>
+<li>準備一台 Linux 主機 (Virtual Mechine )</li>
+<li>安裝 docker ( Optional: docker-compose )</li>
 </ol>
-<p><img src="https://bnz05pap002files.storage.live.com/y4mf3VZ_TrvLMIzOAvwD5scehh0uCIPUsahla1ouyxXnWeuuT5H3ukvDP7hV0gVb_0gnlFJTWeW9UWGP5LXPyQTBd60fbKgxDlDQK2ADWYI5nD6b0pkEd3hfZjLFwEUWurbgWomh3aeF0BWUvSalsrsnPvcz2e_eKp3TjFC4M0aqJI5wZ9FJsnf7SILGMbJzgbp?width=660&height=261&cropmode=none" alt="utterances-install.png"><br>3. 取得授權，並選擇 步驟1 的 Repository</p>
-<p><img src="https://bnz05pap002files.storage.live.com/y4mB7qi6p5Kb5d77Slb0G_jLXcoBZ6yepW2pKcSxd3Ih7_gQ4SDxI9vNpA-6V9wp_RnBN59jH0ziNmpluQFQDjnM92bizO_e_2jLgYQRxeFb7ps9tjvCvauX62h5gJLcvQsa34THbIPo5P6HAZmuIwMlGX5dwFnHIl9fLbX-dITsVKucorwYtuIJ2I8kmzdq_B5?width=480&height=660&cropmode=none" alt="utterances-select-repository.png"><br>4. 填寫對應的 configuration EX: Repository , Blog Post &amp; issue Mapping , Theme …etc</p>
-<p><img src="https://bnz05pap002files.storage.live.com/y4mZW8hAhicSL9Xi4l83gr-741kqXgXqCBnmEDZ5a_ZVaCNUbsZQGTl456l7dxJUszLljpSitj43aRmX3fA0OUM58mYxGTvKuc0wL0VW-9OPS6YAn1Uz9FqzK0Q8YSWOpCQBiDHVMFUb6E5olX7bVBc-vy_rP5gqLV5Kt1WPC8gXKKIKqjtSVCpSzI9LB2H49DI?width=660&height=622&cropmode=none" alt="utterances-configuration-script.png"><br>5. 在 theme 的 _config.yml 新增參數 (blog 目前是使用 next themes)</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># utterances by 2022-03-04</span></span><br><span class="line"><span class="attr">utterances:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<h3 id="使用-docker-安裝-Jenkins"><a href="#使用-docker-安裝-Jenkins" class="headerlink" title="使用 docker 安裝 Jenkins"></a>使用 docker 安裝 Jenkins</h3><ol>
+<li><p>使用 docker 下載 docker images<br><code>docker pull jenkins/jenkins:latest</code></p>
+</li>
+<li><p>使用指令啟動 docker container (指定 port 為 18080)</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker run -u root -d --name myjenkins -p 18080:8080 -p 50000:50000 -v jenkins_home:/var/jenkins_home jenkins/jenkins:latest</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">jenkins 8080 port 為 預設WEB介面 , 50000 port 為 jenkins Agent</span></span><br></pre></td></tr></table></figure>
 
+</li>
+<li><p>啟動後，輸入網址 - <em><strong>{VM IP}:18080</strong></em> 進入 Jenkins 初始畫面</p>
+</li>
+</ol>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mcApoPeOBRDSLJEBnroNaVPjG4VXCzXgQE45FfB0tkD7UrSdMfMLj4HdOgOXg9XPBZMM5YXqvCb_EM3e9WNQUbLwWa3lib_ENDaVotBtrkb0AbhH30jFmqy0BsJwPnZ_4OGRuV8P1YwDXipLFgnYICSA8CsgOhy37Ejok5wMbdd9rsjKlcNwd1R9RGKll56So?width=256&height=139&cropmode=none" alt="Jenkins_initial"></p>
+<ol start="4">
+<li><p>進入 container 中取得安裝的預設密碼</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta"># </span><span class="language-bash">進入 container</span></span><br><span class="line">docker exec -it &#123;container name&#125; /bin/bash</span><br><span class="line"><span class="meta"># </span><span class="language-bash">顯示預設密碼</span></span><br><span class="line">cat /var/jenkins_home/secrets/initialAdminPassword</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>選擇客製化套件安裝 ( 選擇左邊預設全裝)</p>
+</li>
+</ol>
+<p><img src="https://bnz05pap002files.storage.live.com/y4m5nGIeTsyu5iUN2_CGgA4rinujnsw-iQP5TPJ3XwPTOZ65LirQh1oX1jnbkjK07WOWnwC1uYPEZiWuo3huJZA89zN-fmlAygcYUTcWxkygkcUKTLnyNr-JOqoeNhjg3zNZup70RBayB_MxeVqQkX9oopysyxBkOm_mq0PmXAG_6YfI93JBQS7moB_zadgAE9Z?width=256&height=139&cropmode=none" alt="jenkins_plugin_setting"></p>
 <ol start="6">
-<li>在主題底下 <code>themes\next\layout\_partials</code> 的 comments.swig 中 新增其 srcipt<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="string">新增至</span> &#123;<span class="string">%-</span> <span class="string">if</span> <span class="string">page.comments</span> <span class="string">%</span>&#125; <span class="string">後面</span></span><br><span class="line"></span><br><span class="line">&#123;<span class="string">%</span> <span class="string">if</span> <span class="string">theme.utterances.enable</span> <span class="string">%</span>&#125;</span><br><span class="line">    <span class="string">&lt;div</span> <span class="string">class=&quot;comments&quot;</span> <span class="string">id=&quot;comments&gt;</span></span><br><span class="line">        <span class="string">↓</span> <span class="string">複製上面步驟4</span> <span class="string">utterances</span> <span class="string">中產生的</span> <span class="string">script</span></span><br><span class="line">        <span class="string">&lt;script</span> <span class="string">src=&quot;https://utteranc.es/client.js&quot;</span></span><br><span class="line">            <span class="string">...</span></span><br><span class="line">        <span class="string">&lt;/script&gt;</span></span><br><span class="line">    <span class="string">&lt;/div&gt;</span></span><br><span class="line">  &#123;<span class="string">%-</span> <span class="string">endif</span> <span class="string">%</span>&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
-<li>即可看到留言板出現在文章內了</li>
+<li>創建Admin 的 帳號&#x2F;密碼</li>
 </ol>
-<p><img src="https://bnz05pap002files.storage.live.com/y4mi1owUcX16kQYG0y6amhW5TXqG8FlrfdD5PLc08FS7crQCBUFyU0TUJQbw3YSzu8UeSz_ajqZQDOWdxIo5PwIx-HUr_r2__1nn9taGWzzXCWokVufwsWZHApHEC3maMsGRKJxd5Pf3sdT0cW0qVg7dCYdt6IdQ9ie2Z2uetNM-dX_S54E9U7_qVpFRhuWp_wy?width=660&height=313&cropmode=none" alt="utterances-message-board-result.png"></p>
-<h3 id="如何讓留言板不要出現"><a href="#如何讓留言板不要出現" class="headerlink" title="如何讓留言板不要出現"></a>如何讓留言板不要出現</h3><p>因為分類&#x2F;標籤等頁面通常不需要有連言功能<br>在 markdown 的 Front-matter 把 comments 關閉</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">tags</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2022-03-01 20:10:05</span></span><br><span class="line"><span class="attr">type:</span> <span class="string">&quot;tags&quot;</span></span><br><span class="line"><span class="attr">comments:</span> <span class="literal">false</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure>
-
+<p><img src="https://bnz05pap002files.storage.live.com/y4mtzgP0W95pMW1ZWyEC4VcuZHCPR-z42TbjNnNDrpfHoRRtbo7Vo7awco05KH6Ezgujl_oPsAu05rsRrbq5Uz7xGW3Wy4HeOkjeka4OZkdqwqvvhLwzOM9xDGfSdlZYKBpXBaOMpG1kSzooQKri0dhz9mZkdEirCcxFOclaBX2MAgOn9zD35F8UrcY37lsnNyj?width=256&height=138&cropmode=none" alt="createAdminUser.png"></p>
+<ol start="7">
+<li>儲存設定後，即可進入首頁</li>
+</ol>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mOu7W-A_TyloArSKH_UydXT4L7FCHHvSyJwK567rbLYlHkvS3B3kuJIWvqMMHNOCfFpW8JBUHFpE5DE7lndEBw09bgzyGPhLuoez0tzwKgjNhh_3JK_bWIaxOBr7XwJM5exakUtoiSE9RZEZXqRtekj3hHCQzFWg6A27FkL5ZRuS_YpZBtBhp86dNX2gDYz3A?width=256&height=134&cropmode=none" alt="homePage"></p>
+<h3 id="使用-docker-compose-安裝-Jenkins"><a href="#使用-docker-compose-安裝-Jenkins" class="headerlink" title="使用 docker-compose 安裝 Jenkins"></a>使用 docker-compose 安裝 Jenkins</h3><ol>
+<li>撰寫 docker-compose.yml<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;2&#x27;</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">	<span class="attr">jenkins:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">jenkins/jenkins</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">jenkins</span></span><br><span class="line">    <span class="attr">privileged:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">user:</span> <span class="string">root</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">18080</span><span class="string">:8080</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">50000</span><span class="string">:50000</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">JAVA_OPTS:</span> <span class="string">-Xmx2048m</span> <span class="string">-Djava.awt.headless=true</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/var/jenkins_home:/var/jenkins_home</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/var/run/docker.sock:/var/run/docker.sock</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">$&#123;HOME&#125;/.ssh:/root/.ssh:ro</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">$&#123;HOME&#125;/.npmrc:/root/.npmrc</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">$&#123;HOME&#125;/.m2:/root/.m2</span></span><br></pre></td></tr></table></figure></li>
+<li>啟動 dokcer-compose<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker-compose up</span><br></pre></td></tr></table></figure></li>
+</ol>
 <h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
-<li><a href="https://annkuoq.github.io/blog/2020-03-09-add-utterances-comment-widget-to-hexo/">在 Hexo 安裝 utterances 留言版</a></li>
-<li><a href="https://medium.com/starbugs/gatsby-%E7%94%A8-utterances-%E6%9B%BF-gatsby-%E7%9A%84-blog-%E7%B6%B2%E7%AB%99%E7%94%B3%E8%A3%9D-github-issue-%E7%95%99%E8%A8%80%E5%8A%9F%E8%83%BD-e8593318e5a3">Gatsby | 用 utterances 替 Gatsby 的 Blog 網站申裝 GitHub Issue 留言功能</a></li>
-<li><a href="https://blog.kyomind.tw/hexo-blog-reply/">Hexo：新增 utterances 留言板與方案選擇思路</a></li>
-<li><a href="https://utteranc.es/">utterances </a></li>
-<li><a href="https://kidneyweakx.com/2019/19log-1026-hexo-com.html">Hexo Next 主題增加評論系統 utterances</a></li>
+<li><a href="https://ithelp.ithome.com.tw/articles/10202465">day05_docker04_Jenkins</a></li>
+<li><a href="https://iter01.com/553208.html">三十二張圖告訴你，Jenkins構建Spring Boot 有多簡單~
+</a></li>
+<li><a href="https://tomgregory.com/building-a-spring-boot-application-in-docker-and-jenkins/">Building a Spring Boot application in Docker and Jenkins (part 2 of microservice devops series)</a></li>
 </ol>
 ]]></content>
       <categories>
-        <category>blog</category>
+        <category>jenkins</category>
       </categories>
       <tags>
-        <tag>hexo</tag>
+        <tag>docker</tag>
+        <tag>jenkins</tag>
       </tags>
   </entry>
   <entry>
     <title>Java Annotation(標註)</title>
-    <url>/2022/03/05/java-annotation/</url>
+    <url>/java-annotation/</url>
     <content><![CDATA[<p>Java 從 JDK5 開使支援了 Annotation 功能，可以提供在編譯時期提示 or 執行時期讀取的資訊。</p>
 <span id="more"></span>
 
@@ -269,64 +262,96 @@
       </tags>
   </entry>
   <entry>
-    <title>Jenkins 安裝教學</title>
-    <url>/2022/03/06/jenkins-initial/</url>
-    <content><![CDATA[<p>Jenkins 為一個持續化整合工具，由 Java 語言所撰寫，並支援許多套件做整合 ( ex : Maven , Gradle )<br>可用於自動化的持續整合(CI) &amp; 持續部署(CD) 。</p>
+    <title>使用 utterances 在 Hexo 實現留言板功能</title>
+    <url>/hexo-message-board-utterances/</url>
+    <content><![CDATA[<p>留言版在一般的部落格中一個常見的功能，既然使用Github製作了自己的部落格<br>順勢找了一些文章來新增這個功能</p>
+<p>在參閱了許多 blogger 的文章後發現，比較常用的有以下兩種:</p>
+<ul>
+<li>Disqus<ul>
+<li>需要去 Disqus 官網註冊 - <a href="https://disqus.com/">點我前往</a></li>
+</ul>
+</li>
+<li>utterances<ul>
+<li>與 Github Issues 做連結</li>
+<li>需要登入 Github 才能夠進行留言</li>
+</ul>
+</li>
+</ul>
+<p>目前是打算使用 utterances 來實作 部落格的留言版</p>
 <span id="more"></span>
 
-<h3 id="Local安裝前置作業"><a href="#Local安裝前置作業" class="headerlink" title="Local安裝前置作業"></a>Local安裝前置作業</h3><ol>
-<li>準備一台 Linux 主機 (Virtual Mechine )</li>
-<li>安裝 docker ( Optional: docker-compose )</li>
+<h3 id="整合-utterances"><a href="#整合-utterances" class="headerlink" title="整合 utterances"></a>整合 utterances</h3><ol>
+<li>Github 建立 Repository</li>
+<li>安裝 utterances - <a href="https://github.com/apps/utterances">點我前往</a></li>
 </ol>
-<h3 id="使用-docker-安裝-Jenkins"><a href="#使用-docker-安裝-Jenkins" class="headerlink" title="使用 docker 安裝 Jenkins"></a>使用 docker 安裝 Jenkins</h3><ol>
-<li><p>使用 docker 下載 docker images<br><code>docker pull jenkins/jenkins:latest</code></p>
-</li>
-<li><p>使用指令啟動 docker container (指定 port 為 18080)</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker run -u root -d --name myjenkins -p 18080:8080 -p 50000:50000 -v jenkins_home:/var/jenkins_home jenkins/jenkins:latest</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">jenkins 8080 port 為 預設WEB介面 , 50000 port 為 jenkins Agent</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mf3VZ_TrvLMIzOAvwD5scehh0uCIPUsahla1ouyxXnWeuuT5H3ukvDP7hV0gVb_0gnlFJTWeW9UWGP5LXPyQTBd60fbKgxDlDQK2ADWYI5nD6b0pkEd3hfZjLFwEUWurbgWomh3aeF0BWUvSalsrsnPvcz2e_eKp3TjFC4M0aqJI5wZ9FJsnf7SILGMbJzgbp?width=660&height=261&cropmode=none" alt="utterances-install.png"><br>3. 取得授權，並選擇 步驟1 的 Repository</p>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mB7qi6p5Kb5d77Slb0G_jLXcoBZ6yepW2pKcSxd3Ih7_gQ4SDxI9vNpA-6V9wp_RnBN59jH0ziNmpluQFQDjnM92bizO_e_2jLgYQRxeFb7ps9tjvCvauX62h5gJLcvQsa34THbIPo5P6HAZmuIwMlGX5dwFnHIl9fLbX-dITsVKucorwYtuIJ2I8kmzdq_B5?width=480&height=660&cropmode=none" alt="utterances-select-repository.png"><br>4. 填寫對應的 configuration EX: Repository , Blog Post &amp; issue Mapping , Theme …etc</p>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mZW8hAhicSL9Xi4l83gr-741kqXgXqCBnmEDZ5a_ZVaCNUbsZQGTl456l7dxJUszLljpSitj43aRmX3fA0OUM58mYxGTvKuc0wL0VW-9OPS6YAn1Uz9FqzK0Q8YSWOpCQBiDHVMFUb6E5olX7bVBc-vy_rP5gqLV5Kt1WPC8gXKKIKqjtSVCpSzI9LB2H49DI?width=660&height=622&cropmode=none" alt="utterances-configuration-script.png"><br>5. 在 theme 的 _config.yml 新增參數 (blog 目前是使用 next themes)</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># utterances by 2022-03-04</span></span><br><span class="line"><span class="attr">utterances:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
 
-</li>
-<li><p>啟動後，輸入網址 - <em><strong>{VM IP}:18080</strong></em> 進入 Jenkins 初始畫面</p>
-</li>
-</ol>
-<p><img src="https://bnz05pap002files.storage.live.com/y4mcApoPeOBRDSLJEBnroNaVPjG4VXCzXgQE45FfB0tkD7UrSdMfMLj4HdOgOXg9XPBZMM5YXqvCb_EM3e9WNQUbLwWa3lib_ENDaVotBtrkb0AbhH30jFmqy0BsJwPnZ_4OGRuV8P1YwDXipLFgnYICSA8CsgOhy37Ejok5wMbdd9rsjKlcNwd1R9RGKll56So?width=256&height=139&cropmode=none" alt="Jenkins_initial"></p>
-<ol start="4">
-<li><p>進入 container 中取得安裝的預設密碼</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta"># </span><span class="language-bash">進入 container</span></span><br><span class="line">docker exec -it &#123;container name&#125; /bin/bash</span><br><span class="line"><span class="meta"># </span><span class="language-bash">顯示預設密碼</span></span><br><span class="line">cat /var/jenkins_home/secrets/initialAdminPassword</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>選擇客製化套件安裝 ( 選擇左邊預設全裝)</p>
-</li>
-</ol>
-<p><img src="https://bnz05pap002files.storage.live.com/y4m5nGIeTsyu5iUN2_CGgA4rinujnsw-iQP5TPJ3XwPTOZ65LirQh1oX1jnbkjK07WOWnwC1uYPEZiWuo3huJZA89zN-fmlAygcYUTcWxkygkcUKTLnyNr-JOqoeNhjg3zNZup70RBayB_MxeVqQkX9oopysyxBkOm_mq0PmXAG_6YfI93JBQS7moB_zadgAE9Z?width=256&height=139&cropmode=none" alt="jenkins_plugin_setting"></p>
 <ol start="6">
-<li>創建Admin 的 帳號&#x2F;密碼</li>
+<li>在主題底下 <code>themes\next\layout\_partials</code> 的 comments.swig 中 新增其 srcipt<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="string">新增至</span> &#123;<span class="string">%-</span> <span class="string">if</span> <span class="string">page.comments</span> <span class="string">%</span>&#125; <span class="string">後面</span></span><br><span class="line"></span><br><span class="line">&#123;<span class="string">%</span> <span class="string">if</span> <span class="string">theme.utterances.enable</span> <span class="string">%</span>&#125;</span><br><span class="line">    <span class="string">&lt;div</span> <span class="string">class=&quot;comments&quot;</span> <span class="string">id=&quot;comments&gt;</span></span><br><span class="line">        <span class="string">↓</span> <span class="string">複製上面步驟4</span> <span class="string">utterances</span> <span class="string">中產生的</span> <span class="string">script</span></span><br><span class="line">        <span class="string">&lt;script</span> <span class="string">src=&quot;https://utteranc.es/client.js&quot;</span></span><br><span class="line">            <span class="string">...</span></span><br><span class="line">        <span class="string">&lt;/script&gt;</span></span><br><span class="line">    <span class="string">&lt;/div&gt;</span></span><br><span class="line">  &#123;<span class="string">%-</span> <span class="string">endif</span> <span class="string">%</span>&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li>即可看到留言板出現在文章內了</li>
 </ol>
-<p><img src="https://bnz05pap002files.storage.live.com/y4mtzgP0W95pMW1ZWyEC4VcuZHCPR-z42TbjNnNDrpfHoRRtbo7Vo7awco05KH6Ezgujl_oPsAu05rsRrbq5Uz7xGW3Wy4HeOkjeka4OZkdqwqvvhLwzOM9xDGfSdlZYKBpXBaOMpG1kSzooQKri0dhz9mZkdEirCcxFOclaBX2MAgOn9zD35F8UrcY37lsnNyj?width=256&height=138&cropmode=none" alt="createAdminUser.png"></p>
-<ol start="7">
-<li>儲存設定後，即可進入首頁</li>
-</ol>
-<p><img src="https://bnz05pap002files.storage.live.com/y4mOu7W-A_TyloArSKH_UydXT4L7FCHHvSyJwK567rbLYlHkvS3B3kuJIWvqMMHNOCfFpW8JBUHFpE5DE7lndEBw09bgzyGPhLuoez0tzwKgjNhh_3JK_bWIaxOBr7XwJM5exakUtoiSE9RZEZXqRtekj3hHCQzFWg6A27FkL5ZRuS_YpZBtBhp86dNX2gDYz3A?width=256&height=134&cropmode=none" alt="homePage"></p>
-<h3 id="使用-docker-compose-安裝-Jenkins"><a href="#使用-docker-compose-安裝-Jenkins" class="headerlink" title="使用 docker-compose 安裝 Jenkins"></a>使用 docker-compose 安裝 Jenkins</h3><ol>
-<li>撰寫 docker-compose.yml<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;2&#x27;</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">	<span class="attr">jenkins:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">jenkins/jenkins</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">jenkins</span></span><br><span class="line">    <span class="attr">privileged:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">user:</span> <span class="string">root</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">18080</span><span class="string">:8080</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">50000</span><span class="string">:50000</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">JAVA_OPTS:</span> <span class="string">-Xmx2048m</span> <span class="string">-Djava.awt.headless=true</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/var/jenkins_home:/var/jenkins_home</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/var/run/docker.sock:/var/run/docker.sock</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">$&#123;HOME&#125;/.ssh:/root/.ssh:ro</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">$&#123;HOME&#125;/.npmrc:/root/.npmrc</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">$&#123;HOME&#125;/.m2:/root/.m2</span></span><br></pre></td></tr></table></figure></li>
-<li>啟動 dokcer-compose<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker-compose up</span><br></pre></td></tr></table></figure></li>
-</ol>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mi1owUcX16kQYG0y6amhW5TXqG8FlrfdD5PLc08FS7crQCBUFyU0TUJQbw3YSzu8UeSz_ajqZQDOWdxIo5PwIx-HUr_r2__1nn9taGWzzXCWokVufwsWZHApHEC3maMsGRKJxd5Pf3sdT0cW0qVg7dCYdt6IdQ9ie2Z2uetNM-dX_S54E9U7_qVpFRhuWp_wy?width=660&height=313&cropmode=none" alt="utterances-message-board-result.png"></p>
+<h3 id="如何讓留言板不要出現"><a href="#如何讓留言板不要出現" class="headerlink" title="如何讓留言板不要出現"></a>如何讓留言板不要出現</h3><p>因為分類&#x2F;標籤等頁面通常不需要有連言功能<br>在 markdown 的 Front-matter 把 comments 關閉</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">tags</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2022-03-01 20:10:05</span></span><br><span class="line"><span class="attr">type:</span> <span class="string">&quot;tags&quot;</span></span><br><span class="line"><span class="attr">comments:</span> <span class="literal">false</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure>
+
 <h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
-<li><a href="https://ithelp.ithome.com.tw/articles/10202465">day05_docker04_Jenkins</a></li>
-<li><a href="https://iter01.com/553208.html">三十二張圖告訴你，Jenkins構建Spring Boot 有多簡單~
-</a></li>
-<li><a href="https://tomgregory.com/building-a-spring-boot-application-in-docker-and-jenkins/">Building a Spring Boot application in Docker and Jenkins (part 2 of microservice devops series)</a></li>
+<li><a href="https://annkuoq.github.io/blog/2020-03-09-add-utterances-comment-widget-to-hexo/">在 Hexo 安裝 utterances 留言版</a></li>
+<li><a href="https://medium.com/starbugs/gatsby-%E7%94%A8-utterances-%E6%9B%BF-gatsby-%E7%9A%84-blog-%E7%B6%B2%E7%AB%99%E7%94%B3%E8%A3%9D-github-issue-%E7%95%99%E8%A8%80%E5%8A%9F%E8%83%BD-e8593318e5a3">Gatsby | 用 utterances 替 Gatsby 的 Blog 網站申裝 GitHub Issue 留言功能</a></li>
+<li><a href="https://blog.kyomind.tw/hexo-blog-reply/">Hexo：新增 utterances 留言板與方案選擇思路</a></li>
+<li><a href="https://utteranc.es/">utterances </a></li>
+<li><a href="https://kidneyweakx.com/2019/19log-1026-hexo-com.html">Hexo Next 主題增加評論系統 utterances</a></li>
 </ol>
 ]]></content>
       <categories>
-        <category>jenkins</category>
+        <category>blog</category>
       </categories>
       <tags>
-        <tag>docker</tag>
-        <tag>jenkins</tag>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo 備份</title>
+    <url>/hexo-git-backup/</url>
+    <content><![CDATA[<p>使用 Hexo 撰寫文章，使用 <code>hexo generate</code> 時，會將 markdown 轉換成 html<br>在 <code>hexo deploy</code> 時會把靜態資源上傳到 github ，但並不會把 .md 檔案上傳<br>這樣如果撰寫的電腦出了問題，資料就會不覆存在。</p>
+<p>網路上查詢了一下大致上的作法有 2 種:</p>
+<ol>
+<li>blog 的 repository 另開一個分支存取資源(如 Reference. 4)</li>
+<li>使用套件 hexo-git-backup</li>
+</ol>
+<p>我們使用方法2，接著是以下的配置工作</p>
+<span id="more"></span>
+
+<h3 id="安裝步驟"><a href="#安裝步驟" class="headerlink" title="安裝步驟"></a>安裝步驟</h3><ol>
+<li><p>進入blog的workspace &amp; 安裝套件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hexo-git-backup --save</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>根目錄的 <code>_config.yml</code> 檔新增以下設定內容</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># setting git backup</span><br><span class="line">backup:</span><br><span class="line">  type: git</span><br><span class="line">  repository:</span><br><span class="line">    github: https://github.com/&#123;username&#125;/&#123;user&#x27;s repository&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>每次需要備份時，執行指令(下述兩種都可以) </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo backup</span><br><span class="line"># 簡寫</span><br><span class="line">hexo b</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>這樣每次撰寫部落格完後多此步驟就可以將 source 的文章保留下來。</p>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
+<li><a href="https://cheng-yi-ting.github.io/2020/02/08/2020-02-08-HexoBackup/">Hexo 備份</a></li>
+<li><a href="https://github.com/coneycode/hexo-git-backup">Github: hexo-git-backup</a></li>
+<li><a href="http://www.xiaoliblog.cn/page/hexobackup.html">hexo-git-backup 博客备份及恢复</a></li>
+<li><a href="https://cheng-yi-ting.github.io/2020/02/08/2020-02-08-HexoBackup/">使用git分支保存hexo博客源码到github</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>blog</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
       </tags>
   </entry>
   <entry>
     <title>Springboot 讀取 properties 設定檔參數</title>
-    <url>/2022/03/11/springboot-load-properties-file/</url>
+    <url>/springboot-load-properties-file/</url>
     <content><![CDATA[<p>Springboot 在 讀取設定檔參數有 3 種方式 ( 格式有 properties &amp; yml 本篇使用 properties )<br>( Springboot 預設配置檔案位置在 <code>src/main/resources/application.properties</code>)</p>
 <p>如果需要指定 設定檔 需加上 @PropertySource 即可<br>※ 該 Annotation 只能夠指定 properties，因此如果需要指定 yml 檔需要另外實作</p>
 <p>以下來撰寫 3個方式的寫法:</p>
@@ -371,7 +396,7 @@
   </entry>
   <entry>
     <title>Springboot 讀取 yaml 設定檔參數</title>
-    <url>/2022/03/12/springboot-load-yaml-file/</url>
+    <url>/springboot-load-yaml-file/</url>
     <content><![CDATA[<p>讀取客製化設定檔參數，會需要使用 @PropertySource annotation，但該標註只適用於 properties，<br>如果副檔名為 YAML 檔案，會無法解析而造成錯誤，如果要讀取該類型檔案，需要做出以下調整:</p>
 <span id="more"></span>
 
@@ -409,7 +434,7 @@
   </entry>
   <entry>
     <title>使用 Springboot + Mockito 完成單元測試</title>
-    <url>/2022/03/09/springboot-mockito-mock-test/</url>
+    <url>/springboot-mockito-mock-test/</url>
     <content><![CDATA[<p>Mockito 為一個廣泛使用的測試框架，當開發時如果有遇到依賴注入的情境時，往往都會啟動Server，注入實體來進行測試，但這樣的方式即為整合測試 ; 因為當 A 服務呼叫 B 服務，如果 B 服務的內容每次都不一樣，這樣會造成測試結果往往會失敗。</p>
 <p>Mock 測試即為建立假的物件 ; 以 A 服務 呼叫 B 服務來說，我們把 B 服務做 mock，讓回傳的結果固定，就可以專心測試 A 服務的 情境，而不會因為 B 來影響每一次測試的結果</p>
 <span id="more"></span>
