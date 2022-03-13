@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"oscar51011.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="留言版在一般的部落格中一個常見的功能，既然使用Github製作了自己的部落格順勢找了一些文章來新增這個功能 在參閱了許多 blogger 的文章後發現，比較常用的有以下兩種:  Disqus 需要去 Disqus 官網註冊 - 點我前往   utterances 與 Github Issues 做連結 需要登入 Github 才能夠進行留言    目前是打算使用 utterances 來實作 部落">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 utterances 在 Hexo 實現留言板功能">
+<meta property="og:url" content="https://oscar51011.github.io/2022/03/04/hexo-message-board-utterances/index.html">
+<meta property="og:site_name" content="Kai&#39;s Blog">
+<meta property="og:description" content="留言版在一般的部落格中一個常見的功能，既然使用Github製作了自己的部落格順勢找了一些文章來新增這個功能 在參閱了許多 blogger 的文章後發現，比較常用的有以下兩種:  Disqus 需要去 Disqus 官網註冊 - 點我前往   utterances 與 Github Issues 做連結 需要登入 Github 才能夠進行留言    目前是打算使用 utterances 來實作 部落">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://bnz05pap002files.storage.live.com/y4mf3VZ_TrvLMIzOAvwD5scehh0uCIPUsahla1ouyxXnWeuuT5H3ukvDP7hV0gVb_0gnlFJTWeW9UWGP5LXPyQTBd60fbKgxDlDQK2ADWYI5nD6b0pkEd3hfZjLFwEUWurbgWomh3aeF0BWUvSalsrsnPvcz2e_eKp3TjFC4M0aqJI5wZ9FJsnf7SILGMbJzgbp?width=660&height=261&cropmode=none">
+<meta property="og:image" content="https://bnz05pap002files.storage.live.com/y4mB7qi6p5Kb5d77Slb0G_jLXcoBZ6yepW2pKcSxd3Ih7_gQ4SDxI9vNpA-6V9wp_RnBN59jH0ziNmpluQFQDjnM92bizO_e_2jLgYQRxeFb7ps9tjvCvauX62h5gJLcvQsa34THbIPo5P6HAZmuIwMlGX5dwFnHIl9fLbX-dITsVKucorwYtuIJ2I8kmzdq_B5?width=480&height=660&cropmode=none">
+<meta property="og:image" content="https://bnz05pap002files.storage.live.com/y4mZW8hAhicSL9Xi4l83gr-741kqXgXqCBnmEDZ5a_ZVaCNUbsZQGTl456l7dxJUszLljpSitj43aRmX3fA0OUM58mYxGTvKuc0wL0VW-9OPS6YAn1Uz9FqzK0Q8YSWOpCQBiDHVMFUb6E5olX7bVBc-vy_rP5gqLV5Kt1WPC8gXKKIKqjtSVCpSzI9LB2H49DI?width=660&height=622&cropmode=none">
+<meta property="og:image" content="https://bnz05pap002files.storage.live.com/y4mi1owUcX16kQYG0y6amhW5TXqG8FlrfdD5PLc08FS7crQCBUFyU0TUJQbw3YSzu8UeSz_ajqZQDOWdxIo5PwIx-HUr_r2__1nn9taGWzzXCWokVufwsWZHApHEC3maMsGRKJxd5Pf3sdT0cW0qVg7dCYdt6IdQ9ie2Z2uetNM-dX_S54E9U7_qVpFRhuWp_wy?width=660&height=313&cropmode=none">
+<meta property="article:published_time" content="2022-03-03T16:19:31.000Z">
+<meta property="article:modified_time" content="2022-03-11T16:32:21.575Z">
+<meta property="article:author" content="oscar51011">
+<meta property="article:tag" content="hexo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://bnz05pap002files.storage.live.com/y4mf3VZ_TrvLMIzOAvwD5scehh0uCIPUsahla1ouyxXnWeuuT5H3ukvDP7hV0gVb_0gnlFJTWeW9UWGP5LXPyQTBd60fbKgxDlDQK2ADWYI5nD6b0pkEd3hfZjLFwEUWurbgWomh3aeF0BWUvSalsrsnPvcz2e_eKp3TjFC4M0aqJI5wZ9FJsnf7SILGMbJzgbp?width=660&height=261&cropmode=none">
+
+<link rel="canonical" href="https://oscar51011.github.io/2022/03/04/hexo-message-board-utterances/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>使用 utterances 在 Hexo 實現留言板功能 | Kai's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Kai's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://oscar51011.github.io/2022/03/04/hexo-message-board-utterances/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="oscar51011">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Kai's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          使用 utterances 在 Hexo 實現留言板功能
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-03-04 00:19:31" itemprop="dateCreated datePublished" datetime="2022-03-04T00:19:31+08:00">2022-03-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-03-12 00:32:21" itemprop="dateModified" datetime="2022-03-12T00:32:21+08:00">2022-03-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/blog/" itemprop="url" rel="index"><span itemprop="name">blog</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>留言版在一般的部落格中一個常見的功能，既然使用Github製作了自己的部落格<br>順勢找了一些文章來新增這個功能</p>
+<p>在參閱了許多 blogger 的文章後發現，比較常用的有以下兩種:</p>
+<ul>
+<li>Disqus<ul>
+<li>需要去 Disqus 官網註冊 - <a target="_blank" rel="noopener" href="https://disqus.com/">點我前往</a></li>
+</ul>
+</li>
+<li>utterances<ul>
+<li>與 Github Issues 做連結</li>
+<li>需要登入 Github 才能夠進行留言</li>
+</ul>
+</li>
+</ul>
+<p>目前是打算使用 utterances 來實作 部落格的留言版</p>
+<span id="more"></span>
+
+<h3 id="整合-utterances"><a href="#整合-utterances" class="headerlink" title="整合 utterances"></a>整合 utterances</h3><ol>
+<li>Github 建立 Repository</li>
+<li>安裝 utterances - <a target="_blank" rel="noopener" href="https://github.com/apps/utterances">點我前往</a></li>
+</ol>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mf3VZ_TrvLMIzOAvwD5scehh0uCIPUsahla1ouyxXnWeuuT5H3ukvDP7hV0gVb_0gnlFJTWeW9UWGP5LXPyQTBd60fbKgxDlDQK2ADWYI5nD6b0pkEd3hfZjLFwEUWurbgWomh3aeF0BWUvSalsrsnPvcz2e_eKp3TjFC4M0aqJI5wZ9FJsnf7SILGMbJzgbp?width=660&height=261&cropmode=none" alt="utterances-install.png"><br>3. 取得授權，並選擇 步驟1 的 Repository</p>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mB7qi6p5Kb5d77Slb0G_jLXcoBZ6yepW2pKcSxd3Ih7_gQ4SDxI9vNpA-6V9wp_RnBN59jH0ziNmpluQFQDjnM92bizO_e_2jLgYQRxeFb7ps9tjvCvauX62h5gJLcvQsa34THbIPo5P6HAZmuIwMlGX5dwFnHIl9fLbX-dITsVKucorwYtuIJ2I8kmzdq_B5?width=480&height=660&cropmode=none" alt="utterances-select-repository.png"><br>4. 填寫對應的 configuration EX: Repository , Blog Post &amp; issue Mapping , Theme …etc</p>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mZW8hAhicSL9Xi4l83gr-741kqXgXqCBnmEDZ5a_ZVaCNUbsZQGTl456l7dxJUszLljpSitj43aRmX3fA0OUM58mYxGTvKuc0wL0VW-9OPS6YAn1Uz9FqzK0Q8YSWOpCQBiDHVMFUb6E5olX7bVBc-vy_rP5gqLV5Kt1WPC8gXKKIKqjtSVCpSzI9LB2H49DI?width=660&height=622&cropmode=none" alt="utterances-configuration-script.png"><br>5. 在 theme 的 _config.yml 新增參數 (blog 目前是使用 next themes)</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># utterances by 2022-03-04</span></span><br><span class="line"><span class="attr">utterances:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>在主題底下 <code>themes\next\layout\_partials</code> 的 comments.swig 中 新增其 srcipt<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">新增至</span> &#123;<span class="string">%-</span> <span class="string">if</span> <span class="string">page.comments</span> <span class="string">%</span>&#125; <span class="string">後面</span></span><br><span class="line"></span><br><span class="line">&#123;<span class="string">%</span> <span class="string">if</span> <span class="string">theme.utterances.enable</span> <span class="string">%</span>&#125;</span><br><span class="line">    <span class="string">&lt;div</span> <span class="string">class=&quot;comments&quot;</span> <span class="string">id=&quot;comments&gt;</span></span><br><span class="line">        <span class="string">↓</span> <span class="string">複製上面步驟4</span> <span class="string">utterances</span> <span class="string">中產生的</span> <span class="string">script</span></span><br><span class="line">        <span class="string">&lt;script</span> <span class="string">src=&quot;https://utteranc.es/client.js&quot;</span></span><br><span class="line">            <span class="string">...</span></span><br><span class="line">        <span class="string">&lt;/script&gt;</span></span><br><span class="line">    <span class="string">&lt;/div&gt;</span></span><br><span class="line">  &#123;<span class="string">%-</span> <span class="string">endif</span> <span class="string">%</span>&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li>即可看到留言板出現在文章內了</li>
+</ol>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mi1owUcX16kQYG0y6amhW5TXqG8FlrfdD5PLc08FS7crQCBUFyU0TUJQbw3YSzu8UeSz_ajqZQDOWdxIo5PwIx-HUr_r2__1nn9taGWzzXCWokVufwsWZHApHEC3maMsGRKJxd5Pf3sdT0cW0qVg7dCYdt6IdQ9ie2Z2uetNM-dX_S54E9U7_qVpFRhuWp_wy?width=660&height=313&cropmode=none" alt="utterances-message-board-result.png"></p>
+<h3 id="如何讓留言板不要出現"><a href="#如何讓留言板不要出現" class="headerlink" title="如何讓留言板不要出現"></a>如何讓留言板不要出現</h3><p>因為分類&#x2F;標籤等頁面通常不需要有連言功能<br>在 markdown 的 Front-matter 把 comments 關閉</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">tags</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2022-03-01 20:10:05</span></span><br><span class="line"><span class="attr">type:</span> <span class="string">&quot;tags&quot;</span></span><br><span class="line"><span class="attr">comments:</span> <span class="literal">false</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
+<li><a target="_blank" rel="noopener" href="https://annkuoq.github.io/blog/2020-03-09-add-utterances-comment-widget-to-hexo/">在 Hexo 安裝 utterances 留言版</a></li>
+<li><a target="_blank" rel="noopener" href="https://medium.com/starbugs/gatsby-%E7%94%A8-utterances-%E6%9B%BF-gatsby-%E7%9A%84-blog-%E7%B6%B2%E7%AB%99%E7%94%B3%E8%A3%9D-github-issue-%E7%95%99%E8%A8%80%E5%8A%9F%E8%83%BD-e8593318e5a3">Gatsby | 用 utterances 替 Gatsby 的 Blog 網站申裝 GitHub Issue 留言功能</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.kyomind.tw/hexo-blog-reply/">Hexo：新增 utterances 留言板與方案選擇思路</a></li>
+<li><a target="_blank" rel="noopener" href="https://utteranc.es/">utterances </a></li>
+<li><a target="_blank" rel="noopener" href="https://kidneyweakx.com/2019/19log-1026-hexo-com.html">Hexo Next 主題增加評論系統 utterances</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/hexo/" rel="tag"># hexo</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/03/02/hexo-next-theme/" rel="prev" title="Hexo 主題 - NEXT & 新增文章搜尋功能">
+      <i class="fa fa-chevron-left"></i> Hexo 主題 - NEXT & 新增文章搜尋功能
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/03/05/java-annotation/" rel="next" title="Java Annotation(標註)">
+      Java Annotation(標註) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+  
+    <div class="comments" calss="comments">
+      <script src="https://utteranc.es/client.js"
+          repo="oscar51011/oscar51011.github.io.comment"
+          issue-term="pathname"
+          theme="github-light"
+          crossorigin="anonymous"
+          async>
+      </script>
+    </div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B4%E5%90%88-utterances"><span class="nav-number">1.</span> <span class="nav-text">整合 utterances</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E8%AE%93%E7%95%99%E8%A8%80%E6%9D%BF%E4%B8%8D%E8%A6%81%E5%87%BA%E7%8F%BE"><span class="nav-number">2.</span> <span class="nav-text">如何讓留言板不要出現</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reference"><span class="nav-number">3.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">oscar51011</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/oscar51011" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;oscar51011" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/oscar51011@gmail.com" title="E-Mail → oscar51011@gmail.com"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">oscar51011</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
