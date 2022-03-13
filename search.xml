@@ -38,6 +38,139 @@
       </tags>
   </entry>
   <entry>
+    <title>Hexo 調整資料夾原始碼目錄結構</title>
+    <url>/2022/03/13/hexo-change-page-directory/</url>
+    <content><![CDATA[<p>在預設的 Hexo 設定中，會將新的文章檔案放置於 <code>_posts</code> 的資料夾底下<br>隨的時間的推移，該資料夾會變得越來越雜亂無法管理，因此找了一下網路<br>看看有沒有甚麼方法可以做個簡單區隔，因此有的以下的調整:</p>
+<span id="more"></span>
+<h3 id="預設設定-根目錄的-config-yml"><a href="#預設設定-根目錄的-config-yml" class="headerlink" title="預設設定(根目錄的 _config.yml)"></a>預設設定(根目錄的 _config.yml)</h3><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Writing</span></span><br><span class="line"><span class="attr">new_post_name:</span> <span class="string">:title.md</span> <span class="comment"># File name of new posts</span></span><br><span class="line"><span class="attr">default_layout:</span> <span class="string">post</span></span><br><span class="line"><span class="attr">titlecase:</span> <span class="literal">false</span> <span class="comment"># Transform title into </span></span><br><span class="line"><span class="string">...</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="調整後設定-根目錄的-config-yml"><a href="#調整後設定-根目錄的-config-yml" class="headerlink" title="調整後設定(根目錄的 _config.yml)"></a>調整後設定(根目錄的 _config.yml)</h3><p>產生的文章名稱使用 :year :month 依照年月的區分，就不會把所有的文章都全部擺在 <code>_post</code> 底下</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Writing</span></span><br><span class="line"><span class="attr">new_post_name:</span> <span class="string">:year/:month/:title.md</span> <span class="comment"># File name of new posts</span></span><br><span class="line"><span class="attr">default_layout:</span> <span class="string">post</span></span><br><span class="line"><span class="attr">titlecase:</span> <span class="literal">false</span> <span class="comment"># Transform title into </span></span><br><span class="line"><span class="string">...</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="驗證結果"><a href="#驗證結果" class="headerlink" title="驗證結果"></a>驗證結果</h3><p>原本的 <code>_post</code> 底下長出了年分&amp;月份，依照發佈時間即可快速分類找到當時所寫的文章</p>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mg2gM94oI68TB6d4KRCHRGcmssTGjYIbPMsElG3Jdav9b3HE9SiSojZUNw5WnvjWEdh8OtUX-b2JStw0q_4_oUb7ZdwxZ6t5FEcIxUMrdKJlhHwsp_EVkva03IYKKA9m6gubKmSJch7Hag0VOm7h01dTGmvE-bkLm3IXhks-2dy-MJk9RwbzMGJIWvMDHiKx8?width=250&height=256&cropmode=none" alt="hexo-directory"></p>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference:"></a>Reference:</h3><ol>
+<li><a href="https://carlos.mynet.tw/%E4%BD%BF%E7%94%A8%E8%B3%87%E6%96%99%E5%A4%BE%E5%88%86%E5%B1%A4%E7%AE%A1%E7%90%86hexo%E6%96%87%E7%AB%A0%E4%B8%94%E4%B8%8D%E5%BD%B1%E9%9F%BF%E6%B0%B8%E4%B9%85%E9%80%A3%E7%B5%90/">使用資料夾分層管理Hexo文章且不影響永久連結</a></li>
+<li><a href="https://mouson.im/Notes/Hexo/make-hexo-post-category-by-folder/">Hexo - 使文章依文章分類為資料夾名稱置放</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>blog</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo 主題 - NEXT &amp; 新增文章搜尋功能</title>
+    <url>/2022/03/02/hexo-next-theme/</url>
+    <content><![CDATA[<p>紀錄一下，Blog中選定的主題 Next 的安裝經過 &amp; 新增搜尋功能</p>
+<span id="more"></span>
+
+<h3 id="安裝主題-Next"><a href="#安裝主題-Next" class="headerlink" title="安裝主題 Next"></a>安裝主題 Next</h3><ol>
+<li><p>Github clone hexo-theme-next project - <a href="https://github.com/theme-next/hexo-theme-next">點我前往</a></p>
+</li>
+<li><p>在 themes folder 底下建立 next 資料夾並將上述下載的資料 copy 進該資料夾</p>
+</li>
+<li><p>修改 根目錄 的 _config.xml 內容，從預設的 landscape 改成 next</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Extensions</span></span><br><span class="line"><span class="comment">## Plugins: https://hexo.io/plugins/</span></span><br><span class="line"><span class="comment">## Themes: https://hexo.io/themes/</span></span><br><span class="line"><span class="attr">theme:</span> <span class="string">next</span></span><br></pre></td></tr></table></figure></li>
+<li><p>設定檔有2個，一個是配製 Hexo設定，另一個是針對 Next 主題進行配置</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="string">根目錄:</span> <span class="string">_config.yml</span></span><br><span class="line"><span class="string">Next主題:</span> <span class="string">themes/_config.yml</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Next 主題底下有 4種樣式 (設定於 themes 底下的 _config.xml)</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Schemes</span></span><br><span class="line"><span class="comment">#scheme: Muse</span></span><br><span class="line"><span class="attr">scheme:</span> <span class="string">Mist</span></span><br><span class="line"><span class="comment">#scheme: Pisces</span></span><br><span class="line"><span class="comment">#scheme: Gemini</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="開啟-分類-x2F-標籤-功能"><a href="#開啟-分類-x2F-標籤-功能" class="headerlink" title="開啟 分類 &#x2F; 標籤 功能"></a>開啟 分類 &#x2F; 標籤 功能</h3><ul>
+<li>新增 layout 為 page 的文章 ( 一般文章預設為 post)<br><code>hexo new page categories</code> ( type 為 “categories” )<br><code>hexo new page tags</code> ( type 為 “tags” )</li>
+<li>一般文章撰寫時於文章 Front-matter 定義 分類 &#x2F; 標籤 屬性<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">Hexo</span> <span class="string">主題</span> <span class="bullet">-</span> <span class="string">NEXT</span> <span class="string">&amp;</span> <span class="string">新增文章搜尋功能</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2022-03-02 06:55:34</span></span><br><span class="line"><span class="attr">tags:</span> </span><br><span class="line"><span class="bullet">-</span> <span class="string">hexo</span></span><br><span class="line"><span class="attr">categories:</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">blog</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure></li>
+<li>開啟 Next 主題 menu 得以顯示於介面<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">home:</span> <span class="string">/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-home</span></span><br><span class="line">  <span class="comment"># about: /about/ || fa fa-user</span></span><br><span class="line">  <span class="attr">tags:</span> <span class="string">/tags/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-tags</span></span><br><span class="line">  <span class="attr">categories:</span> <span class="string">/categories/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-th</span></span><br><span class="line">  <span class="attr">archives:</span> <span class="string">/archives/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-archive</span></span><br><span class="line">  <span class="comment">#schedule: /schedule/ || fa fa-calendar</span></span><br><span class="line">  <span class="comment">#sitemap: /sitemap.xml || fa fa-sitemap</span></span><br><span class="line">  <span class="comment">#commonweal: /404/ || fa fa-heartbeat</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="新增-搜尋功能"><a href="#新增-搜尋功能" class="headerlink" title="新增 搜尋功能"></a>新增 搜尋功能</h3><ol>
+<li>下載套件 <code>npm install hexo-generator-searchdb --save</code></li>
+<li>根目錄 _config.xml 新增設定<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment">#Local Search / created by 2022-03-02</span></span><br><span class="line"><span class="attr">search:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">path:</span> <span class="string">search.xml</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">field:</span> <span class="string">post</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">format:</span> <span class="string">html</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">content:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure></li>
+<li>主題目錄 _config.xml 開啟 local_search 功能<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Local Search</span></span><br><span class="line"><span class="comment"># Dependencies: https://github.com/theme-next/hexo-generator-searchdb</span></span><br><span class="line"><span class="attr">local_search:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="新增-文章閱讀進度-功能"><a href="#新增-文章閱讀進度-功能" class="headerlink" title="新增 文章閱讀進度 功能"></a>新增 文章閱讀進度 功能</h3><p>將 scrollpercent 從 false 改成 true</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">back2top:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># Back to top in sidebar.</span></span><br><span class="line">  <span class="attr">sidebar:</span> <span class="literal">false</span></span><br><span class="line">  <span class="comment"># Scroll percent label in b2t button.</span></span><br><span class="line">  <span class="attr">scrollpercent:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<p>效果如下:</p>
+<p><img src="https://bnz05pap002files.storage.live.com/y4m1yGLaD3UGbwtXQPefduFnckR3CCidf2SWItddjqzSCA3KdyVLMXnZpx-If2Tl3tWkszjYeEMyotdRXWNIo_iQY_INtR5O0J48eqrMs_1nY9WVie0VKY4hJXYo208GuzkoFHi84ZTce-qnv7Bb6I_Hql7VNLpeIWiQOmib2hAYjdqnt-aDFR2FmDO-C_PuLxP?width=233&height=256&cropmode=none" alt="hexo_page_scrollpercent.png"></p>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
+<li><a href="https://github.com/theme-next/hexo-generator-searchdb">Github Repository : hexo-generator-searchdb</a></li>
+<li><a href="https://ithelp.ithome.com.tw/articles/10248214">(20) 試著學 Hexo - NexT 主題篇 - 可以安裝的套件</a></li>
+<li><a href="https://blog.csdn.net/as480133937/article/details/100138838">Hexo-Next 主题博客个性化配置超详细，超全面(两万字)</a></li>
+<li><a href="https://ithelp.ithome.com.tw/articles/10257569">建立自己Blog系列(三) Hexo next theme 介紹</a></li>
+<li><a href="https://github.com/theme-next/hexo-theme-next">Github Repository : hexo-theme-next</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>blog</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java Annotation(標註)</title>
+    <url>/2022/03/05/java-annotation/</url>
+    <content><![CDATA[<p>Java 從 JDK5 開使支援了 Annotation 功能，可以提供在編譯時期提示 or 執行時期讀取的資訊。</p>
+<span id="more"></span>
+
+<h3 id="標準標註"><a href="#標準標註" class="headerlink" title="標準標註"></a>標準標註</h3><ol>
+<li>@override : 提供 compiler 提醒被標註的 method 必須為 父類別 or 介面所定義之方法</li>
+<li>@Deprecated : 提供 compiler 提醒被標註的 method 已經過時，建議不要再呼叫它</li>
+<li>@SuppressWarnings: 抑制警告訊息 ( 可使用參數 value &#x3D; { args1, args2 …etc } 定義抑制警告類型 )</li>
+<li>@FunctionalInterface: 協助檢查 interface 是否滿足 lambda 的型態 ( 為 java8 時所新增 )</li>
+</ol>
+<h3 id="元標註-meta-annotation"><a href="#元標註-meta-annotation" class="headerlink" title="元標註(meta-annotation)"></a>元標註(meta-annotation)</h3><p>標註使用 meta-annotation 為其他 annotation 做說明<br>meta-annotation 種類如下:</p>
+<ol>
+<li>@Target: 限定 Annotation 使用位置 ( ElementType )</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ANNOTATION_TYPE: meta-annotation為此類型，用來修飾註解</span><br><span class="line">METHOD: 修飾 method EX: springMVC 的 <span class="meta">@GATEMAPPING</span></span><br><span class="line">TYPE: 修飾class, interface, <span class="keyword">enum</span>, annotation  EX: java8 的 <span class="meta">@FunctionalInterface</span></span><br><span class="line">FIELD: 修飾成員變數 EX: java.persistence 的 <span class="meta">@Column</span> </span><br><span class="line">PARAMETER: 修飾方法參數 EX: springMVC 的 <span class="meta">@PathVariable</span></span><br><span class="line">CONSTRUCTOR: 修飾構造器 EX: spring 的 <span class="meta">@Autowired</span></span><br><span class="line">LOCAL_VARIABLE: 修飾區域變數 EX: spring 檢核參數的 <span class="meta">@NotNull</span> 可以用在多個場域</span><br><span class="line">PACKAGE: 修飾 <span class="keyword">package</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>@Retention: 定義了 Annotation 生命週期 ( RetentionPolicy )</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">SOURCE: 只會出現在程式碼中，編譯後不會出現在class檔中 </span><br><span class="line">CLASS: 出現在程式碼中，且會編譯進class檔中，但運行期無任何效果 ( 此類型為 <span class="keyword">default</span> )</span><br><span class="line">RUNTIME: 從程式碼至到運行期間都會存在，可以使用 Reflection 機制取得 annotation 的訊息</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li><p>@Documented: 使用 javadoc 命令生成API檔案時，如要要將標注資料加入文檔，才需要加上此註解</p>
+</li>
+<li><p>@Inherited: 具有繼承性，代表子類別可以拿到父類別的註解訊息<br>※ 只有 class-level annotation 可以使用, method-level 則無法</p>
+</li>
+<li><p>@Repeatable (java1.8新增): 在 JDK8 之前，annotation 某個位置只能出現一次，不能重複使用；但這個功能可以讓 annotation 在同個地方出現多次</p>
+</li>
+</ol>
+<h3 id="自定義標註"><a href="#自定義標註" class="headerlink" title="自定義標註"></a>自定義標註</h3><ul>
+<li>需要使用 <em><strong>@interface</strong></em></li>
+<li>定義屬性，若命名為 value 時，使用時可省略屬性名稱</li>
+<li>屬性需有預設值時，可以使用 <em><strong>default</strong></em> 關鍵字</li>
+<li>欲在執行時期取得 標註資訊，可使用 <em><strong>java Reflection 機制</strong></em></li>
+</ul>
+<p>自定義 annotation 範例:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">@Target(ElementType.METHOD)</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> CustomAnnotation &#123;</span><br><span class="line"></span><br><span class="line">	String[] value();</span><br><span class="line"></span><br><span class="line">	String <span class="title function_">message</span><span class="params">()</span> <span class="keyword">default</span> <span class="string">&quot;none&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用一個 Main 方法 利用 Java Reflaction 取得 Annotation 的值</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">AnnotationMain</span> &#123;</span><br><span class="line">	</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> NoSuchMethodException, SecurityException &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="type">AnnotationMain</span> <span class="variable">main</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">AnnotationMain</span>();</span><br><span class="line">        main.test();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@CustomAnnotation(value = &#123;&quot;test&quot;, &quot;test2&quot;&#125;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">test</span><span class="params">()</span> <span class="keyword">throws</span> NoSuchMethodException, SecurityException &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 使用反射機制取得 method 上的標註</span></span><br><span class="line">        <span class="type">CustomAnnotation</span> <span class="variable">customAnnotation</span> <span class="operator">=</span> AnnotationMain.class.getMethod(<span class="string">&quot;test&quot;</span>).getAnnotation(CustomAnnotation.class);</span><br><span class="line">        </span><br><span class="line">        String[] values = customAnnotation.value();</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 取得 value</span></span><br><span class="line">        System.out.println(<span class="string">&quot;value:&quot;</span>);</span><br><span class="line">        <span class="keyword">for</span>(String value: values) </span><br><span class="line">            System.out.println(value);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 取得 messsage</span></span><br><span class="line">        System.out.println(<span class="string">&quot;message: &quot;</span> + customAnnotation.message());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>執行後會印出相對應的結果，印出 標註上的 value清單 &amp; message 的預設值 none</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">value:</span><br><span class="line">test</span><br><span class="line">test2</span><br><span class="line">message: none</span><br></pre></td></tr></table></figure>
+
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
+<li><a href="https://kucw.github.io/blog/2018/6/java-annotation/">古古’s Blog Java - annotation 的使用</a></li>
+<li><a href="https://openhome.cc/Gossip/Java/Annotation.html">常用標準標註</a></li>
+<li><a href="https://openhome.cc/Gossip/Java/CustomizeAnnotation.html">自訂標註</a></li>
+<li><a href="https://openhome.cc/Gossip/Java/ReadAnnotation.html">讀取標註資訊</a></li>
+<li><a href="https://openhome.cc/Gossip/CodeData/JDK8/Annotation.html">【JDK8】Annotation 功能增強</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>java</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>使用 utterances 在 Hexo 實現留言板功能</title>
     <url>/2022/03/04/hexo-message-board-utterances/</url>
     <content><![CDATA[<p>留言版在一般的部落格中一個常見的功能，既然使用Github製作了自己的部落格<br>順勢找了一些文章來新增這個功能</p>
@@ -216,153 +349,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Java Annotation(標註)</title>
-    <url>/2022/03/05/java-annotation/</url>
-    <content><![CDATA[<p>Java 從 JDK5 開使支援了 Annotation 功能，可以提供在編譯時期提示 or 執行時期讀取的資訊。</p>
-<span id="more"></span>
-
-<h3 id="標準標註"><a href="#標準標註" class="headerlink" title="標準標註"></a>標準標註</h3><ol>
-<li>@override : 提供 compiler 提醒被標註的 method 必須為 父類別 or 介面所定義之方法</li>
-<li>@Deprecated : 提供 compiler 提醒被標註的 method 已經過時，建議不要再呼叫它</li>
-<li>@SuppressWarnings: 抑制警告訊息 ( 可使用參數 value &#x3D; { args1, args2 …etc } 定義抑制警告類型 )</li>
-<li>@FunctionalInterface: 協助檢查 interface 是否滿足 lambda 的型態 ( 為 java8 時所新增 )</li>
-</ol>
-<h3 id="元標註-meta-annotation"><a href="#元標註-meta-annotation" class="headerlink" title="元標註(meta-annotation)"></a>元標註(meta-annotation)</h3><p>標註使用 meta-annotation 為其他 annotation 做說明<br>meta-annotation 種類如下:</p>
-<ol>
-<li>@Target: 限定 Annotation 使用位置 ( ElementType )</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ANNOTATION_TYPE: meta-annotation為此類型，用來修飾註解</span><br><span class="line">METHOD: 修飾 method EX: springMVC 的 <span class="meta">@GATEMAPPING</span></span><br><span class="line">TYPE: 修飾class, interface, <span class="keyword">enum</span>, annotation  EX: java8 的 <span class="meta">@FunctionalInterface</span></span><br><span class="line">FIELD: 修飾成員變數 EX: java.persistence 的 <span class="meta">@Column</span> </span><br><span class="line">PARAMETER: 修飾方法參數 EX: springMVC 的 <span class="meta">@PathVariable</span></span><br><span class="line">CONSTRUCTOR: 修飾構造器 EX: spring 的 <span class="meta">@Autowired</span></span><br><span class="line">LOCAL_VARIABLE: 修飾區域變數 EX: spring 檢核參數的 <span class="meta">@NotNull</span> 可以用在多個場域</span><br><span class="line">PACKAGE: 修飾 <span class="keyword">package</span></span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>@Retention: 定義了 Annotation 生命週期 ( RetentionPolicy )</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">SOURCE: 只會出現在程式碼中，編譯後不會出現在class檔中 </span><br><span class="line">CLASS: 出現在程式碼中，且會編譯進class檔中，但運行期無任何效果 ( 此類型為 <span class="keyword">default</span> )</span><br><span class="line">RUNTIME: 從程式碼至到運行期間都會存在，可以使用 Reflection 機制取得 annotation 的訊息</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li><p>@Documented: 使用 javadoc 命令生成API檔案時，如要要將標注資料加入文檔，才需要加上此註解</p>
-</li>
-<li><p>@Inherited: 具有繼承性，代表子類別可以拿到父類別的註解訊息<br>※ 只有 class-level annotation 可以使用, method-level 則無法</p>
-</li>
-<li><p>@Repeatable (java1.8新增): 在 JDK8 之前，annotation 某個位置只能出現一次，不能重複使用；但這個功能可以讓 annotation 在同個地方出現多次</p>
-</li>
-</ol>
-<h3 id="自定義標註"><a href="#自定義標註" class="headerlink" title="自定義標註"></a>自定義標註</h3><ul>
-<li>需要使用 <em><strong>@interface</strong></em></li>
-<li>定義屬性，若命名為 value 時，使用時可省略屬性名稱</li>
-<li>屬性需有預設值時，可以使用 <em><strong>default</strong></em> 關鍵字</li>
-<li>欲在執行時期取得 標註資訊，可使用 <em><strong>java Reflection 機制</strong></em></li>
-</ul>
-<p>自定義 annotation 範例:</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">@Target(ElementType.METHOD)</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> CustomAnnotation &#123;</span><br><span class="line"></span><br><span class="line">	String[] value();</span><br><span class="line"></span><br><span class="line">	String <span class="title function_">message</span><span class="params">()</span> <span class="keyword">default</span> <span class="string">&quot;none&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>使用一個 Main 方法 利用 Java Reflaction 取得 Annotation 的值</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">AnnotationMain</span> &#123;</span><br><span class="line">	</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> NoSuchMethodException, SecurityException &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="type">AnnotationMain</span> <span class="variable">main</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">AnnotationMain</span>();</span><br><span class="line">        main.test();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@CustomAnnotation(value = &#123;&quot;test&quot;, &quot;test2&quot;&#125;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">test</span><span class="params">()</span> <span class="keyword">throws</span> NoSuchMethodException, SecurityException &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 使用反射機制取得 method 上的標註</span></span><br><span class="line">        <span class="type">CustomAnnotation</span> <span class="variable">customAnnotation</span> <span class="operator">=</span> AnnotationMain.class.getMethod(<span class="string">&quot;test&quot;</span>).getAnnotation(CustomAnnotation.class);</span><br><span class="line">        </span><br><span class="line">        String[] values = customAnnotation.value();</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 取得 value</span></span><br><span class="line">        System.out.println(<span class="string">&quot;value:&quot;</span>);</span><br><span class="line">        <span class="keyword">for</span>(String value: values) </span><br><span class="line">            System.out.println(value);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 取得 messsage</span></span><br><span class="line">        System.out.println(<span class="string">&quot;message: &quot;</span> + customAnnotation.message());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>執行後會印出相對應的結果，印出 標註上的 value清單 &amp; message 的預設值 none</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">value:</span><br><span class="line">test</span><br><span class="line">test2</span><br><span class="line">message: none</span><br></pre></td></tr></table></figure>
-
-<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
-<li><a href="https://kucw.github.io/blog/2018/6/java-annotation/">古古’s Blog Java - annotation 的使用</a></li>
-<li><a href="https://openhome.cc/Gossip/Java/Annotation.html">常用標準標註</a></li>
-<li><a href="https://openhome.cc/Gossip/Java/CustomizeAnnotation.html">自訂標註</a></li>
-<li><a href="https://openhome.cc/Gossip/Java/ReadAnnotation.html">讀取標註資訊</a></li>
-<li><a href="https://openhome.cc/Gossip/CodeData/JDK8/Annotation.html">【JDK8】Annotation 功能增強</a></li>
-</ol>
-]]></content>
-      <categories>
-        <category>java</category>
-      </categories>
-      <tags>
-        <tag>java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hexo 主題 - NEXT &amp; 新增文章搜尋功能</title>
-    <url>/2022/03/02/hexo-next-theme/</url>
-    <content><![CDATA[<p>紀錄一下，Blog中選定的主題 Next 的安裝經過 &amp; 新增搜尋功能</p>
-<span id="more"></span>
-
-<h3 id="安裝主題-Next"><a href="#安裝主題-Next" class="headerlink" title="安裝主題 Next"></a>安裝主題 Next</h3><ol>
-<li><p>Github clone hexo-theme-next project - <a href="https://github.com/theme-next/hexo-theme-next">點我前往</a></p>
-</li>
-<li><p>在 themes folder 底下建立 next 資料夾並將上述下載的資料 copy 進該資料夾</p>
-</li>
-<li><p>修改 根目錄 的 _config.xml 內容，從預設的 landscape 改成 next</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Extensions</span></span><br><span class="line"><span class="comment">## Plugins: https://hexo.io/plugins/</span></span><br><span class="line"><span class="comment">## Themes: https://hexo.io/themes/</span></span><br><span class="line"><span class="attr">theme:</span> <span class="string">next</span></span><br></pre></td></tr></table></figure></li>
-<li><p>設定檔有2個，一個是配製 Hexo設定，另一個是針對 Next 主題進行配置</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="string">根目錄:</span> <span class="string">_config.yml</span></span><br><span class="line"><span class="string">Next主題:</span> <span class="string">themes/_config.yml</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Next 主題底下有 4種樣式 (設定於 themes 底下的 _config.xml)</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Schemes</span></span><br><span class="line"><span class="comment">#scheme: Muse</span></span><br><span class="line"><span class="attr">scheme:</span> <span class="string">Mist</span></span><br><span class="line"><span class="comment">#scheme: Pisces</span></span><br><span class="line"><span class="comment">#scheme: Gemini</span></span><br></pre></td></tr></table></figure></li>
-</ol>
-<h3 id="開啟-分類-x2F-標籤-功能"><a href="#開啟-分類-x2F-標籤-功能" class="headerlink" title="開啟 分類 &#x2F; 標籤 功能"></a>開啟 分類 &#x2F; 標籤 功能</h3><ul>
-<li>新增 layout 為 page 的文章 ( 一般文章預設為 post)<br><code>hexo new page categories</code> ( type 為 “categories” )<br><code>hexo new page tags</code> ( type 為 “tags” )</li>
-<li>一般文章撰寫時於文章 Front-matter 定義 分類 &#x2F; 標籤 屬性<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">Hexo</span> <span class="string">主題</span> <span class="bullet">-</span> <span class="string">NEXT</span> <span class="string">&amp;</span> <span class="string">新增文章搜尋功能</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2022-03-02 06:55:34</span></span><br><span class="line"><span class="attr">tags:</span> </span><br><span class="line"><span class="bullet">-</span> <span class="string">hexo</span></span><br><span class="line"><span class="attr">categories:</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">blog</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure></li>
-<li>開啟 Next 主題 menu 得以顯示於介面<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">home:</span> <span class="string">/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-home</span></span><br><span class="line">  <span class="comment"># about: /about/ || fa fa-user</span></span><br><span class="line">  <span class="attr">tags:</span> <span class="string">/tags/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-tags</span></span><br><span class="line">  <span class="attr">categories:</span> <span class="string">/categories/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-th</span></span><br><span class="line">  <span class="attr">archives:</span> <span class="string">/archives/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-archive</span></span><br><span class="line">  <span class="comment">#schedule: /schedule/ || fa fa-calendar</span></span><br><span class="line">  <span class="comment">#sitemap: /sitemap.xml || fa fa-sitemap</span></span><br><span class="line">  <span class="comment">#commonweal: /404/ || fa fa-heartbeat</span></span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="新增-搜尋功能"><a href="#新增-搜尋功能" class="headerlink" title="新增 搜尋功能"></a>新增 搜尋功能</h3><ol>
-<li>下載套件 <code>npm install hexo-generator-searchdb --save</code></li>
-<li>根目錄 _config.xml 新增設定<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment">#Local Search / created by 2022-03-02</span></span><br><span class="line"><span class="attr">search:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">path:</span> <span class="string">search.xml</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">field:</span> <span class="string">post</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">format:</span> <span class="string">html</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">content:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure></li>
-<li>主題目錄 _config.xml 開啟 local_search 功能<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Local Search</span></span><br><span class="line"><span class="comment"># Dependencies: https://github.com/theme-next/hexo-generator-searchdb</span></span><br><span class="line"><span class="attr">local_search:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure></li>
-</ol>
-<h3 id="新增-文章閱讀進度-功能"><a href="#新增-文章閱讀進度-功能" class="headerlink" title="新增 文章閱讀進度 功能"></a>新增 文章閱讀進度 功能</h3><p>將 scrollpercent 從 false 改成 true</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">back2top:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># Back to top in sidebar.</span></span><br><span class="line">  <span class="attr">sidebar:</span> <span class="literal">false</span></span><br><span class="line">  <span class="comment"># Scroll percent label in b2t button.</span></span><br><span class="line">  <span class="attr">scrollpercent:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-<p>效果如下:</p>
-<p><img src="https://bnz05pap002files.storage.live.com/y4m1yGLaD3UGbwtXQPefduFnckR3CCidf2SWItddjqzSCA3KdyVLMXnZpx-If2Tl3tWkszjYeEMyotdRXWNIo_iQY_INtR5O0J48eqrMs_1nY9WVie0VKY4hJXYo208GuzkoFHi84ZTce-qnv7Bb6I_Hql7VNLpeIWiQOmib2hAYjdqnt-aDFR2FmDO-C_PuLxP?width=233&height=256&cropmode=none" alt="hexo_page_scrollpercent.png"></p>
-<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
-<li><a href="https://github.com/theme-next/hexo-generator-searchdb">Github Repository : hexo-generator-searchdb</a></li>
-<li><a href="https://ithelp.ithome.com.tw/articles/10248214">(20) 試著學 Hexo - NexT 主題篇 - 可以安裝的套件</a></li>
-<li><a href="https://blog.csdn.net/as480133937/article/details/100138838">Hexo-Next 主题博客个性化配置超详细，超全面(两万字)</a></li>
-<li><a href="https://ithelp.ithome.com.tw/articles/10257569">建立自己Blog系列(三) Hexo next theme 介紹</a></li>
-<li><a href="https://github.com/theme-next/hexo-theme-next">Github Repository : hexo-theme-next</a></li>
-</ol>
-]]></content>
-      <categories>
-        <category>blog</category>
-      </categories>
-      <tags>
-        <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Springboot 讀取 yaml 設定檔參數</title>
-    <url>/2022/03/12/springboot-load-yaml-file/</url>
-    <content><![CDATA[<p>讀取客製化設定檔參數，會需要使用 @PropertySource annotation，但該標註只適用於 properties，<br>如果副檔名為 YAML 檔案，會無法解析而造成錯誤，如果要讀取該類型檔案，需要做出以下調整:</p>
-<span id="more"></span>
-
-<h3 id="前置作業-amp-環境"><a href="#前置作業-amp-環境" class="headerlink" title="前置作業 &amp; 環境"></a>前置作業 &amp; 環境</h3><ul>
-<li>Springboot 2.5.2</li>
-<li>maven 引入 web &amp; test dependencies<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line">&lt;dependencies&gt;</span><br><span class="line">  </span><br><span class="line">  	&lt;!-- web --&gt;</span><br><span class="line">  	&lt;dependency&gt;</span><br><span class="line">		&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">		&lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</span><br><span class="line">	&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">	&lt;!-- test framework --&gt;</span><br><span class="line">	&lt;dependency&gt;</span><br><span class="line">		&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">		&lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;</span><br><span class="line">		&lt;scope&gt;test&lt;/scope&gt;</span><br><span class="line">	&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">&lt;/dependencies&gt;</span><br><span class="line">...	</span><br></pre></td></tr></table></figure></li>
-<li>建立客製化的 properites : ymlProject.yml 在 <code>src/main/resources</code> 底下<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">project:</span></span><br><span class="line">  <span class="attr">yamlTest:</span> <span class="string">yamlString</span></span><br></pre></td></tr></table></figure>
-<img src="https://bnz05pap002files.storage.live.com/y4mpxMFJWJBu05lfnSinkVXrUr8aA0AsajHI0gUXWTuEGN6ddymE94uSS9LTxc0CiPTIJ0QVPK5UCTI_EWhWyhqVthH2PVAxUAg8wPiBHkU8T_juUfFm1wZSzhJKuAO1bKyCT6c1CK_1ygN_edsh4YkpWAf9NwuTYsts9tzVtYdArLgaVV-xzP-uMsi_iIeBJRV?width=256&height=150&cropmode=none" alt="setting.png"></li>
-</ul>
-<h3 id="實作程式"><a href="#實作程式" class="headerlink" title="實作程式"></a>實作程式</h3><p>Springboot 提供 </p>
-<ul>
-<li><code>YamlPropertiesFactoryBean</code> 將 YAML 轉成 properties </li>
-<li><code>YamlMapFactoryBean</code> 將 YAML 轉成 Map </li>
-<li><code>YamlPropertySourceLoader</code> 使用 @PropertySource load YAML 檔案<br>本篇使用 <code>YamlPropertiesFactoryBean</code> 將 YAML 轉成 properties 並照原 properties 的方法解析</li>
-</ul>
-<ol>
-<li>覆寫 PropertySourceFactory 使其可以讀取 yaml 格式資料<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 覆寫 propertySource 讓其可以讀取 yaml 資訊</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> oscar51011</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2022年3月12日</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">YamlPropertySourceFactory</span> <span class="keyword">implements</span> <span class="title class_">PropertySourceFactory</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="keyword">public</span> PropertySource&lt;?&gt; createPropertySource(String name, EncodedResource resource) <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">		</span><br><span class="line">        <span class="comment">// spring 提供套件使 YAML 加載成 properties 格式</span></span><br><span class="line">		<span class="type">YamlPropertiesFactoryBean</span> <span class="variable">factory</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">YamlPropertiesFactoryBean</span>();</span><br><span class="line">        factory.setResources(resource.getResource());</span><br><span class="line"></span><br><span class="line">        <span class="type">Properties</span> <span class="variable">properties</span> <span class="operator">=</span> factory.getObject();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">PropertiesPropertySource</span>(resource.getResource().getFilename(), properties);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li>使用 @Configuration &amp; @PropertySource 取得自定義yaml檔案的資料<br> factory 置換 客製化的解析設定檔方式 ; defalut 為 <strong>DefaultPropertySourceFactory</strong><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 讀取自定義 yaml 檔格式內容</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> oscar51011</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2022年3月12日</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@PropertySource(value = &quot;classpath:ymlProject.yml&quot;, factory = YamlPropertySourceFactory.class)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ProjectYamlConfig</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Value(&quot;$&#123;project.yamlTest&#125;&quot;)</span></span><br><span class="line">	<span class="keyword">private</span> String parameter;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> String <span class="title function_">getParameter</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> parameter;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setParameter</span><span class="params">(String parameter)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.parameter = parameter;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ol>
-<h3 id="使用整合測試驗證"><a href="#使用整合測試驗證" class="headerlink" title="使用整合測試驗證"></a>使用整合測試驗證</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@SpringBootTest(classes = &#123;SpringMvcApplication.class&#125;)</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">DemoYamlSettingTest</span> &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> ProjectYamlConfig projectYamlConfig;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="keyword">void</span> <span class="title function_">testYamlSettingCase</span><span class="params">()</span> &#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;load @Value:&quot;</span> + projectYamlConfig.getParameter());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="https://bnz05pap002files.storage.live.com/y4m2FvKxO08tEtm-PWnzkNw38EM956UqWyrtaqvfw6RdCi7Hh1VJAltWqJGfra7k-ibhes5jM83TijHiCC2eXuZlSWvY-KGSu1qI3kuGfPaxv9c1VeAINTBdwqlIG0qB8RY_Fh3pqxvH_H68xWW6lNXMMK0Bn4LLF4TaSZBx8jnfAn1cUP39VGzVx3423kbr6kA?width=660&height=268&cropmode=none" alt="result.png"></p>
-<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
-<li><a href="https://www.baeldung.com/spring-yaml-propertysource">@PropertySource with YAML Files in Spring Boot</a></li>
-<li><a href="https://matthung0807.blogspot.com/2020/10/spring-boot-propertysource-load-yaml.html">Spring Boot @PropertySource load yaml</a></li>
-<li><a href="https://kknews.cc/code/j2ymvpy.html">Spring Boot中通過@PropertySource註解讀取yaml或yml配置文件</a></li>
-<li><a href="https://www.cnblogs.com/rim99/p/8452175.html">两种SpringBoot加载YML配置文件的方法</a></li>
-</ol>
-]]></content>
-      <categories>
-        <category>springboot</category>
-      </categories>
-      <tags>
-        <tag>springboot</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Springboot 讀取 properties 設定檔參數</title>
     <url>/2022/03/11/springboot-load-properties-file/</url>
     <content><![CDATA[<p>Springboot 在 讀取設定檔參數有 3 種方式 ( 格式有 properties &amp; yml 本篇使用 properties )<br>( Springboot 預設配置檔案位置在 <code>src/main/resources/application.properties</code>)</p>
@@ -408,27 +394,41 @@
       </tags>
   </entry>
   <entry>
-    <title>Hexo 調整資料夾原始碼目錄結構</title>
-    <url>/2022/03/13/hexo-change-page-directory/</url>
-    <content><![CDATA[<p>在預設的 Hexo 設定中，會將新的文章檔案放置於 <code>_posts</code> 的資料夾底下<br>隨的時間的推移，該資料夾會變得越來越雜亂無法管理，因此找了一下網路<br>看看有沒有甚麼方法可以做個簡單區隔，因此有的以下的調整:</p>
+    <title>Springboot 讀取 yaml 設定檔參數</title>
+    <url>/2022/03/12/springboot-load-yaml-file/</url>
+    <content><![CDATA[<p>讀取客製化設定檔參數，會需要使用 @PropertySource annotation，但該標註只適用於 properties，<br>如果副檔名為 YAML 檔案，會無法解析而造成錯誤，如果要讀取該類型檔案，需要做出以下調整:</p>
 <span id="more"></span>
-<h3 id="預設設定"><a href="#預設設定" class="headerlink" title="預設設定"></a>預設設定</h3><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Writing</span></span><br><span class="line"><span class="attr">new_post_name:</span> <span class="string">:title.md</span> <span class="comment"># File name of new posts</span></span><br><span class="line"><span class="attr">default_layout:</span> <span class="string">post</span></span><br><span class="line"><span class="attr">titlecase:</span> <span class="literal">false</span> <span class="comment"># Transform title into </span></span><br><span class="line"><span class="string">...</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="調整後設定"><a href="#調整後設定" class="headerlink" title="調整後設定"></a>調整後設定</h3><p>產生的文章名稱使用 :year :month 依照年月的區分，就不會把所有的文章都全部擺在 <code>_post</code> 底下</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Writing</span></span><br><span class="line"><span class="attr">new_post_name:</span> <span class="string">:year/:month/:title.md</span> <span class="comment"># File name of new posts</span></span><br><span class="line"><span class="attr">default_layout:</span> <span class="string">post</span></span><br><span class="line"><span class="attr">titlecase:</span> <span class="literal">false</span> <span class="comment"># Transform title into </span></span><br><span class="line"><span class="string">...</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="驗證結果"><a href="#驗證結果" class="headerlink" title="驗證結果"></a>驗證結果</h3><p>原本的 <code>_post</code> 底下長出了年分&amp;月份，依照發佈時間即可快速分類找到當時所寫的文章</p>
-<p><img src="https://bnz05pap002files.storage.live.com/y4mg2gM94oI68TB6d4KRCHRGcmssTGjYIbPMsElG3Jdav9b3HE9SiSojZUNw5WnvjWEdh8OtUX-b2JStw0q_4_oUb7ZdwxZ6t5FEcIxUMrdKJlhHwsp_EVkva03IYKKA9m6gubKmSJch7Hag0VOm7h01dTGmvE-bkLm3IXhks-2dy-MJk9RwbzMGJIWvMDHiKx8?width=250&height=256&cropmode=none" alt="hexo-directory"></p>
-<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference:"></a>Reference:</h3><ol>
-<li><a href="https://carlos.mynet.tw/%E4%BD%BF%E7%94%A8%E8%B3%87%E6%96%99%E5%A4%BE%E5%88%86%E5%B1%A4%E7%AE%A1%E7%90%86hexo%E6%96%87%E7%AB%A0%E4%B8%94%E4%B8%8D%E5%BD%B1%E9%9F%BF%E6%B0%B8%E4%B9%85%E9%80%A3%E7%B5%90/">使用資料夾分層管理Hexo文章且不影響永久連結</a></li>
-<li><a href="https://mouson.im/Notes/Hexo/make-hexo-post-category-by-folder/">Hexo - 使文章依文章分類為資料夾名稱置放</a></li>
+<h3 id="前置作業-amp-環境"><a href="#前置作業-amp-環境" class="headerlink" title="前置作業 &amp; 環境"></a>前置作業 &amp; 環境</h3><ul>
+<li>Springboot 2.5.2</li>
+<li>maven 引入 web &amp; test dependencies<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line">&lt;dependencies&gt;</span><br><span class="line">  </span><br><span class="line">  	&lt;!-- web --&gt;</span><br><span class="line">  	&lt;dependency&gt;</span><br><span class="line">		&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">		&lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</span><br><span class="line">	&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">	&lt;!-- test framework --&gt;</span><br><span class="line">	&lt;dependency&gt;</span><br><span class="line">		&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">		&lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;</span><br><span class="line">		&lt;scope&gt;test&lt;/scope&gt;</span><br><span class="line">	&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">&lt;/dependencies&gt;</span><br><span class="line">...	</span><br></pre></td></tr></table></figure></li>
+<li>建立客製化的 properites : ymlProject.yml 在 <code>src/main/resources</code> 底下<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">project:</span></span><br><span class="line">  <span class="attr">yamlTest:</span> <span class="string">yamlString</span></span><br></pre></td></tr></table></figure>
+<img src="https://bnz05pap002files.storage.live.com/y4mpxMFJWJBu05lfnSinkVXrUr8aA0AsajHI0gUXWTuEGN6ddymE94uSS9LTxc0CiPTIJ0QVPK5UCTI_EWhWyhqVthH2PVAxUAg8wPiBHkU8T_juUfFm1wZSzhJKuAO1bKyCT6c1CK_1ygN_edsh4YkpWAf9NwuTYsts9tzVtYdArLgaVV-xzP-uMsi_iIeBJRV?width=256&height=150&cropmode=none" alt="setting.png"></li>
+</ul>
+<h3 id="實作程式"><a href="#實作程式" class="headerlink" title="實作程式"></a>實作程式</h3><p>Springboot 提供 </p>
+<ul>
+<li><code>YamlPropertiesFactoryBean</code> 將 YAML 轉成 properties </li>
+<li><code>YamlMapFactoryBean</code> 將 YAML 轉成 Map </li>
+<li><code>YamlPropertySourceLoader</code> 使用 @PropertySource load YAML 檔案<br>本篇使用 <code>YamlPropertiesFactoryBean</code> 將 YAML 轉成 properties 並照原 properties 的方法解析</li>
+</ul>
+<ol>
+<li>覆寫 PropertySourceFactory 使其可以讀取 yaml 格式資料<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 覆寫 propertySource 讓其可以讀取 yaml 資訊</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> oscar51011</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2022年3月12日</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">YamlPropertySourceFactory</span> <span class="keyword">implements</span> <span class="title class_">PropertySourceFactory</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="keyword">public</span> PropertySource&lt;?&gt; createPropertySource(String name, EncodedResource resource) <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">		</span><br><span class="line">        <span class="comment">// spring 提供套件使 YAML 加載成 properties 格式</span></span><br><span class="line">		<span class="type">YamlPropertiesFactoryBean</span> <span class="variable">factory</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">YamlPropertiesFactoryBean</span>();</span><br><span class="line">        factory.setResources(resource.getResource());</span><br><span class="line"></span><br><span class="line">        <span class="type">Properties</span> <span class="variable">properties</span> <span class="operator">=</span> factory.getObject();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">PropertiesPropertySource</span>(resource.getResource().getFilename(), properties);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>使用 @Configuration &amp; @PropertySource 取得自定義yaml檔案的資料<br> factory 置換 客製化的解析設定檔方式 ; defalut 為 <strong>DefaultPropertySourceFactory</strong><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 讀取自定義 yaml 檔格式內容</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> oscar51011</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2022年3月12日</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@PropertySource(value = &quot;classpath:ymlProject.yml&quot;, factory = YamlPropertySourceFactory.class)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ProjectYamlConfig</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Value(&quot;$&#123;project.yamlTest&#125;&quot;)</span></span><br><span class="line">	<span class="keyword">private</span> String parameter;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> String <span class="title function_">getParameter</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> parameter;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setParameter</span><span class="params">(String parameter)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.parameter = parameter;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="使用整合測試驗證"><a href="#使用整合測試驗證" class="headerlink" title="使用整合測試驗證"></a>使用整合測試驗證</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@SpringBootTest(classes = &#123;SpringMvcApplication.class&#125;)</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">DemoYamlSettingTest</span> &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> ProjectYamlConfig projectYamlConfig;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="keyword">void</span> <span class="title function_">testYamlSettingCase</span><span class="params">()</span> &#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;load @Value:&quot;</span> + projectYamlConfig.getParameter());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://bnz05pap002files.storage.live.com/y4m2FvKxO08tEtm-PWnzkNw38EM956UqWyrtaqvfw6RdCi7Hh1VJAltWqJGfra7k-ibhes5jM83TijHiCC2eXuZlSWvY-KGSu1qI3kuGfPaxv9c1VeAINTBdwqlIG0qB8RY_Fh3pqxvH_H68xWW6lNXMMK0Bn4LLF4TaSZBx8jnfAn1cUP39VGzVx3423kbr6kA?width=660&height=268&cropmode=none" alt="result.png"></p>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
+<li><a href="https://www.baeldung.com/spring-yaml-propertysource">@PropertySource with YAML Files in Spring Boot</a></li>
+<li><a href="https://matthung0807.blogspot.com/2020/10/spring-boot-propertysource-load-yaml.html">Spring Boot @PropertySource load yaml</a></li>
+<li><a href="https://kknews.cc/code/j2ymvpy.html">Spring Boot中通過@PropertySource註解讀取yaml或yml配置文件</a></li>
+<li><a href="https://www.cnblogs.com/rim99/p/8452175.html">两种SpringBoot加载YML配置文件的方法</a></li>
 </ol>
 ]]></content>
       <categories>
-        <category>blog</category>
+        <category>springboot</category>
       </categories>
       <tags>
-        <tag>hexo</tag>
+        <tag>springboot</tag>
       </tags>
   </entry>
   <entry>
