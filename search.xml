@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Hexo 調整資料夾原始碼目錄結構</title>
+    <url>/2022/03/13/hexo-change-page-directory/</url>
+    <content><![CDATA[<p>在預設的 Hexo 設定中，會將新的文章檔案放置於 <code>_posts</code> 的資料夾底下<br>隨的時間的推移，該資料夾會變得越來越雜亂無法管理，因此找了一下網路<br>看看有沒有甚麼方法可以做個簡單區隔，因此有的以下的調整:</p>
+<span id="more"></span>
+<h3 id="預設設定-根目錄的-config-yml"><a href="#預設設定-根目錄的-config-yml" class="headerlink" title="預設設定(根目錄的 _config.yml)"></a>預設設定(根目錄的 _config.yml)</h3><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Writing</span></span><br><span class="line"><span class="attr">new_post_name:</span> <span class="string">:title.md</span> <span class="comment"># File name of new posts</span></span><br><span class="line"><span class="attr">default_layout:</span> <span class="string">post</span></span><br><span class="line"><span class="attr">titlecase:</span> <span class="literal">false</span> <span class="comment"># Transform title into </span></span><br><span class="line"><span class="string">...</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="調整後設定-根目錄的-config-yml"><a href="#調整後設定-根目錄的-config-yml" class="headerlink" title="調整後設定(根目錄的 _config.yml)"></a>調整後設定(根目錄的 _config.yml)</h3><p>產生的文章名稱使用 :year :month 依照年月的區分，就不會把所有的文章都全部擺在 <code>_post</code> 底下</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Writing</span></span><br><span class="line"><span class="attr">new_post_name:</span> <span class="string">:year/:month/:title.md</span> <span class="comment"># File name of new posts</span></span><br><span class="line"><span class="attr">default_layout:</span> <span class="string">post</span></span><br><span class="line"><span class="attr">titlecase:</span> <span class="literal">false</span> <span class="comment"># Transform title into </span></span><br><span class="line"><span class="string">...</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="驗證結果"><a href="#驗證結果" class="headerlink" title="驗證結果"></a>驗證結果</h3><p>原本的 <code>_post</code> 底下長出了年分&amp;月份，依照發佈時間即可快速分類找到當時所寫的文章</p>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mg2gM94oI68TB6d4KRCHRGcmssTGjYIbPMsElG3Jdav9b3HE9SiSojZUNw5WnvjWEdh8OtUX-b2JStw0q_4_oUb7ZdwxZ6t5FEcIxUMrdKJlhHwsp_EVkva03IYKKA9m6gubKmSJch7Hag0VOm7h01dTGmvE-bkLm3IXhks-2dy-MJk9RwbzMGJIWvMDHiKx8?width=250&height=256&cropmode=none" alt="hexo-directory"></p>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference:"></a>Reference:</h3><ol>
+<li><a href="https://carlos.mynet.tw/%E4%BD%BF%E7%94%A8%E8%B3%87%E6%96%99%E5%A4%BE%E5%88%86%E5%B1%A4%E7%AE%A1%E7%90%86hexo%E6%96%87%E7%AB%A0%E4%B8%94%E4%B8%8D%E5%BD%B1%E9%9F%BF%E6%B0%B8%E4%B9%85%E9%80%A3%E7%B5%90/">使用資料夾分層管理Hexo文章且不影響永久連結</a></li>
+<li><a href="https://mouson.im/Notes/Hexo/make-hexo-post-category-by-folder/">Hexo - 使文章依文章分類為資料夾名稱置放</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>blog</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hexo 備份</title>
     <url>/2022/03/12/hexo-git-backup/</url>
     <content><![CDATA[<p>使用 Hexo 撰寫文章，使用 <code>hexo generate</code> 時，會將 markdown 轉換成 html<br>在 <code>hexo deploy</code> 時會把靜態資源上傳到 github ，但並不會把 .md 檔案上傳<br>這樣如果撰寫的電腦出了問題，資料就會不覆存在。</p>
@@ -28,30 +52,6 @@
 <li><a href="https://github.com/coneycode/hexo-git-backup">Github: hexo-git-backup</a></li>
 <li><a href="http://www.xiaoliblog.cn/page/hexobackup.html">hexo-git-backup 博客备份及恢复</a></li>
 <li><a href="https://cheng-yi-ting.github.io/2020/02/08/2020-02-08-HexoBackup/">使用git分支保存hexo博客源码到github</a></li>
-</ol>
-]]></content>
-      <categories>
-        <category>blog</category>
-      </categories>
-      <tags>
-        <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hexo 調整資料夾原始碼目錄結構</title>
-    <url>/2022/03/13/hexo-change-page-directory/</url>
-    <content><![CDATA[<p>在預設的 Hexo 設定中，會將新的文章檔案放置於 <code>_posts</code> 的資料夾底下<br>隨的時間的推移，該資料夾會變得越來越雜亂無法管理，因此找了一下網路<br>看看有沒有甚麼方法可以做個簡單區隔，因此有的以下的調整:</p>
-<span id="more"></span>
-<h3 id="預設設定-根目錄的-config-yml"><a href="#預設設定-根目錄的-config-yml" class="headerlink" title="預設設定(根目錄的 _config.yml)"></a>預設設定(根目錄的 _config.yml)</h3><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Writing</span></span><br><span class="line"><span class="attr">new_post_name:</span> <span class="string">:title.md</span> <span class="comment"># File name of new posts</span></span><br><span class="line"><span class="attr">default_layout:</span> <span class="string">post</span></span><br><span class="line"><span class="attr">titlecase:</span> <span class="literal">false</span> <span class="comment"># Transform title into </span></span><br><span class="line"><span class="string">...</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="調整後設定-根目錄的-config-yml"><a href="#調整後設定-根目錄的-config-yml" class="headerlink" title="調整後設定(根目錄的 _config.yml)"></a>調整後設定(根目錄的 _config.yml)</h3><p>產生的文章名稱使用 :year :month 依照年月的區分，就不會把所有的文章都全部擺在 <code>_post</code> 底下</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Writing</span></span><br><span class="line"><span class="attr">new_post_name:</span> <span class="string">:year/:month/:title.md</span> <span class="comment"># File name of new posts</span></span><br><span class="line"><span class="attr">default_layout:</span> <span class="string">post</span></span><br><span class="line"><span class="attr">titlecase:</span> <span class="literal">false</span> <span class="comment"># Transform title into </span></span><br><span class="line"><span class="string">...</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="驗證結果"><a href="#驗證結果" class="headerlink" title="驗證結果"></a>驗證結果</h3><p>原本的 <code>_post</code> 底下長出了年分&amp;月份，依照發佈時間即可快速分類找到當時所寫的文章</p>
-<p><img src="https://bnz05pap002files.storage.live.com/y4mg2gM94oI68TB6d4KRCHRGcmssTGjYIbPMsElG3Jdav9b3HE9SiSojZUNw5WnvjWEdh8OtUX-b2JStw0q_4_oUb7ZdwxZ6t5FEcIxUMrdKJlhHwsp_EVkva03IYKKA9m6gubKmSJch7Hag0VOm7h01dTGmvE-bkLm3IXhks-2dy-MJk9RwbzMGJIWvMDHiKx8?width=250&height=256&cropmode=none" alt="hexo-directory"></p>
-<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference:"></a>Reference:</h3><ol>
-<li><a href="https://carlos.mynet.tw/%E4%BD%BF%E7%94%A8%E8%B3%87%E6%96%99%E5%A4%BE%E5%88%86%E5%B1%A4%E7%AE%A1%E7%90%86hexo%E6%96%87%E7%AB%A0%E4%B8%94%E4%B8%8D%E5%BD%B1%E9%9F%BF%E6%B0%B8%E4%B9%85%E9%80%A3%E7%B5%90/">使用資料夾分層管理Hexo文章且不影響永久連結</a></li>
-<li><a href="https://mouson.im/Notes/Hexo/make-hexo-post-category-by-folder/">Hexo - 使文章依文章分類為資料夾名稱置放</a></li>
 </ol>
 ]]></content>
       <categories>
@@ -100,118 +100,6 @@
 <li><a href="https://blog.csdn.net/as480133937/article/details/100138838">Hexo-Next 主题博客个性化配置超详细，超全面(两万字)</a></li>
 <li><a href="https://ithelp.ithome.com.tw/articles/10257569">建立自己Blog系列(三) Hexo next theme 介紹</a></li>
 <li><a href="https://github.com/theme-next/hexo-theme-next">Github Repository : hexo-theme-next</a></li>
-</ol>
-]]></content>
-      <categories>
-        <category>blog</category>
-      </categories>
-      <tags>
-        <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java Annotation(標註)</title>
-    <url>/2022/03/05/java-annotation/</url>
-    <content><![CDATA[<p>Java 從 JDK5 開使支援了 Annotation 功能，可以提供在編譯時期提示 or 執行時期讀取的資訊。</p>
-<span id="more"></span>
-
-<h3 id="標準標註"><a href="#標準標註" class="headerlink" title="標準標註"></a>標準標註</h3><ol>
-<li>@override : 提供 compiler 提醒被標註的 method 必須為 父類別 or 介面所定義之方法</li>
-<li>@Deprecated : 提供 compiler 提醒被標註的 method 已經過時，建議不要再呼叫它</li>
-<li>@SuppressWarnings: 抑制警告訊息 ( 可使用參數 value &#x3D; { args1, args2 …etc } 定義抑制警告類型 )</li>
-<li>@FunctionalInterface: 協助檢查 interface 是否滿足 lambda 的型態 ( 為 java8 時所新增 )</li>
-</ol>
-<h3 id="元標註-meta-annotation"><a href="#元標註-meta-annotation" class="headerlink" title="元標註(meta-annotation)"></a>元標註(meta-annotation)</h3><p>標註使用 meta-annotation 為其他 annotation 做說明<br>meta-annotation 種類如下:</p>
-<ol>
-<li>@Target: 限定 Annotation 使用位置 ( ElementType )</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ANNOTATION_TYPE: meta-annotation為此類型，用來修飾註解</span><br><span class="line">METHOD: 修飾 method EX: springMVC 的 <span class="meta">@GATEMAPPING</span></span><br><span class="line">TYPE: 修飾class, interface, <span class="keyword">enum</span>, annotation  EX: java8 的 <span class="meta">@FunctionalInterface</span></span><br><span class="line">FIELD: 修飾成員變數 EX: java.persistence 的 <span class="meta">@Column</span> </span><br><span class="line">PARAMETER: 修飾方法參數 EX: springMVC 的 <span class="meta">@PathVariable</span></span><br><span class="line">CONSTRUCTOR: 修飾構造器 EX: spring 的 <span class="meta">@Autowired</span></span><br><span class="line">LOCAL_VARIABLE: 修飾區域變數 EX: spring 檢核參數的 <span class="meta">@NotNull</span> 可以用在多個場域</span><br><span class="line">PACKAGE: 修飾 <span class="keyword">package</span></span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>@Retention: 定義了 Annotation 生命週期 ( RetentionPolicy )</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">SOURCE: 只會出現在程式碼中，編譯後不會出現在class檔中 </span><br><span class="line">CLASS: 出現在程式碼中，且會編譯進class檔中，但運行期無任何效果 ( 此類型為 <span class="keyword">default</span> )</span><br><span class="line">RUNTIME: 從程式碼至到運行期間都會存在，可以使用 Reflection 機制取得 annotation 的訊息</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li><p>@Documented: 使用 javadoc 命令生成API檔案時，如要要將標注資料加入文檔，才需要加上此註解</p>
-</li>
-<li><p>@Inherited: 具有繼承性，代表子類別可以拿到父類別的註解訊息<br>※ 只有 class-level annotation 可以使用, method-level 則無法</p>
-</li>
-<li><p>@Repeatable (java1.8新增): 在 JDK8 之前，annotation 某個位置只能出現一次，不能重複使用；但這個功能可以讓 annotation 在同個地方出現多次</p>
-</li>
-</ol>
-<h3 id="自定義標註"><a href="#自定義標註" class="headerlink" title="自定義標註"></a>自定義標註</h3><ul>
-<li>需要使用 <em><strong>@interface</strong></em></li>
-<li>定義屬性，若命名為 value 時，使用時可省略屬性名稱</li>
-<li>屬性需有預設值時，可以使用 <em><strong>default</strong></em> 關鍵字</li>
-<li>欲在執行時期取得 標註資訊，可使用 <em><strong>java Reflection 機制</strong></em></li>
-</ul>
-<p>自定義 annotation 範例:</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">@Target(ElementType.METHOD)</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> CustomAnnotation &#123;</span><br><span class="line"></span><br><span class="line">	String[] value();</span><br><span class="line"></span><br><span class="line">	String <span class="title function_">message</span><span class="params">()</span> <span class="keyword">default</span> <span class="string">&quot;none&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>使用一個 Main 方法 利用 Java Reflaction 取得 Annotation 的值</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">AnnotationMain</span> &#123;</span><br><span class="line">	</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> NoSuchMethodException, SecurityException &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="type">AnnotationMain</span> <span class="variable">main</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">AnnotationMain</span>();</span><br><span class="line">        main.test();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@CustomAnnotation(value = &#123;&quot;test&quot;, &quot;test2&quot;&#125;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">test</span><span class="params">()</span> <span class="keyword">throws</span> NoSuchMethodException, SecurityException &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 使用反射機制取得 method 上的標註</span></span><br><span class="line">        <span class="type">CustomAnnotation</span> <span class="variable">customAnnotation</span> <span class="operator">=</span> AnnotationMain.class.getMethod(<span class="string">&quot;test&quot;</span>).getAnnotation(CustomAnnotation.class);</span><br><span class="line">        </span><br><span class="line">        String[] values = customAnnotation.value();</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 取得 value</span></span><br><span class="line">        System.out.println(<span class="string">&quot;value:&quot;</span>);</span><br><span class="line">        <span class="keyword">for</span>(String value: values) </span><br><span class="line">            System.out.println(value);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 取得 messsage</span></span><br><span class="line">        System.out.println(<span class="string">&quot;message: &quot;</span> + customAnnotation.message());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>執行後會印出相對應的結果，印出 標註上的 value清單 &amp; message 的預設值 none</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">value:</span><br><span class="line">test</span><br><span class="line">test2</span><br><span class="line">message: none</span><br></pre></td></tr></table></figure>
-
-<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
-<li><a href="https://kucw.github.io/blog/2018/6/java-annotation/">古古’s Blog Java - annotation 的使用</a></li>
-<li><a href="https://openhome.cc/Gossip/Java/Annotation.html">常用標準標註</a></li>
-<li><a href="https://openhome.cc/Gossip/Java/CustomizeAnnotation.html">自訂標註</a></li>
-<li><a href="https://openhome.cc/Gossip/Java/ReadAnnotation.html">讀取標註資訊</a></li>
-<li><a href="https://openhome.cc/Gossip/CodeData/JDK8/Annotation.html">【JDK8】Annotation 功能增強</a></li>
-</ol>
-]]></content>
-      <categories>
-        <category>java</category>
-      </categories>
-      <tags>
-        <tag>java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用 utterances 在 Hexo 實現留言板功能</title>
-    <url>/2022/03/04/hexo-message-board-utterances/</url>
-    <content><![CDATA[<p>留言版在一般的部落格中一個常見的功能，既然使用Github製作了自己的部落格<br>順勢找了一些文章來新增這個功能</p>
-<p>在參閱了許多 blogger 的文章後發現，比較常用的有以下兩種:</p>
-<ul>
-<li>Disqus<ul>
-<li>需要去 Disqus 官網註冊 - <a href="https://disqus.com/">點我前往</a></li>
-</ul>
-</li>
-<li>utterances<ul>
-<li>與 Github Issues 做連結</li>
-<li>需要登入 Github 才能夠進行留言</li>
-</ul>
-</li>
-</ul>
-<p>目前是打算使用 utterances 來實作 部落格的留言版</p>
-<span id="more"></span>
-
-<h3 id="整合-utterances"><a href="#整合-utterances" class="headerlink" title="整合 utterances"></a>整合 utterances</h3><ol>
-<li>Github 建立 Repository</li>
-<li>安裝 utterances - <a href="https://github.com/apps/utterances">點我前往</a></li>
-</ol>
-<p><img src="https://bnz05pap002files.storage.live.com/y4mf3VZ_TrvLMIzOAvwD5scehh0uCIPUsahla1ouyxXnWeuuT5H3ukvDP7hV0gVb_0gnlFJTWeW9UWGP5LXPyQTBd60fbKgxDlDQK2ADWYI5nD6b0pkEd3hfZjLFwEUWurbgWomh3aeF0BWUvSalsrsnPvcz2e_eKp3TjFC4M0aqJI5wZ9FJsnf7SILGMbJzgbp?width=660&height=261&cropmode=none" alt="utterances-install.png"><br>3. 取得授權，並選擇 步驟1 的 Repository</p>
-<p><img src="https://bnz05pap002files.storage.live.com/y4mB7qi6p5Kb5d77Slb0G_jLXcoBZ6yepW2pKcSxd3Ih7_gQ4SDxI9vNpA-6V9wp_RnBN59jH0ziNmpluQFQDjnM92bizO_e_2jLgYQRxeFb7ps9tjvCvauX62h5gJLcvQsa34THbIPo5P6HAZmuIwMlGX5dwFnHIl9fLbX-dITsVKucorwYtuIJ2I8kmzdq_B5?width=480&height=660&cropmode=none" alt="utterances-select-repository.png"><br>4. 填寫對應的 configuration EX: Repository , Blog Post &amp; issue Mapping , Theme …etc</p>
-<p><img src="https://bnz05pap002files.storage.live.com/y4mZW8hAhicSL9Xi4l83gr-741kqXgXqCBnmEDZ5a_ZVaCNUbsZQGTl456l7dxJUszLljpSitj43aRmX3fA0OUM58mYxGTvKuc0wL0VW-9OPS6YAn1Uz9FqzK0Q8YSWOpCQBiDHVMFUb6E5olX7bVBc-vy_rP5gqLV5Kt1WPC8gXKKIKqjtSVCpSzI9LB2H49DI?width=660&height=622&cropmode=none" alt="utterances-configuration-script.png"><br>5. 在 theme 的 _config.yml 新增參數 (blog 目前是使用 next themes)</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># utterances by 2022-03-04</span></span><br><span class="line"><span class="attr">utterances:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-
-<ol start="6">
-<li>在主題底下 <code>themes\next\layout\_partials</code> 的 comments.swig 中 新增其 srcipt<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="string">新增至</span> &#123;<span class="string">%-</span> <span class="string">if</span> <span class="string">page.comments</span> <span class="string">%</span>&#125; <span class="string">後面</span></span><br><span class="line"></span><br><span class="line">&#123;<span class="string">%</span> <span class="string">if</span> <span class="string">theme.utterances.enable</span> <span class="string">%</span>&#125;</span><br><span class="line">    <span class="string">&lt;div</span> <span class="string">class=&quot;comments&quot;</span> <span class="string">id=&quot;comments&gt;</span></span><br><span class="line">        <span class="string">↓</span> <span class="string">複製上面步驟4</span> <span class="string">utterances</span> <span class="string">中產生的</span> <span class="string">script</span></span><br><span class="line">        <span class="string">&lt;script</span> <span class="string">src=&quot;https://utteranc.es/client.js&quot;</span></span><br><span class="line">            <span class="string">...</span></span><br><span class="line">        <span class="string">&lt;/script&gt;</span></span><br><span class="line">    <span class="string">&lt;/div&gt;</span></span><br><span class="line">  &#123;<span class="string">%-</span> <span class="string">endif</span> <span class="string">%</span>&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
-<li>即可看到留言板出現在文章內了</li>
-</ol>
-<p><img src="https://bnz05pap002files.storage.live.com/y4mi1owUcX16kQYG0y6amhW5TXqG8FlrfdD5PLc08FS7crQCBUFyU0TUJQbw3YSzu8UeSz_ajqZQDOWdxIo5PwIx-HUr_r2__1nn9taGWzzXCWokVufwsWZHApHEC3maMsGRKJxd5Pf3sdT0cW0qVg7dCYdt6IdQ9ie2Z2uetNM-dX_S54E9U7_qVpFRhuWp_wy?width=660&height=313&cropmode=none" alt="utterances-message-board-result.png"></p>
-<h3 id="如何讓留言板不要出現"><a href="#如何讓留言板不要出現" class="headerlink" title="如何讓留言板不要出現"></a>如何讓留言板不要出現</h3><p>因為分類&#x2F;標籤等頁面通常不需要有連言功能<br>在 markdown 的 Front-matter 把 comments 關閉</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">tags</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2022-03-01 20:10:05</span></span><br><span class="line"><span class="attr">type:</span> <span class="string">&quot;tags&quot;</span></span><br><span class="line"><span class="attr">comments:</span> <span class="literal">false</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
-<li><a href="https://annkuoq.github.io/blog/2020-03-09-add-utterances-comment-widget-to-hexo/">在 Hexo 安裝 utterances 留言版</a></li>
-<li><a href="https://medium.com/starbugs/gatsby-%E7%94%A8-utterances-%E6%9B%BF-gatsby-%E7%9A%84-blog-%E7%B6%B2%E7%AB%99%E7%94%B3%E8%A3%9D-github-issue-%E7%95%99%E8%A8%80%E5%8A%9F%E8%83%BD-e8593318e5a3">Gatsby | 用 utterances 替 Gatsby 的 Blog 網站申裝 GitHub Issue 留言功能</a></li>
-<li><a href="https://blog.kyomind.tw/hexo-blog-reply/">Hexo：新增 utterances 留言板與方案選擇思路</a></li>
-<li><a href="https://utteranc.es/">utterances </a></li>
-<li><a href="https://kidneyweakx.com/2019/19log-1026-hexo-com.html">Hexo Next 主題增加評論系統 utterances</a></li>
 </ol>
 ]]></content>
       <categories>
@@ -290,6 +178,118 @@
       </categories>
       <tags>
         <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用 utterances 在 Hexo 實現留言板功能</title>
+    <url>/2022/03/04/hexo-message-board-utterances/</url>
+    <content><![CDATA[<p>留言版在一般的部落格中一個常見的功能，既然使用Github製作了自己的部落格<br>順勢找了一些文章來新增這個功能</p>
+<p>在參閱了許多 blogger 的文章後發現，比較常用的有以下兩種:</p>
+<ul>
+<li>Disqus<ul>
+<li>需要去 Disqus 官網註冊 - <a href="https://disqus.com/">點我前往</a></li>
+</ul>
+</li>
+<li>utterances<ul>
+<li>與 Github Issues 做連結</li>
+<li>需要登入 Github 才能夠進行留言</li>
+</ul>
+</li>
+</ul>
+<p>目前是打算使用 utterances 來實作 部落格的留言版</p>
+<span id="more"></span>
+
+<h3 id="整合-utterances"><a href="#整合-utterances" class="headerlink" title="整合 utterances"></a>整合 utterances</h3><ol>
+<li>Github 建立 Repository</li>
+<li>安裝 utterances - <a href="https://github.com/apps/utterances">點我前往</a></li>
+</ol>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mf3VZ_TrvLMIzOAvwD5scehh0uCIPUsahla1ouyxXnWeuuT5H3ukvDP7hV0gVb_0gnlFJTWeW9UWGP5LXPyQTBd60fbKgxDlDQK2ADWYI5nD6b0pkEd3hfZjLFwEUWurbgWomh3aeF0BWUvSalsrsnPvcz2e_eKp3TjFC4M0aqJI5wZ9FJsnf7SILGMbJzgbp?width=660&height=261&cropmode=none" alt="utterances-install.png"><br>3. 取得授權，並選擇 步驟1 的 Repository</p>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mB7qi6p5Kb5d77Slb0G_jLXcoBZ6yepW2pKcSxd3Ih7_gQ4SDxI9vNpA-6V9wp_RnBN59jH0ziNmpluQFQDjnM92bizO_e_2jLgYQRxeFb7ps9tjvCvauX62h5gJLcvQsa34THbIPo5P6HAZmuIwMlGX5dwFnHIl9fLbX-dITsVKucorwYtuIJ2I8kmzdq_B5?width=480&height=660&cropmode=none" alt="utterances-select-repository.png"><br>4. 填寫對應的 configuration EX: Repository , Blog Post &amp; issue Mapping , Theme …etc</p>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mZW8hAhicSL9Xi4l83gr-741kqXgXqCBnmEDZ5a_ZVaCNUbsZQGTl456l7dxJUszLljpSitj43aRmX3fA0OUM58mYxGTvKuc0wL0VW-9OPS6YAn1Uz9FqzK0Q8YSWOpCQBiDHVMFUb6E5olX7bVBc-vy_rP5gqLV5Kt1WPC8gXKKIKqjtSVCpSzI9LB2H49DI?width=660&height=622&cropmode=none" alt="utterances-configuration-script.png"><br>5. 在 theme 的 _config.yml 新增參數 (blog 目前是使用 next themes)</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># utterances by 2022-03-04</span></span><br><span class="line"><span class="attr">utterances:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>在主題底下 <code>themes\next\layout\_partials</code> 的 comments.swig 中 新增其 srcipt<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="string">新增至</span> &#123;<span class="string">%-</span> <span class="string">if</span> <span class="string">page.comments</span> <span class="string">%</span>&#125; <span class="string">後面</span></span><br><span class="line"></span><br><span class="line">&#123;<span class="string">%</span> <span class="string">if</span> <span class="string">theme.utterances.enable</span> <span class="string">%</span>&#125;</span><br><span class="line">    <span class="string">&lt;div</span> <span class="string">class=&quot;comments&quot;</span> <span class="string">id=&quot;comments&gt;</span></span><br><span class="line">        <span class="string">↓</span> <span class="string">複製上面步驟4</span> <span class="string">utterances</span> <span class="string">中產生的</span> <span class="string">script</span></span><br><span class="line">        <span class="string">&lt;script</span> <span class="string">src=&quot;https://utteranc.es/client.js&quot;</span></span><br><span class="line">            <span class="string">...</span></span><br><span class="line">        <span class="string">&lt;/script&gt;</span></span><br><span class="line">    <span class="string">&lt;/div&gt;</span></span><br><span class="line">  &#123;<span class="string">%-</span> <span class="string">endif</span> <span class="string">%</span>&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li>即可看到留言板出現在文章內了</li>
+</ol>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mi1owUcX16kQYG0y6amhW5TXqG8FlrfdD5PLc08FS7crQCBUFyU0TUJQbw3YSzu8UeSz_ajqZQDOWdxIo5PwIx-HUr_r2__1nn9taGWzzXCWokVufwsWZHApHEC3maMsGRKJxd5Pf3sdT0cW0qVg7dCYdt6IdQ9ie2Z2uetNM-dX_S54E9U7_qVpFRhuWp_wy?width=660&height=313&cropmode=none" alt="utterances-message-board-result.png"></p>
+<h3 id="如何讓留言板不要出現"><a href="#如何讓留言板不要出現" class="headerlink" title="如何讓留言板不要出現"></a>如何讓留言板不要出現</h3><p>因為分類&#x2F;標籤等頁面通常不需要有連言功能<br>在 markdown 的 Front-matter 把 comments 關閉</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">tags</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2022-03-01 20:10:05</span></span><br><span class="line"><span class="attr">type:</span> <span class="string">&quot;tags&quot;</span></span><br><span class="line"><span class="attr">comments:</span> <span class="literal">false</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
+<li><a href="https://annkuoq.github.io/blog/2020-03-09-add-utterances-comment-widget-to-hexo/">在 Hexo 安裝 utterances 留言版</a></li>
+<li><a href="https://medium.com/starbugs/gatsby-%E7%94%A8-utterances-%E6%9B%BF-gatsby-%E7%9A%84-blog-%E7%B6%B2%E7%AB%99%E7%94%B3%E8%A3%9D-github-issue-%E7%95%99%E8%A8%80%E5%8A%9F%E8%83%BD-e8593318e5a3">Gatsby | 用 utterances 替 Gatsby 的 Blog 網站申裝 GitHub Issue 留言功能</a></li>
+<li><a href="https://blog.kyomind.tw/hexo-blog-reply/">Hexo：新增 utterances 留言板與方案選擇思路</a></li>
+<li><a href="https://utteranc.es/">utterances </a></li>
+<li><a href="https://kidneyweakx.com/2019/19log-1026-hexo-com.html">Hexo Next 主題增加評論系統 utterances</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>blog</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java Annotation(標註)</title>
+    <url>/2022/03/05/java-annotation/</url>
+    <content><![CDATA[<p>Java 從 JDK5 開使支援了 Annotation 功能，可以提供在編譯時期提示 or 執行時期讀取的資訊。</p>
+<span id="more"></span>
+
+<h3 id="標準標註"><a href="#標準標註" class="headerlink" title="標準標註"></a>標準標註</h3><ol>
+<li>@override : 提供 compiler 提醒被標註的 method 必須為 父類別 or 介面所定義之方法</li>
+<li>@Deprecated : 提供 compiler 提醒被標註的 method 已經過時，建議不要再呼叫它</li>
+<li>@SuppressWarnings: 抑制警告訊息 ( 可使用參數 value &#x3D; { args1, args2 …etc } 定義抑制警告類型 )</li>
+<li>@FunctionalInterface: 協助檢查 interface 是否滿足 lambda 的型態 ( 為 java8 時所新增 )</li>
+</ol>
+<h3 id="元標註-meta-annotation"><a href="#元標註-meta-annotation" class="headerlink" title="元標註(meta-annotation)"></a>元標註(meta-annotation)</h3><p>標註使用 meta-annotation 為其他 annotation 做說明<br>meta-annotation 種類如下:</p>
+<ol>
+<li>@Target: 限定 Annotation 使用位置 ( ElementType )</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ANNOTATION_TYPE: meta-annotation為此類型，用來修飾註解</span><br><span class="line">METHOD: 修飾 method EX: springMVC 的 <span class="meta">@GATEMAPPING</span></span><br><span class="line">TYPE: 修飾class, interface, <span class="keyword">enum</span>, annotation  EX: java8 的 <span class="meta">@FunctionalInterface</span></span><br><span class="line">FIELD: 修飾成員變數 EX: java.persistence 的 <span class="meta">@Column</span> </span><br><span class="line">PARAMETER: 修飾方法參數 EX: springMVC 的 <span class="meta">@PathVariable</span></span><br><span class="line">CONSTRUCTOR: 修飾構造器 EX: spring 的 <span class="meta">@Autowired</span></span><br><span class="line">LOCAL_VARIABLE: 修飾區域變數 EX: spring 檢核參數的 <span class="meta">@NotNull</span> 可以用在多個場域</span><br><span class="line">PACKAGE: 修飾 <span class="keyword">package</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>@Retention: 定義了 Annotation 生命週期 ( RetentionPolicy )</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">SOURCE: 只會出現在程式碼中，編譯後不會出現在class檔中 </span><br><span class="line">CLASS: 出現在程式碼中，且會編譯進class檔中，但運行期無任何效果 ( 此類型為 <span class="keyword">default</span> )</span><br><span class="line">RUNTIME: 從程式碼至到運行期間都會存在，可以使用 Reflection 機制取得 annotation 的訊息</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li><p>@Documented: 使用 javadoc 命令生成API檔案時，如要要將標注資料加入文檔，才需要加上此註解</p>
+</li>
+<li><p>@Inherited: 具有繼承性，代表子類別可以拿到父類別的註解訊息<br>※ 只有 class-level annotation 可以使用, method-level 則無法</p>
+</li>
+<li><p>@Repeatable (java1.8新增): 在 JDK8 之前，annotation 某個位置只能出現一次，不能重複使用；但這個功能可以讓 annotation 在同個地方出現多次</p>
+</li>
+</ol>
+<h3 id="自定義標註"><a href="#自定義標註" class="headerlink" title="自定義標註"></a>自定義標註</h3><ul>
+<li>需要使用 <em><strong>@interface</strong></em></li>
+<li>定義屬性，若命名為 value 時，使用時可省略屬性名稱</li>
+<li>屬性需有預設值時，可以使用 <em><strong>default</strong></em> 關鍵字</li>
+<li>欲在執行時期取得 標註資訊，可使用 <em><strong>java Reflection 機制</strong></em></li>
+</ul>
+<p>自定義 annotation 範例:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">@Target(ElementType.METHOD)</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> CustomAnnotation &#123;</span><br><span class="line"></span><br><span class="line">	String[] value();</span><br><span class="line"></span><br><span class="line">	String <span class="title function_">message</span><span class="params">()</span> <span class="keyword">default</span> <span class="string">&quot;none&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用一個 Main 方法 利用 Java Reflaction 取得 Annotation 的值</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">AnnotationMain</span> &#123;</span><br><span class="line">	</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> NoSuchMethodException, SecurityException &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="type">AnnotationMain</span> <span class="variable">main</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">AnnotationMain</span>();</span><br><span class="line">        main.test();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@CustomAnnotation(value = &#123;&quot;test&quot;, &quot;test2&quot;&#125;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">test</span><span class="params">()</span> <span class="keyword">throws</span> NoSuchMethodException, SecurityException &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 使用反射機制取得 method 上的標註</span></span><br><span class="line">        <span class="type">CustomAnnotation</span> <span class="variable">customAnnotation</span> <span class="operator">=</span> AnnotationMain.class.getMethod(<span class="string">&quot;test&quot;</span>).getAnnotation(CustomAnnotation.class);</span><br><span class="line">        </span><br><span class="line">        String[] values = customAnnotation.value();</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 取得 value</span></span><br><span class="line">        System.out.println(<span class="string">&quot;value:&quot;</span>);</span><br><span class="line">        <span class="keyword">for</span>(String value: values) </span><br><span class="line">            System.out.println(value);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 取得 messsage</span></span><br><span class="line">        System.out.println(<span class="string">&quot;message: &quot;</span> + customAnnotation.message());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>執行後會印出相對應的結果，印出 標註上的 value清單 &amp; message 的預設值 none</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">value:</span><br><span class="line">test</span><br><span class="line">test2</span><br><span class="line">message: none</span><br></pre></td></tr></table></figure>
+
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
+<li><a href="https://kucw.github.io/blog/2018/6/java-annotation/">古古’s Blog Java - annotation 的使用</a></li>
+<li><a href="https://openhome.cc/Gossip/Java/Annotation.html">常用標準標註</a></li>
+<li><a href="https://openhome.cc/Gossip/Java/CustomizeAnnotation.html">自訂標註</a></li>
+<li><a href="https://openhome.cc/Gossip/Java/ReadAnnotation.html">讀取標註資訊</a></li>
+<li><a href="https://openhome.cc/Gossip/CodeData/JDK8/Annotation.html">【JDK8】Annotation 功能增強</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>java</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
       </tags>
   </entry>
   <entry>
