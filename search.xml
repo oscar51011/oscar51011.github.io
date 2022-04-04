@@ -38,67 +38,22 @@
       </tags>
   </entry>
   <entry>
-    <title>利用Hexo + Github.io 建立自己的Blog</title>
-    <url>/2022/03/01/hexo-github-blog-initial/</url>
-    <content><![CDATA[<p>Hexo 為一個 Blog Framework ，基於 NodeJs 語言所開發 (支援 Markdown 語法)</p>
+    <title>Hexo 撰寫草稿</title>
+    <url>/2022/03/17/hexo-add-draft-article/</url>
+    <content><![CDATA[<p>一般使用建立文章指令為 <code>hexo new [layout] &lt;title&gt;</code><br>其用處為在 <code>source\_post</code> (跟目錄的 <code>_config.yml</code> 有預設 layout: post)<br>產生且後續使用<code>hexo generate</code>轉至 <code>public</code> 資料夾並且發佈至 github<br>但如果有未完成的文章，也會被一併發佈。</p>
+<p>這時候，HEXO 提供的撰寫草稿功能就很方便了，指令如下:</p>
 <span id="more"></span>
 
-<h3 id="前置作業"><a href="#前置作業" class="headerlink" title="前置作業"></a>前置作業</h3><ol>
-<li>安裝 Node.js : <a href="https://nodejs.org/en/download/">點我前往</a></li>
-<li>安裝 git : <a href="https://git-scm.com/">點我前往</a></li>
-<li>安裝 hexo :  <code>npm install hexo-cli -g</code></li>
-<li>可以使用指令檢查是否安裝成功<br><code>git --version</code><br><code>node --version</code><br><code>hexo --version</code></li>
-</ol>
-<h3 id="設定-Hexo-Blog"><a href="#設定-Hexo-Blog" class="headerlink" title="設定 Hexo Blog"></a>設定 Hexo Blog</h3><ol>
-<li>初始化專案並進入資料夾:<br><code>hexo init &#123;folder name&#125;</code><br><code>cd &#123;folder name&#125;</code></li>
-</ol>
-<p>初始化後會產生以下的預設 folder:<br><img src="https://bnz05pap002files.storage.live.com/y4mpY4y2J_aUk4idC_5MbB7HDrRqbZYj_JxE3RXQFZMxL4TQL-5yUZA1-3y1LOmh58d-rC1pJZOyoW8gvQ324cB1FiFacHMbGg4DthhkVIaNna0eapHK9tBpoMh1xL_0fGIHISuNUHmgptIMT2MOicPI1haUSn50u3GI_GTSBy83v3V3zPTvvHQuGmiEN0pbWwu?width=233&height=256&cropmode=none" alt="github-io-repository.png"></p>
-<ol start="2">
-<li>安裝 github.io 並建立 Repository</li>
-</ol>
-<ul>
-<li>安裝 deploy git 的套件: <code>npm install hexo-deployer-git --save</code> </li>
-<li>建立 github 的 個人部落格的 repository( 建立 New Repository &amp; 命名規則為 : 帳號名稱.github.io )<br><img src="https://bnz05pap002files.storage.live.com/y4mZW7XTF8h0zIa8VSplmsxa5H1Msdwp0CEuR0v3XwKHQ7ej10q5DTGZJUw8SDLJERKNpP3d_d8exqUZZfiB_QDFnQJBGseTSnQDBz36d4jGoLBGk5pbNtzwxpPVH1ac6I77cqvLIJSrmXdxoTWOZLc2eKa2gH_Job4nSx2qco0srGMo8Y_dKNoK3VrOxvrWXGs?width=1024&height=616&cropmode=none" alt="hexo-init-folder.png"></li>
-</ul>
-<ol start="3">
-<li>調整 _config.yml 以利可以上傳至自己創建的 repository</li>
-</ol>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Deployment</span></span><br><span class="line"><span class="comment">## Docs: https://hexo.io/docs/one-command-deployment</span></span><br><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">https://github.com/username/username.github.io.git</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">master</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># URL</span></span><br><span class="line"><span class="comment">## Set your site url here. For example, if you use GitHub Page, set url as &#x27;https://username.github.io/project&#x27;</span></span><br><span class="line"><span class="attr">url:</span> <span class="string">https://oscar51011.github.io/</span> <span class="comment"># 填入自己創建的 Github Page</span></span><br><span class="line"><span class="attr">permalink:</span> <span class="string">:year/:month/:day/:title/</span></span><br><span class="line"><span class="attr">permalink_defaults:</span></span><br><span class="line"><span class="attr">pretty_urls:</span></span><br><span class="line">  <span class="attr">trailing_index:</span> <span class="literal">true</span> <span class="comment"># Set to false to remove trailing &#x27;index.html&#x27; from permalinks</span></span><br><span class="line">  <span class="attr">trailing_html:</span> <span class="literal">true</span> <span class="comment"># Set to false to remove trailing &#x27;.html&#x27; from permalinks</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="建立草稿"><a href="#建立草稿" class="headerlink" title="建立草稿"></a>建立草稿</h3><p>HEXO 的 layout 除了預設的 post 之外，還有一種叫做 draft ，建立時會儲存在 <code>source\_drafts</code> 底下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo new draft &lt;title&gt;</span><br></pre></td></tr></table></figure>
+<p>當撰寫完成後可以將草稿進行發佈，使用以下指令就可以將文章轉到 <code>source\_post</code> 資料夾</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo publish [layout] &lt;title&gt;</span><br></pre></td></tr></table></figure>
 
-<ol start="4">
-<li><p>執行佈署指令: <code>hexo deploy</code></p>
-<ul>
-<li>根據 public folder 的資料更新至 .deploy_git (並更新至 repository)</li>
-</ul>
-</li>
-<li><p>網址打上<code>https://username.github.io</code> 即可看到自己的BLOG網站</p>
-</li>
-</ol>
-<h3 id="常用指令"><a href="#常用指令" class="headerlink" title="常用指令"></a>常用指令</h3><ul>
-<li>建立新文章: <code>hexo new &#123;title&#125;</code><ul>
-<li>新文章在產生 source folder 底下</li>
-</ul>
-</li>
-<li>清除靜態檔案&amp;快取: <code>hexo clean</code><ul>
-<li>刪除了 public folder &amp; db.json</li>
-</ul>
-</li>
-<li>產生靜態網頁: <code>hexo generate</code><ul>
-<li>根據 source folder 的資料更新至 public folder</li>
-</ul>
-</li>
-<li>本地啟動Server: <code>hexo server</code> <ul>
-<li>使用參數 –port 4001, 可以覆蓋連接埠設定，預設為4000</li>
-<li>使用 Ctrl + C 可以關閉</li>
-</ul>
-</li>
-</ul>
-<p>操作順序為<br><code>hexo clean</code> -&gt; <code>hexo generate</code> -&gt; <code>hexo deploy</code></p>
+<h3 id="使用本地啟動Server測試草稿"><a href="#使用本地啟動Server測試草稿" class="headerlink" title="使用本地啟動Server測試草稿"></a>使用本地啟動Server測試草稿</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo server --draft</span><br></pre></td></tr></table></figure>
+
 <h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
-<li><a href="https://hackmd.io/@Heidi-Liu/note-hexo-github">【學習筆記】如何使用 Hexo + GitHub Pages 架設個人網誌</a> <br></li>
-<li><a href="https://github.com/hexojs/hexo">Hexo Github</a> <br></li>
-<li><a href="https://hexo.io/zh-tw/docs/commands">Hexo 常用指令</a> <br></li>
-<li><a href="https://ithelp.ithome.com.tw/articles/10280954?sc=iThomeR">[Day31] Hexo x GitHub Pages 打造個人部落格</a> <br></li>
+<li><a href="https://hexo.io/zh-tw/docs/writing.html">Hexo 寫作</a></li>
+<li><a href="https://novnan.github.io/Hexo/hexo-draft/">Hexo 文章保存为草稿</a></li>
 </ol>
 ]]></content>
       <categories>
@@ -123,32 +78,6 @@
 <h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference:"></a>Reference:</h3><ol>
 <li><a href="https://carlos.mynet.tw/%E4%BD%BF%E7%94%A8%E8%B3%87%E6%96%99%E5%A4%BE%E5%88%86%E5%B1%A4%E7%AE%A1%E7%90%86hexo%E6%96%87%E7%AB%A0%E4%B8%94%E4%B8%8D%E5%BD%B1%E9%9F%BF%E6%B0%B8%E4%B9%85%E9%80%A3%E7%B5%90/">使用資料夾分層管理Hexo文章且不影響永久連結</a></li>
 <li><a href="https://mouson.im/Notes/Hexo/make-hexo-post-category-by-folder/">Hexo - 使文章依文章分類為資料夾名稱置放</a></li>
-</ol>
-]]></content>
-      <categories>
-        <category>blog</category>
-      </categories>
-      <tags>
-        <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hexo 撰寫草稿</title>
-    <url>/2022/03/17/hexo-add-draft-article/</url>
-    <content><![CDATA[<p>一般使用建立文章指令為 <code>hexo new [layout] &lt;title&gt;</code><br>其用處為在 <code>source\_post</code> (跟目錄的 <code>_config.yml</code> 有預設 layout: post)<br>產生且後續使用<code>hexo generate</code>轉至 <code>public</code> 資料夾並且發佈至 github<br>但如果有未完成的文章，也會被一併發佈。</p>
-<p>這時候，HEXO 提供的撰寫草稿功能就很方便了，指令如下:</p>
-<span id="more"></span>
-
-<h3 id="建立草稿"><a href="#建立草稿" class="headerlink" title="建立草稿"></a>建立草稿</h3><p>HEXO 的 layout 除了預設的 post 之外，還有一種叫做 draft ，建立時會儲存在 <code>source\_drafts</code> 底下</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo new draft &lt;title&gt;</span><br></pre></td></tr></table></figure>
-<p>當撰寫完成後可以將草稿進行發佈，使用以下指令就可以將文章轉到 <code>source\_post</code> 資料夾</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo publish [layout] &lt;title&gt;</span><br></pre></td></tr></table></figure>
-
-<h3 id="使用本地啟動Server測試草稿"><a href="#使用本地啟動Server測試草稿" class="headerlink" title="使用本地啟動Server測試草稿"></a>使用本地啟動Server測試草稿</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo server --draft</span><br></pre></td></tr></table></figure>
-
-<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
-<li><a href="https://hexo.io/zh-tw/docs/writing.html">Hexo 寫作</a></li>
-<li><a href="https://novnan.github.io/Hexo/hexo-draft/">Hexo 文章保存为草稿</a></li>
 </ol>
 ]]></content>
       <categories>
@@ -207,6 +136,60 @@
       </categories>
       <tags>
         <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Servlet Filter 使用</title>
+    <url>/2022/04/04/servlet-filter/</url>
+    <content><![CDATA[<p>為 Servlet 中的其中一種高級特性 , 可用於 servlet 以外對於 request &amp; resposne 進行過濾, 甚至是修改其內容<br>Filter 可以同時存在很多個 , 多個 Filter 就組成了 FilterChain</p>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mWO6JRUFd29vWlVMojv_Zk5aHsoU-QryrWBDS6-yVashakMDUhYIlun5KMeuO18q6ljkEVtpcbWFwIWMuCwGdPp1hhqHXdQ4Vvv1LvGaB1eCkp6-NBxrwdtrlSpbRf1JTUO0x1ketfWGcd4FWnEDMMDMXeKJ9wcYGSGUqIZGbTIMJTSCXXYodmZjej2oSu2om?width=621&height=271&cropmode=none" alt="servlet-filter.png"></p>
+<span id="more"></span>
+
+<h3 id="前置作業"><a href="#前置作業" class="headerlink" title="前置作業"></a>前置作業</h3><ol>
+<li>使用 Maven :  <code>pom.xml</code> 引入 servlet-api<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line">&lt;dependencies&gt;</span><br><span class="line">  &lt;!-- Servlet --&gt;</span><br><span class="line">  &lt;dependency&gt;</span><br><span class="line">      &lt;groupId&gt;javax.servlet&lt;/groupId&gt;</span><br><span class="line">      &lt;artifactId&gt;javax.servlet-api&lt;/artifactId&gt;</span><br><span class="line">      &lt;version&gt;4.0.1&lt;/version&gt;</span><br><span class="line">      &lt;scope&gt;provided&lt;/scope&gt;</span><br><span class="line">  &lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">&lt;/dependencies&gt;</span><br><span class="line">...</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="Filter-實現"><a href="#Filter-實現" class="headerlink" title="Filter 實現"></a>Filter 實現</h3><ol>
+<li>Filter 需要實現 javax.servlet.Filter 介面 ( 該介面有3個方法 )</li>
+</ol>
+<ul>
+<li>init(FilterConfig filterConfig)</li>
+<li>doFilter(ServletRequest request, ServletResponse response, FilterChain chain)</li>
+<li>destory()</li>
+</ul>
+<p>其中 init() &amp; destory() 只會被呼叫一次 (<strong>The default implementation takes no action</strong>),<br>而 doFilter() 每次請求時都會被呼叫</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestFilter</span> <span class="keyword">implements</span> <span class="title class_">Filter</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">doFilter</span><span class="params">(ServletRequest request, ServletResponse response, FilterChain chain)</span> <span class="keyword">throws</span> IOException, ServletException &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;project filter&quot;</span>);</span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">        * 撰寫處裡的邏輯</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">        chain.doFilter(request, response);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>設定配置 ( 使用 xml or annotation )<br>(方法一) 在 <code>web.xml</code> 需要進行設定 ( Servlet 2.5 )<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">web-app</span> <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://Java.sun.com/xml/ns/javaee&quot;</span> <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&quot;</span> <span class="attr">version</span>=<span class="string">&quot;2.5&quot;</span>&gt;</span></span><br><span class="line">...</span><br><span class="line">  <span class="tag">&lt;<span class="name">filter</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>testFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">filter-class</span>&gt;</span>com.demo.filter.TestFilter<span class="tag">&lt;/<span class="name">filter-class</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">filter</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>testFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/*<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">dispatcher</span>&gt;</span>REQUEST<span class="tag">&lt;/<span class="name">dispatcher</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line">...</span><br><span class="line"><span class="tag">&lt;/<span class="name">web-app</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<ul>
+<li><code>&lt;filter&gt;</code> 跟 <code>&lt;filter-mapping&gt;</code> 的名字必須匹配</li>
+<li><code>&lt;url-pattern&gt;</code> 設定 URL規則 , 可以使用 <code>*</code> (萬用字元)</li>
+<li><code>&lt;dispatcher&gt;</code> 設定到達 servlet 的方式, 有4種 &#x3D;&gt; REQUEST <strong>(預設)</strong>, FORWARD, INCLUDE, ERROR ( 根據不同情境使用)</li>
+<li>若有設定 <code>&lt;url-pattern&gt;</code> &amp; <code>&lt;dispatcher&gt;</code> , 它們兩者的條件要<strong>同時符合</strong>, 該 Filter 才會生效</li>
+</ul>
+<p>(方法二) 除了 xml 之外 , 也可以使用 @WebFilter() 的方式 ( Servlet 3.0 才有)</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@WebFilter(&quot;/*&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestFilter</span> <span class="keyword">implements</span> <span class="title class_">Filter</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">doFilter</span><span class="params">(ServletRequest request, ServletResponse response, FilterChain chain)</span> <span class="keyword">throws</span> IOException, ServletException &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;project filter&quot;</span>);</span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">        * 撰寫處裡的邏輯</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">        chain.doFilter(request, response);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Filter-執行順序"><a href="#Filter-執行順序" class="headerlink" title="Filter 執行順序"></a>Filter 執行順序</h3><ul>
+<li>如果都是設定 xml 的情況下 , 由 <code>web.xml</code> 中的 <code>&lt;filter-mapping&gt;</code> 宣告順序依序執行</li>
+<li>如果都是設定 <code>@WebFilter</code> 的情況下 , 由 ClassName 的順序來執行<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SecondaryFilter.java</span><br><span class="line">ThirdFilter.java</span><br></pre></td></tr></table></figure></li>
+<li>如果混用的情況底下 , 會先依照 <code>web.xml</code> 的宣告順序後, 再依照 ClassName 的方式</li>
+</ul>
+<p>基本上一個專案最好統一一種方式處理</p>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
+<li><a href="https://openhome.cc/Gossip/ServletJSP/Filter.html">關於過濾器</a></li>
+<li><a href="https://www.concretepage.com/java-ee/jsp-servlet/how-to-use-filter-in-servlet-3-with-webfilter-annotation">How to Use Filter in Servlet 3 with @WebFilter Annotation</a></li>
+<li><a href="https://openhome.cc/Gossip/ServletJSP/FilterImplSetting.html">Filter 的實作與設定</a></li>
+<li><a href="http://allenwu.logdown.com/posts/220574-filter-annotation-execution-order">Filter Annotation 執行順序</a></li>
+<li><a href="https://www.twblogs.net/a/5b7dafda2b71773f4f185e7a">【Servlet】Filter深入講解及實例研究</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>servlet</category>
+      </categories>
+      <tags>
+        <tag>servlet</tag>
       </tags>
   </entry>
   <entry>
@@ -271,44 +254,67 @@
       </tags>
   </entry>
   <entry>
-    <title>Hexo 主題 - NEXT &amp; 新增文章搜尋功能</title>
-    <url>/2022/03/02/hexo-next-theme/</url>
-    <content><![CDATA[<p>紀錄一下，Blog中選定的主題 Next 的安裝經過 &amp; 新增搜尋功能</p>
+    <title>利用Hexo + Github.io 建立自己的Blog</title>
+    <url>/2022/03/01/hexo-github-blog-initial/</url>
+    <content><![CDATA[<p>Hexo 為一個 Blog Framework ，基於 NodeJs 語言所開發 (支援 Markdown 語法)</p>
 <span id="more"></span>
 
-<h3 id="安裝主題-Next"><a href="#安裝主題-Next" class="headerlink" title="安裝主題 Next"></a>安裝主題 Next</h3><ol>
-<li><p>Github clone hexo-theme-next project - <a href="https://github.com/theme-next/hexo-theme-next">點我前往</a></p>
-</li>
-<li><p>在 themes folder 底下建立 next 資料夾並將上述下載的資料 copy 進該資料夾</p>
-</li>
-<li><p>修改 根目錄 的 _config.xml 內容，從預設的 landscape 改成 next</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Extensions</span></span><br><span class="line"><span class="comment">## Plugins: https://hexo.io/plugins/</span></span><br><span class="line"><span class="comment">## Themes: https://hexo.io/themes/</span></span><br><span class="line"><span class="attr">theme:</span> <span class="string">next</span></span><br></pre></td></tr></table></figure></li>
-<li><p>設定檔有2個，一個是配製 Hexo設定，另一個是針對 Next 主題進行配置</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="string">根目錄:</span> <span class="string">_config.yml</span></span><br><span class="line"><span class="string">Next主題:</span> <span class="string">themes/_config.yml</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Next 主題底下有 4種樣式 (設定於 themes 底下的 _config.xml)</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Schemes</span></span><br><span class="line"><span class="comment">#scheme: Muse</span></span><br><span class="line"><span class="attr">scheme:</span> <span class="string">Mist</span></span><br><span class="line"><span class="comment">#scheme: Pisces</span></span><br><span class="line"><span class="comment">#scheme: Gemini</span></span><br></pre></td></tr></table></figure></li>
+<h3 id="前置作業"><a href="#前置作業" class="headerlink" title="前置作業"></a>前置作業</h3><ol>
+<li>安裝 Node.js : <a href="https://nodejs.org/en/download/">點我前往</a></li>
+<li>安裝 git : <a href="https://git-scm.com/">點我前往</a></li>
+<li>安裝 hexo :  <code>npm install hexo-cli -g</code></li>
+<li>可以使用指令檢查是否安裝成功<br><code>git --version</code><br><code>node --version</code><br><code>hexo --version</code></li>
 </ol>
-<h3 id="開啟-分類-x2F-標籤-功能"><a href="#開啟-分類-x2F-標籤-功能" class="headerlink" title="開啟 分類 &#x2F; 標籤 功能"></a>開啟 分類 &#x2F; 標籤 功能</h3><ul>
-<li>新增 layout 為 page 的文章 ( 一般文章預設為 post)<br><code>hexo new page categories</code> ( type 為 “categories” )<br><code>hexo new page tags</code> ( type 為 “tags” )</li>
-<li>一般文章撰寫時於文章 Front-matter 定義 分類 &#x2F; 標籤 屬性<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">Hexo</span> <span class="string">主題</span> <span class="bullet">-</span> <span class="string">NEXT</span> <span class="string">&amp;</span> <span class="string">新增文章搜尋功能</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2022-03-02 06:55:34</span></span><br><span class="line"><span class="attr">tags:</span> </span><br><span class="line"><span class="bullet">-</span> <span class="string">hexo</span></span><br><span class="line"><span class="attr">categories:</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">blog</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure></li>
-<li>開啟 Next 主題 menu 得以顯示於介面<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">home:</span> <span class="string">/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-home</span></span><br><span class="line">  <span class="comment"># about: /about/ || fa fa-user</span></span><br><span class="line">  <span class="attr">tags:</span> <span class="string">/tags/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-tags</span></span><br><span class="line">  <span class="attr">categories:</span> <span class="string">/categories/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-th</span></span><br><span class="line">  <span class="attr">archives:</span> <span class="string">/archives/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-archive</span></span><br><span class="line">  <span class="comment">#schedule: /schedule/ || fa fa-calendar</span></span><br><span class="line">  <span class="comment">#sitemap: /sitemap.xml || fa fa-sitemap</span></span><br><span class="line">  <span class="comment">#commonweal: /404/ || fa fa-heartbeat</span></span><br></pre></td></tr></table></figure></li>
+<h3 id="設定-Hexo-Blog"><a href="#設定-Hexo-Blog" class="headerlink" title="設定 Hexo Blog"></a>設定 Hexo Blog</h3><ol>
+<li>初始化專案並進入資料夾:<br><code>hexo init &#123;folder name&#125;</code><br><code>cd &#123;folder name&#125;</code></li>
+</ol>
+<p>初始化後會產生以下的預設 folder:<br><img src="https://bnz05pap002files.storage.live.com/y4mpY4y2J_aUk4idC_5MbB7HDrRqbZYj_JxE3RXQFZMxL4TQL-5yUZA1-3y1LOmh58d-rC1pJZOyoW8gvQ324cB1FiFacHMbGg4DthhkVIaNna0eapHK9tBpoMh1xL_0fGIHISuNUHmgptIMT2MOicPI1haUSn50u3GI_GTSBy83v3V3zPTvvHQuGmiEN0pbWwu?width=233&height=256&cropmode=none" alt="github-io-repository.png"></p>
+<ol start="2">
+<li>安裝 github.io 並建立 Repository</li>
+</ol>
+<ul>
+<li>安裝 deploy git 的套件: <code>npm install hexo-deployer-git --save</code> </li>
+<li>建立 github 的 個人部落格的 repository( 建立 New Repository &amp; 命名規則為 : 帳號名稱.github.io )<br><img src="https://bnz05pap002files.storage.live.com/y4mZW7XTF8h0zIa8VSplmsxa5H1Msdwp0CEuR0v3XwKHQ7ej10q5DTGZJUw8SDLJERKNpP3d_d8exqUZZfiB_QDFnQJBGseTSnQDBz36d4jGoLBGk5pbNtzwxpPVH1ac6I77cqvLIJSrmXdxoTWOZLc2eKa2gH_Job4nSx2qco0srGMo8Y_dKNoK3VrOxvrWXGs?width=1024&height=616&cropmode=none" alt="hexo-init-folder.png"></li>
 </ul>
-<h3 id="新增-搜尋功能"><a href="#新增-搜尋功能" class="headerlink" title="新增 搜尋功能"></a>新增 搜尋功能</h3><ol>
-<li>下載套件 <code>npm install hexo-generator-searchdb --save</code></li>
-<li>根目錄 _config.xml 新增設定<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment">#Local Search / created by 2022-03-02</span></span><br><span class="line"><span class="attr">search:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">path:</span> <span class="string">search.xml</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">field:</span> <span class="string">post</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">format:</span> <span class="string">html</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">content:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure></li>
-<li>主題目錄 _config.xml 開啟 local_search 功能<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Local Search</span></span><br><span class="line"><span class="comment"># Dependencies: https://github.com/theme-next/hexo-generator-searchdb</span></span><br><span class="line"><span class="attr">local_search:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure></li>
+<ol start="3">
+<li>調整 _config.yml 以利可以上傳至自己創建的 repository</li>
 </ol>
-<h3 id="新增-文章閱讀進度-功能"><a href="#新增-文章閱讀進度-功能" class="headerlink" title="新增 文章閱讀進度 功能"></a>新增 文章閱讀進度 功能</h3><p>將 scrollpercent 從 false 改成 true</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">back2top:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># Back to top in sidebar.</span></span><br><span class="line">  <span class="attr">sidebar:</span> <span class="literal">false</span></span><br><span class="line">  <span class="comment"># Scroll percent label in b2t button.</span></span><br><span class="line">  <span class="attr">scrollpercent:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-<p>效果如下:</p>
-<p><img src="https://bnz05pap002files.storage.live.com/y4m1yGLaD3UGbwtXQPefduFnckR3CCidf2SWItddjqzSCA3KdyVLMXnZpx-If2Tl3tWkszjYeEMyotdRXWNIo_iQY_INtR5O0J48eqrMs_1nY9WVie0VKY4hJXYo208GuzkoFHi84ZTce-qnv7Bb6I_Hql7VNLpeIWiQOmib2hAYjdqnt-aDFR2FmDO-C_PuLxP?width=233&height=256&cropmode=none" alt="hexo_page_scrollpercent.png"></p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Deployment</span></span><br><span class="line"><span class="comment">## Docs: https://hexo.io/docs/one-command-deployment</span></span><br><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">https://github.com/username/username.github.io.git</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">master</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># URL</span></span><br><span class="line"><span class="comment">## Set your site url here. For example, if you use GitHub Page, set url as &#x27;https://username.github.io/project&#x27;</span></span><br><span class="line"><span class="attr">url:</span> <span class="string">https://oscar51011.github.io/</span> <span class="comment"># 填入自己創建的 Github Page</span></span><br><span class="line"><span class="attr">permalink:</span> <span class="string">:year/:month/:day/:title/</span></span><br><span class="line"><span class="attr">permalink_defaults:</span></span><br><span class="line"><span class="attr">pretty_urls:</span></span><br><span class="line">  <span class="attr">trailing_index:</span> <span class="literal">true</span> <span class="comment"># Set to false to remove trailing &#x27;index.html&#x27; from permalinks</span></span><br><span class="line">  <span class="attr">trailing_html:</span> <span class="literal">true</span> <span class="comment"># Set to false to remove trailing &#x27;.html&#x27; from permalinks</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li><p>執行佈署指令: <code>hexo deploy</code></p>
+<ul>
+<li>根據 public folder 的資料更新至 .deploy_git (並更新至 repository)</li>
+</ul>
+</li>
+<li><p>網址打上<code>https://username.github.io</code> 即可看到自己的BLOG網站</p>
+</li>
+</ol>
+<h3 id="常用指令"><a href="#常用指令" class="headerlink" title="常用指令"></a>常用指令</h3><ul>
+<li>建立新文章: <code>hexo new &#123;title&#125;</code><ul>
+<li>新文章在產生 source folder 底下</li>
+</ul>
+</li>
+<li>清除靜態檔案&amp;快取: <code>hexo clean</code><ul>
+<li>刪除了 public folder &amp; db.json</li>
+</ul>
+</li>
+<li>產生靜態網頁: <code>hexo generate</code><ul>
+<li>根據 source folder 的資料更新至 public folder</li>
+</ul>
+</li>
+<li>本地啟動Server: <code>hexo server</code> <ul>
+<li>使用參數 –port 4001, 可以覆蓋連接埠設定，預設為4000</li>
+<li>使用 Ctrl + C 可以關閉</li>
+</ul>
+</li>
+</ul>
+<p>操作順序為<br><code>hexo clean</code> -&gt; <code>hexo generate</code> -&gt; <code>hexo deploy</code></p>
 <h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
-<li><a href="https://github.com/theme-next/hexo-generator-searchdb">Github Repository : hexo-generator-searchdb</a></li>
-<li><a href="https://ithelp.ithome.com.tw/articles/10248214">(20) 試著學 Hexo - NexT 主題篇 - 可以安裝的套件</a></li>
-<li><a href="https://blog.csdn.net/as480133937/article/details/100138838">Hexo-Next 主题博客个性化配置超详细，超全面(两万字)</a></li>
-<li><a href="https://ithelp.ithome.com.tw/articles/10257569">建立自己Blog系列(三) Hexo next theme 介紹</a></li>
-<li><a href="https://github.com/theme-next/hexo-theme-next">Github Repository : hexo-theme-next</a></li>
+<li><a href="https://hackmd.io/@Heidi-Liu/note-hexo-github">【學習筆記】如何使用 Hexo + GitHub Pages 架設個人網誌</a> <br></li>
+<li><a href="https://github.com/hexojs/hexo">Hexo Github</a> <br></li>
+<li><a href="https://hexo.io/zh-tw/docs/commands">Hexo 常用指令</a> <br></li>
+<li><a href="https://ithelp.ithome.com.tw/articles/10280954?sc=iThomeR">[Day31] Hexo x GitHub Pages 打造個人部落格</a> <br></li>
 </ol>
 ]]></content>
       <categories>
@@ -417,6 +423,54 @@
       </categories>
       <tags>
         <tag>springboot</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo 主題 - NEXT &amp; 新增文章搜尋功能</title>
+    <url>/2022/03/02/hexo-next-theme/</url>
+    <content><![CDATA[<p>紀錄一下，Blog中選定的主題 Next 的安裝經過 &amp; 新增搜尋功能</p>
+<span id="more"></span>
+
+<h3 id="安裝主題-Next"><a href="#安裝主題-Next" class="headerlink" title="安裝主題 Next"></a>安裝主題 Next</h3><ol>
+<li><p>Github clone hexo-theme-next project - <a href="https://github.com/theme-next/hexo-theme-next">點我前往</a></p>
+</li>
+<li><p>在 themes folder 底下建立 next 資料夾並將上述下載的資料 copy 進該資料夾</p>
+</li>
+<li><p>修改 根目錄 的 _config.xml 內容，從預設的 landscape 改成 next</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Extensions</span></span><br><span class="line"><span class="comment">## Plugins: https://hexo.io/plugins/</span></span><br><span class="line"><span class="comment">## Themes: https://hexo.io/themes/</span></span><br><span class="line"><span class="attr">theme:</span> <span class="string">next</span></span><br></pre></td></tr></table></figure></li>
+<li><p>設定檔有2個，一個是配製 Hexo設定，另一個是針對 Next 主題進行配置</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="string">根目錄:</span> <span class="string">_config.yml</span></span><br><span class="line"><span class="string">Next主題:</span> <span class="string">themes/_config.yml</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Next 主題底下有 4種樣式 (設定於 themes 底下的 _config.xml)</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Schemes</span></span><br><span class="line"><span class="comment">#scheme: Muse</span></span><br><span class="line"><span class="attr">scheme:</span> <span class="string">Mist</span></span><br><span class="line"><span class="comment">#scheme: Pisces</span></span><br><span class="line"><span class="comment">#scheme: Gemini</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="開啟-分類-x2F-標籤-功能"><a href="#開啟-分類-x2F-標籤-功能" class="headerlink" title="開啟 分類 &#x2F; 標籤 功能"></a>開啟 分類 &#x2F; 標籤 功能</h3><ul>
+<li>新增 layout 為 page 的文章 ( 一般文章預設為 post)<br><code>hexo new page categories</code> ( type 為 “categories” )<br><code>hexo new page tags</code> ( type 為 “tags” )</li>
+<li>一般文章撰寫時於文章 Front-matter 定義 分類 &#x2F; 標籤 屬性<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">Hexo</span> <span class="string">主題</span> <span class="bullet">-</span> <span class="string">NEXT</span> <span class="string">&amp;</span> <span class="string">新增文章搜尋功能</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2022-03-02 06:55:34</span></span><br><span class="line"><span class="attr">tags:</span> </span><br><span class="line"><span class="bullet">-</span> <span class="string">hexo</span></span><br><span class="line"><span class="attr">categories:</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">blog</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure></li>
+<li>開啟 Next 主題 menu 得以顯示於介面<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">home:</span> <span class="string">/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-home</span></span><br><span class="line">  <span class="comment"># about: /about/ || fa fa-user</span></span><br><span class="line">  <span class="attr">tags:</span> <span class="string">/tags/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-tags</span></span><br><span class="line">  <span class="attr">categories:</span> <span class="string">/categories/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-th</span></span><br><span class="line">  <span class="attr">archives:</span> <span class="string">/archives/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-archive</span></span><br><span class="line">  <span class="comment">#schedule: /schedule/ || fa fa-calendar</span></span><br><span class="line">  <span class="comment">#sitemap: /sitemap.xml || fa fa-sitemap</span></span><br><span class="line">  <span class="comment">#commonweal: /404/ || fa fa-heartbeat</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="新增-搜尋功能"><a href="#新增-搜尋功能" class="headerlink" title="新增 搜尋功能"></a>新增 搜尋功能</h3><ol>
+<li>下載套件 <code>npm install hexo-generator-searchdb --save</code></li>
+<li>根目錄 _config.xml 新增設定<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment">#Local Search / created by 2022-03-02</span></span><br><span class="line"><span class="attr">search:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">path:</span> <span class="string">search.xml</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">field:</span> <span class="string">post</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">format:</span> <span class="string">html</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">content:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure></li>
+<li>主題目錄 _config.xml 開啟 local_search 功能<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Local Search</span></span><br><span class="line"><span class="comment"># Dependencies: https://github.com/theme-next/hexo-generator-searchdb</span></span><br><span class="line"><span class="attr">local_search:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="新增-文章閱讀進度-功能"><a href="#新增-文章閱讀進度-功能" class="headerlink" title="新增 文章閱讀進度 功能"></a>新增 文章閱讀進度 功能</h3><p>將 scrollpercent 從 false 改成 true</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">back2top:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># Back to top in sidebar.</span></span><br><span class="line">  <span class="attr">sidebar:</span> <span class="literal">false</span></span><br><span class="line">  <span class="comment"># Scroll percent label in b2t button.</span></span><br><span class="line">  <span class="attr">scrollpercent:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<p>效果如下:</p>
+<p><img src="https://bnz05pap002files.storage.live.com/y4m1yGLaD3UGbwtXQPefduFnckR3CCidf2SWItddjqzSCA3KdyVLMXnZpx-If2Tl3tWkszjYeEMyotdRXWNIo_iQY_INtR5O0J48eqrMs_1nY9WVie0VKY4hJXYo208GuzkoFHi84ZTce-qnv7Bb6I_Hql7VNLpeIWiQOmib2hAYjdqnt-aDFR2FmDO-C_PuLxP?width=233&height=256&cropmode=none" alt="hexo_page_scrollpercent.png"></p>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
+<li><a href="https://github.com/theme-next/hexo-generator-searchdb">Github Repository : hexo-generator-searchdb</a></li>
+<li><a href="https://ithelp.ithome.com.tw/articles/10248214">(20) 試著學 Hexo - NexT 主題篇 - 可以安裝的套件</a></li>
+<li><a href="https://blog.csdn.net/as480133937/article/details/100138838">Hexo-Next 主题博客个性化配置超详细，超全面(两万字)</a></li>
+<li><a href="https://ithelp.ithome.com.tw/articles/10257569">建立自己Blog系列(三) Hexo next theme 介紹</a></li>
+<li><a href="https://github.com/theme-next/hexo-theme-next">Github Repository : hexo-theme-next</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>blog</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
       </tags>
   </entry>
   <entry>
