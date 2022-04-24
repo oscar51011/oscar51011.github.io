@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"oscar51011.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="之前遇過的專案，前輩有使用過 Swagger 這個工具來讓 API 資訊文件化最近剛好有個機會又需要重新來熟悉這個套件，因此花了點時間記錄一下重新學習的過程目前公司專案使用的版本為 2.9.2，因此本篇也會以該版本為例進行實作">
+<meta property="og:type" content="article">
+<meta property="og:title" content="springboot整合swagger2產出API開發文件">
+<meta property="og:url" content="https://oscar51011.github.io/2022/04/24/springboot-swagger-api-docs/index.html">
+<meta property="og:site_name" content="Kai&#39;s Blog">
+<meta property="og:description" content="之前遇過的專案，前輩有使用過 Swagger 這個工具來讓 API 資訊文件化最近剛好有個機會又需要重新來熟悉這個套件，因此花了點時間記錄一下重新學習的過程目前公司專案使用的版本為 2.9.2，因此本篇也會以該版本為例進行實作">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://bnz05pap002files.storage.live.com/y4mZI3QMiv0Yh8LiEN47-k82v5t7YjtNT5zAO6p10RWlflGj1xkkOAHo3FHxLOOHyz0sSAXbfzYErrnTlps3zri2nMRsniHzTgVbJMwXoXIKTHQPKXDnSVqwtw6Jkys_baYe9k5AQWSQgxonMGe2WtsrSoPDUBT30YR0H9epBvayDdvlbq4JM9azeognvgcKs-i?width=660&height=400&cropmode=none">
+<meta property="og:image" content="https://bnz05pap002files.storage.live.com/y4mmB-9k_fW-ouQCZZFllPF0v8zA8viNB6jzrftVBC3C35um62Wo06kKVwD5iGRAMNQz_LaAYUOs6fWJyndfLOSyMY6qgFC6xGBVTu2_xG8BuPztDsfEo6ohcRF9nhB0csOUFBA-k1ySZw4I7SPyXbePfaJVNaHP-t8oucBjUxfECSdaib8h5-qorBMkIeSPR61?width=1024&height=681&cropmode=none">
+<meta property="og:image" content="https://bnz05pap002files.storage.live.com/y4moaidY72CjG-gNuuYfQqzyr6XoMMNa0JvrmFBoma-67EQhOqTcHJWM1wwB50PtHN7xfZBmHB6f0yaBUWeG7ZvfNbI8pI2dMM2mVwn3EbYCU-yr-G9kTwPoEXUTDLlsyditz9wzKT9owQfeJYkbNNrj0cZOXiqMea1XOSTU6ld-4y3rdnIPoqNElNQoBLahu7c?width=660&height=436&cropmode=none">
+<meta property="og:image" content="https://bnz05pap002files.storage.live.com/y4mbdN08vj5lGpHHhA9ZKDIK_TR_GLLA_0pjTjjLBexUlcsiY0RVOwTnOfQBPffgSNuiMyCTx6LexftI3JXssIh_JkKb0lL_yrwwIlL54OvuWDLUxZgEBLA0nfYQOrKoskGBClSzg6ADCHpP0T0PSIxTFBowB9WNowzczoCTbdKc1mQcP016DBbWoqcn-r2dmSA?width=1024&height=511&cropmode=none">
+<meta property="article:published_time" content="2022-04-24T03:15:27.000Z">
+<meta property="article:modified_time" content="2022-04-24T03:15:27.434Z">
+<meta property="article:author" content="oscar51011">
+<meta property="article:tag" content="springboot">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://bnz05pap002files.storage.live.com/y4mZI3QMiv0Yh8LiEN47-k82v5t7YjtNT5zAO6p10RWlflGj1xkkOAHo3FHxLOOHyz0sSAXbfzYErrnTlps3zri2nMRsniHzTgVbJMwXoXIKTHQPKXDnSVqwtw6Jkys_baYe9k5AQWSQgxonMGe2WtsrSoPDUBT30YR0H9epBvayDdvlbq4JM9azeognvgcKs-i?width=660&height=400&cropmode=none">
+
+<link rel="canonical" href="https://oscar51011.github.io/2022/04/24/springboot-swagger-api-docs/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>springboot整合swagger2產出API開發文件 | Kai's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Kai's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://oscar51011.github.io/2022/04/24/springboot-swagger-api-docs/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="oscar51011">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Kai's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          springboot整合swagger2產出API開發文件
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-04-24 11:15:27" itemprop="dateCreated datePublished" datetime="2022-04-24T11:15:27+08:00">2022-04-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/springboot/" itemprop="url" rel="index"><span itemprop="name">springboot</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>之前遇過的專案，前輩有使用過 Swagger 這個工具來讓 API 資訊文件化<br>最近剛好有個機會又需要重新來熟悉這個套件，因此花了點時間記錄一下重新學習的過程<br>目前公司專案使用的版本為 2.9.2，因此本篇也會以該版本為例進行實作</p>
+<span id="more"></span>
+
+<h3 id="專案配置"><a href="#專案配置" class="headerlink" title="專案配置"></a>專案配置</h3><ul>
+<li>Springboot 2.5.2</li>
+<li>Swagger 2.9.2</li>
+<li>JDK 版本 11</li>
+</ul>
+<ol>
+<li><p>Maven Pom 引入對應的 dependencies</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">  <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">      ...</span><br><span class="line"><span class="comment">&lt;!-- swagger --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.springfox<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>springfox-swagger2<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.9.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.springfox<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>springfox-swagger-ui<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.9.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">      ...</span><br><span class="line">  <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span>	</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>建立配置類別 SwaggerConfig</p>
+</li>
+</ol>
+<ul>
+<li>可以 創建不同 Docket 的 <code>@Bean</code> 根據業務場景進行分類(搭配掃描不同package切分呈現內容)</li>
+<li>可以設定 掃描 特定的 package 或 符合規則之 URL 才顯示於畫面</li>
+<li>可以設定 swagger 是否啟動的開關 (可以在<code>application.properties</code> 配置 <code>swagger.enable = true</code>)</li>
+<li>可以設定 swagger API 畫面顯示資訊</li>
+<li>可以調整 UI 顯示之資訊量<ul>
+<li><font color=#ff0000>supportedSubmitMethods() 可以決定是否要顯示 Try it out 的按鈕，讓使用者用 Web 試打 API</font></li>
+</ul>
+</li>
+<li>可以設定 swagger 是否顯示預設的 response messages</li>
+<li>可以設定 swagger tags 為 API 做群組分類<br>  Hint: swagger3 後提供 annotation 可以直接加於controller直接使用(詳細查看Ref. 4)<br>  <code>@Tag(name = &quot;User&quot;, description = &quot;the User API with description api tag&quot;)</code></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 撰寫Swagger的設定檔</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> oscar51011</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2022年4月23日</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@EnableSwagger2</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SwaggerConfig</span> &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Value(&quot;$&#123;swagger.enable&#125;&quot;)</span></span><br><span class="line">	<span class="keyword">private</span> <span class="type">boolean</span> swaggerEnable;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 配置 Swagger 設定</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> Docket <span class="title function_">api</span><span class="params">()</span> &#123; </span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Docket</span>(DocumentationType.SWAGGER_2)</span><br><span class="line">			<span class="comment">// 決定是否要顯示預設的 response message ( ex: 200, 201, 403, 404 ...etc )</span></span><br><span class="line">        	.useDefaultResponseMessages(<span class="literal">false</span>)</span><br><span class="line">			<span class="comment">// 設定開關讓配置參數決定swagger是否啟用</span></span><br><span class="line">			.enable(swaggerEnable)</span><br><span class="line">			<span class="comment">// swagger Spec 右上角的 Select a spec 顯示之 groupName</span></span><br><span class="line">        	.groupName(<span class="string">&quot;Swagger Demo API&quot;</span>)</span><br><span class="line">			.apiInfo(apiInfo())</span><br><span class="line">			.select()</span><br><span class="line">			<span class="comment">// 可以透過掃特定 package 顯示</span></span><br><span class="line">			.apis(RequestHandlerSelectors.basePackage(<span class="string">&quot;com.demo.situation.swaggerExample.controller&quot;</span>))</span><br><span class="line">			<span class="comment">// 可以掃特定的 url 才顯示於 swagger ( 只顯示swaggerTest開頭的 API )</span></span><br><span class="line">			.paths(PathSelectors.ant(<span class="string">&quot;/swaggerTest/**&quot;</span>))</span><br><span class="line">			.build()</span><br><span class="line">			<span class="comment">// 定義 swagger API tags 可以用於群組分類</span></span><br><span class="line">			.tags(</span><br><span class="line">				<span class="keyword">new</span> <span class="title class_">Tag</span>(<span class="string">&quot;User&quot;</span>, <span class="string">&quot;the User API with description api tag&quot;</span>),</span><br><span class="line">				<span class="keyword">new</span> <span class="title class_">Tag</span>(<span class="string">&quot;Job&quot;</span>, <span class="string">&quot;the Job API with description api tag&quot;</span>)</span><br><span class="line">			)</span><br><span class="line">		;                                           </span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 配置 Swagger API 資訊</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="keyword">private</span> ApiInfo <span class="title function_">apiInfo</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ApiInfoBuilder</span>()</span><br><span class="line">			.title(<span class="string">&quot;SWAGGER API規格&quot;</span>)</span><br><span class="line">			.description(<span class="string">&quot;練習用Swagger呈現API規格&quot;</span>)</span><br><span class="line">			.build()</span><br><span class="line">			;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 設定 Swagger UI 畫面顯示邏輯</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="meta">@Bean</span></span><br><span class="line">	<span class="keyword">public</span> UiConfiguration <span class="title function_">uiConfig</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> UiConfigurationBuilder.builder()</span><br><span class="line">			.defaultModelsExpandDepth(-<span class="number">1</span>)</span><br><span class="line">			<span class="comment">// 如果 submitMethods 放入空陣列，就會把 Try it out 按鈕移除</span></span><br><span class="line">			<span class="comment">// .supportedSubmitMethods(new String[] &#123;&#125;)</span></span><br><span class="line">			.build();</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>撰寫 Controller</li>
+</ol>
+<ul>
+<li><p><code>@Api</code>: 將 class 標記為 swagger 的資源</p>
+<ul>
+<li>value: 描述群組 ; 隱藏式的 tag , 如果沒有設立 tags , 就自成一個群組</li>
+<li>tags: 可以跟 <code>SwaggerConfig.java</code> 的 <code>tags()</code> 配置綁定做群組分類</li>
+</ul>
+</li>
+<li><p><code>@ApiOperation</code>: 用於method level, 描述API介面</p>
+<ul>
+<li>value: API簡介</li>
+<li>note: API描述</li>
+</ul>
+</li>
+<li><p><code>@ApiParam</code>: Input 參數描述</p>
+<ul>
+<li>name: 參數命名</li>
+<li>value: 參數描述</li>
+</ul>
+</li>
+<li><p><code>@ApiResponses</code>: 描述多種 Response 的操作行為，為多個 <code>@ApiResponse</code> 的集合</p>
+</li>
+<li><p><code>@ApiResponse</code>: 描述 Response 的操作行為</p>
+<ul>
+<li>code: HTTP status</li>
+<li>message: 提供可讀性高的描述資訊</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 測試 swagger API 用法</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> oscar51011</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2022年4月24日</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="comment">// value: 類別檔案說明 ; tag: 可以針對不同類型功能做分群</span></span><br><span class="line"><span class="meta">@Api(value = &quot;SWAGGER控制器類別&quot;, tags= &#123;&quot;User&quot;&#125;)</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/swaggerTest&quot;)</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SwaggerController</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@ApiOperation(value = &quot;更新使用者資訊&quot;, notes = &quot;根據XXX場景，更新使用者資訊&quot;, response = UpdateUserInfoViewBean.class)</span></span><br><span class="line">	<span class="meta">@ApiResponses(value = &#123;@ApiResponse(code = 200, message = &quot;用戶資訊&quot;), </span></span><br><span class="line"><span class="meta">						   @ApiResponse(code = 500, message = &quot;異常資訊&quot;)&#125;)</span></span><br><span class="line">	<span class="meta">@PutMapping(value = &quot;/user&quot;, produces = MediaType.APPLICATION_JSON_VALUE)</span></span><br><span class="line">	<span class="keyword">public</span> UpdateUserInfoViewBean <span class="title function_">updateUserInfo</span><span class="params">(<span class="meta">@ApiParam(name=&quot;updateUserInfoParamBean&quot;, value = &quot;更新使用者參數&quot;)</span><span class="meta">@RequestBody</span> UpdateUserInfoParamBean paramBean)</span> &#123;</span><br><span class="line">		</span><br><span class="line">		<span class="type">UpdateUserInfoViewBean</span> <span class="variable">viewBean</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">UpdateUserInfoViewBean</span>();</span><br><span class="line">		</span><br><span class="line">		viewBean.setName(<span class="string">&quot;test&quot;</span>);</span><br><span class="line">		viewBean.setMessage(<span class="string">&quot;success&quot;</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">return</span> viewBean;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>撰寫 Controller 對應的 Request 參數配置</li>
+</ol>
+<ul>
+<li><p><code>@ApiModel</code>: 描述 Swagger Model 的資訊</p>
+<ul>
+<li>value: 別名</li>
+<li>description: model 描述</li>
+</ul>
+</li>
+<li><p><code>@ApiModelProperty</code>: 描述 Model 的參數資訊</p>
+<ul>
+<li>name: 參數名稱</li>
+<li>value: 參數描述</li>
+<li>required: 是否為必填欄位 ( 預設值: false)</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 傳入 Request 參數物件</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> oscar51011</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2022年4月24日</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@ApiModel(value = &quot;UpdateUserInfoParamBean&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UpdateUserInfoParamBean</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 用戶流水碼</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="meta">@ApiModelProperty(name = &quot;id&quot;,value = &quot;客戶流水碼&quot;, required = true)</span></span><br><span class="line">	<span class="keyword">private</span> Long id;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 備註</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="meta">@ApiModelProperty(name = &quot;note&quot;,value = &quot;備註&quot;)</span></span><br><span class="line">	<span class="keyword">private</span> String note;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> Long <span class="title function_">getId</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> id;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setId</span><span class="params">(Long id)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.id = id;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> String <span class="title function_">getNote</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> note;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setNote</span><span class="params">(String note)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.note = note;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li><p>撰寫 Controller 對應的 Response 參數配置</p>
+<p> 參數配置與 Request 的 Annotation 相似，請參考 4. 的描述</p>
+</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 回傳 Response 物件</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> oscar51011</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2022年4月24日</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@ApiModel(value = &quot;UpdateUserInfoViewBean&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UpdateUserInfoViewBean</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 用戶名稱</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="meta">@ApiModelProperty(name = &quot;name&quot;,value = &quot;使用者姓名&quot;)</span></span><br><span class="line">	<span class="keyword">private</span> String name;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 更新結果</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="meta">@ApiModelProperty(name = &quot;result&quot;,value = &quot;更新結果&quot;)</span></span><br><span class="line">	<span class="keyword">private</span> String result;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> String <span class="title function_">getName</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> name;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setName</span><span class="params">(String name)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.name = name;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">public</span> String <span class="title function_">getResult</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> result;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setResult</span><span class="params">(String result)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.result = result;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="驗證結果-amp-使用方式"><a href="#驗證結果-amp-使用方式" class="headerlink" title="驗證結果 &amp; 使用方式"></a>驗證結果 &amp; 使用方式</h3><p>以本地測試來說，連接的網址如下: <a target="_blank" rel="noopener" href="http://localhost:8080/swagger-ui.html">http://localhost:8080/swagger-ui.html</a></p>
+<p>得到的畫面如下圖所示:</p>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mZI3QMiv0Yh8LiEN47-k82v5t7YjtNT5zAO6p10RWlflGj1xkkOAHo3FHxLOOHyz0sSAXbfzYErrnTlps3zri2nMRsniHzTgVbJMwXoXIKTHQPKXDnSVqwtw6Jkys_baYe9k5AQWSQgxonMGe2WtsrSoPDUBT30YR0H9epBvayDdvlbq4JM9azeognvgcKs-i?width=660&height=400&cropmode=none" alt="swagger-ui-page.png"></p>
+<ol>
+<li>接下來我們點開一個API的規格查看一下內部的資訊</li>
+</ol>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mmB-9k_fW-ouQCZZFllPF0v8zA8viNB6jzrftVBC3C35um62Wo06kKVwD5iGRAMNQz_LaAYUOs6fWJyndfLOSyMY6qgFC6xGBVTu2_xG8BuPztDsfEo6ohcRF9nhB0csOUFBA-k1ySZw4I7SPyXbePfaJVNaHP-t8oucBjUxfECSdaib8h5-qorBMkIeSPR61?width=1024&height=681&cropmode=none" alt="swagger-custom-api.png"></p>
+<ol start="2">
+<li>並且點擊右上角的 Try it out 按鈕就可以試打我們的API</li>
+</ol>
+<p><img src="https://bnz05pap002files.storage.live.com/y4moaidY72CjG-gNuuYfQqzyr6XoMMNa0JvrmFBoma-67EQhOqTcHJWM1wwB50PtHN7xfZBmHB6f0yaBUWeG7ZvfNbI8pI2dMM2mVwn3EbYCU-yr-G9kTwPoEXUTDLlsyditz9wzKT9owQfeJYkbNNrj0cZOXiqMea1XOSTU6ld-4y3rdnIPoqNElNQoBLahu7c?width=660&height=436&cropmode=none" alt="swagger-custom-api-Try-it-out.png"></p>
+<ol start="3">
+<li>最後再查看下方的 Response 就可以得到結果</li>
+</ol>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mbdN08vj5lGpHHhA9ZKDIK_TR_GLLA_0pjTjjLBexUlcsiY0RVOwTnOfQBPffgSNuiMyCTx6LexftI3JXssIh_JkKb0lL_yrwwIlL54OvuWDLUxZgEBLA0nfYQOrKoskGBClSzg6ADCHpP0T0PSIxTFBowB9WNowzczoCTbdKc1mQcP016DBbWoqcn-r2dmSA?width=1024&height=511&cropmode=none" alt="swagger-custom-api-response.png"></p>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
+<li><a target="_blank" rel="noopener" href="https://swagger.io/">swagger.io</a></li>
+<li><a target="_blank" rel="noopener" href="https://b0212066.pixnet.net/blog/post/215996424-swagger-2%E4%BD%BF%E7%94%A8%E7%AD%86%E8%A8%98">Spring Boot Swagger 2使用筆記</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.51cto.com/ewwerpm/4915407">swagger2里去掉Models</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.baeldung.com/java-swagger-api-description-deprecated">Swagger @Api Description Is Deprecated</a></li>
+<li><a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10191287">Day 05 - 增加 Swagger 來提供線上版 API 規格說明</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.796t.com/content/1545831370.html">Swagger2常用註解及其說明</a></li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/30047129/swagger-springfox-always-generates-some-response-messages-401-403-by-defa">Swagger - Springfox always generates some response messages (401,403…) by default. How can I remove them?</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/springboot/" rel="tag"># springboot</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/04/22/hibernate-transaction-rollback-only-error/" rel="prev" title="Transaction rolled back because it has been marked as rollback-only">
+      <i class="fa fa-chevron-left"></i> Transaction rolled back because it has been marked as rollback-only
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+  
+    <div class="comments" calss="comments">
+      <script src="https://utteranc.es/client.js"
+          repo="oscar51011/oscar51011.github.io.comment"
+          issue-term="pathname"
+          theme="github-light"
+          crossorigin="anonymous"
+          async>
+      </script>
+    </div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%88%E6%A1%88%E9%85%8D%E7%BD%AE"><span class="nav-number">1.</span> <span class="nav-text">專案配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A9%97%E8%AD%89%E7%B5%90%E6%9E%9C-amp-%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">驗證結果 &amp; 使用方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reference"><span class="nav-number">3.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">oscar51011</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/oscar51011" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;oscar51011" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/oscar51011@gmail.com" title="E-Mail → oscar51011@gmail.com"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">oscar51011</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
