@@ -20,20 +20,25 @@
     var CONFIG = {"hostname":"oscar51011.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="使用 Hexo 撰寫文章，使用 hexo generate 時，會將 markdown 轉換成 html在 hexo deploy 時會把靜態資源上傳到 github ，但並不會把 .md 檔案上傳這樣如果撰寫的電腦出了問題，資料就會不覆存在。 網路上查詢了一下大致上的作法有 2 種:  blog 的 repository 另開一個分支存取資源(如 Reference. 4) 使用套件 hexo-">
+  <meta name="description" content="藉由之前的 使用 jenkins 撰寫 pipeline 腳本完成 springboot 簡易自動化部署  已經知道怎麼撰寫一般的 pipeline但是在實際應用的需求上，開發團隊會在不同的環境(ex: SIT, UAT)進行開發，這樣需要跟對各個分支撰寫腳本 因此本篇撰寫multibranch pipeline，可以使用一個腳本完成這件事前一篇練習是使用 pipeline script 的方式來">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo 備份">
-<meta property="og:url" content="https://oscar51011.github.io/2022/03/12/hexo-git-backup/index.html">
+<meta property="og:title" content="使用 jenkins 撰寫 multiBranch pipeline">
+<meta property="og:url" content="https://oscar51011.github.io/2022/05/08/jenkins-multibranch-pipeline/index.html">
 <meta property="og:site_name" content="Kai&#39;s Blog">
-<meta property="og:description" content="使用 Hexo 撰寫文章，使用 hexo generate 時，會將 markdown 轉換成 html在 hexo deploy 時會把靜態資源上傳到 github ，但並不會把 .md 檔案上傳這樣如果撰寫的電腦出了問題，資料就會不覆存在。 網路上查詢了一下大致上的作法有 2 種:  blog 的 repository 另開一個分支存取資源(如 Reference. 4) 使用套件 hexo-">
+<meta property="og:description" content="藉由之前的 使用 jenkins 撰寫 pipeline 腳本完成 springboot 簡易自動化部署  已經知道怎麼撰寫一般的 pipeline但是在實際應用的需求上，開發團隊會在不同的環境(ex: SIT, UAT)進行開發，這樣需要跟對各個分支撰寫腳本 因此本篇撰寫multibranch pipeline，可以使用一個腳本完成這件事前一篇練習是使用 pipeline script 的方式來">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2022-03-11T22:51:10.000Z">
-<meta property="article:modified_time" content="2022-03-11T23:11:14.441Z">
+<meta property="og:image" content="https://bnz05pap002files.storage.live.com/y4m3EeoO8TA1ZQTerbt7_AxAciIrBF2FxiYy29MUrLLCCVbpCcNNGfJY-n8LnKcY-yBeqi9jzbL97tswNxE5_AsOOQBPBat7Q6YiFaIlYDEbFX5XelKH8VD3RyVpu2PO8IMeYwqTRezzHe-JarOFoHD-xi2RIYPMfh-AKQEDEuKinflIVrAn4NRpA1_izE9RKHd?width=963&height=456&cropmode=none">
+<meta property="og:image" content="https://bnz05pap002files.storage.live.com/y4m3F0mz8wMZJ8Wu3zHxuMKnZaVZuaeSZMv2jKBoheTbPwL6IArwYj9-MZJMZ-yQRTQDN04hVoxk5-9MmvmeyG2yAbNP5mk3uMLT0aWlK6DFfF3KIqCh4izon3DvjPZT5vQlS7hc_VdSoA0tWwjmvBlDOcPVOHTadl6JIBMbPvOyBgtBIevw4zSD4Y0z3DXcr6i?width=1024&height=541&cropmode=none">
+<meta property="og:image" content="https://bnz05pap002files.storage.live.com/y4mBTFN1JdZ61A0t1F0wwmFApUDudAZ_NngMX8V90wBWrVgbI8TNkn0Baq1J1NmA3SqnTEZWBnZ-MMxjzE4pfuh4otcW3_YFKbmyH055Wu4Ha_JOvQ7z4fbc2cUcKPI9cuABtn3J-UVlozT5ESE08MuBVX5ph5N5n62UDzoBIoUXSMa4cguRYO7CTU-yc-rDXxJ?width=1024&height=357&cropmode=none">
+<meta property="article:published_time" content="2022-05-08T10:14:12.000Z">
+<meta property="article:modified_time" content="2022-05-08T10:14:12.787Z">
 <meta property="article:author" content="oscar51011">
-<meta property="article:tag" content="hexo">
+<meta property="article:tag" content="jenkins">
+<meta property="article:tag" content="springboot">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://bnz05pap002files.storage.live.com/y4m3EeoO8TA1ZQTerbt7_AxAciIrBF2FxiYy29MUrLLCCVbpCcNNGfJY-n8LnKcY-yBeqi9jzbL97tswNxE5_AsOOQBPBat7Q6YiFaIlYDEbFX5XelKH8VD3RyVpu2PO8IMeYwqTRezzHe-JarOFoHD-xi2RIYPMfh-AKQEDEuKinflIVrAn4NRpA1_izE9RKHd?width=963&height=456&cropmode=none">
 
-<link rel="canonical" href="https://oscar51011.github.io/2022/03/12/hexo-git-backup/">
+<link rel="canonical" href="https://oscar51011.github.io/2022/05/08/jenkins-multibranch-pipeline/">
 
 
 <script id="page-configurations">
@@ -46,7 +51,7 @@
   };
 </script>
 
-  <title>Hexo 備份 | Kai's Blog</title>
+  <title>使用 jenkins 撰寫 multiBranch pipeline | Kai's Blog</title>
   
 
 
@@ -189,7 +194,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://oscar51011.github.io/2022/03/12/hexo-git-backup/">
+    <link itemprop="mainEntityOfPage" href="https://oscar51011.github.io/2022/05/08/jenkins-multibranch-pipeline/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -202,7 +207,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Hexo 備份
+          使用 jenkins 撰寫 multiBranch pipeline
         </h1>
 
         <div class="post-meta">
@@ -211,9 +216,8 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2022-03-12 06:51:10 / Modified: 07:11:14" itemprop="dateCreated datePublished" datetime="2022-03-12T06:51:10+08:00">2022-03-12</time>
+              <time title="Created: 2022-05-08 18:14:12" itemprop="dateCreated datePublished" datetime="2022-05-08T18:14:12+08:00">2022-05-08</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -221,7 +225,7 @@
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/blog/" itemprop="url" rel="index"><span itemprop="name">blog</span></a>
+                  <a href="/categories/jenkins/" itemprop="url" rel="index"><span itemprop="name">jenkins</span></a>
                 </span>
             </span>
 
@@ -236,31 +240,40 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>使用 Hexo 撰寫文章，使用 <code>hexo generate</code> 時，會將 markdown 轉換成 html<br>在 <code>hexo deploy</code> 時會把靜態資源上傳到 github ，但並不會把 .md 檔案上傳<br>這樣如果撰寫的電腦出了問題，資料就會不覆存在。</p>
-<p>網路上查詢了一下大致上的作法有 2 種:</p>
-<ol>
-<li>blog 的 repository 另開一個分支存取資源(如 Reference. 4)</li>
-<li>使用套件 hexo-git-backup</li>
-</ol>
-<p>我們使用方法2，接著是以下的配置工作</p>
+        <p>藉由之前的 <a href="https://oscar51011.github.io/2022/05/07/jenkins-pipeline">使用 jenkins 撰寫 pipeline 腳本完成 springboot 簡易自動化部署
+</a> 已經知道怎麼撰寫一般的 pipeline<br>但是在實際應用的需求上，開發團隊會在不同的環境(ex: SIT, UAT)進行開發，這樣需要跟對各個分支撰寫腳本</p>
+<p>因此本篇撰寫multibranch pipeline，可以使用一個腳本完成這件事<br>前一篇練習是使用 pipeline script 的方式來撰寫<br>這次也練習 jenkinsfile 的寫法(將 腳本內容 交由版本控制管理)</p>
 <span id="more"></span>
 
-<h3 id="安裝步驟"><a href="#安裝步驟" class="headerlink" title="安裝步驟"></a>安裝步驟</h3><ol>
-<li><p>進入blog的workspace &amp; 安裝套件</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-git-backup --save</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>根目錄的 <code>_config.yml</code> 檔新增以下設定內容</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># setting git backup</span><br><span class="line">backup:</span><br><span class="line">  type: git</span><br><span class="line">  repository:</span><br><span class="line">    github: https://github.com/&#123;username&#125;/&#123;user&#x27;s repository&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>每次需要備份時，執行指令(下述兩種都可以) </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo backup</span><br><span class="line"># 簡寫</span><br><span class="line">hexo b</span><br></pre></td></tr></table></figure></li>
+<h3 id="前置作業"><a href="#前置作業" class="headerlink" title="前置作業"></a>前置作業</h3><ol>
+<li>準備一台 VM 並使用 docker啟動一個 Jenkins</li>
+<li>建置一個可運行的 springboot 專案</li>
 </ol>
-<p>這樣每次撰寫部落格完後多此步驟就可以將 source 的文章保留下來。</p>
-<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
-<li><a target="_blank" rel="noopener" href="https://cheng-yi-ting.github.io/2020/02/08/2020-02-08-HexoBackup/">Hexo 備份</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/coneycode/hexo-git-backup">Github: hexo-git-backup</a></li>
-<li><a target="_blank" rel="noopener" href="http://www.xiaoliblog.cn/page/hexobackup.html">hexo-git-backup 博客备份及恢复</a></li>
-<li><a target="_blank" rel="noopener" href="https://cheng-yi-ting.github.io/2020/02/08/2020-02-08-HexoBackup/">使用git分支保存hexo博客源码到github</a></li>
+<h3 id="自動化流程"><a href="#自動化流程" class="headerlink" title="自動化流程"></a>自動化流程</h3><ol>
+<li>清空該job的workspace</li>
+<li>取得github上對應的repository</li>
+<li>在jenkins主機上進行打包</li>
+<li>通知流程 ( print 結束字樣)</li>
+</ol>
+<h3 id="建置-multiBranch-pipeline-流程"><a href="#建置-multiBranch-pipeline-流程" class="headerlink" title="建置 multiBranch pipeline 流程"></a>建置 multiBranch pipeline 流程</h3><ol>
+<li>將 springboot 專案加上 Jenkinsfile 的檔案</li>
+</ol>
+<p><img src="https://bnz05pap002files.storage.live.com/y4m3EeoO8TA1ZQTerbt7_AxAciIrBF2FxiYy29MUrLLCCVbpCcNNGfJY-n8LnKcY-yBeqi9jzbL97tswNxE5_AsOOQBPBat7Q6YiFaIlYDEbFX5XelKH8VD3RyVpu2PO8IMeYwqTRezzHe-JarOFoHD-xi2RIYPMfh-AKQEDEuKinflIVrAn4NRpA1_izE9RKHd?width=963&height=456&cropmode=none" alt="add-jenkinsfile-to-repository.png"></p>
+<ol start="2">
+<li>建立 multiBranch pipeline<br>Dashboard &gt; 新增作業 &gt; Multibranch Pipeline</li>
+</ol>
+<ul>
+<li>Add Sources 選擇 Git 並填入相關資訊</li>
+</ul>
+<ol start="3">
+<li>專案建置完成後點選 Scan Multibranch Pipeline Now<br>它會去取得 repository 並檢查分支是否有異動過，有的話會執行一次作業<br>(如果有新分支產生也會同步顯示於UI頁面)，如果要個別執行單一分支可點選 branch name 進入各分支</li>
+</ol>
+<p><img src="https://bnz05pap002files.storage.live.com/y4m3F0mz8wMZJ8Wu3zHxuMKnZaVZuaeSZMv2jKBoheTbPwL6IArwYj9-MZJMZ-yQRTQDN04hVoxk5-9MmvmeyG2yAbNP5mk3uMLT0aWlK6DFfF3KIqCh4izon3DvjPZT5vQlS7hc_VdSoA0tWwjmvBlDOcPVOHTadl6JIBMbPvOyBgtBIevw4zSD4Y0z3DXcr6i?width=1024&height=541&cropmode=none" alt="multibranch-pipeline-scan.png"></p>
+<h1 id="驗證結果"><a href="#驗證結果" class="headerlink" title="驗證結果"></a>驗證結果</h1><p>進入單一分支執行完後，也會跟撰寫一般的 pipeline 腳本有同樣的結果，如下圖:</p>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mBTFN1JdZ61A0t1F0wwmFApUDudAZ_NngMX8V90wBWrVgbI8TNkn0Baq1J1NmA3SqnTEZWBnZ-MMxjzE4pfuh4otcW3_YFKbmyH055Wu4Ha_JOvQ7z4fbc2cUcKPI9cuABtn3J-UVlozT5ESE08MuBVX5ph5N5n62UDzoBIoUXSMa4cguRYO7CTU-yc-rDXxJ?width=1024&height=357&cropmode=none" alt="multibranch-pipeline-result.png"></p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ol>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/44928459/is-it-possible-to-rename-default-declarative-checkout-scm-step">stackoverflow - Is it possible to rename default “Declarative: Checkout SCM” step?</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jenkins.io/doc/book/pipeline/jenkinsfile/">jenkins - Using a Jenkinsfile</a></li>
 </ol>
 
     </div>
@@ -271,7 +284,8 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/hexo/" rel="tag"># hexo</a>
+              <a href="/tags/jenkins/" rel="tag"># jenkins</a>
+              <a href="/tags/springboot/" rel="tag"># springboot</a>
           </div>
 
         
@@ -280,13 +294,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2022/03/11/springboot-load-properties-file/" rel="prev" title="Springboot 讀取 properties 設定檔參數">
-      <i class="fa fa-chevron-left"></i> Springboot 讀取 properties 設定檔參數
+    <a href="/2022/05/07/jenkins-pipeline/" rel="prev" title="使用 jenkins 撰寫 pipeline 腳本完成 springboot 簡易自動化部署">
+      <i class="fa fa-chevron-left"></i> 使用 jenkins 撰寫 pipeline 腳本完成 springboot 簡易自動化部署
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2022/03/12/springboot-load-yaml-file/" rel="next" title="Springboot 讀取 yaml 設定檔參數">
-      Springboot 讀取 yaml 設定檔參數 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -355,7 +366,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%9D%E6%AD%A5%E9%A9%9F"><span class="nav-number">1.</span> <span class="nav-text">安裝步驟</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reference"><span class="nav-number">2.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E7%BD%AE%E4%BD%9C%E6%A5%AD"><span class="nav-number">1.</span> <span class="nav-text">前置作業</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%8B%95%E5%8C%96%E6%B5%81%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">自動化流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BB%BA%E7%BD%AE-multiBranch-pipeline-%E6%B5%81%E7%A8%8B"><span class="nav-number">3.</span> <span class="nav-text">建置 multiBranch pipeline 流程</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A9%97%E8%AD%89%E7%B5%90%E6%9E%9C"><span class="nav-number"></span> <span class="nav-text">驗證結果</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number"></span> <span class="nav-text">Reference</span></a></div>
       </div>
       <!--/noindex-->
 
