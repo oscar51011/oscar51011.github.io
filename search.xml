@@ -27,57 +27,6 @@
       </tags>
   </entry>
   <entry>
-    <title>使用 utterances 在 Hexo 實現留言板功能</title>
-    <url>/2022/03/04/hexo-message-board-utterances/</url>
-    <content><![CDATA[<p>留言版在一般的部落格中一個常見的功能，既然使用Github製作了自己的部落格<br>順勢找了一些文章來新增這個功能</p>
-<p>在參閱了許多 blogger 的文章後發現，比較常用的有以下兩種:</p>
-<ul>
-<li>Disqus<ul>
-<li>需要去 Disqus 官網註冊 - <a href="https://disqus.com/">點我前往</a></li>
-</ul>
-</li>
-<li>utterances<ul>
-<li>與 Github Issues 做連結</li>
-<li>需要登入 Github 才能夠進行留言</li>
-</ul>
-</li>
-</ul>
-<p>目前是打算使用 utterances 來實作 部落格的留言版</p>
-<span id="more"></span>
-
-<h3 id="整合-utterances"><a href="#整合-utterances" class="headerlink" title="整合 utterances"></a>整合 utterances</h3><ol>
-<li>Github 建立 Repository</li>
-<li>安裝 utterances - <a href="https://github.com/apps/utterances">點我前往</a></li>
-</ol>
-<p><img src="https://bnz05pap002files.storage.live.com/y4mf3VZ_TrvLMIzOAvwD5scehh0uCIPUsahla1ouyxXnWeuuT5H3ukvDP7hV0gVb_0gnlFJTWeW9UWGP5LXPyQTBd60fbKgxDlDQK2ADWYI5nD6b0pkEd3hfZjLFwEUWurbgWomh3aeF0BWUvSalsrsnPvcz2e_eKp3TjFC4M0aqJI5wZ9FJsnf7SILGMbJzgbp?width=660&height=261&cropmode=none" alt="utterances-install.png"><br>3. 取得授權，並選擇 步驟1 的 Repository</p>
-<p><img src="https://bnz05pap002files.storage.live.com/y4mB7qi6p5Kb5d77Slb0G_jLXcoBZ6yepW2pKcSxd3Ih7_gQ4SDxI9vNpA-6V9wp_RnBN59jH0ziNmpluQFQDjnM92bizO_e_2jLgYQRxeFb7ps9tjvCvauX62h5gJLcvQsa34THbIPo5P6HAZmuIwMlGX5dwFnHIl9fLbX-dITsVKucorwYtuIJ2I8kmzdq_B5?width=480&height=660&cropmode=none" alt="utterances-select-repository.png"><br>4. 填寫對應的 configuration EX: Repository , Blog Post &amp; issue Mapping , Theme …etc</p>
-<p><img src="https://bnz05pap002files.storage.live.com/y4mZW8hAhicSL9Xi4l83gr-741kqXgXqCBnmEDZ5a_ZVaCNUbsZQGTl456l7dxJUszLljpSitj43aRmX3fA0OUM58mYxGTvKuc0wL0VW-9OPS6YAn1Uz9FqzK0Q8YSWOpCQBiDHVMFUb6E5olX7bVBc-vy_rP5gqLV5Kt1WPC8gXKKIKqjtSVCpSzI9LB2H49DI?width=660&height=622&cropmode=none" alt="utterances-configuration-script.png"><br>5. 在 theme 的 _config.yml 新增參數 (blog 目前是使用 next themes)</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># utterances by 2022-03-04</span></span><br><span class="line"><span class="attr">utterances:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-
-<ol start="6">
-<li>在主題底下 <code>themes\next\layout\_partials</code> 的 comments.swig 中 新增其 srcipt<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="string">新增至</span> &#123;<span class="string">%-</span> <span class="string">if</span> <span class="string">page.comments</span> <span class="string">%</span>&#125; <span class="string">後面</span></span><br><span class="line"></span><br><span class="line">&#123;<span class="string">%</span> <span class="string">if</span> <span class="string">theme.utterances.enable</span> <span class="string">%</span>&#125;</span><br><span class="line">    <span class="string">&lt;div</span> <span class="string">class=&quot;comments&quot;</span> <span class="string">id=&quot;comments&gt;</span></span><br><span class="line">        <span class="string">↓</span> <span class="string">複製上面步驟4</span> <span class="string">utterances</span> <span class="string">中產生的</span> <span class="string">script</span></span><br><span class="line">        <span class="string">&lt;script</span> <span class="string">src=&quot;https://utteranc.es/client.js&quot;</span></span><br><span class="line">            <span class="string">...</span></span><br><span class="line">        <span class="string">&lt;/script&gt;</span></span><br><span class="line">    <span class="string">&lt;/div&gt;</span></span><br><span class="line">  &#123;<span class="string">%-</span> <span class="string">endif</span> <span class="string">%</span>&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
-<li>即可看到留言板出現在文章內了</li>
-</ol>
-<p><img src="https://bnz05pap002files.storage.live.com/y4mi1owUcX16kQYG0y6amhW5TXqG8FlrfdD5PLc08FS7crQCBUFyU0TUJQbw3YSzu8UeSz_ajqZQDOWdxIo5PwIx-HUr_r2__1nn9taGWzzXCWokVufwsWZHApHEC3maMsGRKJxd5Pf3sdT0cW0qVg7dCYdt6IdQ9ie2Z2uetNM-dX_S54E9U7_qVpFRhuWp_wy?width=660&height=313&cropmode=none" alt="utterances-message-board-result.png"></p>
-<h3 id="如何讓留言板不要出現"><a href="#如何讓留言板不要出現" class="headerlink" title="如何讓留言板不要出現"></a>如何讓留言板不要出現</h3><p>因為分類&#x2F;標籤等頁面通常不需要有連言功能<br>在 markdown 的 Front-matter 把 comments 關閉</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">tags</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2022-03-01 20:10:05</span></span><br><span class="line"><span class="attr">type:</span> <span class="string">&quot;tags&quot;</span></span><br><span class="line"><span class="attr">comments:</span> <span class="literal">false</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
-<li><a href="https://annkuoq.github.io/blog/2020-03-09-add-utterances-comment-widget-to-hexo/">在 Hexo 安裝 utterances 留言版</a></li>
-<li><a href="https://medium.com/starbugs/gatsby-%E7%94%A8-utterances-%E6%9B%BF-gatsby-%E7%9A%84-blog-%E7%B6%B2%E7%AB%99%E7%94%B3%E8%A3%9D-github-issue-%E7%95%99%E8%A8%80%E5%8A%9F%E8%83%BD-e8593318e5a3">Gatsby | 用 utterances 替 Gatsby 的 Blog 網站申裝 GitHub Issue 留言功能</a></li>
-<li><a href="https://blog.kyomind.tw/hexo-blog-reply/">Hexo：新增 utterances 留言板與方案選擇思路</a></li>
-<li><a href="https://utteranc.es/">utterances </a></li>
-<li><a href="https://kidneyweakx.com/2019/19log-1026-hexo-com.html">Hexo Next 主題增加評論系統 utterances</a></li>
-</ol>
-]]></content>
-      <categories>
-        <category>blog</category>
-      </categories>
-      <tags>
-        <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Hexo 調整資料夾原始碼目錄結構</title>
     <url>/2022/03/13/hexo-change-page-directory/</url>
     <content><![CDATA[<p>在預設的 Hexo 設定中，會將新的文章檔案放置於 <code>_posts</code> 的資料夾底下<br>隨的時間的推移，該資料夾會變得越來越雜亂無法管理，因此找了一下網路<br>看看有沒有甚麼方法可以做個簡單區隔，因此有的以下的調整:</p>
@@ -102,44 +51,33 @@
       </tags>
   </entry>
   <entry>
-    <title>Hexo 主題 - NEXT &amp; 新增文章搜尋功能</title>
-    <url>/2022/03/02/hexo-next-theme/</url>
-    <content><![CDATA[<p>紀錄一下，Blog中選定的主題 Next 的安裝經過 &amp; 新增搜尋功能</p>
+    <title>Hexo 備份</title>
+    <url>/2022/03/12/hexo-git-backup/</url>
+    <content><![CDATA[<p>使用 Hexo 撰寫文章，使用 <code>hexo generate</code> 時，會將 markdown 轉換成 html<br>在 <code>hexo deploy</code> 時會把靜態資源上傳到 github ，但並不會把 .md 檔案上傳<br>這樣如果撰寫的電腦出了問題，資料就會不覆存在。</p>
+<p>網路上查詢了一下大致上的作法有 2 種:</p>
+<ol>
+<li>blog 的 repository 另開一個分支存取資源(如 Reference. 4)</li>
+<li>使用套件 hexo-git-backup</li>
+</ol>
+<p>我們使用方法2，接著是以下的配置工作</p>
 <span id="more"></span>
 
-<h3 id="安裝主題-Next"><a href="#安裝主題-Next" class="headerlink" title="安裝主題 Next"></a>安裝主題 Next</h3><ol>
-<li><p>Github clone hexo-theme-next project - <a href="https://github.com/theme-next/hexo-theme-next">點我前往</a></p>
+<h3 id="安裝步驟"><a href="#安裝步驟" class="headerlink" title="安裝步驟"></a>安裝步驟</h3><ol>
+<li><p>進入blog的workspace &amp; 安裝套件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hexo-git-backup --save</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>在 themes folder 底下建立 next 資料夾並將上述下載的資料 copy 進該資料夾</p>
+<li><p>根目錄的 <code>_config.yml</code> 檔新增以下設定內容</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># setting git backup</span><br><span class="line">backup:</span><br><span class="line">  type: git</span><br><span class="line">  repository:</span><br><span class="line">    github: https://github.com/&#123;username&#125;/&#123;user&#x27;s repository&#125;</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>修改 根目錄 的 _config.xml 內容，從預設的 landscape 改成 next</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Extensions</span></span><br><span class="line"><span class="comment">## Plugins: https://hexo.io/plugins/</span></span><br><span class="line"><span class="comment">## Themes: https://hexo.io/themes/</span></span><br><span class="line"><span class="attr">theme:</span> <span class="string">next</span></span><br></pre></td></tr></table></figure></li>
-<li><p>設定檔有2個，一個是配製 Hexo設定，另一個是針對 Next 主題進行配置</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="string">根目錄:</span> <span class="string">_config.yml</span></span><br><span class="line"><span class="string">Next主題:</span> <span class="string">themes/_config.yml</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Next 主題底下有 4種樣式 (設定於 themes 底下的 _config.xml)</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Schemes</span></span><br><span class="line"><span class="comment">#scheme: Muse</span></span><br><span class="line"><span class="attr">scheme:</span> <span class="string">Mist</span></span><br><span class="line"><span class="comment">#scheme: Pisces</span></span><br><span class="line"><span class="comment">#scheme: Gemini</span></span><br></pre></td></tr></table></figure></li>
+<li><p>每次需要備份時，執行指令(下述兩種都可以) </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo backup</span><br><span class="line"># 簡寫</span><br><span class="line">hexo b</span><br></pre></td></tr></table></figure></li>
 </ol>
-<h3 id="開啟-分類-x2F-標籤-功能"><a href="#開啟-分類-x2F-標籤-功能" class="headerlink" title="開啟 分類 &#x2F; 標籤 功能"></a>開啟 分類 &#x2F; 標籤 功能</h3><ul>
-<li>新增 layout 為 page 的文章 ( 一般文章預設為 post)<br><code>hexo new page categories</code> ( type 為 “categories” )<br><code>hexo new page tags</code> ( type 為 “tags” )</li>
-<li>一般文章撰寫時於文章 Front-matter 定義 分類 &#x2F; 標籤 屬性<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">Hexo</span> <span class="string">主題</span> <span class="bullet">-</span> <span class="string">NEXT</span> <span class="string">&amp;</span> <span class="string">新增文章搜尋功能</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2022-03-02 06:55:34</span></span><br><span class="line"><span class="attr">tags:</span> </span><br><span class="line"><span class="bullet">-</span> <span class="string">hexo</span></span><br><span class="line"><span class="attr">categories:</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">blog</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure></li>
-<li>開啟 Next 主題 menu 得以顯示於介面<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">home:</span> <span class="string">/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-home</span></span><br><span class="line">  <span class="comment"># about: /about/ || fa fa-user</span></span><br><span class="line">  <span class="attr">tags:</span> <span class="string">/tags/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-tags</span></span><br><span class="line">  <span class="attr">categories:</span> <span class="string">/categories/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-th</span></span><br><span class="line">  <span class="attr">archives:</span> <span class="string">/archives/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-archive</span></span><br><span class="line">  <span class="comment">#schedule: /schedule/ || fa fa-calendar</span></span><br><span class="line">  <span class="comment">#sitemap: /sitemap.xml || fa fa-sitemap</span></span><br><span class="line">  <span class="comment">#commonweal: /404/ || fa fa-heartbeat</span></span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="新增-搜尋功能"><a href="#新增-搜尋功能" class="headerlink" title="新增 搜尋功能"></a>新增 搜尋功能</h3><ol>
-<li>下載套件 <code>npm install hexo-generator-searchdb --save</code></li>
-<li>根目錄 _config.xml 新增設定<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment">#Local Search / created by 2022-03-02</span></span><br><span class="line"><span class="attr">search:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">path:</span> <span class="string">search.xml</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">field:</span> <span class="string">post</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">format:</span> <span class="string">html</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">content:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure></li>
-<li>主題目錄 _config.xml 開啟 local_search 功能<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Local Search</span></span><br><span class="line"><span class="comment"># Dependencies: https://github.com/theme-next/hexo-generator-searchdb</span></span><br><span class="line"><span class="attr">local_search:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure></li>
-</ol>
-<h3 id="新增-文章閱讀進度-功能"><a href="#新增-文章閱讀進度-功能" class="headerlink" title="新增 文章閱讀進度 功能"></a>新增 文章閱讀進度 功能</h3><p>將 scrollpercent 從 false 改成 true</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">back2top:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># Back to top in sidebar.</span></span><br><span class="line">  <span class="attr">sidebar:</span> <span class="literal">false</span></span><br><span class="line">  <span class="comment"># Scroll percent label in b2t button.</span></span><br><span class="line">  <span class="attr">scrollpercent:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-<p>效果如下:</p>
-<p><img src="https://bnz05pap002files.storage.live.com/y4m1yGLaD3UGbwtXQPefduFnckR3CCidf2SWItddjqzSCA3KdyVLMXnZpx-If2Tl3tWkszjYeEMyotdRXWNIo_iQY_INtR5O0J48eqrMs_1nY9WVie0VKY4hJXYo208GuzkoFHi84ZTce-qnv7Bb6I_Hql7VNLpeIWiQOmib2hAYjdqnt-aDFR2FmDO-C_PuLxP?width=233&height=256&cropmode=none" alt="hexo_page_scrollpercent.png"></p>
+<p>這樣每次撰寫部落格完後多此步驟就可以將 source 的文章保留下來。</p>
 <h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
-<li><a href="https://github.com/theme-next/hexo-generator-searchdb">Github Repository : hexo-generator-searchdb</a></li>
-<li><a href="https://ithelp.ithome.com.tw/articles/10248214">(20) 試著學 Hexo - NexT 主題篇 - 可以安裝的套件</a></li>
-<li><a href="https://blog.csdn.net/as480133937/article/details/100138838">Hexo-Next 主题博客个性化配置超详细，超全面(两万字)</a></li>
-<li><a href="https://ithelp.ithome.com.tw/articles/10257569">建立自己Blog系列(三) Hexo next theme 介紹</a></li>
-<li><a href="https://github.com/theme-next/hexo-theme-next">Github Repository : hexo-theme-next</a></li>
+<li><a href="https://cheng-yi-ting.github.io/2020/02/08/2020-02-08-HexoBackup/">Hexo 備份</a></li>
+<li><a href="https://github.com/coneycode/hexo-git-backup">Github: hexo-git-backup</a></li>
+<li><a href="http://www.xiaoliblog.cn/page/hexobackup.html">hexo-git-backup 博客备份及恢复</a></li>
+<li><a href="https://cheng-yi-ting.github.io/2020/02/08/2020-02-08-HexoBackup/">使用git分支保存hexo博客源码到github</a></li>
 </ol>
 ]]></content>
       <categories>
@@ -221,33 +159,103 @@
       </tags>
   </entry>
   <entry>
-    <title>Hexo 備份</title>
-    <url>/2022/03/12/hexo-git-backup/</url>
-    <content><![CDATA[<p>使用 Hexo 撰寫文章，使用 <code>hexo generate</code> 時，會將 markdown 轉換成 html<br>在 <code>hexo deploy</code> 時會把靜態資源上傳到 github ，但並不會把 .md 檔案上傳<br>這樣如果撰寫的電腦出了問題，資料就會不覆存在。</p>
-<p>網路上查詢了一下大致上的作法有 2 種:</p>
-<ol>
-<li>blog 的 repository 另開一個分支存取資源(如 Reference. 4)</li>
-<li>使用套件 hexo-git-backup</li>
-</ol>
-<p>我們使用方法2，接著是以下的配置工作</p>
+    <title>Jenkins 安裝教學</title>
+    <url>/2022/03/06/jenkins-initial/</url>
+    <content><![CDATA[<p>Jenkins 為一個持續化整合工具，由 Java 語言所撰寫，並支援許多套件做整合 ( ex : Maven , Gradle )<br>可用於自動化的持續整合(CI) &amp; 持續部署(CD) 。</p>
 <span id="more"></span>
 
-<h3 id="安裝步驟"><a href="#安裝步驟" class="headerlink" title="安裝步驟"></a>安裝步驟</h3><ol>
-<li><p>進入blog的workspace &amp; 安裝套件</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hexo-git-backup --save</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>根目錄的 <code>_config.yml</code> 檔新增以下設定內容</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># setting git backup</span><br><span class="line">backup:</span><br><span class="line">  type: git</span><br><span class="line">  repository:</span><br><span class="line">    github: https://github.com/&#123;username&#125;/&#123;user&#x27;s repository&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>每次需要備份時，執行指令(下述兩種都可以) </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo backup</span><br><span class="line"># 簡寫</span><br><span class="line">hexo b</span><br></pre></td></tr></table></figure></li>
+<h3 id="Local安裝前置作業"><a href="#Local安裝前置作業" class="headerlink" title="Local安裝前置作業"></a>Local安裝前置作業</h3><ol>
+<li>準備一台 Linux 主機 (Virtual Mechine )</li>
+<li>安裝 docker ( Optional: docker-compose )</li>
 </ol>
-<p>這樣每次撰寫部落格完後多此步驟就可以將 source 的文章保留下來。</p>
+<h3 id="使用-docker-安裝-Jenkins"><a href="#使用-docker-安裝-Jenkins" class="headerlink" title="使用 docker 安裝 Jenkins"></a>使用 docker 安裝 Jenkins</h3><ol>
+<li><p>使用 docker 下載 docker images<br><code>docker pull jenkins/jenkins:latest</code></p>
+</li>
+<li><p>使用指令啟動 docker container (指定 port 為 18080)</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker run -u root -d --name myjenkins -p 18080:8080 -p 50000:50000 -v jenkins_home:/var/jenkins_home jenkins/jenkins:latest</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">jenkins 8080 port 為 預設WEB介面 , 50000 port 為 jenkins Agent</span></span><br></pre></td></tr></table></figure>
+
+</li>
+<li><p>啟動後，輸入網址 - <em><strong>{VM IP}:18080</strong></em> 進入 Jenkins 初始畫面</p>
+</li>
+</ol>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mcApoPeOBRDSLJEBnroNaVPjG4VXCzXgQE45FfB0tkD7UrSdMfMLj4HdOgOXg9XPBZMM5YXqvCb_EM3e9WNQUbLwWa3lib_ENDaVotBtrkb0AbhH30jFmqy0BsJwPnZ_4OGRuV8P1YwDXipLFgnYICSA8CsgOhy37Ejok5wMbdd9rsjKlcNwd1R9RGKll56So?width=256&height=139&cropmode=none" alt="Jenkins_initial"></p>
+<ol start="4">
+<li><p>進入 container 中取得安裝的預設密碼</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta"># </span><span class="language-bash">進入 container</span></span><br><span class="line">docker exec -it &#123;container name&#125; /bin/bash</span><br><span class="line"><span class="meta"># </span><span class="language-bash">顯示預設密碼</span></span><br><span class="line">cat /var/jenkins_home/secrets/initialAdminPassword</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>選擇客製化套件安裝 ( 選擇左邊預設全裝)</p>
+</li>
+</ol>
+<p><img src="https://bnz05pap002files.storage.live.com/y4m5nGIeTsyu5iUN2_CGgA4rinujnsw-iQP5TPJ3XwPTOZ65LirQh1oX1jnbkjK07WOWnwC1uYPEZiWuo3huJZA89zN-fmlAygcYUTcWxkygkcUKTLnyNr-JOqoeNhjg3zNZup70RBayB_MxeVqQkX9oopysyxBkOm_mq0PmXAG_6YfI93JBQS7moB_zadgAE9Z?width=256&height=139&cropmode=none" alt="jenkins_plugin_setting"></p>
+<ol start="6">
+<li>創建Admin 的 帳號&#x2F;密碼</li>
+</ol>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mtzgP0W95pMW1ZWyEC4VcuZHCPR-z42TbjNnNDrpfHoRRtbo7Vo7awco05KH6Ezgujl_oPsAu05rsRrbq5Uz7xGW3Wy4HeOkjeka4OZkdqwqvvhLwzOM9xDGfSdlZYKBpXBaOMpG1kSzooQKri0dhz9mZkdEirCcxFOclaBX2MAgOn9zD35F8UrcY37lsnNyj?width=256&height=138&cropmode=none" alt="createAdminUser.png"></p>
+<ol start="7">
+<li>儲存設定後，即可進入首頁</li>
+</ol>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mOu7W-A_TyloArSKH_UydXT4L7FCHHvSyJwK567rbLYlHkvS3B3kuJIWvqMMHNOCfFpW8JBUHFpE5DE7lndEBw09bgzyGPhLuoez0tzwKgjNhh_3JK_bWIaxOBr7XwJM5exakUtoiSE9RZEZXqRtekj3hHCQzFWg6A27FkL5ZRuS_YpZBtBhp86dNX2gDYz3A?width=256&height=134&cropmode=none" alt="homePage"></p>
+<h3 id="使用-docker-compose-安裝-Jenkins"><a href="#使用-docker-compose-安裝-Jenkins" class="headerlink" title="使用 docker-compose 安裝 Jenkins"></a>使用 docker-compose 安裝 Jenkins</h3><ol>
+<li>撰寫 docker-compose.yml<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;2&#x27;</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">	<span class="attr">jenkins:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">jenkins/jenkins</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">jenkins</span></span><br><span class="line">    <span class="attr">privileged:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">user:</span> <span class="string">root</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">18080</span><span class="string">:8080</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">50000</span><span class="string">:50000</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">JAVA_OPTS:</span> <span class="string">-Xmx2048m</span> <span class="string">-Djava.awt.headless=true</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/var/jenkins_home:/var/jenkins_home</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/var/run/docker.sock:/var/run/docker.sock</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">$&#123;HOME&#125;/.ssh:/root/.ssh:ro</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">$&#123;HOME&#125;/.npmrc:/root/.npmrc</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">$&#123;HOME&#125;/.m2:/root/.m2</span></span><br></pre></td></tr></table></figure></li>
+<li>啟動 dokcer-compose<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker-compose up</span><br></pre></td></tr></table></figure></li>
+</ol>
 <h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
-<li><a href="https://cheng-yi-ting.github.io/2020/02/08/2020-02-08-HexoBackup/">Hexo 備份</a></li>
-<li><a href="https://github.com/coneycode/hexo-git-backup">Github: hexo-git-backup</a></li>
-<li><a href="http://www.xiaoliblog.cn/page/hexobackup.html">hexo-git-backup 博客备份及恢复</a></li>
-<li><a href="https://cheng-yi-ting.github.io/2020/02/08/2020-02-08-HexoBackup/">使用git分支保存hexo博客源码到github</a></li>
+<li><a href="https://ithelp.ithome.com.tw/articles/10202465">day05_docker04_Jenkins</a></li>
+<li><a href="https://iter01.com/553208.html">三十二張圖告訴你，Jenkins構建Spring Boot 有多簡單~
+</a></li>
+<li><a href="https://tomgregory.com/building-a-spring-boot-application-in-docker-and-jenkins/">Building a Spring Boot application in Docker and Jenkins (part 2 of microservice devops series)</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>jenkins</category>
+      </categories>
+      <tags>
+        <tag>docker</tag>
+        <tag>jenkins</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用 utterances 在 Hexo 實現留言板功能</title>
+    <url>/2022/03/04/hexo-message-board-utterances/</url>
+    <content><![CDATA[<p>留言版在一般的部落格中一個常見的功能，既然使用Github製作了自己的部落格<br>順勢找了一些文章來新增這個功能</p>
+<p>在參閱了許多 blogger 的文章後發現，比較常用的有以下兩種:</p>
+<ul>
+<li>Disqus<ul>
+<li>需要去 Disqus 官網註冊 - <a href="https://disqus.com/">點我前往</a></li>
+</ul>
+</li>
+<li>utterances<ul>
+<li>與 Github Issues 做連結</li>
+<li>需要登入 Github 才能夠進行留言</li>
+</ul>
+</li>
+</ul>
+<p>目前是打算使用 utterances 來實作 部落格的留言版</p>
+<span id="more"></span>
+
+<h3 id="整合-utterances"><a href="#整合-utterances" class="headerlink" title="整合 utterances"></a>整合 utterances</h3><ol>
+<li>Github 建立 Repository</li>
+<li>安裝 utterances - <a href="https://github.com/apps/utterances">點我前往</a></li>
+</ol>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mf3VZ_TrvLMIzOAvwD5scehh0uCIPUsahla1ouyxXnWeuuT5H3ukvDP7hV0gVb_0gnlFJTWeW9UWGP5LXPyQTBd60fbKgxDlDQK2ADWYI5nD6b0pkEd3hfZjLFwEUWurbgWomh3aeF0BWUvSalsrsnPvcz2e_eKp3TjFC4M0aqJI5wZ9FJsnf7SILGMbJzgbp?width=660&height=261&cropmode=none" alt="utterances-install.png"><br>3. 取得授權，並選擇 步驟1 的 Repository</p>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mB7qi6p5Kb5d77Slb0G_jLXcoBZ6yepW2pKcSxd3Ih7_gQ4SDxI9vNpA-6V9wp_RnBN59jH0ziNmpluQFQDjnM92bizO_e_2jLgYQRxeFb7ps9tjvCvauX62h5gJLcvQsa34THbIPo5P6HAZmuIwMlGX5dwFnHIl9fLbX-dITsVKucorwYtuIJ2I8kmzdq_B5?width=480&height=660&cropmode=none" alt="utterances-select-repository.png"><br>4. 填寫對應的 configuration EX: Repository , Blog Post &amp; issue Mapping , Theme …etc</p>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mZW8hAhicSL9Xi4l83gr-741kqXgXqCBnmEDZ5a_ZVaCNUbsZQGTl456l7dxJUszLljpSitj43aRmX3fA0OUM58mYxGTvKuc0wL0VW-9OPS6YAn1Uz9FqzK0Q8YSWOpCQBiDHVMFUb6E5olX7bVBc-vy_rP5gqLV5Kt1WPC8gXKKIKqjtSVCpSzI9LB2H49DI?width=660&height=622&cropmode=none" alt="utterances-configuration-script.png"><br>5. 在 theme 的 _config.yml 新增參數 (blog 目前是使用 next themes)</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># utterances by 2022-03-04</span></span><br><span class="line"><span class="attr">utterances:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>在主題底下 <code>themes\next\layout\_partials</code> 的 comments.swig 中 新增其 srcipt<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="string">新增至</span> &#123;<span class="string">%-</span> <span class="string">if</span> <span class="string">page.comments</span> <span class="string">%</span>&#125; <span class="string">後面</span></span><br><span class="line"></span><br><span class="line">&#123;<span class="string">%</span> <span class="string">if</span> <span class="string">theme.utterances.enable</span> <span class="string">%</span>&#125;</span><br><span class="line">    <span class="string">&lt;div</span> <span class="string">class=&quot;comments&quot;</span> <span class="string">id=&quot;comments&gt;</span></span><br><span class="line">        <span class="string">↓</span> <span class="string">複製上面步驟4</span> <span class="string">utterances</span> <span class="string">中產生的</span> <span class="string">script</span></span><br><span class="line">        <span class="string">&lt;script</span> <span class="string">src=&quot;https://utteranc.es/client.js&quot;</span></span><br><span class="line">            <span class="string">...</span></span><br><span class="line">        <span class="string">&lt;/script&gt;</span></span><br><span class="line">    <span class="string">&lt;/div&gt;</span></span><br><span class="line">  &#123;<span class="string">%-</span> <span class="string">endif</span> <span class="string">%</span>&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li>即可看到留言板出現在文章內了</li>
+</ol>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mi1owUcX16kQYG0y6amhW5TXqG8FlrfdD5PLc08FS7crQCBUFyU0TUJQbw3YSzu8UeSz_ajqZQDOWdxIo5PwIx-HUr_r2__1nn9taGWzzXCWokVufwsWZHApHEC3maMsGRKJxd5Pf3sdT0cW0qVg7dCYdt6IdQ9ie2Z2uetNM-dX_S54E9U7_qVpFRhuWp_wy?width=660&height=313&cropmode=none" alt="utterances-message-board-result.png"></p>
+<h3 id="如何讓留言板不要出現"><a href="#如何讓留言板不要出現" class="headerlink" title="如何讓留言板不要出現"></a>如何讓留言板不要出現</h3><p>因為分類&#x2F;標籤等頁面通常不需要有連言功能<br>在 markdown 的 Front-matter 把 comments 關閉</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">tags</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2022-03-01 20:10:05</span></span><br><span class="line"><span class="attr">type:</span> <span class="string">&quot;tags&quot;</span></span><br><span class="line"><span class="attr">comments:</span> <span class="literal">false</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
+<li><a href="https://annkuoq.github.io/blog/2020-03-09-add-utterances-comment-widget-to-hexo/">在 Hexo 安裝 utterances 留言版</a></li>
+<li><a href="https://medium.com/starbugs/gatsby-%E7%94%A8-utterances-%E6%9B%BF-gatsby-%E7%9A%84-blog-%E7%B6%B2%E7%AB%99%E7%94%B3%E8%A3%9D-github-issue-%E7%95%99%E8%A8%80%E5%8A%9F%E8%83%BD-e8593318e5a3">Gatsby | 用 utterances 替 Gatsby 的 Blog 網站申裝 GitHub Issue 留言功能</a></li>
+<li><a href="https://blog.kyomind.tw/hexo-blog-reply/">Hexo：新增 utterances 留言板與方案選擇思路</a></li>
+<li><a href="https://utteranc.es/">utterances </a></li>
+<li><a href="https://kidneyweakx.com/2019/19log-1026-hexo-com.html">Hexo Next 主題增加評論系統 utterances</a></li>
 </ol>
 ]]></content>
       <categories>
@@ -319,59 +327,103 @@
       </tags>
   </entry>
   <entry>
-    <title>Jenkins 安裝教學</title>
-    <url>/2022/03/06/jenkins-initial/</url>
-    <content><![CDATA[<p>Jenkins 為一個持續化整合工具，由 Java 語言所撰寫，並支援許多套件做整合 ( ex : Maven , Gradle )<br>可用於自動化的持續整合(CI) &amp; 持續部署(CD) 。</p>
+    <title>Hexo 主題 - NEXT &amp; 新增文章搜尋功能</title>
+    <url>/2022/03/02/hexo-next-theme/</url>
+    <content><![CDATA[<p>紀錄一下，Blog中選定的主題 Next 的安裝經過 &amp; 新增搜尋功能</p>
 <span id="more"></span>
 
-<h3 id="Local安裝前置作業"><a href="#Local安裝前置作業" class="headerlink" title="Local安裝前置作業"></a>Local安裝前置作業</h3><ol>
-<li>準備一台 Linux 主機 (Virtual Mechine )</li>
-<li>安裝 docker ( Optional: docker-compose )</li>
-</ol>
-<h3 id="使用-docker-安裝-Jenkins"><a href="#使用-docker-安裝-Jenkins" class="headerlink" title="使用 docker 安裝 Jenkins"></a>使用 docker 安裝 Jenkins</h3><ol>
-<li><p>使用 docker 下載 docker images<br><code>docker pull jenkins/jenkins:latest</code></p>
+<h3 id="安裝主題-Next"><a href="#安裝主題-Next" class="headerlink" title="安裝主題 Next"></a>安裝主題 Next</h3><ol>
+<li><p>Github clone hexo-theme-next project - <a href="https://github.com/theme-next/hexo-theme-next">點我前往</a></p>
 </li>
-<li><p>使用指令啟動 docker container (指定 port 為 18080)</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker run -u root -d --name myjenkins -p 18080:8080 -p 50000:50000 -v jenkins_home:/var/jenkins_home jenkins/jenkins:latest</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">jenkins 8080 port 為 預設WEB介面 , 50000 port 為 jenkins Agent</span></span><br></pre></td></tr></table></figure>
-
+<li><p>在 themes folder 底下建立 next 資料夾並將上述下載的資料 copy 進該資料夾</p>
 </li>
-<li><p>啟動後，輸入網址 - <em><strong>{VM IP}:18080</strong></em> 進入 Jenkins 初始畫面</p>
+<li><p>修改 根目錄 的 _config.xml 內容，從預設的 landscape 改成 next</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Extensions</span></span><br><span class="line"><span class="comment">## Plugins: https://hexo.io/plugins/</span></span><br><span class="line"><span class="comment">## Themes: https://hexo.io/themes/</span></span><br><span class="line"><span class="attr">theme:</span> <span class="string">next</span></span><br></pre></td></tr></table></figure></li>
+<li><p>設定檔有2個，一個是配製 Hexo設定，另一個是針對 Next 主題進行配置</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="string">根目錄:</span> <span class="string">_config.yml</span></span><br><span class="line"><span class="string">Next主題:</span> <span class="string">themes/_config.yml</span></span><br></pre></td></tr></table></figure>
 </li>
+<li><p>Next 主題底下有 4種樣式 (設定於 themes 底下的 _config.xml)</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Schemes</span></span><br><span class="line"><span class="comment">#scheme: Muse</span></span><br><span class="line"><span class="attr">scheme:</span> <span class="string">Mist</span></span><br><span class="line"><span class="comment">#scheme: Pisces</span></span><br><span class="line"><span class="comment">#scheme: Gemini</span></span><br></pre></td></tr></table></figure></li>
 </ol>
-<p><img src="https://bnz05pap002files.storage.live.com/y4mcApoPeOBRDSLJEBnroNaVPjG4VXCzXgQE45FfB0tkD7UrSdMfMLj4HdOgOXg9XPBZMM5YXqvCb_EM3e9WNQUbLwWa3lib_ENDaVotBtrkb0AbhH30jFmqy0BsJwPnZ_4OGRuV8P1YwDXipLFgnYICSA8CsgOhy37Ejok5wMbdd9rsjKlcNwd1R9RGKll56So?width=256&height=139&cropmode=none" alt="Jenkins_initial"></p>
-<ol start="4">
-<li><p>進入 container 中取得安裝的預設密碼</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta"># </span><span class="language-bash">進入 container</span></span><br><span class="line">docker exec -it &#123;container name&#125; /bin/bash</span><br><span class="line"><span class="meta"># </span><span class="language-bash">顯示預設密碼</span></span><br><span class="line">cat /var/jenkins_home/secrets/initialAdminPassword</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>選擇客製化套件安裝 ( 選擇左邊預設全裝)</p>
-</li>
+<h3 id="開啟-分類-x2F-標籤-功能"><a href="#開啟-分類-x2F-標籤-功能" class="headerlink" title="開啟 分類 &#x2F; 標籤 功能"></a>開啟 分類 &#x2F; 標籤 功能</h3><ul>
+<li>新增 layout 為 page 的文章 ( 一般文章預設為 post)<br><code>hexo new page categories</code> ( type 為 “categories” )<br><code>hexo new page tags</code> ( type 為 “tags” )</li>
+<li>一般文章撰寫時於文章 Front-matter 定義 分類 &#x2F; 標籤 屬性<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">Hexo</span> <span class="string">主題</span> <span class="bullet">-</span> <span class="string">NEXT</span> <span class="string">&amp;</span> <span class="string">新增文章搜尋功能</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2022-03-02 06:55:34</span></span><br><span class="line"><span class="attr">tags:</span> </span><br><span class="line"><span class="bullet">-</span> <span class="string">hexo</span></span><br><span class="line"><span class="attr">categories:</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">blog</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure></li>
+<li>開啟 Next 主題 menu 得以顯示於介面<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">home:</span> <span class="string">/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-home</span></span><br><span class="line">  <span class="comment"># about: /about/ || fa fa-user</span></span><br><span class="line">  <span class="attr">tags:</span> <span class="string">/tags/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-tags</span></span><br><span class="line">  <span class="attr">categories:</span> <span class="string">/categories/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-th</span></span><br><span class="line">  <span class="attr">archives:</span> <span class="string">/archives/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-archive</span></span><br><span class="line">  <span class="comment">#schedule: /schedule/ || fa fa-calendar</span></span><br><span class="line">  <span class="comment">#sitemap: /sitemap.xml || fa fa-sitemap</span></span><br><span class="line">  <span class="comment">#commonweal: /404/ || fa fa-heartbeat</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="新增-搜尋功能"><a href="#新增-搜尋功能" class="headerlink" title="新增 搜尋功能"></a>新增 搜尋功能</h3><ol>
+<li>下載套件 <code>npm install hexo-generator-searchdb --save</code></li>
+<li>根目錄 _config.xml 新增設定<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment">#Local Search / created by 2022-03-02</span></span><br><span class="line"><span class="attr">search:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">path:</span> <span class="string">search.xml</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">field:</span> <span class="string">post</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">format:</span> <span class="string">html</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">content:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure></li>
+<li>主題目錄 _config.xml 開啟 local_search 功能<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Local Search</span></span><br><span class="line"><span class="comment"># Dependencies: https://github.com/theme-next/hexo-generator-searchdb</span></span><br><span class="line"><span class="attr">local_search:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure></li>
 </ol>
-<p><img src="https://bnz05pap002files.storage.live.com/y4m5nGIeTsyu5iUN2_CGgA4rinujnsw-iQP5TPJ3XwPTOZ65LirQh1oX1jnbkjK07WOWnwC1uYPEZiWuo3huJZA89zN-fmlAygcYUTcWxkygkcUKTLnyNr-JOqoeNhjg3zNZup70RBayB_MxeVqQkX9oopysyxBkOm_mq0PmXAG_6YfI93JBQS7moB_zadgAE9Z?width=256&height=139&cropmode=none" alt="jenkins_plugin_setting"></p>
-<ol start="6">
-<li>創建Admin 的 帳號&#x2F;密碼</li>
-</ol>
-<p><img src="https://bnz05pap002files.storage.live.com/y4mtzgP0W95pMW1ZWyEC4VcuZHCPR-z42TbjNnNDrpfHoRRtbo7Vo7awco05KH6Ezgujl_oPsAu05rsRrbq5Uz7xGW3Wy4HeOkjeka4OZkdqwqvvhLwzOM9xDGfSdlZYKBpXBaOMpG1kSzooQKri0dhz9mZkdEirCcxFOclaBX2MAgOn9zD35F8UrcY37lsnNyj?width=256&height=138&cropmode=none" alt="createAdminUser.png"></p>
-<ol start="7">
-<li>儲存設定後，即可進入首頁</li>
-</ol>
-<p><img src="https://bnz05pap002files.storage.live.com/y4mOu7W-A_TyloArSKH_UydXT4L7FCHHvSyJwK567rbLYlHkvS3B3kuJIWvqMMHNOCfFpW8JBUHFpE5DE7lndEBw09bgzyGPhLuoez0tzwKgjNhh_3JK_bWIaxOBr7XwJM5exakUtoiSE9RZEZXqRtekj3hHCQzFWg6A27FkL5ZRuS_YpZBtBhp86dNX2gDYz3A?width=256&height=134&cropmode=none" alt="homePage"></p>
-<h3 id="使用-docker-compose-安裝-Jenkins"><a href="#使用-docker-compose-安裝-Jenkins" class="headerlink" title="使用 docker-compose 安裝 Jenkins"></a>使用 docker-compose 安裝 Jenkins</h3><ol>
-<li>撰寫 docker-compose.yml<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;2&#x27;</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">	<span class="attr">jenkins:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">jenkins/jenkins</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">jenkins</span></span><br><span class="line">    <span class="attr">privileged:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">user:</span> <span class="string">root</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">18080</span><span class="string">:8080</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">50000</span><span class="string">:50000</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">JAVA_OPTS:</span> <span class="string">-Xmx2048m</span> <span class="string">-Djava.awt.headless=true</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/var/jenkins_home:/var/jenkins_home</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/var/run/docker.sock:/var/run/docker.sock</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">$&#123;HOME&#125;/.ssh:/root/.ssh:ro</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">$&#123;HOME&#125;/.npmrc:/root/.npmrc</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">$&#123;HOME&#125;/.m2:/root/.m2</span></span><br></pre></td></tr></table></figure></li>
-<li>啟動 dokcer-compose<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker-compose up</span><br></pre></td></tr></table></figure></li>
-</ol>
+<h3 id="新增-文章閱讀進度-功能"><a href="#新增-文章閱讀進度-功能" class="headerlink" title="新增 文章閱讀進度 功能"></a>新增 文章閱讀進度 功能</h3><p>將 scrollpercent 從 false 改成 true</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">back2top:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># Back to top in sidebar.</span></span><br><span class="line">  <span class="attr">sidebar:</span> <span class="literal">false</span></span><br><span class="line">  <span class="comment"># Scroll percent label in b2t button.</span></span><br><span class="line">  <span class="attr">scrollpercent:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<p>效果如下:</p>
+<p><img src="https://bnz05pap002files.storage.live.com/y4m1yGLaD3UGbwtXQPefduFnckR3CCidf2SWItddjqzSCA3KdyVLMXnZpx-If2Tl3tWkszjYeEMyotdRXWNIo_iQY_INtR5O0J48eqrMs_1nY9WVie0VKY4hJXYo208GuzkoFHi84ZTce-qnv7Bb6I_Hql7VNLpeIWiQOmib2hAYjdqnt-aDFR2FmDO-C_PuLxP?width=233&height=256&cropmode=none" alt="hexo_page_scrollpercent.png"></p>
 <h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
-<li><a href="https://ithelp.ithome.com.tw/articles/10202465">day05_docker04_Jenkins</a></li>
-<li><a href="https://iter01.com/553208.html">三十二張圖告訴你，Jenkins構建Spring Boot 有多簡單~
-</a></li>
-<li><a href="https://tomgregory.com/building-a-spring-boot-application-in-docker-and-jenkins/">Building a Spring Boot application in Docker and Jenkins (part 2 of microservice devops series)</a></li>
+<li><a href="https://github.com/theme-next/hexo-generator-searchdb">Github Repository : hexo-generator-searchdb</a></li>
+<li><a href="https://ithelp.ithome.com.tw/articles/10248214">(20) 試著學 Hexo - NexT 主題篇 - 可以安裝的套件</a></li>
+<li><a href="https://blog.csdn.net/as480133937/article/details/100138838">Hexo-Next 主题博客个性化配置超详细，超全面(两万字)</a></li>
+<li><a href="https://ithelp.ithome.com.tw/articles/10257569">建立自己Blog系列(三) Hexo next theme 介紹</a></li>
+<li><a href="https://github.com/theme-next/hexo-theme-next">Github Repository : hexo-theme-next</a></li>
 </ol>
 ]]></content>
       <categories>
-        <category>jenkins</category>
+        <category>blog</category>
       </categories>
       <tags>
-        <tag>docker</tag>
-        <tag>jenkins</tag>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Transaction rolled back because it has been marked as rollback-only</title>
+    <url>/2022/04/22/hibernate-transaction-rollback-only-error/</url>
+    <content><![CDATA[<p>最近在公司查詢問題時，心想著對於 Transaction 可能也不是非常了解，<br>再加上常常遇到 <font color=#ff0000><strong>Transaction rolled back because it has been marked as rollback-only</strong></font> 這個問題，<br>因此就花點時間來重現這個問題，並思考怎麼避免。</p>
+<span id="more"></span>
+
+<h3 id="重現問題場景-主要以Service為主-DAO部分就不贅述"><a href="#重現問題場景-主要以Service為主-DAO部分就不贅述" class="headerlink" title="重現問題場景(主要以Service為主, DAO部分就不贅述)"></a>重現問題場景(主要以Service為主, DAO部分就不贅述)</h3><p>Controller 呼叫 CallerService, CallerService 再呼叫 CalleeService, CalleeService 發生錯誤後，<br>rollback 回 CallerService 試圖使用 try catch 把錯誤包起來使 服務繼續執行時會出現這個錯誤訊息。</p>
+<p>呼叫的Controller</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/situation/transactionException&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestController</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> CallerService callerService;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@RequestMapping(&quot;/test&quot;)</span></span><br><span class="line">	<span class="keyword">public</span> String <span class="title function_">test</span><span class="params">()</span> &#123;</span><br><span class="line">		callerService.addJob();</span><br><span class="line">		<span class="keyword">return</span> <span class="string">&quot;ok&quot;</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>主要的服務有兩個</p>
+<ol>
+<li>CallerService<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 呼叫流程的服務</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> oscar51011</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2022年4月22日</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CallerService</span> &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> CalleeService calleeService;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> JobDaoImpl jobDaoImpl;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Transactional</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">addJob</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="comment">// insert sql</span></span><br><span class="line">		<span class="type">Job</span> <span class="variable">job</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Job</span>();</span><br><span class="line">		job.setId(<span class="number">3L</span>);</span><br><span class="line">		job.setDescription(<span class="string">&quot;test&quot;</span>);</span><br><span class="line">		jobDaoImpl.addJob(job);</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="comment">// call update sql service</span></span><br><span class="line">			calleeService.updateJob();</span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			System.out.println(<span class="string">&quot;catch Exception&quot;</span>);</span><br><span class="line">		&#125;		</span><br><span class="line">		System.out.println(<span class="string">&quot;service done.&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>CalleeService<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 被呼叫的 Service</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> oscar51011</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2022年4月22日</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CalleeService</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> JobDaoImpl jobDaoImpl;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Transactional</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">updateJob</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="type">Job</span> <span class="variable">job</span> <span class="operator">=</span> jobDaoImpl.getJobById(<span class="number">1L</span>);</span><br><span class="line">		job.setDescription(<span class="string">&quot;test2&quot;</span>);</span><br><span class="line">		jobDaoImpl.updateJob(job);</span><br><span class="line">		<span class="comment">// 預期出錯, 檢查會不會rollback</span></span><br><span class="line">		System.out.println(<span class="number">1</span>/<span class="number">0</span>);</span><br><span class="line">	&#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>錯誤訊息如附圖:<br><img src="https://bnz05pap002files.storage.live.com/y4mq_PjejYzusEV72n3uKAJ9CzS_8ROfhfUHQPGt1iK14_3n3DRPc7eIK8sbdTs1F1bZn4Jv4vwy70ZeVQCr-I-xGOiL1D_IULG8M6bgRJg-RiZtCv474EyjZS5PKonxiyFtj3_5HChUMY6xFkfCkRUio58VLqNdpsso6f1zW3KfkhGkO3PQNfKjk2mFgOTMDuR?width=660&height=179&cropmode=none" alt="transaction-rollback-only-error.png"></p>
+<p><code>@Transactional</code> 的預設值為 <code>PROPAGATION_REQUIRED</code>，我們來看一下 Spring docs 中的解釋:</p>
+<blockquote>
+<p>When the propagation setting is PROPAGATION_REQUIRED, a logical transaction scope is created for each method upon which the setting is applied. Each such logical transaction scope can determine rollback-only status individually, with an outer transaction scope being logically independent from the inner transaction scope. Of course, in case of standard PROPAGATION_REQUIRED behavior, all these scopes will be mapped to the same physical transaction. So a <font color=#ff0000>rollback-only marker set in the inner transaction scope does affect the outer transaction’s chance to actually commit </font> (as you would expect it to).<br>However, in the case where an inner transaction scope sets the rollback-only marker, the outer transaction has not decided on the rollback itself, and so the rollback (silently triggered by the inner transaction scope) is unexpected. A corresponding <strong>UnexpectedRollbackException</strong> is thrown at that point. This is expected behavior so that the caller of a transaction can never be misled to assume that a commit was performed when it really was not. So if an <font color=#ff0000>inner transaction (of which the outer caller is not aware) silently marks a transaction as rollback-only, the outer caller still calls commit. The outer caller needs to receive an UnexpectedRollbackException to indicate clearly that a rollback was performed instead </font>.<br>(以上段落出自 Ref.1 的 Spring docs 的 16.5.7 Transaction propagation 中的 Required 部分)</p>
+</blockquote>
+<p>當 CallerService 呼叫 CalleeService 時，它們就為同一個 physcal transaction<br>因此當 CalleeService發生異常時，拋出異常，並把 transaction 標記成 rollback-only<br>當 CallerService 走完流程，spring 發現 transaction 已經被標記成 rollback-only，但流程居然走完了，因此就報出錯誤</p>
+<p>如上述描述，我們就接到了 UnexpectedRollbackException，因為它不符合原本該 Transaction Propagation 的機制</p>
+<h3 id="解決方法"><a href="#解決方法" class="headerlink" title="解決方法"></a>解決方法</h3><p>調整的方向分成兩種類型(CallerService 的 addJob 需要寫入資料、CallerService 的 addJob 資料 rollback)</p>
+<ul>
+<li>CallerService 的 addJob 需要寫入資料</li>
+</ul>
+<ol>
+<li>將 CalleeService 的流程包 try catch，處理好異常行為不要讓 exception 拋出來；transaction 就不會被註記 rollback-only</li>
+<li>將 CalleeService 的 transaction 改成 <code>@Transactional(propagation = Propagation.REQUIRES_NEW)</code><br>如果是不同的 transaction ，CallerService 的 transaction 就不會被註記成 rollback-only ，造成異常<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 被呼叫的 Service</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> oscar51011</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2022年4月22日</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CalleeService</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> JobDaoImpl jobDaoImpl;</span><br><span class="line">	</span><br><span class="line">    <span class="comment">// ( **解決方案** ) 設置為開一個新的 transactional</span></span><br><span class="line">	<span class="meta">@Transactional(propagation = Propagation.REQUIRES_NEW)</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">updateJob</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="type">Job</span> <span class="variable">job</span> <span class="operator">=</span> jobDaoImpl.getJobById(<span class="number">1L</span>);</span><br><span class="line">		job.setDescription(<span class="string">&quot;test2&quot;</span>);</span><br><span class="line">		jobDaoImpl.updateJob(job);</span><br><span class="line">		<span class="comment">// 預期出錯, 檢查會不會rollback</span></span><br><span class="line">		System.out.println(<span class="number">1</span>/<span class="number">0</span>);</span><br><span class="line">	&#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<ul>
+<li>CallerService 的 addJob 資料 rollback</li>
+</ul>
+<ol>
+<li>調整業務流程，把 CallerService 的 catch 在 throw exception 出去</li>
+<li>在 CallerService 的 catch 中手動觸發 rollback，讓 method 結束後執行 rollback 讓 DB 還原<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 呼叫流程的服務</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> oscar51011</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2022年4月22日</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CallerService</span> &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> CalleeService calleeService;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> JobDaoImpl jobDaoImpl;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Transactional</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">addJob</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="comment">// insert sql</span></span><br><span class="line">		<span class="type">Job</span> <span class="variable">job</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Job</span>();</span><br><span class="line">		job.setId(<span class="number">3L</span>);</span><br><span class="line">		job.setDescription(<span class="string">&quot;test&quot;</span>);</span><br><span class="line">		jobDaoImpl.addJob(job);</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="comment">// call update sql service</span></span><br><span class="line">			calleeService.updateJob();</span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			System.out.println(<span class="string">&quot;catch Exception&quot;</span>);</span><br><span class="line">			<span class="comment">// ( **解決方案** )設定手動回滾</span></span><br><span class="line">			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();</span><br><span class="line">		&#125;		</span><br><span class="line">		System.out.println(<span class="string">&quot;service done.&quot;</span>);</span><br><span class="line">	&#125;	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
+<li><a href="https://docs.spring.io/spring-framework/docs/4.2.x/spring-framework-reference/html/transaction.html">Spring- 16.Transaction Management</a></li>
+<li><a href="https://www.cnblogs.com/dirgo/p/11421828.html">Spring事务嵌套引发的血案—Transaction rolled back because it has been marked as rollback-only</a></li>
+<li><a href="https://yunlongn.github.io/2019/05/06/%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%BA%8B%E5%8A%A1%E7%9A%84%E5%9D%91Transaction-rolled-back-because-it-has-been-marked-as-rollback-only/">记一次事务的坑 Transaction rolled back because it has been marked as rollback-only</a></li>
+<li><a href="https://www.796t.com/article.php?id=51988">SpringBoot事務註解@Transactional 事物回滾、手動回滾事物</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>springboot</category>
+      </categories>
+      <tags>
+        <tag>springboot</tag>
+        <tag>hibernate</tag>
       </tags>
   </entry>
   <entry>
@@ -481,296 +533,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Springboot 讀取 yaml 設定檔參數</title>
-    <url>/2022/03/12/springboot-load-yaml-file/</url>
-    <content><![CDATA[<p>讀取客製化設定檔參數，會需要使用 @PropertySource annotation，但該標註只適用於 properties，<br>如果副檔名為 YAML 檔案，會無法解析而造成錯誤，如果要讀取該類型檔案，需要做出以下調整:</p>
-<span id="more"></span>
-
-<h3 id="前置作業-amp-環境"><a href="#前置作業-amp-環境" class="headerlink" title="前置作業 &amp; 環境"></a>前置作業 &amp; 環境</h3><ul>
-<li>Springboot 2.5.2</li>
-<li>maven 引入 web &amp; test dependencies<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line">&lt;dependencies&gt;</span><br><span class="line">  </span><br><span class="line">  	&lt;!-- web --&gt;</span><br><span class="line">  	&lt;dependency&gt;</span><br><span class="line">		&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">		&lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</span><br><span class="line">	&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">	&lt;!-- test framework --&gt;</span><br><span class="line">	&lt;dependency&gt;</span><br><span class="line">		&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">		&lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;</span><br><span class="line">		&lt;scope&gt;test&lt;/scope&gt;</span><br><span class="line">	&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">&lt;/dependencies&gt;</span><br><span class="line">...	</span><br></pre></td></tr></table></figure></li>
-<li>建立客製化的 properites : ymlProject.yml 在 <code>src/main/resources</code> 底下<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">project:</span></span><br><span class="line">  <span class="attr">yamlTest:</span> <span class="string">yamlString</span></span><br></pre></td></tr></table></figure>
-<img src="https://bnz05pap002files.storage.live.com/y4mpxMFJWJBu05lfnSinkVXrUr8aA0AsajHI0gUXWTuEGN6ddymE94uSS9LTxc0CiPTIJ0QVPK5UCTI_EWhWyhqVthH2PVAxUAg8wPiBHkU8T_juUfFm1wZSzhJKuAO1bKyCT6c1CK_1ygN_edsh4YkpWAf9NwuTYsts9tzVtYdArLgaVV-xzP-uMsi_iIeBJRV?width=256&height=150&cropmode=none" alt="setting.png"></li>
-</ul>
-<h3 id="實作程式"><a href="#實作程式" class="headerlink" title="實作程式"></a>實作程式</h3><p>Springboot 提供 </p>
-<ul>
-<li><code>YamlPropertiesFactoryBean</code> 將 YAML 轉成 properties </li>
-<li><code>YamlMapFactoryBean</code> 將 YAML 轉成 Map </li>
-<li><code>YamlPropertySourceLoader</code> 使用 @PropertySource load YAML 檔案<br>本篇使用 <code>YamlPropertiesFactoryBean</code> 將 YAML 轉成 properties 並照原 properties 的方法解析</li>
-</ul>
-<ol>
-<li>覆寫 PropertySourceFactory 使其可以讀取 yaml 格式資料<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 覆寫 propertySource 讓其可以讀取 yaml 資訊</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> oscar51011</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2022年3月12日</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">YamlPropertySourceFactory</span> <span class="keyword">implements</span> <span class="title class_">PropertySourceFactory</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="keyword">public</span> PropertySource&lt;?&gt; createPropertySource(String name, EncodedResource resource) <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">		</span><br><span class="line">        <span class="comment">// spring 提供套件使 YAML 加載成 properties 格式</span></span><br><span class="line">		<span class="type">YamlPropertiesFactoryBean</span> <span class="variable">factory</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">YamlPropertiesFactoryBean</span>();</span><br><span class="line">        factory.setResources(resource.getResource());</span><br><span class="line"></span><br><span class="line">        <span class="type">Properties</span> <span class="variable">properties</span> <span class="operator">=</span> factory.getObject();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">PropertiesPropertySource</span>(resource.getResource().getFilename(), properties);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li>使用 @Configuration &amp; @PropertySource 取得自定義yaml檔案的資料<br> factory 置換 客製化的解析設定檔方式 ; defalut 為 <strong>DefaultPropertySourceFactory</strong><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 讀取自定義 yaml 檔格式內容</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> oscar51011</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2022年3月12日</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@PropertySource(value = &quot;classpath:ymlProject.yml&quot;, factory = YamlPropertySourceFactory.class)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ProjectYamlConfig</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Value(&quot;$&#123;project.yamlTest&#125;&quot;)</span></span><br><span class="line">	<span class="keyword">private</span> String parameter;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> String <span class="title function_">getParameter</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> parameter;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setParameter</span><span class="params">(String parameter)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.parameter = parameter;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ol>
-<h3 id="使用整合測試驗證"><a href="#使用整合測試驗證" class="headerlink" title="使用整合測試驗證"></a>使用整合測試驗證</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@SpringBootTest(classes = &#123;SpringMvcApplication.class&#125;)</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">DemoYamlSettingTest</span> &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> ProjectYamlConfig projectYamlConfig;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="keyword">void</span> <span class="title function_">testYamlSettingCase</span><span class="params">()</span> &#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;load @Value:&quot;</span> + projectYamlConfig.getParameter());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="https://bnz05pap002files.storage.live.com/y4m2FvKxO08tEtm-PWnzkNw38EM956UqWyrtaqvfw6RdCi7Hh1VJAltWqJGfra7k-ibhes5jM83TijHiCC2eXuZlSWvY-KGSu1qI3kuGfPaxv9c1VeAINTBdwqlIG0qB8RY_Fh3pqxvH_H68xWW6lNXMMK0Bn4LLF4TaSZBx8jnfAn1cUP39VGzVx3423kbr6kA?width=660&height=268&cropmode=none" alt="result.png"></p>
-<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
-<li><a href="https://www.baeldung.com/spring-yaml-propertysource">@PropertySource with YAML Files in Spring Boot</a></li>
-<li><a href="https://matthung0807.blogspot.com/2020/10/spring-boot-propertysource-load-yaml.html">Spring Boot @PropertySource load yaml</a></li>
-<li><a href="https://kknews.cc/code/j2ymvpy.html">Spring Boot中通過@PropertySource註解讀取yaml或yml配置文件</a></li>
-<li><a href="https://www.cnblogs.com/rim99/p/8452175.html">两种SpringBoot加载YML配置文件的方法</a></li>
-</ol>
-]]></content>
-      <categories>
-        <category>springboot</category>
-      </categories>
-      <tags>
-        <tag>springboot</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用 Jenkins 串接 github webhook</title>
-    <url>/2022/05/01/jenkins-connect-github-webhook/</url>
-    <content><![CDATA[<p>目的: 撰寫基本的 Job，連接 Git Repository 並附上測試結果</p>
-<p>流程有兩種:</p>
-<ul>
-<li>主動詢問 ( polling )</li>
-<li>Git Webhook 觸發</li>
-</ul>
-<p>前置作業:</p>
-<ul>
-<li>使用 VM + docker 建置 jenkins</li>
-<li>擁有一個 Github 帳號</li>
-</ul>
-<p>步驟如下:</p>
-<span id="more"></span>
-
-<h3 id="SSH-KEY-設定"><a href="#SSH-KEY-設定" class="headerlink" title="SSH KEY 設定"></a>SSH KEY 設定</h3><ol>
-<li>產生 SSH KEY</li>
-</ol>
-<ul>
-<li>進入 Linux 產出 ssh key (因為測試的關係, 密碼部分直接 enter 略過)<br><code>ssh-keygen</code></li>
-<li>取出 public key 放置於 Github<br><code>cat ~/.ssh/id_rsa.pub</code></li>
-<li>取出 private key 放置於 Jenkins<br><code>cat ~/.ssh/id_rsa</code></li>
-</ul>
-<ol start="2">
-<li>登入 Github 設定 SSH KEY</li>
-</ol>
-<ul>
-<li>點選右上角 使用者 icon &gt; Settings &gt; 點選左排選單 SSH and GPG keys</li>
-<li>Add New SSH key</li>
-</ul>
-<p><img src="https://bnz05pap002files.storage.live.com/y4m9dct9qTqIYmVF9AuQu3MFn93UnP8bBINcibxL2WedvEDyNl4EtIAqZRwmP91V9uwqm23kVXbjs30w__pzuTamytZM1poSqWBirlGxz2IM9_mpHGvfEkStnlENcd9dWO4G5hD0cK0U4p2g9TzWepeMeau20ozcRoukj6Tw8sgSwttR5iygAvazsCpKtnK1xae?width=660&height=348&cropmode=none" alt="github_add_ssh_key.png"></p>
-<ol start="3">
-<li>登入 Jenkins 設定 Credentails</li>
-</ol>
-<ul>
-<li>點選 管理 Jenkins &gt; Security 的 Manage Credentials &gt; System &gt; Global credential(unrestricted)</li>
-<li>點選 Add Credentials</li>
-</ul>
-<p><img src="https://bnz05pap002files.storage.live.com/y4mRUytICogBKzHJ-6tF19J84l246bEvlLJ-kt_HsfBgyizYqa2ppkfQrYt8FkCNG9MAhh1foUVw1wgeFT2vs7byr6DGbni5zy7xjxKp8bMxOHJW6D5yN4lW4XvHbLhXl2EicxqBtEYeYE4t-CzMpxv6-6dVzCukxZZNy7hpL6ylqrc4bGA0N3WqrdU8mkwkebe?width=1024&height=583&cropmode=none" alt="jenkins-ssh-credentials.png"></p>
-<h3 id="輪詢-polling"><a href="#輪詢-polling" class="headerlink" title="輪詢 (polling)"></a>輪詢 (polling)</h3><p>Jenkins 新增作業 &gt; 建置Free-Style 軟體專案</p>
-<ul>
-<li>原始碼管理選擇 git repository ( Credentials 選擇 3. 所建立的 )</li>
-<li>觸發建置程序 選擇 輪詢SCM</li>
-</ul>
-<p><img src="https://bnz05pap002files.storage.live.com/y4miEJ68U0Z2Vr66riZwUMoUSUqmUdHUMSF7HhfV_e5rv-GvK6130INTvB_Zpts0soq5MJAIbzSSy8jtelwI6gr_YIWQ0-KcBngIXG5Yh28ozKjyrLxQFFViVHSKcpaEtnCM_GbqveC0Dgn-HWKcEW1wJswZ8xmzlCcNe8JAomfOV39Kvlg8Qh7Ngb7-E5IH0Tl?width=1024&height=412&cropmode=none" alt="jenkins-polling.png"></p>
-<ul>
-<li>專案修改一個項目並 push 回 master 主線，使其輪詢發現其異動並觸發 Job</li>
-</ul>
-<p><img src="https://bnz05pap002files.storage.live.com/y4mWFZJQdCsCVuGf5uqi0vb2a6YIiI5k5zdcK4vKo4rJYXgQlgtcMkl5bt0WzPPSoSjTpx0B-cUjYC2j7GuDJt4hxRFdRxzp5xm2StrHypE-_d7l-wuvIsFNePY6iNLVevL2FFBgAlYT3aQ7Ptv8fXnckJgHt1LEanHK0uv81wxSwgrMVmAfaSwqT3FoSzfONWt?width=861&height=623&cropmode=none" alt="jenkins-polling-result.png"></p>
-<h3 id="Git-Webhook"><a href="#Git-Webhook" class="headerlink" title="Git Webhook"></a>Git Webhook</h3><p>Jenkins 新增作業 &gt; 建置Free-Style 軟體專案</p>
-<ul>
-<li>原始碼管理選擇 git repository ( Credentials 選擇 3. 所建立的 )</li>
-<li>觸發建置程序 選擇 輪詢SCM</li>
-</ul>
-<font color=#ff0000>
-因為 Docker Jenkins 的 IP 是內網，Github Webhook 連不到 <br>
-因此 要使用 ngrok 裝在 VM 裡面，使 Jenkins mapping 到 domain <br>
-再讓 webhook 的 Payload URL 使用 ngrok 的服務串聯 <br>
-</font>
-
-<ol>
-<li>安裝 Ngork 步驟如下:</li>
-</ol>
-<ul>
-<li>官網安裝 NRORK - <a href="https://ngrok.com/download">點我前往</a></li>
-<li>使用 SSH or FTP 方式丟進 VM 裡面</li>
-<li>將服務丟到 &#x2F;usr&#x2F;bin 底下<br><code>sudo mv ngrok /usr/bin/.</code></li>
-<li>如果權限不足，執行以下指令 (參考Ref. 7)<br><code>cd /usr/bin</code><br><code>chmod -x ngrok</code></li>
-<li>執行 ngork ( 該 port 為 Jenkins 對外的 port 18080)<br><code>ngrok http &#123;port&#125;</code></li>
-</ul>
-<p>執行後如下圖:</p>
-<p><img src="https://bnz05pap002files.storage.live.com/y4m6RLUneOV_aQFmdKmX6jl-rgHsNbTJLNgtFYwfjCFH4-ZkchOSKugXIqAtCwBEnlYeBTi-MrwkYmxhJ84QFztIQGruqKxSVxZWMSqX5q91etGfX7qDYlFITHO-HRB2_enWAvWnkdx0q1GqYKt5H15bweHxqjsMi_Ds1QK2daWkqbErDcjeuh-nbHgLDmMA8Zn?width=1024&height=391&cropmode=none" alt="ngrok-terminal.png"></p>
-<ol start="2">
-<li>專案設置 Webhook</li>
-</ol>
-<ul>
-<li>Github Custom Repository &gt; Settings &gt; Webhooks 點選右上角 Add webhook</li>
-<li>將上述 ngork 的 domain + &#x2F;github-webhook&#x2F; 加入至 payload URL</li>
-</ul>
-<p>配置如下圖:</p>
-<p><img src="https://bnz05pap002files.storage.live.com/y4mcEaj5tX2cpp9BNtHlizGZ2w1ioEy4nbf-Mi4eq0OPgagTip-iGYOP9ShthkoWPfaLerfLSTEXotUTlT6P_K5Dt0d3op99NaTcra_jlRC_21mXnvKr82u14WB8exnihsLqIUY2N5vdfS_bLX2of29KZ7GPIOXXEWGJa2mWBHS_Pch6q7CdGhh7-va-sRm8no2?width=1024&height=629&cropmode=none" alt="github-webhook.png"></p>
-<ol start="3">
-<li>專案修改一個項目並 push 回 master 主線，Webhook 會發送 API 給 Jenkins並觸發 Job</li>
-</ol>
-<p><img src="https://bnz05pap002files.storage.live.com/y4mg6VDt0rMBaEGLE9bV6ATXN58YIhr7BMCZyuBhanEFecN9NcqunvadP0voKRIb-Mu1Efoi82AKwPQs4qxMfYkj1eho9BMLC9dOh20f42PAumVx9uRq0sDOKQNkIK5UKtb5F1z_WYoFVmuhk38CTxkH8rd4nZXO3gTI-PAykxcvi-UZ96-BFUvn3zL9xaGuwEO?width=933&height=735&cropmode=none" alt="jenkins-webhook-result.png"></p>
-<p>以上就是此次的流程紀錄</p>
-<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
-<li><a href="https://www.jianshu.com/p/07b60b788088">Jenkins+Github实现自动触发构建</a></li>
-<li><a href="https://www.youtube.com/watch?v=MIP3WTW8ylM&ab_channel=edureka!">Webhooks in Jenkins | Integrating Jenkins with Github | DevOps Training | Edureka</a></li>
-<li><a href="https://zoejoyuliao.medium.com/%E9%80%8F%E9%81%8E-github-webhook-%E8%A7%B8%E7%99%BC%E6%9C%AC%E5%9C%B0-jenkins-pipeline-%E8%AE%93%E4%BD%A0-push-code-%E5%88%B0-github-%E5%B0%B1%E6%9C%83%E8%87%AA%E5%8B%95%E8%B7%91-ci-cd-7c4bd7a22446">透過 GitHub Webhook 讓你 push code 到 Github 就會自動觸發本地 Jenkins Pipeline</a></li>
-<li><a href="https://www.jenkins.io/doc/book/using/using-credentials/">Jenkins - Using credentials</a></li>
-<li><a href="https://zoejoyuliao.medium.com/%E9%80%8F%E9%81%8E-github-webhook-%E8%A7%B8%E7%99%BC%E6%9C%AC%E5%9C%B0-jenkins-pipeline-%E8%AE%93%E4%BD%A0-push-code-%E5%88%B0-github-%E5%B0%B1%E6%9C%83%E8%87%AA%E5%8B%95%E8%B7%91-ci-cd-7c4bd7a22446">透過 GitHub Webhook 讓你 push code 到 Github 就會自動觸發本地 Jenkins Pipeline</a></li>
-<li><a href="https://ithelp.ithome.com.tw/articles/10227428">Ngrok：讓本機測試時也能有 HTTPS 憑證</a></li>
-<li><a href="https://stackoverflow.com/questions/52744044/how-do-i-fix-ngrok-permission-denied">How do I fix ngrok permission denied?</a></li>
-</ol>
-]]></content>
-      <categories>
-        <category>jenkins</category>
-      </categories>
-      <tags>
-        <tag>jenkins</tag>
-        <tag>ngork</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Springboot 讀取 properties 設定檔參數</title>
-    <url>/2022/03/11/springboot-load-properties-file/</url>
-    <content><![CDATA[<p>Springboot 在 讀取設定檔參數有 3 種方式 ( 格式有 properties &amp; yml 本篇使用 properties )<br>( Springboot 預設配置檔案位置在 <code>src/main/resources/application.properties</code>)</p>
-<p>如果需要指定 設定檔 需加上 @PropertySource 即可<br>※ 該 Annotation 只能夠指定 properties，因此如果需要指定 yml 檔需要另外實作</p>
-<p>以下來撰寫 3個方式的寫法:</p>
-<span id="more"></span>
-
-<h3 id="前置作業-amp-環境"><a href="#前置作業-amp-環境" class="headerlink" title="前置作業 &amp; 環境"></a>前置作業 &amp; 環境</h3><ul>
-<li>Springboot 2.5.2</li>
-<li>maven 引入 web &amp; test dependencies<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line">&lt;dependencies&gt;</span><br><span class="line">  </span><br><span class="line">  	&lt;!-- web --&gt;</span><br><span class="line">  	&lt;dependency&gt;</span><br><span class="line">		&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">		&lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</span><br><span class="line">	&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">	&lt;!-- test framework --&gt;</span><br><span class="line">	&lt;dependency&gt;</span><br><span class="line">		&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">		&lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;</span><br><span class="line">		&lt;scope&gt;test&lt;/scope&gt;</span><br><span class="line">	&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">&lt;/dependencies&gt;</span><br><span class="line">...	</span><br></pre></td></tr></table></figure></li>
-</ul>
-<ol>
-<li>在預設的 application.properites 加入參數<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">project.parameter</span> = <span class="string">test</span></span><br></pre></td></tr></table></figure></li>
-<li>建立客製化的 properites : test.properties 在 <code>src/main/resources</code> 底下<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">project.parameter</span> = <span class="string">test</span></span><br></pre></td></tr></table></figure>
-<img src="https://bnz05pap002files.storage.live.com/y4mAxeVYT8ncJ7Ivjb7MJX5CoaNpca8B2VyFU2zEX6L8ccQHQjZxyGxcau8wLyqWI597-GQhpK_vpq5oHpDbu6DNSsKCP4IoVk9KOQri5l_H7DminfZi8DBxNDioEZ9RTWgpimfBU8LN-3xNPivdoLa2JR6LVa__ILGpE0RdRtelWa1C9SSPnXYatCaVbqB_bm_?width=256&height=113&cropmode=none" alt="resources.png"></li>
-</ol>
-<h3 id="1-使用-Value-Annotation-讀取檔案"><a href="#1-使用-Value-Annotation-讀取檔案" class="headerlink" title="1. 使用 @Value Annotation 讀取檔案"></a>1. 使用 @Value Annotation 讀取檔案</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="comment">//@PropertySource(&quot;classpath:test.properties&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ProjectConfig</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Value(&quot;$&#123;project.parameter&#125;&quot;)</span></span><br><span class="line">	<span class="keyword">private</span> String parameter;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> String <span class="title function_">getParameter</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> parameter;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setParameter</span><span class="params">(String parameter)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.parameter = parameter;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-使用-Enviroment-介面取得設定檔資訊"><a href="#2-使用-Enviroment-介面取得設定檔資訊" class="headerlink" title="2. 使用 Enviroment 介面取得設定檔資訊"></a>2. 使用 Enviroment 介面取得設定檔資訊</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="comment">//@PropertySource(&quot;classpath:test.properties&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ProjectEnvConfig</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">    Environment environment;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> String <span class="title function_">getParameterValue</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">value</span> <span class="operator">=</span> environment.getProperty(<span class="string">&quot;project.parameter&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-使用-ConfigurationProperties-annotation-讀取檔案"><a href="#3-使用-ConfigurationProperties-annotation-讀取檔案" class="headerlink" title="3. 使用 @ConfigurationProperties annotation 讀取檔案"></a>3. 使用 @ConfigurationProperties annotation 讀取檔案</h3><p>ConfigurationProperties 可以將設定檔 mapping 成一個實體類別<br>使用該 annotation 建議引入對應的 dependencies</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-boot-configuration-processor&lt;/artifactId&gt;</span><br><span class="line">    &lt;optional&gt;true&lt;/optional&gt;</span><br><span class="line">&lt;/dependency&gt;   </span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@ConfigurationProperties(prefix = &quot;project&quot;)</span></span><br><span class="line"><span class="comment">// @PropertySource(&quot;classpath:test.properties&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ProjectConfigurationPropertiesConfig</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> String parameter;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> String <span class="title function_">getParameter</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> parameter;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setParameter</span><span class="params">(String parameter)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.parameter = parameter;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="驗證結果"><a href="#驗證結果" class="headerlink" title="驗證結果"></a>驗證結果</h3><p>使用一個簡單的整合測試來跑上述的結果查看是否可以取得設定檔的內容</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@SpringBootTest</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">DemoSettingTest</span> &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> ProjectConfig projectConfig;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> ProjectEnvConfig projectEnvConfig;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> ProjectConfigurationPropertiesConfig projectConfigurationPropertiesConfig;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="keyword">void</span> <span class="title function_">testSettingCase</span><span class="params">()</span> &#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;load @Value:&quot;</span> + projectConfig.getParameter());</span><br><span class="line">		System.out.println(<span class="string">&quot;load Enviroment interface:&quot;</span> + projectEnvConfig.getParameterValue());</span><br><span class="line">		System.out.println(<span class="string">&quot;load @ConfigurationProperties:&quot;</span> + projectConfigurationPropertiesConfig.getParameter());</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p><img src="https://bnz05pap002files.storage.live.com/y4m-JMnLiItOrZFNEkD0b5sW373Q8AKyQtKXW3jXxLt3B2RkMuTv7XfmxHXiZBQ4PJIbpFwxUzYw5Mus-4QX3MZIWBOEBj3pBufCERPt0T6L-FZ9-ORRYxKKXtfD34DgicSi4d_oga5M8wj4Xt492iRlR-a9O-kppMrY5m-jDigjaJv54hQyWmv5P63KbE7sW-3?width=660&height=257&cropmode=none" alt="demo-result.png"></p>
-<h3 id="錯誤訊息"><a href="#錯誤訊息" class="headerlink" title="錯誤訊息"></a>錯誤訊息</h3><ol>
-<li>如果設定檔的參數無法對應到 java 檔的設定時，會拋出 Could not resolve placeholder xxx 的訊息<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Could not resolve placeholder &#x27;project.parameter&#x27; in value &quot;$&#123;project.parameter&#125;&quot;</span><br></pre></td></tr></table></figure></li>
-</ol>
-<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
-<li><a href="https://iter01.com/587071.html">【springboot讀取配置檔案】@ConfigurationProperties、@PropertySource和@Value</a></li>
-<li><a href="https://iter01.com/515254.html">Spring Boot讀取配置檔案的幾種方式
-</a></li>
-</ol>
-]]></content>
-      <categories>
-        <category>springboot</category>
-      </categories>
-      <tags>
-        <tag>springboot</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用 jenkins 撰寫 multiBranch pipeline</title>
-    <url>/2022/05/08/jenkins-multibranch-pipeline/</url>
-    <content><![CDATA[<p>藉由之前的 <a href="https://oscar51011.github.io/2022/05/07/jenkins-pipeline">使用 jenkins 撰寫 pipeline 腳本完成 springboot 簡易自動化部署
-</a> 已經知道怎麼撰寫一般的 pipeline<br>但是在實際應用的需求上，開發團隊會在不同的環境(ex: SIT, UAT)進行開發，這樣需要跟對各個分支撰寫腳本</p>
-<p>因此本篇撰寫multibranch pipeline，可以使用一個腳本完成這件事<br>前一篇練習是使用 pipeline script 的方式來撰寫<br>這次也練習 jenkinsfile 的寫法(將 腳本內容 交由版本控制管理)</p>
-<span id="more"></span>
-
-<h3 id="前置作業"><a href="#前置作業" class="headerlink" title="前置作業"></a>前置作業</h3><ol>
-<li>準備一台 VM 並使用 docker啟動一個 Jenkins</li>
-<li>建置一個可運行的 springboot 專案</li>
-</ol>
-<h3 id="自動化流程"><a href="#自動化流程" class="headerlink" title="自動化流程"></a>自動化流程</h3><ol>
-<li>清空該job的workspace</li>
-<li>取得github上對應的repository</li>
-<li>在jenkins主機上進行打包</li>
-<li>通知流程 ( print 結束字樣)</li>
-</ol>
-<h3 id="建置-multiBranch-pipeline-流程"><a href="#建置-multiBranch-pipeline-流程" class="headerlink" title="建置 multiBranch pipeline 流程"></a>建置 multiBranch pipeline 流程</h3><ol>
-<li>將 springboot 專案加上 Jenkinsfile 的檔案</li>
-</ol>
-<p><img src="https://bnz05pap002files.storage.live.com/y4m3EeoO8TA1ZQTerbt7_AxAciIrBF2FxiYy29MUrLLCCVbpCcNNGfJY-n8LnKcY-yBeqi9jzbL97tswNxE5_AsOOQBPBat7Q6YiFaIlYDEbFX5XelKH8VD3RyVpu2PO8IMeYwqTRezzHe-JarOFoHD-xi2RIYPMfh-AKQEDEuKinflIVrAn4NRpA1_izE9RKHd?width=963&height=456&cropmode=none" alt="add-jenkinsfile-to-repository.png"></p>
-<ol start="2">
-<li>建立 multiBranch pipeline<br>Dashboard &gt; 新增作業 &gt; Multibranch Pipeline</li>
-</ol>
-<ul>
-<li>Add Sources 選擇 Git 並填入相關資訊</li>
-</ul>
-<ol start="3">
-<li>專案建置完成後點選 Scan Multibranch Pipeline Now<br>它會去取得 repository 並檢查分支是否有異動過，有的話會執行一次作業<br>(如果有新分支產生也會同步顯示於UI頁面)，如果要個別執行單一分支可點選 branch name 進入各分支</li>
-</ol>
-<p><img src="https://bnz05pap002files.storage.live.com/y4m3F0mz8wMZJ8Wu3zHxuMKnZaVZuaeSZMv2jKBoheTbPwL6IArwYj9-MZJMZ-yQRTQDN04hVoxk5-9MmvmeyG2yAbNP5mk3uMLT0aWlK6DFfF3KIqCh4izon3DvjPZT5vQlS7hc_VdSoA0tWwjmvBlDOcPVOHTadl6JIBMbPvOyBgtBIevw4zSD4Y0z3DXcr6i?width=1024&height=541&cropmode=none" alt="multibranch-pipeline-scan.png"></p>
-<h1 id="驗證結果"><a href="#驗證結果" class="headerlink" title="驗證結果"></a>驗證結果</h1><p>進入單一分支執行完後，也會跟撰寫一般的 pipeline 腳本有同樣的結果，如下圖:</p>
-<p><img src="https://bnz05pap002files.storage.live.com/y4mBTFN1JdZ61A0t1F0wwmFApUDudAZ_NngMX8V90wBWrVgbI8TNkn0Baq1J1NmA3SqnTEZWBnZ-MMxjzE4pfuh4otcW3_YFKbmyH055Wu4Ha_JOvQ7z4fbc2cUcKPI9cuABtn3J-UVlozT5ESE08MuBVX5ph5N5n62UDzoBIoUXSMa4cguRYO7CTU-yc-rDXxJ?width=1024&height=357&cropmode=none" alt="multibranch-pipeline-result.png"></p>
-<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ol>
-<li><a href="https://stackoverflow.com/questions/44928459/is-it-possible-to-rename-default-declarative-checkout-scm-step">stackoverflow - Is it possible to rename default “Declarative: Checkout SCM” step?</a></li>
-<li><a href="https://www.jenkins.io/doc/book/pipeline/jenkinsfile/">jenkins - Using a Jenkinsfile</a></li>
-</ol>
-]]></content>
-      <categories>
-        <category>jenkins</category>
-      </categories>
-      <tags>
-        <tag>jenkins</tag>
-        <tag>springboot</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Servlet Filter 使用</title>
-    <url>/2022/04/04/servlet-filter/</url>
-    <content><![CDATA[<p>為 Servlet 中的其中一種高級特性 , 可用於 servlet 以外對於 request &amp; resposne 進行過濾, 甚至是修改其內容<br>Filter 可以同時存在很多個 , 多個 Filter 就組成了 FilterChain</p>
-<p><img src="https://bnz05pap002files.storage.live.com/y4mWO6JRUFd29vWlVMojv_Zk5aHsoU-QryrWBDS6-yVashakMDUhYIlun5KMeuO18q6ljkEVtpcbWFwIWMuCwGdPp1hhqHXdQ4Vvv1LvGaB1eCkp6-NBxrwdtrlSpbRf1JTUO0x1ketfWGcd4FWnEDMMDMXeKJ9wcYGSGUqIZGbTIMJTSCXXYodmZjej2oSu2om?width=621&height=271&cropmode=none" alt="servlet-filter.png"></p>
-<span id="more"></span>
-
-<h3 id="前置作業"><a href="#前置作業" class="headerlink" title="前置作業"></a>前置作業</h3><ol>
-<li>使用 Maven :  <code>pom.xml</code> 引入 servlet-api<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line">&lt;dependencies&gt;</span><br><span class="line">  &lt;!-- Servlet --&gt;</span><br><span class="line">  &lt;dependency&gt;</span><br><span class="line">      &lt;groupId&gt;javax.servlet&lt;/groupId&gt;</span><br><span class="line">      &lt;artifactId&gt;javax.servlet-api&lt;/artifactId&gt;</span><br><span class="line">      &lt;version&gt;4.0.1&lt;/version&gt;</span><br><span class="line">      &lt;scope&gt;provided&lt;/scope&gt;</span><br><span class="line">  &lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">&lt;/dependencies&gt;</span><br><span class="line">...</span><br></pre></td></tr></table></figure></li>
-</ol>
-<h3 id="Filter-實現"><a href="#Filter-實現" class="headerlink" title="Filter 實現"></a>Filter 實現</h3><ol>
-<li>Filter 需要實現 javax.servlet.Filter 介面 ( 該介面有3個方法 )</li>
-</ol>
-<ul>
-<li>init(FilterConfig filterConfig)</li>
-<li>doFilter(ServletRequest request, ServletResponse response, FilterChain chain)</li>
-<li>destory()</li>
-</ul>
-<p>其中 init() &amp; destory() 只會被呼叫一次 (<strong>The default implementation takes no action</strong>),<br>而 doFilter() 每次請求時都會被呼叫</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestFilter</span> <span class="keyword">implements</span> <span class="title class_">Filter</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">doFilter</span><span class="params">(ServletRequest request, ServletResponse response, FilterChain chain)</span> <span class="keyword">throws</span> IOException, ServletException &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;project filter&quot;</span>);</span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">        * 撰寫處裡的邏輯</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">        chain.doFilter(request, response);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>設定配置 ( 使用 xml or annotation )<br>(方法一) 在 <code>web.xml</code> 需要進行設定 ( Servlet 2.5 )<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">web-app</span> <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://Java.sun.com/xml/ns/javaee&quot;</span> <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&quot;</span> <span class="attr">version</span>=<span class="string">&quot;2.5&quot;</span>&gt;</span></span><br><span class="line">...</span><br><span class="line">  <span class="tag">&lt;<span class="name">filter</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>testFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">filter-class</span>&gt;</span>com.demo.filter.TestFilter<span class="tag">&lt;/<span class="name">filter-class</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">filter</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>testFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/*<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">dispatcher</span>&gt;</span>REQUEST<span class="tag">&lt;/<span class="name">dispatcher</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line">...</span><br><span class="line"><span class="tag">&lt;/<span class="name">web-app</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
-</ol>
-<ul>
-<li><code>&lt;filter&gt;</code> 跟 <code>&lt;filter-mapping&gt;</code> 的名字必須匹配</li>
-<li><code>&lt;url-pattern&gt;</code> 設定 URL規則 , 可以使用 <code>*</code> (萬用字元)</li>
-<li><code>&lt;dispatcher&gt;</code> 設定到達 servlet 的方式, 有4種 &#x3D;&gt; REQUEST <strong>(預設)</strong>, FORWARD, INCLUDE, ERROR ( 根據不同情境使用)</li>
-<li>若有設定 <code>&lt;url-pattern&gt;</code> &amp; <code>&lt;dispatcher&gt;</code> , 它們兩者的條件要<strong>同時符合</strong>, 該 Filter 才會生效</li>
-</ul>
-<p>(方法二) 除了 xml 之外 , 也可以使用 @WebFilter() 的方式 ( Servlet 3.0 才有)</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@WebFilter(&quot;/*&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestFilter</span> <span class="keyword">implements</span> <span class="title class_">Filter</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">doFilter</span><span class="params">(ServletRequest request, ServletResponse response, FilterChain chain)</span> <span class="keyword">throws</span> IOException, ServletException &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;project filter&quot;</span>);</span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">        * 撰寫處裡的邏輯</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">        chain.doFilter(request, response);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="Filter-執行順序"><a href="#Filter-執行順序" class="headerlink" title="Filter 執行順序"></a>Filter 執行順序</h3><ul>
-<li>如果都是設定 xml 的情況下 , 由 <code>web.xml</code> 中的 <code>&lt;filter-mapping&gt;</code> 宣告順序依序執行</li>
-<li>如果都是設定 <code>@WebFilter</code> 的情況下 , 由 ClassName 的順序來執行<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SecondaryFilter.java</span><br><span class="line">ThirdFilter.java</span><br></pre></td></tr></table></figure></li>
-<li>如果混用的情況底下 , 會先依照 <code>web.xml</code> 的宣告順序後, 再依照 ClassName 的方式</li>
-</ul>
-<p>基本上一個專案最好統一一種方式處理</p>
-<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
-<li><a href="https://openhome.cc/Gossip/ServletJSP/Filter.html">關於過濾器</a></li>
-<li><a href="https://www.concretepage.com/java-ee/jsp-servlet/how-to-use-filter-in-servlet-3-with-webfilter-annotation">How to Use Filter in Servlet 3 with @WebFilter Annotation</a></li>
-<li><a href="https://openhome.cc/Gossip/ServletJSP/FilterImplSetting.html">Filter 的實作與設定</a></li>
-<li><a href="http://allenwu.logdown.com/posts/220574-filter-annotation-execution-order">Filter Annotation 執行順序</a></li>
-<li><a href="https://www.twblogs.net/a/5b7dafda2b71773f4f185e7a">【Servlet】Filter深入講解及實例研究</a></li>
-</ol>
-]]></content>
-      <categories>
-        <category>servlet</category>
-      </categories>
-      <tags>
-        <tag>servlet</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>springboot 整合 mybatis</title>
     <url>/2022/04/09/springboot-mybatis/</url>
     <content><![CDATA[<p>Mybatis 為一個 ORM（Object Relational Mapping) 框架，簡單易學<br>接下來藉由一系列步驟，實作 Springboot 搭配 mybatis 取得 database 的資料</p>
@@ -832,111 +594,41 @@ Update的部分用 Assert 斷言驗證值是否有修改。<br>執行後，發�
       </tags>
   </entry>
   <entry>
-    <title>使用 jenkins 撰寫 pipeline 腳本完成 springboot 簡易自動化部署</title>
-    <url>/2022/05/07/jenkins-pipeline/</url>
-    <content><![CDATA[<p>本篇記錄撰寫 pipeline 完成簡易 springboot 的打包部署流程<br>並記錄在官網中使用到的一些 pipeline syntax</p>
+    <title>Springboot 讀取 properties 設定檔參數</title>
+    <url>/2022/03/11/springboot-load-properties-file/</url>
+    <content><![CDATA[<p>Springboot 在 讀取設定檔參數有 3 種方式 ( 格式有 properties &amp; yml 本篇使用 properties )<br>( Springboot 預設配置檔案位置在 <code>src/main/resources/application.properties</code>)</p>
+<p>如果需要指定 設定檔 需加上 @PropertySource 即可<br>※ 該 Annotation 只能夠指定 properties，因此如果需要指定 yml 檔需要另外實作</p>
+<p>以下來撰寫 3個方式的寫法:</p>
 <span id="more"></span>
 
-<h3 id="前置作業"><a href="#前置作業" class="headerlink" title="前置作業"></a>前置作業</h3><ol>
-<li>準備兩台 VM (一台裝 jenkins VM, 一台用來部署VM)</li>
-<li>使用 docker啟動一個 Jenkins </li>
-<li>docker jenkins VM配置 ssh 設定使 主機跳轉時不用輸入帳號密碼<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta"># </span><span class="language-bash">jenkins VM 建立 ssh key</span></span><br><span class="line">ssh-keygen -t rsa -b 4096</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">進入 docker jenkins 的 .ssh 資料夾</span></span><br><span class="line">cd /root/.ssh</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">取得 public key</span> </span><br><span class="line">cat id_rsa.pub</span><br></pre></td></tr></table></figure></li>
-<li>部署 VM 進入 <code>.ssh</code> 資料夾下 建立 <code>authorized_keys</code> 檔案 , 並把上述 public key 複製<br>設定完後，從 docker jenkins ssh 進 部署VM 確認是否可以正常執行</li>
-<li>建置一個可運行的 springboot 專案</li>
-<li>使用 docker啟動一個 Jenkins </li>
-<li>jenkins 安裝 maven plugin<br>Dashboard &gt; 管理 jenkins &gt; Global Tool Configuration &gt; 點擊 maven 安裝 (選擇版本&amp;勾選自動安裝)</li>
-<li>jenkins credentials 配置連接 github 之設定</li>
-</ol>
-<h3 id="自動化流程"><a href="#自動化流程" class="headerlink" title="自動化流程"></a>自動化流程</h3><ol>
-<li>清空該job的workspace</li>
-<li>取得github上對應的repository</li>
-<li>在jenkins主機上進行打包</li>
-<li>使用 linux 指令將 springboot jar 檔送到部署主機上</li>
-<li>通知流程 ( print 結束字樣)</li>
-</ol>
-<h1 id="Jenkins-pipeline-Code-撰寫"><a href="#Jenkins-pipeline-Code-撰寫" class="headerlink" title="Jenkins pipeline Code 撰寫"></a>Jenkins pipeline Code 撰寫</h1><ol>
-<li>Jenkins 有提供 pipeline Syntax 產生器可以使用<br>Dashboard &gt; 自己開的 job &gt; Pipeline Syntax</li>
-</ol>
-<p><img src="https://bnz05pap002files.storage.live.com/y4mlgGj36sPhIhYlEke5YQiOGEnHlVx5Yn6c7Gsta8LOTrDGCd1hJTDGDB9uuot5oCVL0tBt1parZEAJ4JKBLZyKUasat3v5WhTxqcqa9kEAgKvEIzowxE0IontSJPMYAXj_LMkSLpDNteYPU5_X6nREetiFiy9oKu7xXxQ-8IEdGRk2dDJzsB0iRxH2Y9jOj1u?width=1024&height=629&cropmode=none" alt="pipeline-syntax.png"></p>
-<ol start="2">
-<li><p>Jenkins 有提供 enviroment 可以設定系統參數 &amp; parameter 可以定義參數，讓user根據不同情境處理Job</p>
-</li>
-<li><p>新增作業 &gt; 選擇 Pipeline Job &gt; 點選組態 ( 開始撰寫自己的第一個 pipeline job)<br>pipeline Definition 有兩種，本篇使用 <font color=#ff0000>pipeline script</font></p>
-</li>
-</ol>
-<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">pipeline &#123;</span><br><span class="line">    agent any</span><br><span class="line">    </span><br><span class="line">    environment &#123;</span><br><span class="line">        remoteUser = <span class="string">&#x27;填入部署VM帳號&#x27;</span></span><br><span class="line">        remoteIp = <span class="string">&#x27;填入部署VM IP&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    parameters &#123;</span><br><span class="line">        choice(</span><br><span class="line">          <span class="symbol">description:</span> <span class="string">&#x27;你需要選擇哪個環境執行 ?&#x27;</span>,</span><br><span class="line">          <span class="symbol">name:</span> <span class="string">&#x27;profile&#x27;</span>,</span><br><span class="line">          <span class="symbol">choices:</span> [<span class="string">&#x27;dev&#x27;</span>, <span class="string">&#x27;uat&#x27;</span>]</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    stages &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 步驟1: 清空資料夾</span></span><br><span class="line">        stage(<span class="string">&#x27;deleteDir&#x27;</span>)&#123;</span><br><span class="line">            steps&#123;</span><br><span class="line">                deleteDir()</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 步驟2: checkout github code</span></span><br><span class="line">        stage(<span class="string">&#x27;checkout&#x27;</span>)&#123;</span><br><span class="line">           steps&#123;</span><br><span class="line">              checkout([<span class="attr">$class:</span> <span class="string">&#x27;GitSCM&#x27;</span>, <span class="attr">branches:</span> [[<span class="attr">name:</span> <span class="string">&#x27;*/master&#x27;</span>]], <span class="attr">extensions:</span> [], <span class="attr">userRemoteConfigs:</span> [[<span class="attr">credentialsId:</span> <span class="string">&#x27;VM_USER&#x27;</span>, <span class="attr">url:</span> <span class="string">&#x27;填入需要取得之Git repository&#x27;</span>]]])</span><br><span class="line">           &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 步驟3: 專案打包成jar</span></span><br><span class="line">        stage(<span class="string">&#x27;build&#x27;</span>)&#123;</span><br><span class="line">            steps&#123;</span><br><span class="line">                withMaven(<span class="attr">maven:</span> <span class="string">&#x27;maven-3.3.9&#x27;</span>) &#123;</span><br><span class="line">                    sh <span class="string">&#x27;mvn clean package -DskipTests&#x27;</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 步驟4: 專案部署到另一台server , 並啟動</span></span><br><span class="line">        stage(<span class="string">&#x27;deploy&#x27;</span>) &#123;</span><br><span class="line">            steps &#123;</span><br><span class="line">                </span><br><span class="line">                sh <span class="string">&quot;scp web/target/gameballWeb.jar $&#123;env.remoteUser&#125;@$&#123;env.remoteIp&#125;:/home/oscar51011/project&quot;</span></span><br><span class="line">                echo <span class="string">&#x27;執行環境: $&#123;profile&#125;&#x27;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        stage(<span class="string">&#x27;notify&#x27;</span>) &#123;</span><br><span class="line">            steps &#123;</span><br><span class="line">                sh <span class="string">&quot;echo &#x27;job done!&#x27;&quot;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125; </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="驗證結果"><a href="#驗證結果" class="headerlink" title="驗證結果"></a>驗證結果</h1><ol>
-<li>手動執行 Build</li>
-</ol>
-<p><img src="https://bnz05pap002files.storage.live.com/y4mW9A3gzWWOuCD5IMKBvwWlZhxgpIOt3ABwb_JlX77O6G9qwifU9Aiy0JLBwJ9-zEd6mxPdA8k8hfLfdjtYh1AZgFctCq5P1a-y2ufGYafPxAwODxTPZ961aztqJFT2htszB_xJ7XfR20HohKm5M9pRx6bg8EFgP5ydOT0IOG-3xHpTF01KaIt6OS9QQseeyq1?width=660&height=306&cropmode=none" alt="pipeline-parameter.png"></p>
-<ol start="2">
-<li>執行完後即可看到 pipeline 的結果</li>
-</ol>
-<p><img src="https://bnz05pap002files.storage.live.com/y4muOlGasqRI4TNMjFnarl9n4OTtvqKbCcQjAE67pKYAaf8HHyHG4okSmxpm_Hk17--LBzeHRD8RFpTXrel9A0cghCIsGifcABGqxpx1R9bV50ojMDZN4yLzkjJLHW_sMpTcglls2VXQk82Bp3p3J17EoHXlOPrV3ch5PzhsUY1El00MKuy7_RrFWFc9uVcF1A1?width=1024&height=297&cropmode=none" alt="pipeline-result.png"></p>
-<h3 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h3><p>以上就是初步撰寫第一個 pipeline 腳本的流程，但本篇還有很多部分有進步空間，紀錄一下後續延伸方向。</p>
-<ul>
-<li>研究 pipeline script from SCM </li>
-<li>研究 如果在背景執行 springboot 專案，且可以優雅的 shutdown</li>
-<li>研究 單元測試，在 CICD 中單元測試也是重要的一環</li>
-<li>研究 健康檢查機制(部署完成後，通常都會需要做健康檢查，確認專案是否有成功啟動)</li>
-<li>備份舊版本資料，以利後續出問題時可以復原退回前版</li>
+<h3 id="前置作業-amp-環境"><a href="#前置作業-amp-環境" class="headerlink" title="前置作業 &amp; 環境"></a>前置作業 &amp; 環境</h3><ul>
+<li>Springboot 2.5.2</li>
+<li>maven 引入 web &amp; test dependencies<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line">&lt;dependencies&gt;</span><br><span class="line">  </span><br><span class="line">  	&lt;!-- web --&gt;</span><br><span class="line">  	&lt;dependency&gt;</span><br><span class="line">		&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">		&lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</span><br><span class="line">	&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">	&lt;!-- test framework --&gt;</span><br><span class="line">	&lt;dependency&gt;</span><br><span class="line">		&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">		&lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;</span><br><span class="line">		&lt;scope&gt;test&lt;/scope&gt;</span><br><span class="line">	&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">&lt;/dependencies&gt;</span><br><span class="line">...	</span><br></pre></td></tr></table></figure></li>
 </ul>
-<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ol>
-<li><a href="https://www.baeldung.com/ops/jenkins-pipelines">Intro to Jenkins 2 and the Power of Pipelines</a></li>
-<li><a href="https://www.jenkins.io/doc/book/pipeline/syntax/">Jenkins - Pipeline Syntax</a></li>
-<li><a href="https://www.jenkins.io/doc/book/pipeline/getting-started/">Jenkins - Getting started with Pipeline</a></li>
+<ol>
+<li>在預設的 application.properites 加入參數<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">project.parameter</span> = <span class="string">test</span></span><br></pre></td></tr></table></figure></li>
+<li>建立客製化的 properites : test.properties 在 <code>src/main/resources</code> 底下<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">project.parameter</span> = <span class="string">test</span></span><br></pre></td></tr></table></figure>
+<img src="https://bnz05pap002files.storage.live.com/y4mAxeVYT8ncJ7Ivjb7MJX5CoaNpca8B2VyFU2zEX6L8ccQHQjZxyGxcau8wLyqWI597-GQhpK_vpq5oHpDbu6DNSsKCP4IoVk9KOQri5l_H7DminfZi8DBxNDioEZ9RTWgpimfBU8LN-3xNPivdoLa2JR6LVa__ILGpE0RdRtelWa1C9SSPnXYatCaVbqB_bm_?width=256&height=113&cropmode=none" alt="resources.png"></li>
 </ol>
-]]></content>
-      <categories>
-        <category>jenkins</category>
-      </categories>
-      <tags>
-        <tag>jenkins</tag>
-        <tag>springboot</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Transaction rolled back because it has been marked as rollback-only</title>
-    <url>/2022/04/22/hibernate-transaction-rollback-only-error/</url>
-    <content><![CDATA[<p>最近在公司查詢問題時，心想著對於 Transaction 可能也不是非常了解，<br>再加上常常遇到 <font color=#ff0000><strong>Transaction rolled back because it has been marked as rollback-only</strong></font> 這個問題，<br>因此就花點時間來重現這個問題，並思考怎麼避免。</p>
-<span id="more"></span>
+<h3 id="1-使用-Value-Annotation-讀取檔案"><a href="#1-使用-Value-Annotation-讀取檔案" class="headerlink" title="1. 使用 @Value Annotation 讀取檔案"></a>1. 使用 @Value Annotation 讀取檔案</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="comment">//@PropertySource(&quot;classpath:test.properties&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ProjectConfig</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Value(&quot;$&#123;project.parameter&#125;&quot;)</span></span><br><span class="line">	<span class="keyword">private</span> String parameter;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> String <span class="title function_">getParameter</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> parameter;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setParameter</span><span class="params">(String parameter)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.parameter = parameter;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="重現問題場景-主要以Service為主-DAO部分就不贅述"><a href="#重現問題場景-主要以Service為主-DAO部分就不贅述" class="headerlink" title="重現問題場景(主要以Service為主, DAO部分就不贅述)"></a>重現問題場景(主要以Service為主, DAO部分就不贅述)</h3><p>Controller 呼叫 CallerService, CallerService 再呼叫 CalleeService, CalleeService 發生錯誤後，<br>rollback 回 CallerService 試圖使用 try catch 把錯誤包起來使 服務繼續執行時會出現這個錯誤訊息。</p>
-<p>呼叫的Controller</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/situation/transactionException&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestController</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> CallerService callerService;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@RequestMapping(&quot;/test&quot;)</span></span><br><span class="line">	<span class="keyword">public</span> String <span class="title function_">test</span><span class="params">()</span> &#123;</span><br><span class="line">		callerService.addJob();</span><br><span class="line">		<span class="keyword">return</span> <span class="string">&quot;ok&quot;</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-使用-Enviroment-介面取得設定檔資訊"><a href="#2-使用-Enviroment-介面取得設定檔資訊" class="headerlink" title="2. 使用 Enviroment 介面取得設定檔資訊"></a>2. 使用 Enviroment 介面取得設定檔資訊</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="comment">//@PropertySource(&quot;classpath:test.properties&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ProjectEnvConfig</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">    Environment environment;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> String <span class="title function_">getParameterValue</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">value</span> <span class="operator">=</span> environment.getProperty(<span class="string">&quot;project.parameter&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>主要的服務有兩個</p>
-<ol>
-<li>CallerService<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 呼叫流程的服務</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> oscar51011</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2022年4月22日</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CallerService</span> &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> CalleeService calleeService;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> JobDaoImpl jobDaoImpl;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Transactional</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">addJob</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="comment">// insert sql</span></span><br><span class="line">		<span class="type">Job</span> <span class="variable">job</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Job</span>();</span><br><span class="line">		job.setId(<span class="number">3L</span>);</span><br><span class="line">		job.setDescription(<span class="string">&quot;test&quot;</span>);</span><br><span class="line">		jobDaoImpl.addJob(job);</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="comment">// call update sql service</span></span><br><span class="line">			calleeService.updateJob();</span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			System.out.println(<span class="string">&quot;catch Exception&quot;</span>);</span><br><span class="line">		&#125;		</span><br><span class="line">		System.out.println(<span class="string">&quot;service done.&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li>CalleeService<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 被呼叫的 Service</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> oscar51011</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2022年4月22日</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CalleeService</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> JobDaoImpl jobDaoImpl;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Transactional</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">updateJob</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="type">Job</span> <span class="variable">job</span> <span class="operator">=</span> jobDaoImpl.getJobById(<span class="number">1L</span>);</span><br><span class="line">		job.setDescription(<span class="string">&quot;test2&quot;</span>);</span><br><span class="line">		jobDaoImpl.updateJob(job);</span><br><span class="line">		<span class="comment">// 預期出錯, 檢查會不會rollback</span></span><br><span class="line">		System.out.println(<span class="number">1</span>/<span class="number">0</span>);</span><br><span class="line">	&#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ol>
-<p>錯誤訊息如附圖:<br><img src="https://bnz05pap002files.storage.live.com/y4mq_PjejYzusEV72n3uKAJ9CzS_8ROfhfUHQPGt1iK14_3n3DRPc7eIK8sbdTs1F1bZn4Jv4vwy70ZeVQCr-I-xGOiL1D_IULG8M6bgRJg-RiZtCv474EyjZS5PKonxiyFtj3_5HChUMY6xFkfCkRUio58VLqNdpsso6f1zW3KfkhGkO3PQNfKjk2mFgOTMDuR?width=660&height=179&cropmode=none" alt="transaction-rollback-only-error.png"></p>
-<p><code>@Transactional</code> 的預設值為 <code>PROPAGATION_REQUIRED</code>，我們來看一下 Spring docs 中的解釋:</p>
-<blockquote>
-<p>When the propagation setting is PROPAGATION_REQUIRED, a logical transaction scope is created for each method upon which the setting is applied. Each such logical transaction scope can determine rollback-only status individually, with an outer transaction scope being logically independent from the inner transaction scope. Of course, in case of standard PROPAGATION_REQUIRED behavior, all these scopes will be mapped to the same physical transaction. So a <font color=#ff0000>rollback-only marker set in the inner transaction scope does affect the outer transaction’s chance to actually commit </font> (as you would expect it to).<br>However, in the case where an inner transaction scope sets the rollback-only marker, the outer transaction has not decided on the rollback itself, and so the rollback (silently triggered by the inner transaction scope) is unexpected. A corresponding <strong>UnexpectedRollbackException</strong> is thrown at that point. This is expected behavior so that the caller of a transaction can never be misled to assume that a commit was performed when it really was not. So if an <font color=#ff0000>inner transaction (of which the outer caller is not aware) silently marks a transaction as rollback-only, the outer caller still calls commit. The outer caller needs to receive an UnexpectedRollbackException to indicate clearly that a rollback was performed instead </font>.<br>(以上段落出自 Ref.1 的 Spring docs 的 16.5.7 Transaction propagation 中的 Required 部分)</p>
-</blockquote>
-<p>當 CallerService 呼叫 CalleeService 時，它們就為同一個 physcal transaction<br>因此當 CalleeService發生異常時，拋出異常，並把 transaction 標記成 rollback-only<br>當 CallerService 走完流程，spring 發現 transaction 已經被標記成 rollback-only，但流程居然走完了，因此就報出錯誤</p>
-<p>如上述描述，我們就接到了 UnexpectedRollbackException，因為它不符合原本該 Transaction Propagation 的機制</p>
-<h3 id="解決方法"><a href="#解決方法" class="headerlink" title="解決方法"></a>解決方法</h3><p>調整的方向分成兩種類型(CallerService 的 addJob 需要寫入資料、CallerService 的 addJob 資料 rollback)</p>
-<ul>
-<li>CallerService 的 addJob 需要寫入資料</li>
-</ul>
-<ol>
-<li>將 CalleeService 的流程包 try catch，處理好異常行為不要讓 exception 拋出來；transaction 就不會被註記 rollback-only</li>
-<li>將 CalleeService 的 transaction 改成 <code>@Transactional(propagation = Propagation.REQUIRES_NEW)</code><br>如果是不同的 transaction ，CallerService 的 transaction 就不會被註記成 rollback-only ，造成異常<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 被呼叫的 Service</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> oscar51011</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2022年4月22日</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CalleeService</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> JobDaoImpl jobDaoImpl;</span><br><span class="line">	</span><br><span class="line">    <span class="comment">// ( **解決方案** ) 設置為開一個新的 transactional</span></span><br><span class="line">	<span class="meta">@Transactional(propagation = Propagation.REQUIRES_NEW)</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">updateJob</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="type">Job</span> <span class="variable">job</span> <span class="operator">=</span> jobDaoImpl.getJobById(<span class="number">1L</span>);</span><br><span class="line">		job.setDescription(<span class="string">&quot;test2&quot;</span>);</span><br><span class="line">		jobDaoImpl.updateJob(job);</span><br><span class="line">		<span class="comment">// 預期出錯, 檢查會不會rollback</span></span><br><span class="line">		System.out.println(<span class="number">1</span>/<span class="number">0</span>);</span><br><span class="line">	&#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ol>
-<ul>
-<li>CallerService 的 addJob 資料 rollback</li>
-</ul>
-<ol>
-<li>調整業務流程，把 CallerService 的 catch 在 throw exception 出去</li>
-<li>在 CallerService 的 catch 中手動觸發 rollback，讓 method 結束後執行 rollback 讓 DB 還原<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 呼叫流程的服務</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> oscar51011</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2022年4月22日</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CallerService</span> &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> CalleeService calleeService;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> JobDaoImpl jobDaoImpl;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Transactional</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">addJob</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="comment">// insert sql</span></span><br><span class="line">		<span class="type">Job</span> <span class="variable">job</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Job</span>();</span><br><span class="line">		job.setId(<span class="number">3L</span>);</span><br><span class="line">		job.setDescription(<span class="string">&quot;test&quot;</span>);</span><br><span class="line">		jobDaoImpl.addJob(job);</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="comment">// call update sql service</span></span><br><span class="line">			calleeService.updateJob();</span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			System.out.println(<span class="string">&quot;catch Exception&quot;</span>);</span><br><span class="line">			<span class="comment">// ( **解決方案** )設定手動回滾</span></span><br><span class="line">			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();</span><br><span class="line">		&#125;		</span><br><span class="line">		System.out.println(<span class="string">&quot;service done.&quot;</span>);</span><br><span class="line">	&#125;	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<h3 id="3-使用-ConfigurationProperties-annotation-讀取檔案"><a href="#3-使用-ConfigurationProperties-annotation-讀取檔案" class="headerlink" title="3. 使用 @ConfigurationProperties annotation 讀取檔案"></a>3. 使用 @ConfigurationProperties annotation 讀取檔案</h3><p>ConfigurationProperties 可以將設定檔 mapping 成一個實體類別<br>使用該 annotation 建議引入對應的 dependencies</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-boot-configuration-processor&lt;/artifactId&gt;</span><br><span class="line">    &lt;optional&gt;true&lt;/optional&gt;</span><br><span class="line">&lt;/dependency&gt;   </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@ConfigurationProperties(prefix = &quot;project&quot;)</span></span><br><span class="line"><span class="comment">// @PropertySource(&quot;classpath:test.properties&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ProjectConfigurationPropertiesConfig</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> String parameter;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> String <span class="title function_">getParameter</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> parameter;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setParameter</span><span class="params">(String parameter)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.parameter = parameter;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="驗證結果"><a href="#驗證結果" class="headerlink" title="驗證結果"></a>驗證結果</h3><p>使用一個簡單的整合測試來跑上述的結果查看是否可以取得設定檔的內容</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@SpringBootTest</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">DemoSettingTest</span> &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> ProjectConfig projectConfig;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> ProjectEnvConfig projectEnvConfig;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> ProjectConfigurationPropertiesConfig projectConfigurationPropertiesConfig;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="keyword">void</span> <span class="title function_">testSettingCase</span><span class="params">()</span> &#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;load @Value:&quot;</span> + projectConfig.getParameter());</span><br><span class="line">		System.out.println(<span class="string">&quot;load Enviroment interface:&quot;</span> + projectEnvConfig.getParameterValue());</span><br><span class="line">		System.out.println(<span class="string">&quot;load @ConfigurationProperties:&quot;</span> + projectConfigurationPropertiesConfig.getParameter());</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><img src="https://bnz05pap002files.storage.live.com/y4m-JMnLiItOrZFNEkD0b5sW373Q8AKyQtKXW3jXxLt3B2RkMuTv7XfmxHXiZBQ4PJIbpFwxUzYw5Mus-4QX3MZIWBOEBj3pBufCERPt0T6L-FZ9-ORRYxKKXtfD34DgicSi4d_oga5M8wj4Xt492iRlR-a9O-kppMrY5m-jDigjaJv54hQyWmv5P63KbE7sW-3?width=660&height=257&cropmode=none" alt="demo-result.png"></p>
+<h3 id="錯誤訊息"><a href="#錯誤訊息" class="headerlink" title="錯誤訊息"></a>錯誤訊息</h3><ol>
+<li>如果設定檔的參數無法對應到 java 檔的設定時，會拋出 Could not resolve placeholder xxx 的訊息<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Could not resolve placeholder &#x27;project.parameter&#x27; in value &quot;$&#123;project.parameter&#125;&quot;</span><br></pre></td></tr></table></figure></li>
 </ol>
 <h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
-<li><a href="https://docs.spring.io/spring-framework/docs/4.2.x/spring-framework-reference/html/transaction.html">Spring- 16.Transaction Management</a></li>
-<li><a href="https://www.cnblogs.com/dirgo/p/11421828.html">Spring事务嵌套引发的血案—Transaction rolled back because it has been marked as rollback-only</a></li>
-<li><a href="https://yunlongn.github.io/2019/05/06/%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%BA%8B%E5%8A%A1%E7%9A%84%E5%9D%91Transaction-rolled-back-because-it-has-been-marked-as-rollback-only/">记一次事务的坑 Transaction rolled back because it has been marked as rollback-only</a></li>
-<li><a href="https://www.796t.com/article.php?id=51988">SpringBoot事務註解@Transactional 事物回滾、手動回滾事物</a></li>
+<li><a href="https://iter01.com/587071.html">【springboot讀取配置檔案】@ConfigurationProperties、@PropertySource和@Value</a></li>
+<li><a href="https://iter01.com/515254.html">Spring Boot讀取配置檔案的幾種方式
+</a></li>
 </ol>
 ]]></content>
       <categories>
@@ -944,7 +636,82 @@ Update的部分用 Assert 斷言驗證值是否有修改。<br>執行後，發�
       </categories>
       <tags>
         <tag>springboot</tag>
-        <tag>hibernate</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Springboot 讀取 yaml 設定檔參數</title>
+    <url>/2022/03/12/springboot-load-yaml-file/</url>
+    <content><![CDATA[<p>讀取客製化設定檔參數，會需要使用 @PropertySource annotation，但該標註只適用於 properties，<br>如果副檔名為 YAML 檔案，會無法解析而造成錯誤，如果要讀取該類型檔案，需要做出以下調整:</p>
+<span id="more"></span>
+
+<h3 id="前置作業-amp-環境"><a href="#前置作業-amp-環境" class="headerlink" title="前置作業 &amp; 環境"></a>前置作業 &amp; 環境</h3><ul>
+<li>Springboot 2.5.2</li>
+<li>maven 引入 web &amp; test dependencies<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line">&lt;dependencies&gt;</span><br><span class="line">  </span><br><span class="line">  	&lt;!-- web --&gt;</span><br><span class="line">  	&lt;dependency&gt;</span><br><span class="line">		&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">		&lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</span><br><span class="line">	&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">	&lt;!-- test framework --&gt;</span><br><span class="line">	&lt;dependency&gt;</span><br><span class="line">		&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">		&lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;</span><br><span class="line">		&lt;scope&gt;test&lt;/scope&gt;</span><br><span class="line">	&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">&lt;/dependencies&gt;</span><br><span class="line">...	</span><br></pre></td></tr></table></figure></li>
+<li>建立客製化的 properites : ymlProject.yml 在 <code>src/main/resources</code> 底下<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">project:</span></span><br><span class="line">  <span class="attr">yamlTest:</span> <span class="string">yamlString</span></span><br></pre></td></tr></table></figure>
+<img src="https://bnz05pap002files.storage.live.com/y4mpxMFJWJBu05lfnSinkVXrUr8aA0AsajHI0gUXWTuEGN6ddymE94uSS9LTxc0CiPTIJ0QVPK5UCTI_EWhWyhqVthH2PVAxUAg8wPiBHkU8T_juUfFm1wZSzhJKuAO1bKyCT6c1CK_1ygN_edsh4YkpWAf9NwuTYsts9tzVtYdArLgaVV-xzP-uMsi_iIeBJRV?width=256&height=150&cropmode=none" alt="setting.png"></li>
+</ul>
+<h3 id="實作程式"><a href="#實作程式" class="headerlink" title="實作程式"></a>實作程式</h3><p>Springboot 提供 </p>
+<ul>
+<li><code>YamlPropertiesFactoryBean</code> 將 YAML 轉成 properties </li>
+<li><code>YamlMapFactoryBean</code> 將 YAML 轉成 Map </li>
+<li><code>YamlPropertySourceLoader</code> 使用 @PropertySource load YAML 檔案<br>本篇使用 <code>YamlPropertiesFactoryBean</code> 將 YAML 轉成 properties 並照原 properties 的方法解析</li>
+</ul>
+<ol>
+<li>覆寫 PropertySourceFactory 使其可以讀取 yaml 格式資料<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 覆寫 propertySource 讓其可以讀取 yaml 資訊</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> oscar51011</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2022年3月12日</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">YamlPropertySourceFactory</span> <span class="keyword">implements</span> <span class="title class_">PropertySourceFactory</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="keyword">public</span> PropertySource&lt;?&gt; createPropertySource(String name, EncodedResource resource) <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">		</span><br><span class="line">        <span class="comment">// spring 提供套件使 YAML 加載成 properties 格式</span></span><br><span class="line">		<span class="type">YamlPropertiesFactoryBean</span> <span class="variable">factory</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">YamlPropertiesFactoryBean</span>();</span><br><span class="line">        factory.setResources(resource.getResource());</span><br><span class="line"></span><br><span class="line">        <span class="type">Properties</span> <span class="variable">properties</span> <span class="operator">=</span> factory.getObject();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">PropertiesPropertySource</span>(resource.getResource().getFilename(), properties);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>使用 @Configuration &amp; @PropertySource 取得自定義yaml檔案的資料<br> factory 置換 客製化的解析設定檔方式 ; defalut 為 <strong>DefaultPropertySourceFactory</strong><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 讀取自定義 yaml 檔格式內容</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> oscar51011</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2022年3月12日</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@PropertySource(value = &quot;classpath:ymlProject.yml&quot;, factory = YamlPropertySourceFactory.class)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ProjectYamlConfig</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Value(&quot;$&#123;project.yamlTest&#125;&quot;)</span></span><br><span class="line">	<span class="keyword">private</span> String parameter;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> String <span class="title function_">getParameter</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> parameter;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setParameter</span><span class="params">(String parameter)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.parameter = parameter;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="使用整合測試驗證"><a href="#使用整合測試驗證" class="headerlink" title="使用整合測試驗證"></a>使用整合測試驗證</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@SpringBootTest(classes = &#123;SpringMvcApplication.class&#125;)</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">DemoYamlSettingTest</span> &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> ProjectYamlConfig projectYamlConfig;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="keyword">void</span> <span class="title function_">testYamlSettingCase</span><span class="params">()</span> &#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;load @Value:&quot;</span> + projectYamlConfig.getParameter());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://bnz05pap002files.storage.live.com/y4m2FvKxO08tEtm-PWnzkNw38EM956UqWyrtaqvfw6RdCi7Hh1VJAltWqJGfra7k-ibhes5jM83TijHiCC2eXuZlSWvY-KGSu1qI3kuGfPaxv9c1VeAINTBdwqlIG0qB8RY_Fh3pqxvH_H68xWW6lNXMMK0Bn4LLF4TaSZBx8jnfAn1cUP39VGzVx3423kbr6kA?width=660&height=268&cropmode=none" alt="result.png"></p>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
+<li><a href="https://www.baeldung.com/spring-yaml-propertysource">@PropertySource with YAML Files in Spring Boot</a></li>
+<li><a href="https://matthung0807.blogspot.com/2020/10/spring-boot-propertysource-load-yaml.html">Spring Boot @PropertySource load yaml</a></li>
+<li><a href="https://kknews.cc/code/j2ymvpy.html">Spring Boot中通過@PropertySource註解讀取yaml或yml配置文件</a></li>
+<li><a href="https://www.cnblogs.com/rim99/p/8452175.html">两种SpringBoot加载YML配置文件的方法</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>springboot</category>
+      </categories>
+      <tags>
+        <tag>springboot</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Effective Java Item1 - 使用靜態工廠方法取代構造方法</title>
+    <url>/2022/05/19/effective-java-item1/</url>
+    <content><![CDATA[<p>此為閱讀 Effective Java 3rd 所記錄的學習歷程<br>Item1 : 使用靜態工廠方法取代構造方法</p>
+<span id="more"></span>
+
+<p>如果要產生一個實例，一般普遍的想法就是使用 public constructor 讓開發人員隨時需要即使用 <em>new</em> 的方式</p>
+<p>但也有另外一種方式，使用靜態工廠方法來提供創造物件的服務</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">   <span class="keyword">private</span> <span class="title function_">Job</span><span class="params">(String title)</span> &#123;</span><br><span class="line">	<span class="built_in">this</span>.title = title;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> Job <span class="title function_">from</span><span class="params">(String title)</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Job</span>(title);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="使用-靜態工廠方法的好處"><a href="#使用-靜態工廠方法的好處" class="headerlink" title="使用 靜態工廠方法的好處"></a>使用 靜態工廠方法的好處</h1><ol>
+<li>有屬於自己的方法名稱，相較於構造方法，可讀性高</li>
+<li>避免每次呼叫時，都需要建立一個新的實例</li>
+</ol>
+<p>-&gt; 可以自行決定需要給新的實例 或是 舊的 ( 設計模式 Singleton )<br>3. 可以透過靜態工廠取得子類別實例，並可藉由不同參數，得到不同子類別</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Job</span> &#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> Job <span class="title function_">newInstance</span><span class="params">(String name)</span> &#123;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">if</span>(name.equals(<span class="string">&quot;doctor&quot;</span>)) <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Doctor</span>();</span><br><span class="line">	</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Employee</span>();</span><br><span class="line">	&#125;	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Doctor</span> <span class="keyword">extends</span> <span class="title class_">Job</span> &#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Employee</span> <span class="keyword">extends</span> <span class="title class_">Job</span> &#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>可以透過靜態工廠取得實作同一介面的實例<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Service</span> &#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> Discount <span class="title function_">getDiscount</span><span class="params">(String type)</span> &#123;</span><br><span class="line">		<span class="keyword">switch</span>(type) &#123;</span><br><span class="line">			<span class="keyword">case</span> <span class="string">&quot;half&quot;</span>: <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">HalfPriceDiscountImpl</span>();</span><br><span class="line">			<span class="keyword">case</span> <span class="string">&quot;limit&quot;</span>: <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">TimeLimitDiscountImpl</span>();</span><br><span class="line">			<span class="keyword">default</span> :  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">MemberDiscountImpl</span>();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h1 id="使用-靜態工廠方法的缺點"><a href="#使用-靜態工廠方法的缺點" class="headerlink" title="使用 靜態工廠方法的缺點"></a>使用 靜態工廠方法的缺點</h1><ol>
+<li>如 構造方法為私有，則無法被繼承</li>
+<li>與其他靜態方法無差別，很難在眾多方法中一點看出。</li>
+</ol>
+<p>-&gt; 可用慣用命名行為，使其容易辨認<br>EX: getInstance() : 取得實例<br>    newInstance() : 確保每次取得的實例皆為新的實例<br>    valueOf() : 類別轉換 Integer.valueOf(int i)</p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ol>
+<li><a href="https://www.blogbrb.com/posts/book/effective-java-item1/">Effective Java Item1 以靜態工廠方法代替建構函式</a></li>
+<li><a href="https://www.jyt0532.com/2017/09/20/static-factory-method/">Effective Java Item1 - 靜態工廠方法</a></li>
+<li><a href="https://www.gushiciku.cn/pl/2Pkd/zh-tw">第一條建議：考慮用靜態工廠方法代替構造方法——《Effective Java》讀書筆記</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>effectiveJava</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+        <tag>effectiveJava</tag>
       </tags>
   </entry>
   <entry>
@@ -1069,6 +836,277 @@ Update的部分用 Assert 斷言驗證值是否有修改。<br>執行後，發�
       </categories>
       <tags>
         <tag>springboot</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用 jenkins 撰寫 multiBranch pipeline</title>
+    <url>/2022/05/08/jenkins-multibranch-pipeline/</url>
+    <content><![CDATA[<p>藉由之前的 <a href="https://oscar51011.github.io/2022/05/07/jenkins-pipeline">使用 jenkins 撰寫 pipeline 腳本完成 springboot 簡易自動化部署
+</a> 已經知道怎麼撰寫一般的 pipeline<br>但是在實際應用的需求上，開發團隊會在不同的環境(ex: SIT, UAT)進行開發，這樣需要跟對各個分支撰寫腳本</p>
+<p>因此本篇撰寫multibranch pipeline，可以使用一個腳本完成這件事<br>前一篇練習是使用 pipeline script 的方式來撰寫<br>這次也練習 jenkinsfile 的寫法(將 腳本內容 交由版本控制管理)</p>
+<span id="more"></span>
+
+<h3 id="前置作業"><a href="#前置作業" class="headerlink" title="前置作業"></a>前置作業</h3><ol>
+<li>準備一台 VM 並使用 docker啟動一個 Jenkins</li>
+<li>建置一個可運行的 springboot 專案</li>
+</ol>
+<h3 id="自動化流程"><a href="#自動化流程" class="headerlink" title="自動化流程"></a>自動化流程</h3><ol>
+<li>清空該job的workspace</li>
+<li>取得github上對應的repository</li>
+<li>在jenkins主機上進行打包</li>
+<li>通知流程 ( print 結束字樣)</li>
+</ol>
+<h3 id="建置-multiBranch-pipeline-流程"><a href="#建置-multiBranch-pipeline-流程" class="headerlink" title="建置 multiBranch pipeline 流程"></a>建置 multiBranch pipeline 流程</h3><ol>
+<li>將 springboot 專案加上 Jenkinsfile 的檔案</li>
+</ol>
+<p><img src="https://bnz05pap002files.storage.live.com/y4m3EeoO8TA1ZQTerbt7_AxAciIrBF2FxiYy29MUrLLCCVbpCcNNGfJY-n8LnKcY-yBeqi9jzbL97tswNxE5_AsOOQBPBat7Q6YiFaIlYDEbFX5XelKH8VD3RyVpu2PO8IMeYwqTRezzHe-JarOFoHD-xi2RIYPMfh-AKQEDEuKinflIVrAn4NRpA1_izE9RKHd?width=963&height=456&cropmode=none" alt="add-jenkinsfile-to-repository.png"></p>
+<ol start="2">
+<li>建立 multiBranch pipeline<br>Dashboard &gt; 新增作業 &gt; Multibranch Pipeline</li>
+</ol>
+<ul>
+<li>Add Sources 選擇 Git 並填入相關資訊</li>
+</ul>
+<ol start="3">
+<li>專案建置完成後點選 Scan Multibranch Pipeline Now<br>它會去取得 repository 並檢查分支是否有異動過，有的話會執行一次作業<br>(如果有新分支產生也會同步顯示於UI頁面)，如果要個別執行單一分支可點選 branch name 進入各分支</li>
+</ol>
+<p><img src="https://bnz05pap002files.storage.live.com/y4m3F0mz8wMZJ8Wu3zHxuMKnZaVZuaeSZMv2jKBoheTbPwL6IArwYj9-MZJMZ-yQRTQDN04hVoxk5-9MmvmeyG2yAbNP5mk3uMLT0aWlK6DFfF3KIqCh4izon3DvjPZT5vQlS7hc_VdSoA0tWwjmvBlDOcPVOHTadl6JIBMbPvOyBgtBIevw4zSD4Y0z3DXcr6i?width=1024&height=541&cropmode=none" alt="multibranch-pipeline-scan.png"></p>
+<h1 id="驗證結果"><a href="#驗證結果" class="headerlink" title="驗證結果"></a>驗證結果</h1><p>進入單一分支執行完後，也會跟撰寫一般的 pipeline 腳本有同樣的結果，如下圖:</p>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mBTFN1JdZ61A0t1F0wwmFApUDudAZ_NngMX8V90wBWrVgbI8TNkn0Baq1J1NmA3SqnTEZWBnZ-MMxjzE4pfuh4otcW3_YFKbmyH055Wu4Ha_JOvQ7z4fbc2cUcKPI9cuABtn3J-UVlozT5ESE08MuBVX5ph5N5n62UDzoBIoUXSMa4cguRYO7CTU-yc-rDXxJ?width=1024&height=357&cropmode=none" alt="multibranch-pipeline-result.png"></p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ol>
+<li><a href="https://stackoverflow.com/questions/44928459/is-it-possible-to-rename-default-declarative-checkout-scm-step">stackoverflow - Is it possible to rename default “Declarative: Checkout SCM” step?</a></li>
+<li><a href="https://www.jenkins.io/doc/book/pipeline/jenkinsfile/">jenkins - Using a Jenkinsfile</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>jenkins</category>
+      </categories>
+      <tags>
+        <tag>jenkins</tag>
+        <tag>springboot</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Servlet Filter 使用</title>
+    <url>/2022/04/04/servlet-filter/</url>
+    <content><![CDATA[<p>為 Servlet 中的其中一種高級特性 , 可用於 servlet 以外對於 request &amp; resposne 進行過濾, 甚至是修改其內容<br>Filter 可以同時存在很多個 , 多個 Filter 就組成了 FilterChain</p>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mWO6JRUFd29vWlVMojv_Zk5aHsoU-QryrWBDS6-yVashakMDUhYIlun5KMeuO18q6ljkEVtpcbWFwIWMuCwGdPp1hhqHXdQ4Vvv1LvGaB1eCkp6-NBxrwdtrlSpbRf1JTUO0x1ketfWGcd4FWnEDMMDMXeKJ9wcYGSGUqIZGbTIMJTSCXXYodmZjej2oSu2om?width=621&height=271&cropmode=none" alt="servlet-filter.png"></p>
+<span id="more"></span>
+
+<h3 id="前置作業"><a href="#前置作業" class="headerlink" title="前置作業"></a>前置作業</h3><ol>
+<li>使用 Maven :  <code>pom.xml</code> 引入 servlet-api<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line">&lt;dependencies&gt;</span><br><span class="line">  &lt;!-- Servlet --&gt;</span><br><span class="line">  &lt;dependency&gt;</span><br><span class="line">      &lt;groupId&gt;javax.servlet&lt;/groupId&gt;</span><br><span class="line">      &lt;artifactId&gt;javax.servlet-api&lt;/artifactId&gt;</span><br><span class="line">      &lt;version&gt;4.0.1&lt;/version&gt;</span><br><span class="line">      &lt;scope&gt;provided&lt;/scope&gt;</span><br><span class="line">  &lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">&lt;/dependencies&gt;</span><br><span class="line">...</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="Filter-實現"><a href="#Filter-實現" class="headerlink" title="Filter 實現"></a>Filter 實現</h3><ol>
+<li>Filter 需要實現 javax.servlet.Filter 介面 ( 該介面有3個方法 )</li>
+</ol>
+<ul>
+<li>init(FilterConfig filterConfig)</li>
+<li>doFilter(ServletRequest request, ServletResponse response, FilterChain chain)</li>
+<li>destory()</li>
+</ul>
+<p>其中 init() &amp; destory() 只會被呼叫一次 (<strong>The default implementation takes no action</strong>),<br>而 doFilter() 每次請求時都會被呼叫</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestFilter</span> <span class="keyword">implements</span> <span class="title class_">Filter</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">doFilter</span><span class="params">(ServletRequest request, ServletResponse response, FilterChain chain)</span> <span class="keyword">throws</span> IOException, ServletException &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;project filter&quot;</span>);</span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">        * 撰寫處裡的邏輯</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">        chain.doFilter(request, response);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>設定配置 ( 使用 xml or annotation )<br>(方法一) 在 <code>web.xml</code> 需要進行設定 ( Servlet 2.5 )<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">web-app</span> <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://Java.sun.com/xml/ns/javaee&quot;</span> <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&quot;</span> <span class="attr">version</span>=<span class="string">&quot;2.5&quot;</span>&gt;</span></span><br><span class="line">...</span><br><span class="line">  <span class="tag">&lt;<span class="name">filter</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>testFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">filter-class</span>&gt;</span>com.demo.filter.TestFilter<span class="tag">&lt;/<span class="name">filter-class</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">filter</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>testFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/*<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">dispatcher</span>&gt;</span>REQUEST<span class="tag">&lt;/<span class="name">dispatcher</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line">...</span><br><span class="line"><span class="tag">&lt;/<span class="name">web-app</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<ul>
+<li><code>&lt;filter&gt;</code> 跟 <code>&lt;filter-mapping&gt;</code> 的名字必須匹配</li>
+<li><code>&lt;url-pattern&gt;</code> 設定 URL規則 , 可以使用 <code>*</code> (萬用字元)</li>
+<li><code>&lt;dispatcher&gt;</code> 設定到達 servlet 的方式, 有4種 &#x3D;&gt; REQUEST <strong>(預設)</strong>, FORWARD, INCLUDE, ERROR ( 根據不同情境使用)</li>
+<li>若有設定 <code>&lt;url-pattern&gt;</code> &amp; <code>&lt;dispatcher&gt;</code> , 它們兩者的條件要<strong>同時符合</strong>, 該 Filter 才會生效</li>
+</ul>
+<p>(方法二) 除了 xml 之外 , 也可以使用 @WebFilter() 的方式 ( Servlet 3.0 才有)</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@WebFilter(&quot;/*&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestFilter</span> <span class="keyword">implements</span> <span class="title class_">Filter</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">doFilter</span><span class="params">(ServletRequest request, ServletResponse response, FilterChain chain)</span> <span class="keyword">throws</span> IOException, ServletException &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;project filter&quot;</span>);</span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">        * 撰寫處裡的邏輯</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">        chain.doFilter(request, response);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Filter-執行順序"><a href="#Filter-執行順序" class="headerlink" title="Filter 執行順序"></a>Filter 執行順序</h3><ul>
+<li>如果都是設定 xml 的情況下 , 由 <code>web.xml</code> 中的 <code>&lt;filter-mapping&gt;</code> 宣告順序依序執行</li>
+<li>如果都是設定 <code>@WebFilter</code> 的情況下 , 由 ClassName 的順序來執行<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SecondaryFilter.java</span><br><span class="line">ThirdFilter.java</span><br></pre></td></tr></table></figure></li>
+<li>如果混用的情況底下 , 會先依照 <code>web.xml</code> 的宣告順序後, 再依照 ClassName 的方式</li>
+</ul>
+<p>基本上一個專案最好統一一種方式處理</p>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
+<li><a href="https://openhome.cc/Gossip/ServletJSP/Filter.html">關於過濾器</a></li>
+<li><a href="https://www.concretepage.com/java-ee/jsp-servlet/how-to-use-filter-in-servlet-3-with-webfilter-annotation">How to Use Filter in Servlet 3 with @WebFilter Annotation</a></li>
+<li><a href="https://openhome.cc/Gossip/ServletJSP/FilterImplSetting.html">Filter 的實作與設定</a></li>
+<li><a href="http://allenwu.logdown.com/posts/220574-filter-annotation-execution-order">Filter Annotation 執行順序</a></li>
+<li><a href="https://www.twblogs.net/a/5b7dafda2b71773f4f185e7a">【Servlet】Filter深入講解及實例研究</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>servlet</category>
+      </categories>
+      <tags>
+        <tag>servlet</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用 jenkins 撰寫 pipeline 腳本完成 springboot 簡易自動化部署</title>
+    <url>/2022/05/07/jenkins-pipeline/</url>
+    <content><![CDATA[<p>本篇記錄撰寫 pipeline 完成簡易 springboot 的打包部署流程<br>並記錄在官網中使用到的一些 pipeline syntax</p>
+<span id="more"></span>
+
+<h3 id="前置作業"><a href="#前置作業" class="headerlink" title="前置作業"></a>前置作業</h3><ol>
+<li>準備兩台 VM (一台裝 jenkins VM, 一台用來部署VM)</li>
+<li>使用 docker啟動一個 Jenkins </li>
+<li>docker jenkins VM配置 ssh 設定使 主機跳轉時不用輸入帳號密碼<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta"># </span><span class="language-bash">jenkins VM 建立 ssh key</span></span><br><span class="line">ssh-keygen -t rsa -b 4096</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">進入 docker jenkins 的 .ssh 資料夾</span></span><br><span class="line">cd /root/.ssh</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">取得 public key</span> </span><br><span class="line">cat id_rsa.pub</span><br></pre></td></tr></table></figure></li>
+<li>部署 VM 進入 <code>.ssh</code> 資料夾下 建立 <code>authorized_keys</code> 檔案 , 並把上述 public key 複製<br>設定完後，從 docker jenkins ssh 進 部署VM 確認是否可以正常執行</li>
+<li>建置一個可運行的 springboot 專案</li>
+<li>使用 docker啟動一個 Jenkins </li>
+<li>jenkins 安裝 maven plugin<br>Dashboard &gt; 管理 jenkins &gt; Global Tool Configuration &gt; 點擊 maven 安裝 (選擇版本&amp;勾選自動安裝)</li>
+<li>jenkins credentials 配置連接 github 之設定</li>
+</ol>
+<h3 id="自動化流程"><a href="#自動化流程" class="headerlink" title="自動化流程"></a>自動化流程</h3><ol>
+<li>清空該job的workspace</li>
+<li>取得github上對應的repository</li>
+<li>在jenkins主機上進行打包</li>
+<li>使用 linux 指令將 springboot jar 檔送到部署主機上</li>
+<li>通知流程 ( print 結束字樣)</li>
+</ol>
+<h1 id="Jenkins-pipeline-Code-撰寫"><a href="#Jenkins-pipeline-Code-撰寫" class="headerlink" title="Jenkins pipeline Code 撰寫"></a>Jenkins pipeline Code 撰寫</h1><ol>
+<li>Jenkins 有提供 pipeline Syntax 產生器可以使用<br>Dashboard &gt; 自己開的 job &gt; Pipeline Syntax</li>
+</ol>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mlgGj36sPhIhYlEke5YQiOGEnHlVx5Yn6c7Gsta8LOTrDGCd1hJTDGDB9uuot5oCVL0tBt1parZEAJ4JKBLZyKUasat3v5WhTxqcqa9kEAgKvEIzowxE0IontSJPMYAXj_LMkSLpDNteYPU5_X6nREetiFiy9oKu7xXxQ-8IEdGRk2dDJzsB0iRxH2Y9jOj1u?width=1024&height=629&cropmode=none" alt="pipeline-syntax.png"></p>
+<ol start="2">
+<li><p>Jenkins 有提供 enviroment 可以設定系統參數 &amp; parameter 可以定義參數，讓user根據不同情境處理Job</p>
+</li>
+<li><p>新增作業 &gt; 選擇 Pipeline Job &gt; 點選組態 ( 開始撰寫自己的第一個 pipeline job)<br>pipeline Definition 有兩種，本篇使用 <font color=#ff0000>pipeline script</font></p>
+</li>
+</ol>
+<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">pipeline &#123;</span><br><span class="line">    agent any</span><br><span class="line">    </span><br><span class="line">    environment &#123;</span><br><span class="line">        remoteUser = <span class="string">&#x27;填入部署VM帳號&#x27;</span></span><br><span class="line">        remoteIp = <span class="string">&#x27;填入部署VM IP&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    parameters &#123;</span><br><span class="line">        choice(</span><br><span class="line">          <span class="symbol">description:</span> <span class="string">&#x27;你需要選擇哪個環境執行 ?&#x27;</span>,</span><br><span class="line">          <span class="symbol">name:</span> <span class="string">&#x27;profile&#x27;</span>,</span><br><span class="line">          <span class="symbol">choices:</span> [<span class="string">&#x27;dev&#x27;</span>, <span class="string">&#x27;uat&#x27;</span>]</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    stages &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 步驟1: 清空資料夾</span></span><br><span class="line">        stage(<span class="string">&#x27;deleteDir&#x27;</span>)&#123;</span><br><span class="line">            steps&#123;</span><br><span class="line">                deleteDir()</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 步驟2: checkout github code</span></span><br><span class="line">        stage(<span class="string">&#x27;checkout&#x27;</span>)&#123;</span><br><span class="line">           steps&#123;</span><br><span class="line">              checkout([<span class="attr">$class:</span> <span class="string">&#x27;GitSCM&#x27;</span>, <span class="attr">branches:</span> [[<span class="attr">name:</span> <span class="string">&#x27;*/master&#x27;</span>]], <span class="attr">extensions:</span> [], <span class="attr">userRemoteConfigs:</span> [[<span class="attr">credentialsId:</span> <span class="string">&#x27;VM_USER&#x27;</span>, <span class="attr">url:</span> <span class="string">&#x27;填入需要取得之Git repository&#x27;</span>]]])</span><br><span class="line">           &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 步驟3: 專案打包成jar</span></span><br><span class="line">        stage(<span class="string">&#x27;build&#x27;</span>)&#123;</span><br><span class="line">            steps&#123;</span><br><span class="line">                withMaven(<span class="attr">maven:</span> <span class="string">&#x27;maven-3.3.9&#x27;</span>) &#123;</span><br><span class="line">                    sh <span class="string">&#x27;mvn clean package -DskipTests&#x27;</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 步驟4: 專案部署到另一台server , 並啟動</span></span><br><span class="line">        stage(<span class="string">&#x27;deploy&#x27;</span>) &#123;</span><br><span class="line">            steps &#123;</span><br><span class="line">                </span><br><span class="line">                sh <span class="string">&quot;scp web/target/gameballWeb.jar $&#123;env.remoteUser&#125;@$&#123;env.remoteIp&#125;:/home/oscar51011/project&quot;</span></span><br><span class="line">                echo <span class="string">&#x27;執行環境: $&#123;profile&#125;&#x27;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        stage(<span class="string">&#x27;notify&#x27;</span>) &#123;</span><br><span class="line">            steps &#123;</span><br><span class="line">                sh <span class="string">&quot;echo &#x27;job done!&#x27;&quot;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125; </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="驗證結果"><a href="#驗證結果" class="headerlink" title="驗證結果"></a>驗證結果</h1><ol>
+<li>手動執行 Build</li>
+</ol>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mW9A3gzWWOuCD5IMKBvwWlZhxgpIOt3ABwb_JlX77O6G9qwifU9Aiy0JLBwJ9-zEd6mxPdA8k8hfLfdjtYh1AZgFctCq5P1a-y2ufGYafPxAwODxTPZ961aztqJFT2htszB_xJ7XfR20HohKm5M9pRx6bg8EFgP5ydOT0IOG-3xHpTF01KaIt6OS9QQseeyq1?width=660&height=306&cropmode=none" alt="pipeline-parameter.png"></p>
+<ol start="2">
+<li>執行完後即可看到 pipeline 的結果</li>
+</ol>
+<p><img src="https://bnz05pap002files.storage.live.com/y4muOlGasqRI4TNMjFnarl9n4OTtvqKbCcQjAE67pKYAaf8HHyHG4okSmxpm_Hk17--LBzeHRD8RFpTXrel9A0cghCIsGifcABGqxpx1R9bV50ojMDZN4yLzkjJLHW_sMpTcglls2VXQk82Bp3p3J17EoHXlOPrV3ch5PzhsUY1El00MKuy7_RrFWFc9uVcF1A1?width=1024&height=297&cropmode=none" alt="pipeline-result.png"></p>
+<h3 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h3><p>以上就是初步撰寫第一個 pipeline 腳本的流程，但本篇還有很多部分有進步空間，紀錄一下後續延伸方向。</p>
+<ul>
+<li>研究 pipeline script from SCM </li>
+<li>研究 如果在背景執行 springboot 專案，且可以優雅的 shutdown</li>
+<li>研究 單元測試，在 CICD 中單元測試也是重要的一環</li>
+<li>研究 健康檢查機制(部署完成後，通常都會需要做健康檢查，確認專案是否有成功啟動)</li>
+<li>備份舊版本資料，以利後續出問題時可以復原退回前版</li>
+</ul>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ol>
+<li><a href="https://www.baeldung.com/ops/jenkins-pipelines">Intro to Jenkins 2 and the Power of Pipelines</a></li>
+<li><a href="https://www.jenkins.io/doc/book/pipeline/syntax/">Jenkins - Pipeline Syntax</a></li>
+<li><a href="https://www.jenkins.io/doc/book/pipeline/getting-started/">Jenkins - Getting started with Pipeline</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>jenkins</category>
+      </categories>
+      <tags>
+        <tag>jenkins</tag>
+        <tag>springboot</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用 Jenkins 串接 github webhook</title>
+    <url>/2022/05/01/jenkins-connect-github-webhook/</url>
+    <content><![CDATA[<p>目的: 撰寫基本的 Job，連接 Git Repository 並附上測試結果</p>
+<p>流程有兩種:</p>
+<ul>
+<li>主動詢問 ( polling )</li>
+<li>Git Webhook 觸發</li>
+</ul>
+<p>前置作業:</p>
+<ul>
+<li>使用 VM + docker 建置 jenkins</li>
+<li>擁有一個 Github 帳號</li>
+</ul>
+<p>步驟如下:</p>
+<span id="more"></span>
+
+<h3 id="SSH-KEY-設定"><a href="#SSH-KEY-設定" class="headerlink" title="SSH KEY 設定"></a>SSH KEY 設定</h3><ol>
+<li>產生 SSH KEY</li>
+</ol>
+<ul>
+<li>進入 Linux 產出 ssh key (因為測試的關係, 密碼部分直接 enter 略過)<br><code>ssh-keygen</code></li>
+<li>取出 public key 放置於 Github<br><code>cat ~/.ssh/id_rsa.pub</code></li>
+<li>取出 private key 放置於 Jenkins<br><code>cat ~/.ssh/id_rsa</code></li>
+</ul>
+<ol start="2">
+<li>登入 Github 設定 SSH KEY</li>
+</ol>
+<ul>
+<li>點選右上角 使用者 icon &gt; Settings &gt; 點選左排選單 SSH and GPG keys</li>
+<li>Add New SSH key</li>
+</ul>
+<p><img src="https://bnz05pap002files.storage.live.com/y4m9dct9qTqIYmVF9AuQu3MFn93UnP8bBINcibxL2WedvEDyNl4EtIAqZRwmP91V9uwqm23kVXbjs30w__pzuTamytZM1poSqWBirlGxz2IM9_mpHGvfEkStnlENcd9dWO4G5hD0cK0U4p2g9TzWepeMeau20ozcRoukj6Tw8sgSwttR5iygAvazsCpKtnK1xae?width=660&height=348&cropmode=none" alt="github_add_ssh_key.png"></p>
+<ol start="3">
+<li>登入 Jenkins 設定 Credentails</li>
+</ol>
+<ul>
+<li>點選 管理 Jenkins &gt; Security 的 Manage Credentials &gt; System &gt; Global credential(unrestricted)</li>
+<li>點選 Add Credentials</li>
+</ul>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mRUytICogBKzHJ-6tF19J84l246bEvlLJ-kt_HsfBgyizYqa2ppkfQrYt8FkCNG9MAhh1foUVw1wgeFT2vs7byr6DGbni5zy7xjxKp8bMxOHJW6D5yN4lW4XvHbLhXl2EicxqBtEYeYE4t-CzMpxv6-6dVzCukxZZNy7hpL6ylqrc4bGA0N3WqrdU8mkwkebe?width=1024&height=583&cropmode=none" alt="jenkins-ssh-credentials.png"></p>
+<h3 id="輪詢-polling"><a href="#輪詢-polling" class="headerlink" title="輪詢 (polling)"></a>輪詢 (polling)</h3><p>Jenkins 新增作業 &gt; 建置Free-Style 軟體專案</p>
+<ul>
+<li>原始碼管理選擇 git repository ( Credentials 選擇 3. 所建立的 )</li>
+<li>觸發建置程序 選擇 輪詢SCM</li>
+</ul>
+<p><img src="https://bnz05pap002files.storage.live.com/y4miEJ68U0Z2Vr66riZwUMoUSUqmUdHUMSF7HhfV_e5rv-GvK6130INTvB_Zpts0soq5MJAIbzSSy8jtelwI6gr_YIWQ0-KcBngIXG5Yh28ozKjyrLxQFFViVHSKcpaEtnCM_GbqveC0Dgn-HWKcEW1wJswZ8xmzlCcNe8JAomfOV39Kvlg8Qh7Ngb7-E5IH0Tl?width=1024&height=412&cropmode=none" alt="jenkins-polling.png"></p>
+<ul>
+<li>專案修改一個項目並 push 回 master 主線，使其輪詢發現其異動並觸發 Job</li>
+</ul>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mWFZJQdCsCVuGf5uqi0vb2a6YIiI5k5zdcK4vKo4rJYXgQlgtcMkl5bt0WzPPSoSjTpx0B-cUjYC2j7GuDJt4hxRFdRxzp5xm2StrHypE-_d7l-wuvIsFNePY6iNLVevL2FFBgAlYT3aQ7Ptv8fXnckJgHt1LEanHK0uv81wxSwgrMVmAfaSwqT3FoSzfONWt?width=861&height=623&cropmode=none" alt="jenkins-polling-result.png"></p>
+<h3 id="Git-Webhook"><a href="#Git-Webhook" class="headerlink" title="Git Webhook"></a>Git Webhook</h3><p>Jenkins 新增作業 &gt; 建置Free-Style 軟體專案</p>
+<ul>
+<li>原始碼管理選擇 git repository ( Credentials 選擇 3. 所建立的 )</li>
+<li>觸發建置程序 選擇 輪詢SCM</li>
+</ul>
+<font color=#ff0000>
+因為 Docker Jenkins 的 IP 是內網，Github Webhook 連不到 <br>
+因此 要使用 ngrok 裝在 VM 裡面，使 Jenkins mapping 到 domain <br>
+再讓 webhook 的 Payload URL 使用 ngrok 的服務串聯 <br>
+</font>
+
+<ol>
+<li>安裝 Ngork 步驟如下:</li>
+</ol>
+<ul>
+<li>官網安裝 NRORK - <a href="https://ngrok.com/download">點我前往</a></li>
+<li>使用 SSH or FTP 方式丟進 VM 裡面</li>
+<li>將服務丟到 &#x2F;usr&#x2F;bin 底下<br><code>sudo mv ngrok /usr/bin/.</code></li>
+<li>如果權限不足，執行以下指令 (參考Ref. 7)<br><code>cd /usr/bin</code><br><code>chmod -x ngrok</code></li>
+<li>執行 ngork ( 該 port 為 Jenkins 對外的 port 18080)<br><code>ngrok http &#123;port&#125;</code></li>
+</ul>
+<p>執行後如下圖:</p>
+<p><img src="https://bnz05pap002files.storage.live.com/y4m6RLUneOV_aQFmdKmX6jl-rgHsNbTJLNgtFYwfjCFH4-ZkchOSKugXIqAtCwBEnlYeBTi-MrwkYmxhJ84QFztIQGruqKxSVxZWMSqX5q91etGfX7qDYlFITHO-HRB2_enWAvWnkdx0q1GqYKt5H15bweHxqjsMi_Ds1QK2daWkqbErDcjeuh-nbHgLDmMA8Zn?width=1024&height=391&cropmode=none" alt="ngrok-terminal.png"></p>
+<ol start="2">
+<li>專案設置 Webhook</li>
+</ol>
+<ul>
+<li>Github Custom Repository &gt; Settings &gt; Webhooks 點選右上角 Add webhook</li>
+<li>將上述 ngork 的 domain + &#x2F;github-webhook&#x2F; 加入至 payload URL</li>
+</ul>
+<p>配置如下圖:</p>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mcEaj5tX2cpp9BNtHlizGZ2w1ioEy4nbf-Mi4eq0OPgagTip-iGYOP9ShthkoWPfaLerfLSTEXotUTlT6P_K5Dt0d3op99NaTcra_jlRC_21mXnvKr82u14WB8exnihsLqIUY2N5vdfS_bLX2of29KZ7GPIOXXEWGJa2mWBHS_Pch6q7CdGhh7-va-sRm8no2?width=1024&height=629&cropmode=none" alt="github-webhook.png"></p>
+<ol start="3">
+<li>專案修改一個項目並 push 回 master 主線，Webhook 會發送 API 給 Jenkins並觸發 Job</li>
+</ol>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mg6VDt0rMBaEGLE9bV6ATXN58YIhr7BMCZyuBhanEFecN9NcqunvadP0voKRIb-Mu1Efoi82AKwPQs4qxMfYkj1eho9BMLC9dOh20f42PAumVx9uRq0sDOKQNkIK5UKtb5F1z_WYoFVmuhk38CTxkH8rd4nZXO3gTI-PAykxcvi-UZ96-BFUvn3zL9xaGuwEO?width=933&height=735&cropmode=none" alt="jenkins-webhook-result.png"></p>
+<p>以上就是此次的流程紀錄</p>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
+<li><a href="https://www.jianshu.com/p/07b60b788088">Jenkins+Github实现自动触发构建</a></li>
+<li><a href="https://www.youtube.com/watch?v=MIP3WTW8ylM&ab_channel=edureka!">Webhooks in Jenkins | Integrating Jenkins with Github | DevOps Training | Edureka</a></li>
+<li><a href="https://zoejoyuliao.medium.com/%E9%80%8F%E9%81%8E-github-webhook-%E8%A7%B8%E7%99%BC%E6%9C%AC%E5%9C%B0-jenkins-pipeline-%E8%AE%93%E4%BD%A0-push-code-%E5%88%B0-github-%E5%B0%B1%E6%9C%83%E8%87%AA%E5%8B%95%E8%B7%91-ci-cd-7c4bd7a22446">透過 GitHub Webhook 讓你 push code 到 Github 就會自動觸發本地 Jenkins Pipeline</a></li>
+<li><a href="https://www.jenkins.io/doc/book/using/using-credentials/">Jenkins - Using credentials</a></li>
+<li><a href="https://zoejoyuliao.medium.com/%E9%80%8F%E9%81%8E-github-webhook-%E8%A7%B8%E7%99%BC%E6%9C%AC%E5%9C%B0-jenkins-pipeline-%E8%AE%93%E4%BD%A0-push-code-%E5%88%B0-github-%E5%B0%B1%E6%9C%83%E8%87%AA%E5%8B%95%E8%B7%91-ci-cd-7c4bd7a22446">透過 GitHub Webhook 讓你 push code 到 Github 就會自動觸發本地 Jenkins Pipeline</a></li>
+<li><a href="https://ithelp.ithome.com.tw/articles/10227428">Ngrok：讓本機測試時也能有 HTTPS 憑證</a></li>
+<li><a href="https://stackoverflow.com/questions/52744044/how-do-i-fix-ngrok-permission-denied">How do I fix ngrok permission denied?</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>jenkins</category>
+      </categories>
+      <tags>
+        <tag>jenkins</tag>
+        <tag>ngork</tag>
       </tags>
   </entry>
 </search>
