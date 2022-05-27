@@ -27,6 +27,43 @@
       </tags>
   </entry>
   <entry>
+    <title>Hexo 備份</title>
+    <url>/2022/03/12/hexo-git-backup/</url>
+    <content><![CDATA[<p>使用 Hexo 撰寫文章，使用 <code>hexo generate</code> 時，會將 markdown 轉換成 html<br>在 <code>hexo deploy</code> 時會把靜態資源上傳到 github ，但並不會把 .md 檔案上傳<br>這樣如果撰寫的電腦出了問題，資料就會不覆存在。</p>
+<p>網路上查詢了一下大致上的作法有 2 種:</p>
+<ol>
+<li>blog 的 repository 另開一個分支存取資源(如 Reference. 4)</li>
+<li>使用套件 hexo-git-backup</li>
+</ol>
+<p>我們使用方法2，接著是以下的配置工作</p>
+<span id="more"></span>
+
+<h3 id="安裝步驟"><a href="#安裝步驟" class="headerlink" title="安裝步驟"></a>安裝步驟</h3><ol>
+<li><p>進入blog的workspace &amp; 安裝套件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hexo-git-backup --save</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>根目錄的 <code>_config.yml</code> 檔新增以下設定內容</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># setting git backup</span><br><span class="line">backup:</span><br><span class="line">  type: git</span><br><span class="line">  repository:</span><br><span class="line">    github: https://github.com/&#123;username&#125;/&#123;user&#x27;s repository&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>每次需要備份時，執行指令(下述兩種都可以) </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo backup</span><br><span class="line"># 簡寫</span><br><span class="line">hexo b</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>這樣每次撰寫部落格完後多此步驟就可以將 source 的文章保留下來。</p>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
+<li><a href="https://cheng-yi-ting.github.io/2020/02/08/2020-02-08-HexoBackup/">Hexo 備份</a></li>
+<li><a href="https://github.com/coneycode/hexo-git-backup">Github: hexo-git-backup</a></li>
+<li><a href="http://www.xiaoliblog.cn/page/hexobackup.html">hexo-git-backup 博客备份及恢复</a></li>
+<li><a href="https://cheng-yi-ting.github.io/2020/02/08/2020-02-08-HexoBackup/">使用git分支保存hexo博客源码到github</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>blog</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hexo 調整資料夾原始碼目錄結構</title>
     <url>/2022/03/13/hexo-change-page-directory/</url>
     <content><![CDATA[<p>在預設的 Hexo 設定中，會將新的文章檔案放置於 <code>_posts</code> 的資料夾底下<br>隨的時間的推移，該資料夾會變得越來越雜亂無法管理，因此找了一下網路<br>看看有沒有甚麼方法可以做個簡單區隔，因此有的以下的調整:</p>
@@ -48,6 +85,118 @@
       </categories>
       <tags>
         <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用 utterances 在 Hexo 實現留言板功能</title>
+    <url>/2022/03/04/hexo-message-board-utterances/</url>
+    <content><![CDATA[<p>留言版在一般的部落格中一個常見的功能，既然使用Github製作了自己的部落格<br>順勢找了一些文章來新增這個功能</p>
+<p>在參閱了許多 blogger 的文章後發現，比較常用的有以下兩種:</p>
+<ul>
+<li>Disqus<ul>
+<li>需要去 Disqus 官網註冊 - <a href="https://disqus.com/">點我前往</a></li>
+</ul>
+</li>
+<li>utterances<ul>
+<li>與 Github Issues 做連結</li>
+<li>需要登入 Github 才能夠進行留言</li>
+</ul>
+</li>
+</ul>
+<p>目前是打算使用 utterances 來實作 部落格的留言版</p>
+<span id="more"></span>
+
+<h3 id="整合-utterances"><a href="#整合-utterances" class="headerlink" title="整合 utterances"></a>整合 utterances</h3><ol>
+<li>Github 建立 Repository</li>
+<li>安裝 utterances - <a href="https://github.com/apps/utterances">點我前往</a></li>
+</ol>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mf3VZ_TrvLMIzOAvwD5scehh0uCIPUsahla1ouyxXnWeuuT5H3ukvDP7hV0gVb_0gnlFJTWeW9UWGP5LXPyQTBd60fbKgxDlDQK2ADWYI5nD6b0pkEd3hfZjLFwEUWurbgWomh3aeF0BWUvSalsrsnPvcz2e_eKp3TjFC4M0aqJI5wZ9FJsnf7SILGMbJzgbp?width=660&height=261&cropmode=none" alt="utterances-install.png"><br>3. 取得授權，並選擇 步驟1 的 Repository</p>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mB7qi6p5Kb5d77Slb0G_jLXcoBZ6yepW2pKcSxd3Ih7_gQ4SDxI9vNpA-6V9wp_RnBN59jH0ziNmpluQFQDjnM92bizO_e_2jLgYQRxeFb7ps9tjvCvauX62h5gJLcvQsa34THbIPo5P6HAZmuIwMlGX5dwFnHIl9fLbX-dITsVKucorwYtuIJ2I8kmzdq_B5?width=480&height=660&cropmode=none" alt="utterances-select-repository.png"><br>4. 填寫對應的 configuration EX: Repository , Blog Post &amp; issue Mapping , Theme …etc</p>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mZW8hAhicSL9Xi4l83gr-741kqXgXqCBnmEDZ5a_ZVaCNUbsZQGTl456l7dxJUszLljpSitj43aRmX3fA0OUM58mYxGTvKuc0wL0VW-9OPS6YAn1Uz9FqzK0Q8YSWOpCQBiDHVMFUb6E5olX7bVBc-vy_rP5gqLV5Kt1WPC8gXKKIKqjtSVCpSzI9LB2H49DI?width=660&height=622&cropmode=none" alt="utterances-configuration-script.png"><br>5. 在 theme 的 _config.yml 新增參數 (blog 目前是使用 next themes)</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># utterances by 2022-03-04</span></span><br><span class="line"><span class="attr">utterances:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>在主題底下 <code>themes\next\layout\_partials</code> 的 comments.swig 中 新增其 srcipt<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="string">新增至</span> &#123;<span class="string">%-</span> <span class="string">if</span> <span class="string">page.comments</span> <span class="string">%</span>&#125; <span class="string">後面</span></span><br><span class="line"></span><br><span class="line">&#123;<span class="string">%</span> <span class="string">if</span> <span class="string">theme.utterances.enable</span> <span class="string">%</span>&#125;</span><br><span class="line">    <span class="string">&lt;div</span> <span class="string">class=&quot;comments&quot;</span> <span class="string">id=&quot;comments&gt;</span></span><br><span class="line">        <span class="string">↓</span> <span class="string">複製上面步驟4</span> <span class="string">utterances</span> <span class="string">中產生的</span> <span class="string">script</span></span><br><span class="line">        <span class="string">&lt;script</span> <span class="string">src=&quot;https://utteranc.es/client.js&quot;</span></span><br><span class="line">            <span class="string">...</span></span><br><span class="line">        <span class="string">&lt;/script&gt;</span></span><br><span class="line">    <span class="string">&lt;/div&gt;</span></span><br><span class="line">  &#123;<span class="string">%-</span> <span class="string">endif</span> <span class="string">%</span>&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li>即可看到留言板出現在文章內了</li>
+</ol>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mi1owUcX16kQYG0y6amhW5TXqG8FlrfdD5PLc08FS7crQCBUFyU0TUJQbw3YSzu8UeSz_ajqZQDOWdxIo5PwIx-HUr_r2__1nn9taGWzzXCWokVufwsWZHApHEC3maMsGRKJxd5Pf3sdT0cW0qVg7dCYdt6IdQ9ie2Z2uetNM-dX_S54E9U7_qVpFRhuWp_wy?width=660&height=313&cropmode=none" alt="utterances-message-board-result.png"></p>
+<h3 id="如何讓留言板不要出現"><a href="#如何讓留言板不要出現" class="headerlink" title="如何讓留言板不要出現"></a>如何讓留言板不要出現</h3><p>因為分類&#x2F;標籤等頁面通常不需要有連言功能<br>在 markdown 的 Front-matter 把 comments 關閉</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">tags</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2022-03-01 20:10:05</span></span><br><span class="line"><span class="attr">type:</span> <span class="string">&quot;tags&quot;</span></span><br><span class="line"><span class="attr">comments:</span> <span class="literal">false</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
+<li><a href="https://annkuoq.github.io/blog/2020-03-09-add-utterances-comment-widget-to-hexo/">在 Hexo 安裝 utterances 留言版</a></li>
+<li><a href="https://medium.com/starbugs/gatsby-%E7%94%A8-utterances-%E6%9B%BF-gatsby-%E7%9A%84-blog-%E7%B6%B2%E7%AB%99%E7%94%B3%E8%A3%9D-github-issue-%E7%95%99%E8%A8%80%E5%8A%9F%E8%83%BD-e8593318e5a3">Gatsby | 用 utterances 替 Gatsby 的 Blog 網站申裝 GitHub Issue 留言功能</a></li>
+<li><a href="https://blog.kyomind.tw/hexo-blog-reply/">Hexo：新增 utterances 留言板與方案選擇思路</a></li>
+<li><a href="https://utteranc.es/">utterances </a></li>
+<li><a href="https://kidneyweakx.com/2019/19log-1026-hexo-com.html">Hexo Next 主題增加評論系統 utterances</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>blog</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java Annotation(標註)</title>
+    <url>/2022/03/05/java-annotation/</url>
+    <content><![CDATA[<p>Java 從 JDK5 開使支援了 Annotation 功能，可以提供在編譯時期提示 or 執行時期讀取的資訊。</p>
+<span id="more"></span>
+
+<h3 id="標準標註"><a href="#標準標註" class="headerlink" title="標準標註"></a>標準標註</h3><ol>
+<li>@override : 提供 compiler 提醒被標註的 method 必須為 父類別 or 介面所定義之方法</li>
+<li>@Deprecated : 提供 compiler 提醒被標註的 method 已經過時，建議不要再呼叫它</li>
+<li>@SuppressWarnings: 抑制警告訊息 ( 可使用參數 value &#x3D; { args1, args2 …etc } 定義抑制警告類型 )</li>
+<li>@FunctionalInterface: 協助檢查 interface 是否滿足 lambda 的型態 ( 為 java8 時所新增 )</li>
+</ol>
+<h3 id="元標註-meta-annotation"><a href="#元標註-meta-annotation" class="headerlink" title="元標註(meta-annotation)"></a>元標註(meta-annotation)</h3><p>標註使用 meta-annotation 為其他 annotation 做說明<br>meta-annotation 種類如下:</p>
+<ol>
+<li>@Target: 限定 Annotation 使用位置 ( ElementType )</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ANNOTATION_TYPE: meta-annotation為此類型，用來修飾註解</span><br><span class="line">METHOD: 修飾 method EX: springMVC 的 <span class="meta">@GATEMAPPING</span></span><br><span class="line">TYPE: 修飾class, interface, <span class="keyword">enum</span>, annotation  EX: java8 的 <span class="meta">@FunctionalInterface</span></span><br><span class="line">FIELD: 修飾成員變數 EX: java.persistence 的 <span class="meta">@Column</span> </span><br><span class="line">PARAMETER: 修飾方法參數 EX: springMVC 的 <span class="meta">@PathVariable</span></span><br><span class="line">CONSTRUCTOR: 修飾構造器 EX: spring 的 <span class="meta">@Autowired</span></span><br><span class="line">LOCAL_VARIABLE: 修飾區域變數 EX: spring 檢核參數的 <span class="meta">@NotNull</span> 可以用在多個場域</span><br><span class="line">PACKAGE: 修飾 <span class="keyword">package</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>@Retention: 定義了 Annotation 生命週期 ( RetentionPolicy )</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">SOURCE: 只會出現在程式碼中，編譯後不會出現在class檔中 </span><br><span class="line">CLASS: 出現在程式碼中，且會編譯進class檔中，但運行期無任何效果 ( 此類型為 <span class="keyword">default</span> )</span><br><span class="line">RUNTIME: 從程式碼至到運行期間都會存在，可以使用 Reflection 機制取得 annotation 的訊息</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li><p>@Documented: 使用 javadoc 命令生成API檔案時，如要要將標注資料加入文檔，才需要加上此註解</p>
+</li>
+<li><p>@Inherited: 具有繼承性，代表子類別可以拿到父類別的註解訊息<br>※ 只有 class-level annotation 可以使用, method-level 則無法</p>
+</li>
+<li><p>@Repeatable (java1.8新增): 在 JDK8 之前，annotation 某個位置只能出現一次，不能重複使用；但這個功能可以讓 annotation 在同個地方出現多次</p>
+</li>
+</ol>
+<h3 id="自定義標註"><a href="#自定義標註" class="headerlink" title="自定義標註"></a>自定義標註</h3><ul>
+<li>需要使用 <em><strong>@interface</strong></em></li>
+<li>定義屬性，若命名為 value 時，使用時可省略屬性名稱</li>
+<li>屬性需有預設值時，可以使用 <em><strong>default</strong></em> 關鍵字</li>
+<li>欲在執行時期取得 標註資訊，可使用 <em><strong>java Reflection 機制</strong></em></li>
+</ul>
+<p>自定義 annotation 範例:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">@Target(ElementType.METHOD)</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> CustomAnnotation &#123;</span><br><span class="line"></span><br><span class="line">	String[] value();</span><br><span class="line"></span><br><span class="line">	String <span class="title function_">message</span><span class="params">()</span> <span class="keyword">default</span> <span class="string">&quot;none&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用一個 Main 方法 利用 Java Reflaction 取得 Annotation 的值</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">AnnotationMain</span> &#123;</span><br><span class="line">	</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> NoSuchMethodException, SecurityException &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="type">AnnotationMain</span> <span class="variable">main</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">AnnotationMain</span>();</span><br><span class="line">        main.test();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@CustomAnnotation(value = &#123;&quot;test&quot;, &quot;test2&quot;&#125;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">test</span><span class="params">()</span> <span class="keyword">throws</span> NoSuchMethodException, SecurityException &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 使用反射機制取得 method 上的標註</span></span><br><span class="line">        <span class="type">CustomAnnotation</span> <span class="variable">customAnnotation</span> <span class="operator">=</span> AnnotationMain.class.getMethod(<span class="string">&quot;test&quot;</span>).getAnnotation(CustomAnnotation.class);</span><br><span class="line">        </span><br><span class="line">        String[] values = customAnnotation.value();</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 取得 value</span></span><br><span class="line">        System.out.println(<span class="string">&quot;value:&quot;</span>);</span><br><span class="line">        <span class="keyword">for</span>(String value: values) </span><br><span class="line">            System.out.println(value);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 取得 messsage</span></span><br><span class="line">        System.out.println(<span class="string">&quot;message: &quot;</span> + customAnnotation.message());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>執行後會印出相對應的結果，印出 標註上的 value清單 &amp; message 的預設值 none</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">value:</span><br><span class="line">test</span><br><span class="line">test2</span><br><span class="line">message: none</span><br></pre></td></tr></table></figure>
+
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
+<li><a href="https://kucw.github.io/blog/2018/6/java-annotation/">古古’s Blog Java - annotation 的使用</a></li>
+<li><a href="https://openhome.cc/Gossip/Java/Annotation.html">常用標準標註</a></li>
+<li><a href="https://openhome.cc/Gossip/Java/CustomizeAnnotation.html">自訂標註</a></li>
+<li><a href="https://openhome.cc/Gossip/Java/ReadAnnotation.html">讀取標註資訊</a></li>
+<li><a href="https://openhome.cc/Gossip/CodeData/JDK8/Annotation.html">【JDK8】Annotation 功能增強</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>java</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
       </tags>
   </entry>
   <entry>
@@ -119,203 +268,6 @@
       </categories>
       <tags>
         <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hexo 備份</title>
-    <url>/2022/03/12/hexo-git-backup/</url>
-    <content><![CDATA[<p>使用 Hexo 撰寫文章，使用 <code>hexo generate</code> 時，會將 markdown 轉換成 html<br>在 <code>hexo deploy</code> 時會把靜態資源上傳到 github ，但並不會把 .md 檔案上傳<br>這樣如果撰寫的電腦出了問題，資料就會不覆存在。</p>
-<p>網路上查詢了一下大致上的作法有 2 種:</p>
-<ol>
-<li>blog 的 repository 另開一個分支存取資源(如 Reference. 4)</li>
-<li>使用套件 hexo-git-backup</li>
-</ol>
-<p>我們使用方法2，接著是以下的配置工作</p>
-<span id="more"></span>
-
-<h3 id="安裝步驟"><a href="#安裝步驟" class="headerlink" title="安裝步驟"></a>安裝步驟</h3><ol>
-<li><p>進入blog的workspace &amp; 安裝套件</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hexo-git-backup --save</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>根目錄的 <code>_config.yml</code> 檔新增以下設定內容</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># setting git backup</span><br><span class="line">backup:</span><br><span class="line">  type: git</span><br><span class="line">  repository:</span><br><span class="line">    github: https://github.com/&#123;username&#125;/&#123;user&#x27;s repository&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>每次需要備份時，執行指令(下述兩種都可以) </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo backup</span><br><span class="line"># 簡寫</span><br><span class="line">hexo b</span><br></pre></td></tr></table></figure></li>
-</ol>
-<p>這樣每次撰寫部落格完後多此步驟就可以將 source 的文章保留下來。</p>
-<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
-<li><a href="https://cheng-yi-ting.github.io/2020/02/08/2020-02-08-HexoBackup/">Hexo 備份</a></li>
-<li><a href="https://github.com/coneycode/hexo-git-backup">Github: hexo-git-backup</a></li>
-<li><a href="http://www.xiaoliblog.cn/page/hexobackup.html">hexo-git-backup 博客备份及恢复</a></li>
-<li><a href="https://cheng-yi-ting.github.io/2020/02/08/2020-02-08-HexoBackup/">使用git分支保存hexo博客源码到github</a></li>
-</ol>
-]]></content>
-      <categories>
-        <category>blog</category>
-      </categories>
-      <tags>
-        <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用 utterances 在 Hexo 實現留言板功能</title>
-    <url>/2022/03/04/hexo-message-board-utterances/</url>
-    <content><![CDATA[<p>留言版在一般的部落格中一個常見的功能，既然使用Github製作了自己的部落格<br>順勢找了一些文章來新增這個功能</p>
-<p>在參閱了許多 blogger 的文章後發現，比較常用的有以下兩種:</p>
-<ul>
-<li>Disqus<ul>
-<li>需要去 Disqus 官網註冊 - <a href="https://disqus.com/">點我前往</a></li>
-</ul>
-</li>
-<li>utterances<ul>
-<li>與 Github Issues 做連結</li>
-<li>需要登入 Github 才能夠進行留言</li>
-</ul>
-</li>
-</ul>
-<p>目前是打算使用 utterances 來實作 部落格的留言版</p>
-<span id="more"></span>
-
-<h3 id="整合-utterances"><a href="#整合-utterances" class="headerlink" title="整合 utterances"></a>整合 utterances</h3><ol>
-<li>Github 建立 Repository</li>
-<li>安裝 utterances - <a href="https://github.com/apps/utterances">點我前往</a></li>
-</ol>
-<p><img src="https://bnz05pap002files.storage.live.com/y4mf3VZ_TrvLMIzOAvwD5scehh0uCIPUsahla1ouyxXnWeuuT5H3ukvDP7hV0gVb_0gnlFJTWeW9UWGP5LXPyQTBd60fbKgxDlDQK2ADWYI5nD6b0pkEd3hfZjLFwEUWurbgWomh3aeF0BWUvSalsrsnPvcz2e_eKp3TjFC4M0aqJI5wZ9FJsnf7SILGMbJzgbp?width=660&height=261&cropmode=none" alt="utterances-install.png"><br>3. 取得授權，並選擇 步驟1 的 Repository</p>
-<p><img src="https://bnz05pap002files.storage.live.com/y4mB7qi6p5Kb5d77Slb0G_jLXcoBZ6yepW2pKcSxd3Ih7_gQ4SDxI9vNpA-6V9wp_RnBN59jH0ziNmpluQFQDjnM92bizO_e_2jLgYQRxeFb7ps9tjvCvauX62h5gJLcvQsa34THbIPo5P6HAZmuIwMlGX5dwFnHIl9fLbX-dITsVKucorwYtuIJ2I8kmzdq_B5?width=480&height=660&cropmode=none" alt="utterances-select-repository.png"><br>4. 填寫對應的 configuration EX: Repository , Blog Post &amp; issue Mapping , Theme …etc</p>
-<p><img src="https://bnz05pap002files.storage.live.com/y4mZW8hAhicSL9Xi4l83gr-741kqXgXqCBnmEDZ5a_ZVaCNUbsZQGTl456l7dxJUszLljpSitj43aRmX3fA0OUM58mYxGTvKuc0wL0VW-9OPS6YAn1Uz9FqzK0Q8YSWOpCQBiDHVMFUb6E5olX7bVBc-vy_rP5gqLV5Kt1WPC8gXKKIKqjtSVCpSzI9LB2H49DI?width=660&height=622&cropmode=none" alt="utterances-configuration-script.png"><br>5. 在 theme 的 _config.yml 新增參數 (blog 目前是使用 next themes)</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># utterances by 2022-03-04</span></span><br><span class="line"><span class="attr">utterances:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-
-<ol start="6">
-<li>在主題底下 <code>themes\next\layout\_partials</code> 的 comments.swig 中 新增其 srcipt<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="string">新增至</span> &#123;<span class="string">%-</span> <span class="string">if</span> <span class="string">page.comments</span> <span class="string">%</span>&#125; <span class="string">後面</span></span><br><span class="line"></span><br><span class="line">&#123;<span class="string">%</span> <span class="string">if</span> <span class="string">theme.utterances.enable</span> <span class="string">%</span>&#125;</span><br><span class="line">    <span class="string">&lt;div</span> <span class="string">class=&quot;comments&quot;</span> <span class="string">id=&quot;comments&gt;</span></span><br><span class="line">        <span class="string">↓</span> <span class="string">複製上面步驟4</span> <span class="string">utterances</span> <span class="string">中產生的</span> <span class="string">script</span></span><br><span class="line">        <span class="string">&lt;script</span> <span class="string">src=&quot;https://utteranc.es/client.js&quot;</span></span><br><span class="line">            <span class="string">...</span></span><br><span class="line">        <span class="string">&lt;/script&gt;</span></span><br><span class="line">    <span class="string">&lt;/div&gt;</span></span><br><span class="line">  &#123;<span class="string">%-</span> <span class="string">endif</span> <span class="string">%</span>&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
-<li>即可看到留言板出現在文章內了</li>
-</ol>
-<p><img src="https://bnz05pap002files.storage.live.com/y4mi1owUcX16kQYG0y6amhW5TXqG8FlrfdD5PLc08FS7crQCBUFyU0TUJQbw3YSzu8UeSz_ajqZQDOWdxIo5PwIx-HUr_r2__1nn9taGWzzXCWokVufwsWZHApHEC3maMsGRKJxd5Pf3sdT0cW0qVg7dCYdt6IdQ9ie2Z2uetNM-dX_S54E9U7_qVpFRhuWp_wy?width=660&height=313&cropmode=none" alt="utterances-message-board-result.png"></p>
-<h3 id="如何讓留言板不要出現"><a href="#如何讓留言板不要出現" class="headerlink" title="如何讓留言板不要出現"></a>如何讓留言板不要出現</h3><p>因為分類&#x2F;標籤等頁面通常不需要有連言功能<br>在 markdown 的 Front-matter 把 comments 關閉</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">tags</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2022-03-01 20:10:05</span></span><br><span class="line"><span class="attr">type:</span> <span class="string">&quot;tags&quot;</span></span><br><span class="line"><span class="attr">comments:</span> <span class="literal">false</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
-<li><a href="https://annkuoq.github.io/blog/2020-03-09-add-utterances-comment-widget-to-hexo/">在 Hexo 安裝 utterances 留言版</a></li>
-<li><a href="https://medium.com/starbugs/gatsby-%E7%94%A8-utterances-%E6%9B%BF-gatsby-%E7%9A%84-blog-%E7%B6%B2%E7%AB%99%E7%94%B3%E8%A3%9D-github-issue-%E7%95%99%E8%A8%80%E5%8A%9F%E8%83%BD-e8593318e5a3">Gatsby | 用 utterances 替 Gatsby 的 Blog 網站申裝 GitHub Issue 留言功能</a></li>
-<li><a href="https://blog.kyomind.tw/hexo-blog-reply/">Hexo：新增 utterances 留言板與方案選擇思路</a></li>
-<li><a href="https://utteranc.es/">utterances </a></li>
-<li><a href="https://kidneyweakx.com/2019/19log-1026-hexo-com.html">Hexo Next 主題增加評論系統 utterances</a></li>
-</ol>
-]]></content>
-      <categories>
-        <category>blog</category>
-      </categories>
-      <tags>
-        <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hexo 主題 - NEXT &amp; 新增文章搜尋功能</title>
-    <url>/2022/03/02/hexo-next-theme/</url>
-    <content><![CDATA[<p>紀錄一下，Blog中選定的主題 Next 的安裝經過 &amp; 新增搜尋功能</p>
-<span id="more"></span>
-
-<h3 id="安裝主題-Next"><a href="#安裝主題-Next" class="headerlink" title="安裝主題 Next"></a>安裝主題 Next</h3><ol>
-<li><p>Github clone hexo-theme-next project - <a href="https://github.com/theme-next/hexo-theme-next">點我前往</a></p>
-</li>
-<li><p>在 themes folder 底下建立 next 資料夾並將上述下載的資料 copy 進該資料夾</p>
-</li>
-<li><p>修改 根目錄 的 _config.xml 內容，從預設的 landscape 改成 next</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Extensions</span></span><br><span class="line"><span class="comment">## Plugins: https://hexo.io/plugins/</span></span><br><span class="line"><span class="comment">## Themes: https://hexo.io/themes/</span></span><br><span class="line"><span class="attr">theme:</span> <span class="string">next</span></span><br></pre></td></tr></table></figure></li>
-<li><p>設定檔有2個，一個是配製 Hexo設定，另一個是針對 Next 主題進行配置</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="string">根目錄:</span> <span class="string">_config.yml</span></span><br><span class="line"><span class="string">Next主題:</span> <span class="string">themes/_config.yml</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Next 主題底下有 4種樣式 (設定於 themes 底下的 _config.xml)</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Schemes</span></span><br><span class="line"><span class="comment">#scheme: Muse</span></span><br><span class="line"><span class="attr">scheme:</span> <span class="string">Mist</span></span><br><span class="line"><span class="comment">#scheme: Pisces</span></span><br><span class="line"><span class="comment">#scheme: Gemini</span></span><br></pre></td></tr></table></figure></li>
-</ol>
-<h3 id="開啟-分類-x2F-標籤-功能"><a href="#開啟-分類-x2F-標籤-功能" class="headerlink" title="開啟 分類 &#x2F; 標籤 功能"></a>開啟 分類 &#x2F; 標籤 功能</h3><ul>
-<li>新增 layout 為 page 的文章 ( 一般文章預設為 post)<br><code>hexo new page categories</code> ( type 為 “categories” )<br><code>hexo new page tags</code> ( type 為 “tags” )</li>
-<li>一般文章撰寫時於文章 Front-matter 定義 分類 &#x2F; 標籤 屬性<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">Hexo</span> <span class="string">主題</span> <span class="bullet">-</span> <span class="string">NEXT</span> <span class="string">&amp;</span> <span class="string">新增文章搜尋功能</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2022-03-02 06:55:34</span></span><br><span class="line"><span class="attr">tags:</span> </span><br><span class="line"><span class="bullet">-</span> <span class="string">hexo</span></span><br><span class="line"><span class="attr">categories:</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">blog</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure></li>
-<li>開啟 Next 主題 menu 得以顯示於介面<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">home:</span> <span class="string">/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-home</span></span><br><span class="line">  <span class="comment"># about: /about/ || fa fa-user</span></span><br><span class="line">  <span class="attr">tags:</span> <span class="string">/tags/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-tags</span></span><br><span class="line">  <span class="attr">categories:</span> <span class="string">/categories/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-th</span></span><br><span class="line">  <span class="attr">archives:</span> <span class="string">/archives/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-archive</span></span><br><span class="line">  <span class="comment">#schedule: /schedule/ || fa fa-calendar</span></span><br><span class="line">  <span class="comment">#sitemap: /sitemap.xml || fa fa-sitemap</span></span><br><span class="line">  <span class="comment">#commonweal: /404/ || fa fa-heartbeat</span></span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="新增-搜尋功能"><a href="#新增-搜尋功能" class="headerlink" title="新增 搜尋功能"></a>新增 搜尋功能</h3><ol>
-<li>下載套件 <code>npm install hexo-generator-searchdb --save</code></li>
-<li>根目錄 _config.xml 新增設定<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment">#Local Search / created by 2022-03-02</span></span><br><span class="line"><span class="attr">search:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">path:</span> <span class="string">search.xml</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">field:</span> <span class="string">post</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">format:</span> <span class="string">html</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">content:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure></li>
-<li>主題目錄 _config.xml 開啟 local_search 功能<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Local Search</span></span><br><span class="line"><span class="comment"># Dependencies: https://github.com/theme-next/hexo-generator-searchdb</span></span><br><span class="line"><span class="attr">local_search:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure></li>
-</ol>
-<h3 id="新增-文章閱讀進度-功能"><a href="#新增-文章閱讀進度-功能" class="headerlink" title="新增 文章閱讀進度 功能"></a>新增 文章閱讀進度 功能</h3><p>將 scrollpercent 從 false 改成 true</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">back2top:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># Back to top in sidebar.</span></span><br><span class="line">  <span class="attr">sidebar:</span> <span class="literal">false</span></span><br><span class="line">  <span class="comment"># Scroll percent label in b2t button.</span></span><br><span class="line">  <span class="attr">scrollpercent:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-<p>效果如下:</p>
-<p><img src="https://bnz05pap002files.storage.live.com/y4m1yGLaD3UGbwtXQPefduFnckR3CCidf2SWItddjqzSCA3KdyVLMXnZpx-If2Tl3tWkszjYeEMyotdRXWNIo_iQY_INtR5O0J48eqrMs_1nY9WVie0VKY4hJXYo208GuzkoFHi84ZTce-qnv7Bb6I_Hql7VNLpeIWiQOmib2hAYjdqnt-aDFR2FmDO-C_PuLxP?width=233&height=256&cropmode=none" alt="hexo_page_scrollpercent.png"></p>
-<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
-<li><a href="https://github.com/theme-next/hexo-generator-searchdb">Github Repository : hexo-generator-searchdb</a></li>
-<li><a href="https://ithelp.ithome.com.tw/articles/10248214">(20) 試著學 Hexo - NexT 主題篇 - 可以安裝的套件</a></li>
-<li><a href="https://blog.csdn.net/as480133937/article/details/100138838">Hexo-Next 主题博客个性化配置超详细，超全面(两万字)</a></li>
-<li><a href="https://ithelp.ithome.com.tw/articles/10257569">建立自己Blog系列(三) Hexo next theme 介紹</a></li>
-<li><a href="https://github.com/theme-next/hexo-theme-next">Github Repository : hexo-theme-next</a></li>
-</ol>
-]]></content>
-      <categories>
-        <category>blog</category>
-      </categories>
-      <tags>
-        <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java Annotation(標註)</title>
-    <url>/2022/03/05/java-annotation/</url>
-    <content><![CDATA[<p>Java 從 JDK5 開使支援了 Annotation 功能，可以提供在編譯時期提示 or 執行時期讀取的資訊。</p>
-<span id="more"></span>
-
-<h3 id="標準標註"><a href="#標準標註" class="headerlink" title="標準標註"></a>標準標註</h3><ol>
-<li>@override : 提供 compiler 提醒被標註的 method 必須為 父類別 or 介面所定義之方法</li>
-<li>@Deprecated : 提供 compiler 提醒被標註的 method 已經過時，建議不要再呼叫它</li>
-<li>@SuppressWarnings: 抑制警告訊息 ( 可使用參數 value &#x3D; { args1, args2 …etc } 定義抑制警告類型 )</li>
-<li>@FunctionalInterface: 協助檢查 interface 是否滿足 lambda 的型態 ( 為 java8 時所新增 )</li>
-</ol>
-<h3 id="元標註-meta-annotation"><a href="#元標註-meta-annotation" class="headerlink" title="元標註(meta-annotation)"></a>元標註(meta-annotation)</h3><p>標註使用 meta-annotation 為其他 annotation 做說明<br>meta-annotation 種類如下:</p>
-<ol>
-<li>@Target: 限定 Annotation 使用位置 ( ElementType )</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ANNOTATION_TYPE: meta-annotation為此類型，用來修飾註解</span><br><span class="line">METHOD: 修飾 method EX: springMVC 的 <span class="meta">@GATEMAPPING</span></span><br><span class="line">TYPE: 修飾class, interface, <span class="keyword">enum</span>, annotation  EX: java8 的 <span class="meta">@FunctionalInterface</span></span><br><span class="line">FIELD: 修飾成員變數 EX: java.persistence 的 <span class="meta">@Column</span> </span><br><span class="line">PARAMETER: 修飾方法參數 EX: springMVC 的 <span class="meta">@PathVariable</span></span><br><span class="line">CONSTRUCTOR: 修飾構造器 EX: spring 的 <span class="meta">@Autowired</span></span><br><span class="line">LOCAL_VARIABLE: 修飾區域變數 EX: spring 檢核參數的 <span class="meta">@NotNull</span> 可以用在多個場域</span><br><span class="line">PACKAGE: 修飾 <span class="keyword">package</span></span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>@Retention: 定義了 Annotation 生命週期 ( RetentionPolicy )</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">SOURCE: 只會出現在程式碼中，編譯後不會出現在class檔中 </span><br><span class="line">CLASS: 出現在程式碼中，且會編譯進class檔中，但運行期無任何效果 ( 此類型為 <span class="keyword">default</span> )</span><br><span class="line">RUNTIME: 從程式碼至到運行期間都會存在，可以使用 Reflection 機制取得 annotation 的訊息</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li><p>@Documented: 使用 javadoc 命令生成API檔案時，如要要將標注資料加入文檔，才需要加上此註解</p>
-</li>
-<li><p>@Inherited: 具有繼承性，代表子類別可以拿到父類別的註解訊息<br>※ 只有 class-level annotation 可以使用, method-level 則無法</p>
-</li>
-<li><p>@Repeatable (java1.8新增): 在 JDK8 之前，annotation 某個位置只能出現一次，不能重複使用；但這個功能可以讓 annotation 在同個地方出現多次</p>
-</li>
-</ol>
-<h3 id="自定義標註"><a href="#自定義標註" class="headerlink" title="自定義標註"></a>自定義標註</h3><ul>
-<li>需要使用 <em><strong>@interface</strong></em></li>
-<li>定義屬性，若命名為 value 時，使用時可省略屬性名稱</li>
-<li>屬性需有預設值時，可以使用 <em><strong>default</strong></em> 關鍵字</li>
-<li>欲在執行時期取得 標註資訊，可使用 <em><strong>java Reflection 機制</strong></em></li>
-</ul>
-<p>自定義 annotation 範例:</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">@Target(ElementType.METHOD)</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> CustomAnnotation &#123;</span><br><span class="line"></span><br><span class="line">	String[] value();</span><br><span class="line"></span><br><span class="line">	String <span class="title function_">message</span><span class="params">()</span> <span class="keyword">default</span> <span class="string">&quot;none&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>使用一個 Main 方法 利用 Java Reflaction 取得 Annotation 的值</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">AnnotationMain</span> &#123;</span><br><span class="line">	</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> NoSuchMethodException, SecurityException &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="type">AnnotationMain</span> <span class="variable">main</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">AnnotationMain</span>();</span><br><span class="line">        main.test();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@CustomAnnotation(value = &#123;&quot;test&quot;, &quot;test2&quot;&#125;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">test</span><span class="params">()</span> <span class="keyword">throws</span> NoSuchMethodException, SecurityException &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 使用反射機制取得 method 上的標註</span></span><br><span class="line">        <span class="type">CustomAnnotation</span> <span class="variable">customAnnotation</span> <span class="operator">=</span> AnnotationMain.class.getMethod(<span class="string">&quot;test&quot;</span>).getAnnotation(CustomAnnotation.class);</span><br><span class="line">        </span><br><span class="line">        String[] values = customAnnotation.value();</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 取得 value</span></span><br><span class="line">        System.out.println(<span class="string">&quot;value:&quot;</span>);</span><br><span class="line">        <span class="keyword">for</span>(String value: values) </span><br><span class="line">            System.out.println(value);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 取得 messsage</span></span><br><span class="line">        System.out.println(<span class="string">&quot;message: &quot;</span> + customAnnotation.message());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>執行後會印出相對應的結果，印出 標註上的 value清單 &amp; message 的預設值 none</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">value:</span><br><span class="line">test</span><br><span class="line">test2</span><br><span class="line">message: none</span><br></pre></td></tr></table></figure>
-
-<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
-<li><a href="https://kucw.github.io/blog/2018/6/java-annotation/">古古’s Blog Java - annotation 的使用</a></li>
-<li><a href="https://openhome.cc/Gossip/Java/Annotation.html">常用標準標註</a></li>
-<li><a href="https://openhome.cc/Gossip/Java/CustomizeAnnotation.html">自訂標註</a></li>
-<li><a href="https://openhome.cc/Gossip/Java/ReadAnnotation.html">讀取標註資訊</a></li>
-<li><a href="https://openhome.cc/Gossip/CodeData/JDK8/Annotation.html">【JDK8】Annotation 功能增強</a></li>
-</ol>
-]]></content>
-      <categories>
-        <category>java</category>
-      </categories>
-      <tags>
-        <tag>java</tag>
       </tags>
   </entry>
   <entry>
@@ -417,6 +369,54 @@
       </categories>
       <tags>
         <tag>springboot</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo 主題 - NEXT &amp; 新增文章搜尋功能</title>
+    <url>/2022/03/02/hexo-next-theme/</url>
+    <content><![CDATA[<p>紀錄一下，Blog中選定的主題 Next 的安裝經過 &amp; 新增搜尋功能</p>
+<span id="more"></span>
+
+<h3 id="安裝主題-Next"><a href="#安裝主題-Next" class="headerlink" title="安裝主題 Next"></a>安裝主題 Next</h3><ol>
+<li><p>Github clone hexo-theme-next project - <a href="https://github.com/theme-next/hexo-theme-next">點我前往</a></p>
+</li>
+<li><p>在 themes folder 底下建立 next 資料夾並將上述下載的資料 copy 進該資料夾</p>
+</li>
+<li><p>修改 根目錄 的 _config.xml 內容，從預設的 landscape 改成 next</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Extensions</span></span><br><span class="line"><span class="comment">## Plugins: https://hexo.io/plugins/</span></span><br><span class="line"><span class="comment">## Themes: https://hexo.io/themes/</span></span><br><span class="line"><span class="attr">theme:</span> <span class="string">next</span></span><br></pre></td></tr></table></figure></li>
+<li><p>設定檔有2個，一個是配製 Hexo設定，另一個是針對 Next 主題進行配置</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="string">根目錄:</span> <span class="string">_config.yml</span></span><br><span class="line"><span class="string">Next主題:</span> <span class="string">themes/_config.yml</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Next 主題底下有 4種樣式 (設定於 themes 底下的 _config.xml)</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Schemes</span></span><br><span class="line"><span class="comment">#scheme: Muse</span></span><br><span class="line"><span class="attr">scheme:</span> <span class="string">Mist</span></span><br><span class="line"><span class="comment">#scheme: Pisces</span></span><br><span class="line"><span class="comment">#scheme: Gemini</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="開啟-分類-x2F-標籤-功能"><a href="#開啟-分類-x2F-標籤-功能" class="headerlink" title="開啟 分類 &#x2F; 標籤 功能"></a>開啟 分類 &#x2F; 標籤 功能</h3><ul>
+<li>新增 layout 為 page 的文章 ( 一般文章預設為 post)<br><code>hexo new page categories</code> ( type 為 “categories” )<br><code>hexo new page tags</code> ( type 為 “tags” )</li>
+<li>一般文章撰寫時於文章 Front-matter 定義 分類 &#x2F; 標籤 屬性<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">Hexo</span> <span class="string">主題</span> <span class="bullet">-</span> <span class="string">NEXT</span> <span class="string">&amp;</span> <span class="string">新增文章搜尋功能</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2022-03-02 06:55:34</span></span><br><span class="line"><span class="attr">tags:</span> </span><br><span class="line"><span class="bullet">-</span> <span class="string">hexo</span></span><br><span class="line"><span class="attr">categories:</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">blog</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure></li>
+<li>開啟 Next 主題 menu 得以顯示於介面<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">home:</span> <span class="string">/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-home</span></span><br><span class="line">  <span class="comment"># about: /about/ || fa fa-user</span></span><br><span class="line">  <span class="attr">tags:</span> <span class="string">/tags/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-tags</span></span><br><span class="line">  <span class="attr">categories:</span> <span class="string">/categories/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-th</span></span><br><span class="line">  <span class="attr">archives:</span> <span class="string">/archives/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-archive</span></span><br><span class="line">  <span class="comment">#schedule: /schedule/ || fa fa-calendar</span></span><br><span class="line">  <span class="comment">#sitemap: /sitemap.xml || fa fa-sitemap</span></span><br><span class="line">  <span class="comment">#commonweal: /404/ || fa fa-heartbeat</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="新增-搜尋功能"><a href="#新增-搜尋功能" class="headerlink" title="新增 搜尋功能"></a>新增 搜尋功能</h3><ol>
+<li>下載套件 <code>npm install hexo-generator-searchdb --save</code></li>
+<li>根目錄 _config.xml 新增設定<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment">#Local Search / created by 2022-03-02</span></span><br><span class="line"><span class="attr">search:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">path:</span> <span class="string">search.xml</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">field:</span> <span class="string">post</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">format:</span> <span class="string">html</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">content:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure></li>
+<li>主題目錄 _config.xml 開啟 local_search 功能<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Local Search</span></span><br><span class="line"><span class="comment"># Dependencies: https://github.com/theme-next/hexo-generator-searchdb</span></span><br><span class="line"><span class="attr">local_search:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="新增-文章閱讀進度-功能"><a href="#新增-文章閱讀進度-功能" class="headerlink" title="新增 文章閱讀進度 功能"></a>新增 文章閱讀進度 功能</h3><p>將 scrollpercent 從 false 改成 true</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">back2top:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># Back to top in sidebar.</span></span><br><span class="line">  <span class="attr">sidebar:</span> <span class="literal">false</span></span><br><span class="line">  <span class="comment"># Scroll percent label in b2t button.</span></span><br><span class="line">  <span class="attr">scrollpercent:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<p>效果如下:</p>
+<p><img src="https://bnz05pap002files.storage.live.com/y4m1yGLaD3UGbwtXQPefduFnckR3CCidf2SWItddjqzSCA3KdyVLMXnZpx-If2Tl3tWkszjYeEMyotdRXWNIo_iQY_INtR5O0J48eqrMs_1nY9WVie0VKY4hJXYo208GuzkoFHi84ZTce-qnv7Bb6I_Hql7VNLpeIWiQOmib2hAYjdqnt-aDFR2FmDO-C_PuLxP?width=233&height=256&cropmode=none" alt="hexo_page_scrollpercent.png"></p>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
+<li><a href="https://github.com/theme-next/hexo-generator-searchdb">Github Repository : hexo-generator-searchdb</a></li>
+<li><a href="https://ithelp.ithome.com.tw/articles/10248214">(20) 試著學 Hexo - NexT 主題篇 - 可以安裝的套件</a></li>
+<li><a href="https://blog.csdn.net/as480133937/article/details/100138838">Hexo-Next 主题博客个性化配置超详细，超全面(两万字)</a></li>
+<li><a href="https://ithelp.ithome.com.tw/articles/10257569">建立自己Blog系列(三) Hexo next theme 介紹</a></li>
+<li><a href="https://github.com/theme-next/hexo-theme-next">Github Repository : hexo-theme-next</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>blog</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -564,41 +564,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Effective Java Item1 - 使用靜態工廠方法取代建構子</title>
-    <url>/2022/05/19/effective-java-item1/</url>
-    <content><![CDATA[<p>此為閱讀 Effective Java 3rd 所記錄的學習歷程<br>Item1 : 使用靜態工廠方法取代建構子</p>
-<span id="more"></span>
-
-<p>如果要產生一個實例，一般普遍的想法就是使用 public constructor 讓開發人員隨時需要即使用 <em>new</em> 的方式</p>
-<p>但也有另外一種方式，使用靜態工廠方法來提供創造物件的服務</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">   <span class="keyword">private</span> <span class="title function_">Job</span><span class="params">(String title)</span> &#123;</span><br><span class="line">	<span class="built_in">this</span>.title = title;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> Job <span class="title function_">from</span><span class="params">(String title)</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Job</span>(title);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="使用-靜態工廠方法的好處"><a href="#使用-靜態工廠方法的好處" class="headerlink" title="使用 靜態工廠方法的好處"></a>使用 靜態工廠方法的好處</h1><ol>
-<li>有屬於自己的方法名稱，相較於建構子，可讀性高</li>
-<li>避免每次呼叫時，都需要建立一個新的實例<br> -&gt; 可以自行決定需要給新的實例 或是 舊的 ( 設計模式 Singleton )</li>
-<li>可以透過靜態工廠取得子類別實例，並可藉由不同參數，得到不同子類別<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Job</span> &#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> Job <span class="title function_">newInstance</span><span class="params">(String name)</span> &#123;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">if</span>(name.equals(<span class="string">&quot;doctor&quot;</span>)) <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Doctor</span>();</span><br><span class="line">	</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Employee</span>();</span><br><span class="line">	&#125;	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Doctor</span> <span class="keyword">extends</span> <span class="title class_">Job</span> &#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Employee</span> <span class="keyword">extends</span> <span class="title class_">Job</span> &#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
-<li>可以透過靜態工廠取得實作同一介面的實例<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Service</span> &#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> Discount <span class="title function_">getDiscount</span><span class="params">(String type)</span> &#123;</span><br><span class="line">		<span class="keyword">switch</span>(type) &#123;</span><br><span class="line">			<span class="keyword">case</span> <span class="string">&quot;half&quot;</span>: <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">HalfPriceDiscountImpl</span>();</span><br><span class="line">			<span class="keyword">case</span> <span class="string">&quot;limit&quot;</span>: <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">TimeLimitDiscountImpl</span>();</span><br><span class="line">			<span class="keyword">default</span> :  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">MemberDiscountImpl</span>();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ol>
-<h1 id="使用-靜態工廠方法的缺點"><a href="#使用-靜態工廠方法的缺點" class="headerlink" title="使用 靜態工廠方法的缺點"></a>使用 靜態工廠方法的缺點</h1><ol>
-<li>如 建構子為私有，則無法被繼承</li>
-<li>與其他靜態方法無差別，很難在眾多方法中一點看出。</li>
-</ol>
-<p>-&gt; 可用慣用命名行為，使其容易辨認<br>EX: getInstance() : 取得實例<br>    newInstance() : 確保每次取得的實例皆為新的實例<br>    valueOf() : 類別轉換 Integer.valueOf(int i)</p>
-<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ol>
-<li><a href="https://www.blogbrb.com/posts/book/effective-java-item1/">Effective Java Item1 以靜態工廠方法代替建構函式</a></li>
-<li><a href="https://www.jyt0532.com/2017/09/20/static-factory-method/">Effective Java Item1 - 靜態工廠方法</a></li>
-<li><a href="https://www.gushiciku.cn/pl/2Pkd/zh-tw">第一條建議：考慮用靜態工廠方法代替構造方法——《Effective Java》讀書筆記</a></li>
-</ol>
-]]></content>
-      <categories>
-        <category>effectiveJava</category>
-      </categories>
-      <tags>
-        <tag>java</tag>
-        <tag>effectiveJava</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Effective Java Item3 - 使用私有建構子或Enum類型實現Singleton</title>
     <url>/2022/05/22/effective-java-item3/</url>
     <content><![CDATA[<p>此為閱讀 Effective Java 3rd 所記錄的學習歷程<br>Item3 : 使用私有建構子或Enum類型實現Singleton</p>
@@ -645,7 +610,42 @@
       </tags>
   </entry>
   <entry>
-    <title>使用私有建構子來實現禁止實例化</title>
+    <title>Effective Java Item1 - 使用靜態工廠方法取代建構子</title>
+    <url>/2022/05/19/effective-java-item1/</url>
+    <content><![CDATA[<p>此為閱讀 Effective Java 3rd 所記錄的學習歷程<br>Item1 : 使用靜態工廠方法取代建構子</p>
+<span id="more"></span>
+
+<p>如果要產生一個實例，一般普遍的想法就是使用 public constructor 讓開發人員隨時需要即使用 <em>new</em> 的方式</p>
+<p>但也有另外一種方式，使用靜態工廠方法來提供創造物件的服務</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">   <span class="keyword">private</span> <span class="title function_">Job</span><span class="params">(String title)</span> &#123;</span><br><span class="line">	<span class="built_in">this</span>.title = title;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> Job <span class="title function_">from</span><span class="params">(String title)</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Job</span>(title);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="使用-靜態工廠方法的好處"><a href="#使用-靜態工廠方法的好處" class="headerlink" title="使用 靜態工廠方法的好處"></a>使用 靜態工廠方法的好處</h1><ol>
+<li>有屬於自己的方法名稱，相較於建構子，可讀性高</li>
+<li>避免每次呼叫時，都需要建立一個新的實例<br> -&gt; 可以自行決定需要給新的實例 或是 舊的 ( 設計模式 Singleton )</li>
+<li>可以透過靜態工廠取得子類別實例，並可藉由不同參數，得到不同子類別<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Job</span> &#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> Job <span class="title function_">newInstance</span><span class="params">(String name)</span> &#123;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">if</span>(name.equals(<span class="string">&quot;doctor&quot;</span>)) <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Doctor</span>();</span><br><span class="line">	</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Employee</span>();</span><br><span class="line">	&#125;	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Doctor</span> <span class="keyword">extends</span> <span class="title class_">Job</span> &#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Employee</span> <span class="keyword">extends</span> <span class="title class_">Job</span> &#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li>可以透過靜態工廠取得實作同一介面的實例<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Service</span> &#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> Discount <span class="title function_">getDiscount</span><span class="params">(String type)</span> &#123;</span><br><span class="line">		<span class="keyword">switch</span>(type) &#123;</span><br><span class="line">			<span class="keyword">case</span> <span class="string">&quot;half&quot;</span>: <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">HalfPriceDiscountImpl</span>();</span><br><span class="line">			<span class="keyword">case</span> <span class="string">&quot;limit&quot;</span>: <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">TimeLimitDiscountImpl</span>();</span><br><span class="line">			<span class="keyword">default</span> :  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">MemberDiscountImpl</span>();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h1 id="使用-靜態工廠方法的缺點"><a href="#使用-靜態工廠方法的缺點" class="headerlink" title="使用 靜態工廠方法的缺點"></a>使用 靜態工廠方法的缺點</h1><ol>
+<li>如 建構子為私有，則無法被繼承</li>
+<li>與其他靜態方法無差別，很難在眾多方法中一點看出。</li>
+</ol>
+<p>-&gt; 可用慣用命名行為，使其容易辨認<br>EX: getInstance() : 取得實例<br>    newInstance() : 確保每次取得的實例皆為新的實例<br>    valueOf() : 類別轉換 Integer.valueOf(int i)</p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ol>
+<li><a href="https://www.blogbrb.com/posts/book/effective-java-item1/">Effective Java Item1 以靜態工廠方法代替建構函式</a></li>
+<li><a href="https://www.jyt0532.com/2017/09/20/static-factory-method/">Effective Java Item1 - 靜態工廠方法</a></li>
+<li><a href="https://www.gushiciku.cn/pl/2Pkd/zh-tw">第一條建議：考慮用靜態工廠方法代替構造方法——《Effective Java》讀書筆記</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>effectiveJava</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+        <tag>effectiveJava</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Effective Java Item4 - 使用私有建構子來實現禁止實例化</title>
     <url>/2022/05/23/effective-java-item4/</url>
     <content><![CDATA[<p>此為閱讀 Effective Java 3rd 所記錄的學習歷程<br>Item4 : 使用私有建構子來實現禁止實例化</p>
 <span id="more"></span>
@@ -674,112 +674,6 @@
       <tags>
         <tag>java</tag>
         <tag>effectiveJava</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用 Jenkins 串接 github webhook</title>
-    <url>/2022/05/01/jenkins-connect-github-webhook/</url>
-    <content><![CDATA[<p>目的: 撰寫基本的 Job，連接 Git Repository 並附上測試結果</p>
-<p>流程有兩種:</p>
-<ul>
-<li>主動詢問 ( polling )</li>
-<li>Git Webhook 觸發</li>
-</ul>
-<p>前置作業:</p>
-<ul>
-<li>使用 VM + docker 建置 jenkins</li>
-<li>擁有一個 Github 帳號</li>
-</ul>
-<p>步驟如下:</p>
-<span id="more"></span>
-
-<h3 id="SSH-KEY-設定"><a href="#SSH-KEY-設定" class="headerlink" title="SSH KEY 設定"></a>SSH KEY 設定</h3><ol>
-<li>產生 SSH KEY</li>
-</ol>
-<ul>
-<li>進入 Linux 產出 ssh key (因為測試的關係, 密碼部分直接 enter 略過)<br><code>ssh-keygen</code></li>
-<li>取出 public key 放置於 Github<br><code>cat ~/.ssh/id_rsa.pub</code></li>
-<li>取出 private key 放置於 Jenkins<br><code>cat ~/.ssh/id_rsa</code></li>
-</ul>
-<ol start="2">
-<li>登入 Github 設定 SSH KEY</li>
-</ol>
-<ul>
-<li>點選右上角 使用者 icon &gt; Settings &gt; 點選左排選單 SSH and GPG keys</li>
-<li>Add New SSH key</li>
-</ul>
-<p><img src="https://bnz05pap002files.storage.live.com/y4m9dct9qTqIYmVF9AuQu3MFn93UnP8bBINcibxL2WedvEDyNl4EtIAqZRwmP91V9uwqm23kVXbjs30w__pzuTamytZM1poSqWBirlGxz2IM9_mpHGvfEkStnlENcd9dWO4G5hD0cK0U4p2g9TzWepeMeau20ozcRoukj6Tw8sgSwttR5iygAvazsCpKtnK1xae?width=660&height=348&cropmode=none" alt="github_add_ssh_key.png"></p>
-<ol start="3">
-<li>登入 Jenkins 設定 Credentails</li>
-</ol>
-<ul>
-<li>點選 管理 Jenkins &gt; Security 的 Manage Credentials &gt; System &gt; Global credential(unrestricted)</li>
-<li>點選 Add Credentials</li>
-</ul>
-<p><img src="https://bnz05pap002files.storage.live.com/y4mRUytICogBKzHJ-6tF19J84l246bEvlLJ-kt_HsfBgyizYqa2ppkfQrYt8FkCNG9MAhh1foUVw1wgeFT2vs7byr6DGbni5zy7xjxKp8bMxOHJW6D5yN4lW4XvHbLhXl2EicxqBtEYeYE4t-CzMpxv6-6dVzCukxZZNy7hpL6ylqrc4bGA0N3WqrdU8mkwkebe?width=1024&height=583&cropmode=none" alt="jenkins-ssh-credentials.png"></p>
-<h3 id="輪詢-polling"><a href="#輪詢-polling" class="headerlink" title="輪詢 (polling)"></a>輪詢 (polling)</h3><p>Jenkins 新增作業 &gt; 建置Free-Style 軟體專案</p>
-<ul>
-<li>原始碼管理選擇 git repository ( Credentials 選擇 3. 所建立的 )</li>
-<li>觸發建置程序 選擇 輪詢SCM</li>
-</ul>
-<p><img src="https://bnz05pap002files.storage.live.com/y4miEJ68U0Z2Vr66riZwUMoUSUqmUdHUMSF7HhfV_e5rv-GvK6130INTvB_Zpts0soq5MJAIbzSSy8jtelwI6gr_YIWQ0-KcBngIXG5Yh28ozKjyrLxQFFViVHSKcpaEtnCM_GbqveC0Dgn-HWKcEW1wJswZ8xmzlCcNe8JAomfOV39Kvlg8Qh7Ngb7-E5IH0Tl?width=1024&height=412&cropmode=none" alt="jenkins-polling.png"></p>
-<ul>
-<li>專案修改一個項目並 push 回 master 主線，使其輪詢發現其異動並觸發 Job</li>
-</ul>
-<p><img src="https://bnz05pap002files.storage.live.com/y4mWFZJQdCsCVuGf5uqi0vb2a6YIiI5k5zdcK4vKo4rJYXgQlgtcMkl5bt0WzPPSoSjTpx0B-cUjYC2j7GuDJt4hxRFdRxzp5xm2StrHypE-_d7l-wuvIsFNePY6iNLVevL2FFBgAlYT3aQ7Ptv8fXnckJgHt1LEanHK0uv81wxSwgrMVmAfaSwqT3FoSzfONWt?width=861&height=623&cropmode=none" alt="jenkins-polling-result.png"></p>
-<h3 id="Git-Webhook"><a href="#Git-Webhook" class="headerlink" title="Git Webhook"></a>Git Webhook</h3><p>Jenkins 新增作業 &gt; 建置Free-Style 軟體專案</p>
-<ul>
-<li>原始碼管理選擇 git repository ( Credentials 選擇 3. 所建立的 )</li>
-<li>觸發建置程序 選擇 輪詢SCM</li>
-</ul>
-<font color=#ff0000>
-因為 Docker Jenkins 的 IP 是內網，Github Webhook 連不到 <br>
-因此 要使用 ngrok 裝在 VM 裡面，使 Jenkins mapping 到 domain <br>
-再讓 webhook 的 Payload URL 使用 ngrok 的服務串聯 <br>
-</font>
-
-<ol>
-<li>安裝 Ngork 步驟如下:</li>
-</ol>
-<ul>
-<li>官網安裝 NRORK - <a href="https://ngrok.com/download">點我前往</a></li>
-<li>使用 SSH or FTP 方式丟進 VM 裡面</li>
-<li>將服務丟到 &#x2F;usr&#x2F;bin 底下<br><code>sudo mv ngrok /usr/bin/.</code></li>
-<li>如果權限不足，執行以下指令 (參考Ref. 7)<br><code>cd /usr/bin</code><br><code>chmod -x ngrok</code></li>
-<li>執行 ngork ( 該 port 為 Jenkins 對外的 port 18080)<br><code>ngrok http &#123;port&#125;</code></li>
-</ul>
-<p>執行後如下圖:</p>
-<p><img src="https://bnz05pap002files.storage.live.com/y4m6RLUneOV_aQFmdKmX6jl-rgHsNbTJLNgtFYwfjCFH4-ZkchOSKugXIqAtCwBEnlYeBTi-MrwkYmxhJ84QFztIQGruqKxSVxZWMSqX5q91etGfX7qDYlFITHO-HRB2_enWAvWnkdx0q1GqYKt5H15bweHxqjsMi_Ds1QK2daWkqbErDcjeuh-nbHgLDmMA8Zn?width=1024&height=391&cropmode=none" alt="ngrok-terminal.png"></p>
-<ol start="2">
-<li>專案設置 Webhook</li>
-</ol>
-<ul>
-<li>Github Custom Repository &gt; Settings &gt; Webhooks 點選右上角 Add webhook</li>
-<li>將上述 ngork 的 domain + &#x2F;github-webhook&#x2F; 加入至 payload URL</li>
-</ul>
-<p>配置如下圖:</p>
-<p><img src="https://bnz05pap002files.storage.live.com/y4mcEaj5tX2cpp9BNtHlizGZ2w1ioEy4nbf-Mi4eq0OPgagTip-iGYOP9ShthkoWPfaLerfLSTEXotUTlT6P_K5Dt0d3op99NaTcra_jlRC_21mXnvKr82u14WB8exnihsLqIUY2N5vdfS_bLX2of29KZ7GPIOXXEWGJa2mWBHS_Pch6q7CdGhh7-va-sRm8no2?width=1024&height=629&cropmode=none" alt="github-webhook.png"></p>
-<ol start="3">
-<li>專案修改一個項目並 push 回 master 主線，Webhook 會發送 API 給 Jenkins並觸發 Job</li>
-</ol>
-<p><img src="https://bnz05pap002files.storage.live.com/y4mg6VDt0rMBaEGLE9bV6ATXN58YIhr7BMCZyuBhanEFecN9NcqunvadP0voKRIb-Mu1Efoi82AKwPQs4qxMfYkj1eho9BMLC9dOh20f42PAumVx9uRq0sDOKQNkIK5UKtb5F1z_WYoFVmuhk38CTxkH8rd4nZXO3gTI-PAykxcvi-UZ96-BFUvn3zL9xaGuwEO?width=933&height=735&cropmode=none" alt="jenkins-webhook-result.png"></p>
-<p>以上就是此次的流程紀錄</p>
-<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
-<li><a href="https://www.jianshu.com/p/07b60b788088">Jenkins+Github实现自动触发构建</a></li>
-<li><a href="https://www.youtube.com/watch?v=MIP3WTW8ylM&ab_channel=edureka!">Webhooks in Jenkins | Integrating Jenkins with Github | DevOps Training | Edureka</a></li>
-<li><a href="https://zoejoyuliao.medium.com/%E9%80%8F%E9%81%8E-github-webhook-%E8%A7%B8%E7%99%BC%E6%9C%AC%E5%9C%B0-jenkins-pipeline-%E8%AE%93%E4%BD%A0-push-code-%E5%88%B0-github-%E5%B0%B1%E6%9C%83%E8%87%AA%E5%8B%95%E8%B7%91-ci-cd-7c4bd7a22446">透過 GitHub Webhook 讓你 push code 到 Github 就會自動觸發本地 Jenkins Pipeline</a></li>
-<li><a href="https://www.jenkins.io/doc/book/using/using-credentials/">Jenkins - Using credentials</a></li>
-<li><a href="https://zoejoyuliao.medium.com/%E9%80%8F%E9%81%8E-github-webhook-%E8%A7%B8%E7%99%BC%E6%9C%AC%E5%9C%B0-jenkins-pipeline-%E8%AE%93%E4%BD%A0-push-code-%E5%88%B0-github-%E5%B0%B1%E6%9C%83%E8%87%AA%E5%8B%95%E8%B7%91-ci-cd-7c4bd7a22446">透過 GitHub Webhook 讓你 push code 到 Github 就會自動觸發本地 Jenkins Pipeline</a></li>
-<li><a href="https://ithelp.ithome.com.tw/articles/10227428">Ngrok：讓本機測試時也能有 HTTPS 憑證</a></li>
-<li><a href="https://stackoverflow.com/questions/52744044/how-do-i-fix-ngrok-permission-denied">How do I fix ngrok permission denied?</a></li>
-</ol>
-]]></content>
-      <categories>
-        <category>jenkins</category>
-      </categories>
-      <tags>
-        <tag>jenkins</tag>
-        <tag>ngork</tag>
       </tags>
   </entry>
   <entry>
@@ -891,6 +785,112 @@
       <tags>
         <tag>jenkins</tag>
         <tag>springboot</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用 Jenkins 串接 github webhook</title>
+    <url>/2022/05/01/jenkins-connect-github-webhook/</url>
+    <content><![CDATA[<p>目的: 撰寫基本的 Job，連接 Git Repository 並附上測試結果</p>
+<p>流程有兩種:</p>
+<ul>
+<li>主動詢問 ( polling )</li>
+<li>Git Webhook 觸發</li>
+</ul>
+<p>前置作業:</p>
+<ul>
+<li>使用 VM + docker 建置 jenkins</li>
+<li>擁有一個 Github 帳號</li>
+</ul>
+<p>步驟如下:</p>
+<span id="more"></span>
+
+<h3 id="SSH-KEY-設定"><a href="#SSH-KEY-設定" class="headerlink" title="SSH KEY 設定"></a>SSH KEY 設定</h3><ol>
+<li>產生 SSH KEY</li>
+</ol>
+<ul>
+<li>進入 Linux 產出 ssh key (因為測試的關係, 密碼部分直接 enter 略過)<br><code>ssh-keygen</code></li>
+<li>取出 public key 放置於 Github<br><code>cat ~/.ssh/id_rsa.pub</code></li>
+<li>取出 private key 放置於 Jenkins<br><code>cat ~/.ssh/id_rsa</code></li>
+</ul>
+<ol start="2">
+<li>登入 Github 設定 SSH KEY</li>
+</ol>
+<ul>
+<li>點選右上角 使用者 icon &gt; Settings &gt; 點選左排選單 SSH and GPG keys</li>
+<li>Add New SSH key</li>
+</ul>
+<p><img src="https://bnz05pap002files.storage.live.com/y4m9dct9qTqIYmVF9AuQu3MFn93UnP8bBINcibxL2WedvEDyNl4EtIAqZRwmP91V9uwqm23kVXbjs30w__pzuTamytZM1poSqWBirlGxz2IM9_mpHGvfEkStnlENcd9dWO4G5hD0cK0U4p2g9TzWepeMeau20ozcRoukj6Tw8sgSwttR5iygAvazsCpKtnK1xae?width=660&height=348&cropmode=none" alt="github_add_ssh_key.png"></p>
+<ol start="3">
+<li>登入 Jenkins 設定 Credentails</li>
+</ol>
+<ul>
+<li>點選 管理 Jenkins &gt; Security 的 Manage Credentials &gt; System &gt; Global credential(unrestricted)</li>
+<li>點選 Add Credentials</li>
+</ul>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mRUytICogBKzHJ-6tF19J84l246bEvlLJ-kt_HsfBgyizYqa2ppkfQrYt8FkCNG9MAhh1foUVw1wgeFT2vs7byr6DGbni5zy7xjxKp8bMxOHJW6D5yN4lW4XvHbLhXl2EicxqBtEYeYE4t-CzMpxv6-6dVzCukxZZNy7hpL6ylqrc4bGA0N3WqrdU8mkwkebe?width=1024&height=583&cropmode=none" alt="jenkins-ssh-credentials.png"></p>
+<h3 id="輪詢-polling"><a href="#輪詢-polling" class="headerlink" title="輪詢 (polling)"></a>輪詢 (polling)</h3><p>Jenkins 新增作業 &gt; 建置Free-Style 軟體專案</p>
+<ul>
+<li>原始碼管理選擇 git repository ( Credentials 選擇 3. 所建立的 )</li>
+<li>觸發建置程序 選擇 輪詢SCM</li>
+</ul>
+<p><img src="https://bnz05pap002files.storage.live.com/y4miEJ68U0Z2Vr66riZwUMoUSUqmUdHUMSF7HhfV_e5rv-GvK6130INTvB_Zpts0soq5MJAIbzSSy8jtelwI6gr_YIWQ0-KcBngIXG5Yh28ozKjyrLxQFFViVHSKcpaEtnCM_GbqveC0Dgn-HWKcEW1wJswZ8xmzlCcNe8JAomfOV39Kvlg8Qh7Ngb7-E5IH0Tl?width=1024&height=412&cropmode=none" alt="jenkins-polling.png"></p>
+<ul>
+<li>專案修改一個項目並 push 回 master 主線，使其輪詢發現其異動並觸發 Job</li>
+</ul>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mWFZJQdCsCVuGf5uqi0vb2a6YIiI5k5zdcK4vKo4rJYXgQlgtcMkl5bt0WzPPSoSjTpx0B-cUjYC2j7GuDJt4hxRFdRxzp5xm2StrHypE-_d7l-wuvIsFNePY6iNLVevL2FFBgAlYT3aQ7Ptv8fXnckJgHt1LEanHK0uv81wxSwgrMVmAfaSwqT3FoSzfONWt?width=861&height=623&cropmode=none" alt="jenkins-polling-result.png"></p>
+<h3 id="Git-Webhook"><a href="#Git-Webhook" class="headerlink" title="Git Webhook"></a>Git Webhook</h3><p>Jenkins 新增作業 &gt; 建置Free-Style 軟體專案</p>
+<ul>
+<li>原始碼管理選擇 git repository ( Credentials 選擇 3. 所建立的 )</li>
+<li>觸發建置程序 選擇 輪詢SCM</li>
+</ul>
+<font color=#ff0000>
+因為 Docker Jenkins 的 IP 是內網，Github Webhook 連不到 <br>
+因此 要使用 ngrok 裝在 VM 裡面，使 Jenkins mapping 到 domain <br>
+再讓 webhook 的 Payload URL 使用 ngrok 的服務串聯 <br>
+</font>
+
+<ol>
+<li>安裝 Ngork 步驟如下:</li>
+</ol>
+<ul>
+<li>官網安裝 NRORK - <a href="https://ngrok.com/download">點我前往</a></li>
+<li>使用 SSH or FTP 方式丟進 VM 裡面</li>
+<li>將服務丟到 &#x2F;usr&#x2F;bin 底下<br><code>sudo mv ngrok /usr/bin/.</code></li>
+<li>如果權限不足，執行以下指令 (參考Ref. 7)<br><code>cd /usr/bin</code><br><code>chmod -x ngrok</code></li>
+<li>執行 ngork ( 該 port 為 Jenkins 對外的 port 18080)<br><code>ngrok http &#123;port&#125;</code></li>
+</ul>
+<p>執行後如下圖:</p>
+<p><img src="https://bnz05pap002files.storage.live.com/y4m6RLUneOV_aQFmdKmX6jl-rgHsNbTJLNgtFYwfjCFH4-ZkchOSKugXIqAtCwBEnlYeBTi-MrwkYmxhJ84QFztIQGruqKxSVxZWMSqX5q91etGfX7qDYlFITHO-HRB2_enWAvWnkdx0q1GqYKt5H15bweHxqjsMi_Ds1QK2daWkqbErDcjeuh-nbHgLDmMA8Zn?width=1024&height=391&cropmode=none" alt="ngrok-terminal.png"></p>
+<ol start="2">
+<li>專案設置 Webhook</li>
+</ol>
+<ul>
+<li>Github Custom Repository &gt; Settings &gt; Webhooks 點選右上角 Add webhook</li>
+<li>將上述 ngork 的 domain + &#x2F;github-webhook&#x2F; 加入至 payload URL</li>
+</ul>
+<p>配置如下圖:</p>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mcEaj5tX2cpp9BNtHlizGZ2w1ioEy4nbf-Mi4eq0OPgagTip-iGYOP9ShthkoWPfaLerfLSTEXotUTlT6P_K5Dt0d3op99NaTcra_jlRC_21mXnvKr82u14WB8exnihsLqIUY2N5vdfS_bLX2of29KZ7GPIOXXEWGJa2mWBHS_Pch6q7CdGhh7-va-sRm8no2?width=1024&height=629&cropmode=none" alt="github-webhook.png"></p>
+<ol start="3">
+<li>專案修改一個項目並 push 回 master 主線，Webhook 會發送 API 給 Jenkins並觸發 Job</li>
+</ol>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mg6VDt0rMBaEGLE9bV6ATXN58YIhr7BMCZyuBhanEFecN9NcqunvadP0voKRIb-Mu1Efoi82AKwPQs4qxMfYkj1eho9BMLC9dOh20f42PAumVx9uRq0sDOKQNkIK5UKtb5F1z_WYoFVmuhk38CTxkH8rd4nZXO3gTI-PAykxcvi-UZ96-BFUvn3zL9xaGuwEO?width=933&height=735&cropmode=none" alt="jenkins-webhook-result.png"></p>
+<p>以上就是此次的流程紀錄</p>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
+<li><a href="https://www.jianshu.com/p/07b60b788088">Jenkins+Github实现自动触发构建</a></li>
+<li><a href="https://www.youtube.com/watch?v=MIP3WTW8ylM&ab_channel=edureka!">Webhooks in Jenkins | Integrating Jenkins with Github | DevOps Training | Edureka</a></li>
+<li><a href="https://zoejoyuliao.medium.com/%E9%80%8F%E9%81%8E-github-webhook-%E8%A7%B8%E7%99%BC%E6%9C%AC%E5%9C%B0-jenkins-pipeline-%E8%AE%93%E4%BD%A0-push-code-%E5%88%B0-github-%E5%B0%B1%E6%9C%83%E8%87%AA%E5%8B%95%E8%B7%91-ci-cd-7c4bd7a22446">透過 GitHub Webhook 讓你 push code 到 Github 就會自動觸發本地 Jenkins Pipeline</a></li>
+<li><a href="https://www.jenkins.io/doc/book/using/using-credentials/">Jenkins - Using credentials</a></li>
+<li><a href="https://zoejoyuliao.medium.com/%E9%80%8F%E9%81%8E-github-webhook-%E8%A7%B8%E7%99%BC%E6%9C%AC%E5%9C%B0-jenkins-pipeline-%E8%AE%93%E4%BD%A0-push-code-%E5%88%B0-github-%E5%B0%B1%E6%9C%83%E8%87%AA%E5%8B%95%E8%B7%91-ci-cd-7c4bd7a22446">透過 GitHub Webhook 讓你 push code 到 Github 就會自動觸發本地 Jenkins Pipeline</a></li>
+<li><a href="https://ithelp.ithome.com.tw/articles/10227428">Ngrok：讓本機測試時也能有 HTTPS 憑證</a></li>
+<li><a href="https://stackoverflow.com/questions/52744044/how-do-i-fix-ngrok-permission-denied">How do I fix ngrok permission denied?</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>jenkins</category>
+      </categories>
+      <tags>
+        <tag>jenkins</tag>
+        <tag>ngork</tag>
       </tags>
   </entry>
   <entry>
