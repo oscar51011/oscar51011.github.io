@@ -1,6 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Hexo 撰寫草稿</title>
+    <url>/2022/03/17/hexo-add-draft-article/</url>
+    <content><![CDATA[<p>一般使用建立文章指令為 <code>hexo new [layout] &lt;title&gt;</code><br>其用處為在 <code>source\_post</code> (跟目錄的 <code>_config.yml</code> 有預設 layout: post)<br>產生且後續使用<code>hexo generate</code>轉至 <code>public</code> 資料夾並且發佈至 github<br>但如果有未完成的文章，也會被一併發佈。</p>
+<p>這時候，HEXO 提供的撰寫草稿功能就很方便了，指令如下:</p>
+<span id="more"></span>
+
+<h3 id="建立草稿"><a href="#建立草稿" class="headerlink" title="建立草稿"></a>建立草稿</h3><p>HEXO 的 layout 除了預設的 post 之外，還有一種叫做 draft ，建立時會儲存在 <code>source\_drafts</code> 底下</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo new draft &lt;title&gt;</span><br></pre></td></tr></table></figure>
+<p>當撰寫完成後可以將草稿進行發佈，使用以下指令就可以將文章轉到 <code>source\_post</code> 資料夾</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo publish [layout] &lt;title&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用本地啟動Server測試草稿"><a href="#使用本地啟動Server測試草稿" class="headerlink" title="使用本地啟動Server測試草稿"></a>使用本地啟動Server測試草稿</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo server --draft</span><br></pre></td></tr></table></figure>
+
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
+<li><a href="https://hexo.io/zh-tw/docs/writing.html">Hexo 寫作</a></li>
+<li><a href="https://novnan.github.io/Hexo/hexo-draft/">Hexo 文章保存为草稿</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>blog</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hexo 調整資料夾原始碼目錄結構</title>
     <url>/2022/03/13/hexo-change-page-directory/</url>
     <content><![CDATA[<p>在預設的 Hexo 設定中，會將新的文章檔案放置於 <code>_posts</code> 的資料夾底下<br>隨的時間的推移，該資料夾會變得越來越雜亂無法管理，因此找了一下網路<br>看看有沒有甚麼方法可以做個簡單區隔，因此有的以下的調整:</p>
@@ -15,6 +41,43 @@
 <h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference:"></a>Reference:</h3><ol>
 <li><a href="https://carlos.mynet.tw/%E4%BD%BF%E7%94%A8%E8%B3%87%E6%96%99%E5%A4%BE%E5%88%86%E5%B1%A4%E7%AE%A1%E7%90%86hexo%E6%96%87%E7%AB%A0%E4%B8%94%E4%B8%8D%E5%BD%B1%E9%9F%BF%E6%B0%B8%E4%B9%85%E9%80%A3%E7%B5%90/">使用資料夾分層管理Hexo文章且不影響永久連結</a></li>
 <li><a href="https://mouson.im/Notes/Hexo/make-hexo-post-category-by-folder/">Hexo - 使文章依文章分類為資料夾名稱置放</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>blog</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo 備份</title>
+    <url>/2022/03/12/hexo-git-backup/</url>
+    <content><![CDATA[<p>使用 Hexo 撰寫文章，使用 <code>hexo generate</code> 時，會將 markdown 轉換成 html<br>在 <code>hexo deploy</code> 時會把靜態資源上傳到 github ，但並不會把 .md 檔案上傳<br>這樣如果撰寫的電腦出了問題，資料就會不覆存在。</p>
+<p>網路上查詢了一下大致上的作法有 2 種:</p>
+<ol>
+<li>blog 的 repository 另開一個分支存取資源(如 Reference. 4)</li>
+<li>使用套件 hexo-git-backup</li>
+</ol>
+<p>我們使用方法2，接著是以下的配置工作</p>
+<span id="more"></span>
+
+<h3 id="安裝步驟"><a href="#安裝步驟" class="headerlink" title="安裝步驟"></a>安裝步驟</h3><ol>
+<li><p>進入blog的workspace &amp; 安裝套件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hexo-git-backup --save</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>根目錄的 <code>_config.yml</code> 檔新增以下設定內容</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># setting git backup</span><br><span class="line">backup:</span><br><span class="line">  type: git</span><br><span class="line">  repository:</span><br><span class="line">    github: https://github.com/&#123;username&#125;/&#123;user&#x27;s repository&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>每次需要備份時，執行指令(下述兩種都可以) </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo backup</span><br><span class="line"># 簡寫</span><br><span class="line">hexo b</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>這樣每次撰寫部落格完後多此步驟就可以將 source 的文章保留下來。</p>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
+<li><a href="https://cheng-yi-ting.github.io/2020/02/08/2020-02-08-HexoBackup/">Hexo 備份</a></li>
+<li><a href="https://github.com/coneycode/hexo-git-backup">Github: hexo-git-backup</a></li>
+<li><a href="http://www.xiaoliblog.cn/page/hexobackup.html">hexo-git-backup 博客备份及恢复</a></li>
+<li><a href="https://cheng-yi-ting.github.io/2020/02/08/2020-02-08-HexoBackup/">使用git分支保存hexo博客源码到github</a></li>
 </ol>
 ]]></content>
       <categories>
@@ -147,122 +210,48 @@
       </tags>
   </entry>
   <entry>
-    <title>Hexo 備份</title>
-    <url>/2022/03/12/hexo-git-backup/</url>
-    <content><![CDATA[<p>使用 Hexo 撰寫文章，使用 <code>hexo generate</code> 時，會將 markdown 轉換成 html<br>在 <code>hexo deploy</code> 時會把靜態資源上傳到 github ，但並不會把 .md 檔案上傳<br>這樣如果撰寫的電腦出了問題，資料就會不覆存在。</p>
-<p>網路上查詢了一下大致上的作法有 2 種:</p>
+    <title>Springboot 讀取 properties 設定檔參數</title>
+    <url>/2022/03/11/springboot-load-properties-file/</url>
+    <content><![CDATA[<p>Springboot 在 讀取設定檔參數有 3 種方式 ( 格式有 properties &amp; yml 本篇使用 properties )<br>( Springboot 預設配置檔案位置在 <code>src/main/resources/application.properties</code>)</p>
+<p>如果需要指定 設定檔 需加上 @PropertySource 即可<br>※ 該 Annotation 只能夠指定 properties，因此如果需要指定 yml 檔需要另外實作</p>
+<p>以下來撰寫 3個方式的寫法:</p>
+<span id="more"></span>
+
+<h3 id="前置作業-amp-環境"><a href="#前置作業-amp-環境" class="headerlink" title="前置作業 &amp; 環境"></a>前置作業 &amp; 環境</h3><ul>
+<li>Springboot 2.5.2</li>
+<li>maven 引入 web &amp; test dependencies<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line">&lt;dependencies&gt;</span><br><span class="line">  </span><br><span class="line">  	&lt;!-- web --&gt;</span><br><span class="line">  	&lt;dependency&gt;</span><br><span class="line">		&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">		&lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</span><br><span class="line">	&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">	&lt;!-- test framework --&gt;</span><br><span class="line">	&lt;dependency&gt;</span><br><span class="line">		&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">		&lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;</span><br><span class="line">		&lt;scope&gt;test&lt;/scope&gt;</span><br><span class="line">	&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">&lt;/dependencies&gt;</span><br><span class="line">...	</span><br></pre></td></tr></table></figure></li>
+</ul>
 <ol>
-<li>blog 的 repository 另開一個分支存取資源(如 Reference. 4)</li>
-<li>使用套件 hexo-git-backup</li>
+<li>在預設的 application.properites 加入參數<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">project.parameter</span> = <span class="string">test</span></span><br></pre></td></tr></table></figure></li>
+<li>建立客製化的 properites : test.properties 在 <code>src/main/resources</code> 底下<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">project.parameter</span> = <span class="string">test</span></span><br></pre></td></tr></table></figure>
+<img src="https://bnz05pap002files.storage.live.com/y4mAxeVYT8ncJ7Ivjb7MJX5CoaNpca8B2VyFU2zEX6L8ccQHQjZxyGxcau8wLyqWI597-GQhpK_vpq5oHpDbu6DNSsKCP4IoVk9KOQri5l_H7DminfZi8DBxNDioEZ9RTWgpimfBU8LN-3xNPivdoLa2JR6LVa__ILGpE0RdRtelWa1C9SSPnXYatCaVbqB_bm_?width=256&height=113&cropmode=none" alt="resources.png"></li>
 </ol>
-<p>我們使用方法2，接著是以下的配置工作</p>
-<span id="more"></span>
+<h3 id="1-使用-Value-Annotation-讀取檔案"><a href="#1-使用-Value-Annotation-讀取檔案" class="headerlink" title="1. 使用 @Value Annotation 讀取檔案"></a>1. 使用 @Value Annotation 讀取檔案</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="comment">//@PropertySource(&quot;classpath:test.properties&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ProjectConfig</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Value(&quot;$&#123;project.parameter&#125;&quot;)</span></span><br><span class="line">	<span class="keyword">private</span> String parameter;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> String <span class="title function_">getParameter</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> parameter;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setParameter</span><span class="params">(String parameter)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.parameter = parameter;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="安裝步驟"><a href="#安裝步驟" class="headerlink" title="安裝步驟"></a>安裝步驟</h3><ol>
-<li><p>進入blog的workspace &amp; 安裝套件</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install hexo-git-backup --save</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>根目錄的 <code>_config.yml</code> 檔新增以下設定內容</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># setting git backup</span><br><span class="line">backup:</span><br><span class="line">  type: git</span><br><span class="line">  repository:</span><br><span class="line">    github: https://github.com/&#123;username&#125;/&#123;user&#x27;s repository&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>每次需要備份時，執行指令(下述兩種都可以) </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo backup</span><br><span class="line"># 簡寫</span><br><span class="line">hexo b</span><br></pre></td></tr></table></figure></li>
-</ol>
-<p>這樣每次撰寫部落格完後多此步驟就可以將 source 的文章保留下來。</p>
-<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
-<li><a href="https://cheng-yi-ting.github.io/2020/02/08/2020-02-08-HexoBackup/">Hexo 備份</a></li>
-<li><a href="https://github.com/coneycode/hexo-git-backup">Github: hexo-git-backup</a></li>
-<li><a href="http://www.xiaoliblog.cn/page/hexobackup.html">hexo-git-backup 博客备份及恢复</a></li>
-<li><a href="https://cheng-yi-ting.github.io/2020/02/08/2020-02-08-HexoBackup/">使用git分支保存hexo博客源码到github</a></li>
-</ol>
-]]></content>
-      <categories>
-        <category>blog</category>
-      </categories>
-      <tags>
-        <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hexo 撰寫草稿</title>
-    <url>/2022/03/17/hexo-add-draft-article/</url>
-    <content><![CDATA[<p>一般使用建立文章指令為 <code>hexo new [layout] &lt;title&gt;</code><br>其用處為在 <code>source\_post</code> (跟目錄的 <code>_config.yml</code> 有預設 layout: post)<br>產生且後續使用<code>hexo generate</code>轉至 <code>public</code> 資料夾並且發佈至 github<br>但如果有未完成的文章，也會被一併發佈。</p>
-<p>這時候，HEXO 提供的撰寫草稿功能就很方便了，指令如下:</p>
-<span id="more"></span>
+<h3 id="2-使用-Enviroment-介面取得設定檔資訊"><a href="#2-使用-Enviroment-介面取得設定檔資訊" class="headerlink" title="2. 使用 Enviroment 介面取得設定檔資訊"></a>2. 使用 Enviroment 介面取得設定檔資訊</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="comment">//@PropertySource(&quot;classpath:test.properties&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ProjectEnvConfig</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">    Environment environment;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> String <span class="title function_">getParameterValue</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">value</span> <span class="operator">=</span> environment.getProperty(<span class="string">&quot;project.parameter&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="建立草稿"><a href="#建立草稿" class="headerlink" title="建立草稿"></a>建立草稿</h3><p>HEXO 的 layout 除了預設的 post 之外，還有一種叫做 draft ，建立時會儲存在 <code>source\_drafts</code> 底下</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo new draft &lt;title&gt;</span><br></pre></td></tr></table></figure>
-<p>當撰寫完成後可以將草稿進行發佈，使用以下指令就可以將文章轉到 <code>source\_post</code> 資料夾</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo publish [layout] &lt;title&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="3-使用-ConfigurationProperties-annotation-讀取檔案"><a href="#3-使用-ConfigurationProperties-annotation-讀取檔案" class="headerlink" title="3. 使用 @ConfigurationProperties annotation 讀取檔案"></a>3. 使用 @ConfigurationProperties annotation 讀取檔案</h3><p>ConfigurationProperties 可以將設定檔 mapping 成一個實體類別<br>使用該 annotation 建議引入對應的 dependencies</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-boot-configuration-processor&lt;/artifactId&gt;</span><br><span class="line">    &lt;optional&gt;true&lt;/optional&gt;</span><br><span class="line">&lt;/dependency&gt;   </span><br></pre></td></tr></table></figure>
 
-<h3 id="使用本地啟動Server測試草稿"><a href="#使用本地啟動Server測試草稿" class="headerlink" title="使用本地啟動Server測試草稿"></a>使用本地啟動Server測試草稿</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo server --draft</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@ConfigurationProperties(prefix = &quot;project&quot;)</span></span><br><span class="line"><span class="comment">// @PropertySource(&quot;classpath:test.properties&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ProjectConfigurationPropertiesConfig</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> String parameter;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> String <span class="title function_">getParameter</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> parameter;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setParameter</span><span class="params">(String parameter)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.parameter = parameter;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
-<li><a href="https://hexo.io/zh-tw/docs/writing.html">Hexo 寫作</a></li>
-<li><a href="https://novnan.github.io/Hexo/hexo-draft/">Hexo 文章保存为草稿</a></li>
-</ol>
-]]></content>
-      <categories>
-        <category>blog</category>
-      </categories>
-      <tags>
-        <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Jenkins 安裝教學</title>
-    <url>/2022/03/06/jenkins-initial/</url>
-    <content><![CDATA[<p>Jenkins 為一個持續化整合工具，由 Java 語言所撰寫，並支援許多套件做整合 ( ex : Maven , Gradle )<br>可用於自動化的持續整合(CI) &amp; 持續部署(CD) 。</p>
-<span id="more"></span>
-
-<h3 id="Local安裝前置作業"><a href="#Local安裝前置作業" class="headerlink" title="Local安裝前置作業"></a>Local安裝前置作業</h3><ol>
-<li>準備一台 Linux 主機 (Virtual Mechine )</li>
-<li>安裝 docker ( Optional: docker-compose )</li>
-</ol>
-<h3 id="使用-docker-安裝-Jenkins"><a href="#使用-docker-安裝-Jenkins" class="headerlink" title="使用 docker 安裝 Jenkins"></a>使用 docker 安裝 Jenkins</h3><ol>
-<li><p>使用 docker 下載 docker images<br><code>docker pull jenkins/jenkins:latest</code></p>
-</li>
-<li><p>使用指令啟動 docker container (指定 port 為 18080)</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker run -u root -d --name myjenkins -p 18080:8080 -p 50000:50000 -v jenkins_home:/var/jenkins_home jenkins/jenkins:latest</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">jenkins 8080 port 為 預設WEB介面 , 50000 port 為 jenkins Agent</span></span><br></pre></td></tr></table></figure>
-
-</li>
-<li><p>啟動後，輸入網址 - <em><strong>{VM IP}:18080</strong></em> 進入 Jenkins 初始畫面</p>
-</li>
-</ol>
-<p><img src="https://bnz05pap002files.storage.live.com/y4mcApoPeOBRDSLJEBnroNaVPjG4VXCzXgQE45FfB0tkD7UrSdMfMLj4HdOgOXg9XPBZMM5YXqvCb_EM3e9WNQUbLwWa3lib_ENDaVotBtrkb0AbhH30jFmqy0BsJwPnZ_4OGRuV8P1YwDXipLFgnYICSA8CsgOhy37Ejok5wMbdd9rsjKlcNwd1R9RGKll56So?width=256&height=139&cropmode=none" alt="Jenkins_initial"></p>
-<ol start="4">
-<li><p>進入 container 中取得安裝的預設密碼</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta"># </span><span class="language-bash">進入 container</span></span><br><span class="line">docker exec -it &#123;container name&#125; /bin/bash</span><br><span class="line"><span class="meta"># </span><span class="language-bash">顯示預設密碼</span></span><br><span class="line">cat /var/jenkins_home/secrets/initialAdminPassword</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>選擇客製化套件安裝 ( 選擇左邊預設全裝)</p>
-</li>
-</ol>
-<p><img src="https://bnz05pap002files.storage.live.com/y4m5nGIeTsyu5iUN2_CGgA4rinujnsw-iQP5TPJ3XwPTOZ65LirQh1oX1jnbkjK07WOWnwC1uYPEZiWuo3huJZA89zN-fmlAygcYUTcWxkygkcUKTLnyNr-JOqoeNhjg3zNZup70RBayB_MxeVqQkX9oopysyxBkOm_mq0PmXAG_6YfI93JBQS7moB_zadgAE9Z?width=256&height=139&cropmode=none" alt="jenkins_plugin_setting"></p>
-<ol start="6">
-<li>創建Admin 的 帳號&#x2F;密碼</li>
-</ol>
-<p><img src="https://bnz05pap002files.storage.live.com/y4mtzgP0W95pMW1ZWyEC4VcuZHCPR-z42TbjNnNDrpfHoRRtbo7Vo7awco05KH6Ezgujl_oPsAu05rsRrbq5Uz7xGW3Wy4HeOkjeka4OZkdqwqvvhLwzOM9xDGfSdlZYKBpXBaOMpG1kSzooQKri0dhz9mZkdEirCcxFOclaBX2MAgOn9zD35F8UrcY37lsnNyj?width=256&height=138&cropmode=none" alt="createAdminUser.png"></p>
-<ol start="7">
-<li>儲存設定後，即可進入首頁</li>
-</ol>
-<p><img src="https://bnz05pap002files.storage.live.com/y4mOu7W-A_TyloArSKH_UydXT4L7FCHHvSyJwK567rbLYlHkvS3B3kuJIWvqMMHNOCfFpW8JBUHFpE5DE7lndEBw09bgzyGPhLuoez0tzwKgjNhh_3JK_bWIaxOBr7XwJM5exakUtoiSE9RZEZXqRtekj3hHCQzFWg6A27FkL5ZRuS_YpZBtBhp86dNX2gDYz3A?width=256&height=134&cropmode=none" alt="homePage"></p>
-<h3 id="使用-docker-compose-安裝-Jenkins"><a href="#使用-docker-compose-安裝-Jenkins" class="headerlink" title="使用 docker-compose 安裝 Jenkins"></a>使用 docker-compose 安裝 Jenkins</h3><ol>
-<li>撰寫 docker-compose.yml<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;2&#x27;</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">	<span class="attr">jenkins:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">jenkins/jenkins</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">jenkins</span></span><br><span class="line">    <span class="attr">privileged:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">user:</span> <span class="string">root</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">18080</span><span class="string">:8080</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">50000</span><span class="string">:50000</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">JAVA_OPTS:</span> <span class="string">-Xmx2048m</span> <span class="string">-Djava.awt.headless=true</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/var/jenkins_home:/var/jenkins_home</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/var/run/docker.sock:/var/run/docker.sock</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">$&#123;HOME&#125;/.ssh:/root/.ssh:ro</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">$&#123;HOME&#125;/.npmrc:/root/.npmrc</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">$&#123;HOME&#125;/.m2:/root/.m2</span></span><br></pre></td></tr></table></figure></li>
-<li>啟動 dokcer-compose<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker-compose up</span><br></pre></td></tr></table></figure></li>
+<h3 id="驗證結果"><a href="#驗證結果" class="headerlink" title="驗證結果"></a>驗證結果</h3><p>使用一個簡單的整合測試來跑上述的結果查看是否可以取得設定檔的內容</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@SpringBootTest</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">DemoSettingTest</span> &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> ProjectConfig projectConfig;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> ProjectEnvConfig projectEnvConfig;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> ProjectConfigurationPropertiesConfig projectConfigurationPropertiesConfig;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="keyword">void</span> <span class="title function_">testSettingCase</span><span class="params">()</span> &#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;load @Value:&quot;</span> + projectConfig.getParameter());</span><br><span class="line">		System.out.println(<span class="string">&quot;load Enviroment interface:&quot;</span> + projectEnvConfig.getParameterValue());</span><br><span class="line">		System.out.println(<span class="string">&quot;load @ConfigurationProperties:&quot;</span> + projectConfigurationPropertiesConfig.getParameter());</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><img src="https://bnz05pap002files.storage.live.com/y4m-JMnLiItOrZFNEkD0b5sW373Q8AKyQtKXW3jXxLt3B2RkMuTv7XfmxHXiZBQ4PJIbpFwxUzYw5Mus-4QX3MZIWBOEBj3pBufCERPt0T6L-FZ9-ORRYxKKXtfD34DgicSi4d_oga5M8wj4Xt492iRlR-a9O-kppMrY5m-jDigjaJv54hQyWmv5P63KbE7sW-3?width=660&height=257&cropmode=none" alt="demo-result.png"></p>
+<h3 id="錯誤訊息"><a href="#錯誤訊息" class="headerlink" title="錯誤訊息"></a>錯誤訊息</h3><ol>
+<li>如果設定檔的參數無法對應到 java 檔的設定時，會拋出 Could not resolve placeholder xxx 的訊息<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Could not resolve placeholder &#x27;project.parameter&#x27; in value &quot;$&#123;project.parameter&#125;&quot;</span><br></pre></td></tr></table></figure></li>
 </ol>
 <h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
-<li><a href="https://ithelp.ithome.com.tw/articles/10202465">day05_docker04_Jenkins</a></li>
-<li><a href="https://iter01.com/553208.html">三十二張圖告訴你，Jenkins構建Spring Boot 有多簡單~
+<li><a href="https://iter01.com/587071.html">【springboot讀取配置檔案】@ConfigurationProperties、@PropertySource和@Value</a></li>
+<li><a href="https://iter01.com/515254.html">Spring Boot讀取配置檔案的幾種方式
 </a></li>
-<li><a href="https://tomgregory.com/building-a-spring-boot-application-in-docker-and-jenkins/">Building a Spring Boot application in Docker and Jenkins (part 2 of microservice devops series)</a></li>
 </ol>
 ]]></content>
       <categories>
-        <category>jenkins</category>
+        <category>springboot</category>
       </categories>
       <tags>
-        <tag>docker</tag>
-        <tag>jenkins</tag>
+        <tag>springboot</tag>
       </tags>
   </entry>
   <entry>
@@ -375,51 +364,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Springboot 讀取 properties 設定檔參數</title>
-    <url>/2022/03/11/springboot-load-properties-file/</url>
-    <content><![CDATA[<p>Springboot 在 讀取設定檔參數有 3 種方式 ( 格式有 properties &amp; yml 本篇使用 properties )<br>( Springboot 預設配置檔案位置在 <code>src/main/resources/application.properties</code>)</p>
-<p>如果需要指定 設定檔 需加上 @PropertySource 即可<br>※ 該 Annotation 只能夠指定 properties，因此如果需要指定 yml 檔需要另外實作</p>
-<p>以下來撰寫 3個方式的寫法:</p>
-<span id="more"></span>
-
-<h3 id="前置作業-amp-環境"><a href="#前置作業-amp-環境" class="headerlink" title="前置作業 &amp; 環境"></a>前置作業 &amp; 環境</h3><ul>
-<li>Springboot 2.5.2</li>
-<li>maven 引入 web &amp; test dependencies<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line">&lt;dependencies&gt;</span><br><span class="line">  </span><br><span class="line">  	&lt;!-- web --&gt;</span><br><span class="line">  	&lt;dependency&gt;</span><br><span class="line">		&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">		&lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</span><br><span class="line">	&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">	&lt;!-- test framework --&gt;</span><br><span class="line">	&lt;dependency&gt;</span><br><span class="line">		&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">		&lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;</span><br><span class="line">		&lt;scope&gt;test&lt;/scope&gt;</span><br><span class="line">	&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">&lt;/dependencies&gt;</span><br><span class="line">...	</span><br></pre></td></tr></table></figure></li>
-</ul>
-<ol>
-<li>在預設的 application.properites 加入參數<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">project.parameter</span> = <span class="string">test</span></span><br></pre></td></tr></table></figure></li>
-<li>建立客製化的 properites : test.properties 在 <code>src/main/resources</code> 底下<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="attr">project.parameter</span> = <span class="string">test</span></span><br></pre></td></tr></table></figure>
-<img src="https://bnz05pap002files.storage.live.com/y4mAxeVYT8ncJ7Ivjb7MJX5CoaNpca8B2VyFU2zEX6L8ccQHQjZxyGxcau8wLyqWI597-GQhpK_vpq5oHpDbu6DNSsKCP4IoVk9KOQri5l_H7DminfZi8DBxNDioEZ9RTWgpimfBU8LN-3xNPivdoLa2JR6LVa__ILGpE0RdRtelWa1C9SSPnXYatCaVbqB_bm_?width=256&height=113&cropmode=none" alt="resources.png"></li>
-</ol>
-<h3 id="1-使用-Value-Annotation-讀取檔案"><a href="#1-使用-Value-Annotation-讀取檔案" class="headerlink" title="1. 使用 @Value Annotation 讀取檔案"></a>1. 使用 @Value Annotation 讀取檔案</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="comment">//@PropertySource(&quot;classpath:test.properties&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ProjectConfig</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Value(&quot;$&#123;project.parameter&#125;&quot;)</span></span><br><span class="line">	<span class="keyword">private</span> String parameter;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> String <span class="title function_">getParameter</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> parameter;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setParameter</span><span class="params">(String parameter)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.parameter = parameter;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-使用-Enviroment-介面取得設定檔資訊"><a href="#2-使用-Enviroment-介面取得設定檔資訊" class="headerlink" title="2. 使用 Enviroment 介面取得設定檔資訊"></a>2. 使用 Enviroment 介面取得設定檔資訊</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="comment">//@PropertySource(&quot;classpath:test.properties&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ProjectEnvConfig</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">    Environment environment;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> String <span class="title function_">getParameterValue</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">value</span> <span class="operator">=</span> environment.getProperty(<span class="string">&quot;project.parameter&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-使用-ConfigurationProperties-annotation-讀取檔案"><a href="#3-使用-ConfigurationProperties-annotation-讀取檔案" class="headerlink" title="3. 使用 @ConfigurationProperties annotation 讀取檔案"></a>3. 使用 @ConfigurationProperties annotation 讀取檔案</h3><p>ConfigurationProperties 可以將設定檔 mapping 成一個實體類別<br>使用該 annotation 建議引入對應的 dependencies</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-boot-configuration-processor&lt;/artifactId&gt;</span><br><span class="line">    &lt;optional&gt;true&lt;/optional&gt;</span><br><span class="line">&lt;/dependency&gt;   </span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@ConfigurationProperties(prefix = &quot;project&quot;)</span></span><br><span class="line"><span class="comment">// @PropertySource(&quot;classpath:test.properties&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ProjectConfigurationPropertiesConfig</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> String parameter;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> String <span class="title function_">getParameter</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> parameter;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setParameter</span><span class="params">(String parameter)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.parameter = parameter;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="驗證結果"><a href="#驗證結果" class="headerlink" title="驗證結果"></a>驗證結果</h3><p>使用一個簡單的整合測試來跑上述的結果查看是否可以取得設定檔的內容</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@SpringBootTest</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">DemoSettingTest</span> &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> ProjectConfig projectConfig;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> ProjectEnvConfig projectEnvConfig;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> ProjectConfigurationPropertiesConfig projectConfigurationPropertiesConfig;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="keyword">void</span> <span class="title function_">testSettingCase</span><span class="params">()</span> &#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;load @Value:&quot;</span> + projectConfig.getParameter());</span><br><span class="line">		System.out.println(<span class="string">&quot;load Enviroment interface:&quot;</span> + projectEnvConfig.getParameterValue());</span><br><span class="line">		System.out.println(<span class="string">&quot;load @ConfigurationProperties:&quot;</span> + projectConfigurationPropertiesConfig.getParameter());</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p><img src="https://bnz05pap002files.storage.live.com/y4m-JMnLiItOrZFNEkD0b5sW373Q8AKyQtKXW3jXxLt3B2RkMuTv7XfmxHXiZBQ4PJIbpFwxUzYw5Mus-4QX3MZIWBOEBj3pBufCERPt0T6L-FZ9-ORRYxKKXtfD34DgicSi4d_oga5M8wj4Xt492iRlR-a9O-kppMrY5m-jDigjaJv54hQyWmv5P63KbE7sW-3?width=660&height=257&cropmode=none" alt="demo-result.png"></p>
-<h3 id="錯誤訊息"><a href="#錯誤訊息" class="headerlink" title="錯誤訊息"></a>錯誤訊息</h3><ol>
-<li>如果設定檔的參數無法對應到 java 檔的設定時，會拋出 Could not resolve placeholder xxx 的訊息<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Could not resolve placeholder &#x27;project.parameter&#x27; in value &quot;$&#123;project.parameter&#125;&quot;</span><br></pre></td></tr></table></figure></li>
-</ol>
-<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
-<li><a href="https://iter01.com/587071.html">【springboot讀取配置檔案】@ConfigurationProperties、@PropertySource和@Value</a></li>
-<li><a href="https://iter01.com/515254.html">Spring Boot讀取配置檔案的幾種方式
-</a></li>
-</ol>
-]]></content>
-      <categories>
-        <category>springboot</category>
-      </categories>
-      <tags>
-        <tag>springboot</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Springboot 讀取 yaml 設定檔參數</title>
     <url>/2022/03/12/springboot-load-yaml-file/</url>
     <content><![CDATA[<p>讀取客製化設定檔參數，會需要使用 @PropertySource annotation，但該標註只適用於 properties，<br>如果副檔名為 YAML 檔案，會無法解析而造成錯誤，如果要讀取該類型檔案，需要做出以下調整:</p>
@@ -455,6 +399,62 @@
       </categories>
       <tags>
         <tag>springboot</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Jenkins 安裝教學</title>
+    <url>/2022/03/06/jenkins-initial/</url>
+    <content><![CDATA[<p>Jenkins 為一個持續化整合工具，由 Java 語言所撰寫，並支援許多套件做整合 ( ex : Maven , Gradle )<br>可用於自動化的持續整合(CI) &amp; 持續部署(CD) 。</p>
+<span id="more"></span>
+
+<h3 id="Local安裝前置作業"><a href="#Local安裝前置作業" class="headerlink" title="Local安裝前置作業"></a>Local安裝前置作業</h3><ol>
+<li>準備一台 Linux 主機 (Virtual Mechine )</li>
+<li>安裝 docker ( Optional: docker-compose )</li>
+</ol>
+<h3 id="使用-docker-安裝-Jenkins"><a href="#使用-docker-安裝-Jenkins" class="headerlink" title="使用 docker 安裝 Jenkins"></a>使用 docker 安裝 Jenkins</h3><ol>
+<li><p>使用 docker 下載 docker images<br><code>docker pull jenkins/jenkins:latest</code></p>
+</li>
+<li><p>使用指令啟動 docker container (指定 port 為 18080)</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker run -u root -d --name myjenkins -p 18080:8080 -p 50000:50000 -v jenkins_home:/var/jenkins_home jenkins/jenkins:latest</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">jenkins 8080 port 為 預設WEB介面 , 50000 port 為 jenkins Agent</span></span><br></pre></td></tr></table></figure>
+
+</li>
+<li><p>啟動後，輸入網址 - <em><strong>{VM IP}:18080</strong></em> 進入 Jenkins 初始畫面</p>
+</li>
+</ol>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mcApoPeOBRDSLJEBnroNaVPjG4VXCzXgQE45FfB0tkD7UrSdMfMLj4HdOgOXg9XPBZMM5YXqvCb_EM3e9WNQUbLwWa3lib_ENDaVotBtrkb0AbhH30jFmqy0BsJwPnZ_4OGRuV8P1YwDXipLFgnYICSA8CsgOhy37Ejok5wMbdd9rsjKlcNwd1R9RGKll56So?width=256&height=139&cropmode=none" alt="Jenkins_initial"></p>
+<ol start="4">
+<li><p>進入 container 中取得安裝的預設密碼</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta"># </span><span class="language-bash">進入 container</span></span><br><span class="line">docker exec -it &#123;container name&#125; /bin/bash</span><br><span class="line"><span class="meta"># </span><span class="language-bash">顯示預設密碼</span></span><br><span class="line">cat /var/jenkins_home/secrets/initialAdminPassword</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>選擇客製化套件安裝 ( 選擇左邊預設全裝)</p>
+</li>
+</ol>
+<p><img src="https://bnz05pap002files.storage.live.com/y4m5nGIeTsyu5iUN2_CGgA4rinujnsw-iQP5TPJ3XwPTOZ65LirQh1oX1jnbkjK07WOWnwC1uYPEZiWuo3huJZA89zN-fmlAygcYUTcWxkygkcUKTLnyNr-JOqoeNhjg3zNZup70RBayB_MxeVqQkX9oopysyxBkOm_mq0PmXAG_6YfI93JBQS7moB_zadgAE9Z?width=256&height=139&cropmode=none" alt="jenkins_plugin_setting"></p>
+<ol start="6">
+<li>創建Admin 的 帳號&#x2F;密碼</li>
+</ol>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mtzgP0W95pMW1ZWyEC4VcuZHCPR-z42TbjNnNDrpfHoRRtbo7Vo7awco05KH6Ezgujl_oPsAu05rsRrbq5Uz7xGW3Wy4HeOkjeka4OZkdqwqvvhLwzOM9xDGfSdlZYKBpXBaOMpG1kSzooQKri0dhz9mZkdEirCcxFOclaBX2MAgOn9zD35F8UrcY37lsnNyj?width=256&height=138&cropmode=none" alt="createAdminUser.png"></p>
+<ol start="7">
+<li>儲存設定後，即可進入首頁</li>
+</ol>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mOu7W-A_TyloArSKH_UydXT4L7FCHHvSyJwK567rbLYlHkvS3B3kuJIWvqMMHNOCfFpW8JBUHFpE5DE7lndEBw09bgzyGPhLuoez0tzwKgjNhh_3JK_bWIaxOBr7XwJM5exakUtoiSE9RZEZXqRtekj3hHCQzFWg6A27FkL5ZRuS_YpZBtBhp86dNX2gDYz3A?width=256&height=134&cropmode=none" alt="homePage"></p>
+<h3 id="使用-docker-compose-安裝-Jenkins"><a href="#使用-docker-compose-安裝-Jenkins" class="headerlink" title="使用 docker-compose 安裝 Jenkins"></a>使用 docker-compose 安裝 Jenkins</h3><ol>
+<li>撰寫 docker-compose.yml<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;2&#x27;</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">	<span class="attr">jenkins:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">jenkins/jenkins</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">jenkins</span></span><br><span class="line">    <span class="attr">privileged:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">user:</span> <span class="string">root</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">18080</span><span class="string">:8080</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">50000</span><span class="string">:50000</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">JAVA_OPTS:</span> <span class="string">-Xmx2048m</span> <span class="string">-Djava.awt.headless=true</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/var/jenkins_home:/var/jenkins_home</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/var/run/docker.sock:/var/run/docker.sock</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">$&#123;HOME&#125;/.ssh:/root/.ssh:ro</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">$&#123;HOME&#125;/.npmrc:/root/.npmrc</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">$&#123;HOME&#125;/.m2:/root/.m2</span></span><br></pre></td></tr></table></figure></li>
+<li>啟動 dokcer-compose<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker-compose up</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
+<li><a href="https://ithelp.ithome.com.tw/articles/10202465">day05_docker04_Jenkins</a></li>
+<li><a href="https://iter01.com/553208.html">三十二張圖告訴你，Jenkins構建Spring Boot 有多簡單~
+</a></li>
+<li><a href="https://tomgregory.com/building-a-spring-boot-application-in-docker-and-jenkins/">Building a Spring Boot application in Docker and Jenkins (part 2 of microservice devops series)</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>jenkins</category>
+      </categories>
+      <tags>
+        <tag>docker</tag>
+        <tag>jenkins</tag>
       </tags>
   </entry>
   <entry>
@@ -500,58 +500,6 @@
       <tags>
         <tag>springboot</tag>
         <tag>maven</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Transaction rolled back because it has been marked as rollback-only</title>
-    <url>/2022/04/22/hibernate-transaction-rollback-only-error/</url>
-    <content><![CDATA[<p>最近在公司查詢問題時，心想著對於 Transaction 可能也不是非常了解，<br>再加上常常遇到 <font color=#ff0000><strong>Transaction rolled back because it has been marked as rollback-only</strong></font> 這個問題，<br>因此就花點時間來重現這個問題，並思考怎麼避免。</p>
-<span id="more"></span>
-
-<h3 id="重現問題場景-主要以Service為主-DAO部分就不贅述"><a href="#重現問題場景-主要以Service為主-DAO部分就不贅述" class="headerlink" title="重現問題場景(主要以Service為主, DAO部分就不贅述)"></a>重現問題場景(主要以Service為主, DAO部分就不贅述)</h3><p>Controller 呼叫 CallerService, CallerService 再呼叫 CalleeService, CalleeService 發生錯誤後，<br>rollback 回 CallerService 試圖使用 try catch 把錯誤包起來使 服務繼續執行時會出現這個錯誤訊息。</p>
-<p>呼叫的Controller</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/situation/transactionException&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestController</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> CallerService callerService;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@RequestMapping(&quot;/test&quot;)</span></span><br><span class="line">	<span class="keyword">public</span> String <span class="title function_">test</span><span class="params">()</span> &#123;</span><br><span class="line">		callerService.addJob();</span><br><span class="line">		<span class="keyword">return</span> <span class="string">&quot;ok&quot;</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>主要的服務有兩個</p>
-<ol>
-<li>CallerService<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 呼叫流程的服務</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> oscar51011</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2022年4月22日</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CallerService</span> &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> CalleeService calleeService;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> JobDaoImpl jobDaoImpl;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Transactional</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">addJob</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="comment">// insert sql</span></span><br><span class="line">		<span class="type">Job</span> <span class="variable">job</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Job</span>();</span><br><span class="line">		job.setId(<span class="number">3L</span>);</span><br><span class="line">		job.setDescription(<span class="string">&quot;test&quot;</span>);</span><br><span class="line">		jobDaoImpl.addJob(job);</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="comment">// call update sql service</span></span><br><span class="line">			calleeService.updateJob();</span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			System.out.println(<span class="string">&quot;catch Exception&quot;</span>);</span><br><span class="line">		&#125;		</span><br><span class="line">		System.out.println(<span class="string">&quot;service done.&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li>CalleeService<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 被呼叫的 Service</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> oscar51011</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2022年4月22日</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CalleeService</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> JobDaoImpl jobDaoImpl;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Transactional</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">updateJob</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="type">Job</span> <span class="variable">job</span> <span class="operator">=</span> jobDaoImpl.getJobById(<span class="number">1L</span>);</span><br><span class="line">		job.setDescription(<span class="string">&quot;test2&quot;</span>);</span><br><span class="line">		jobDaoImpl.updateJob(job);</span><br><span class="line">		<span class="comment">// 預期出錯, 檢查會不會rollback</span></span><br><span class="line">		System.out.println(<span class="number">1</span>/<span class="number">0</span>);</span><br><span class="line">	&#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ol>
-<p>錯誤訊息如附圖:<br><img src="https://bnz05pap002files.storage.live.com/y4mq_PjejYzusEV72n3uKAJ9CzS_8ROfhfUHQPGt1iK14_3n3DRPc7eIK8sbdTs1F1bZn4Jv4vwy70ZeVQCr-I-xGOiL1D_IULG8M6bgRJg-RiZtCv474EyjZS5PKonxiyFtj3_5HChUMY6xFkfCkRUio58VLqNdpsso6f1zW3KfkhGkO3PQNfKjk2mFgOTMDuR?width=660&height=179&cropmode=none" alt="transaction-rollback-only-error.png"></p>
-<p><code>@Transactional</code> 的預設值為 <code>PROPAGATION_REQUIRED</code>，我們來看一下 Spring docs 中的解釋:</p>
-<blockquote>
-<p>When the propagation setting is PROPAGATION_REQUIRED, a logical transaction scope is created for each method upon which the setting is applied. Each such logical transaction scope can determine rollback-only status individually, with an outer transaction scope being logically independent from the inner transaction scope. Of course, in case of standard PROPAGATION_REQUIRED behavior, all these scopes will be mapped to the same physical transaction. So a <font color=#ff0000>rollback-only marker set in the inner transaction scope does affect the outer transaction’s chance to actually commit </font> (as you would expect it to).<br>However, in the case where an inner transaction scope sets the rollback-only marker, the outer transaction has not decided on the rollback itself, and so the rollback (silently triggered by the inner transaction scope) is unexpected. A corresponding <strong>UnexpectedRollbackException</strong> is thrown at that point. This is expected behavior so that the caller of a transaction can never be misled to assume that a commit was performed when it really was not. So if an <font color=#ff0000>inner transaction (of which the outer caller is not aware) silently marks a transaction as rollback-only, the outer caller still calls commit. The outer caller needs to receive an UnexpectedRollbackException to indicate clearly that a rollback was performed instead </font>.<br>(以上段落出自 Ref.1 的 Spring docs 的 16.5.7 Transaction propagation 中的 Required 部分)</p>
-</blockquote>
-<p>當 CallerService 呼叫 CalleeService 時，它們就為同一個 physcal transaction<br>因此當 CalleeService發生異常時，拋出異常，並把 transaction 標記成 rollback-only<br>當 CallerService 走完流程，spring 發現 transaction 已經被標記成 rollback-only，但流程居然走完了，因此就報出錯誤</p>
-<p>如上述描述，我們就接到了 UnexpectedRollbackException，因為它不符合原本該 Transaction Propagation 的機制</p>
-<h3 id="解決方法"><a href="#解決方法" class="headerlink" title="解決方法"></a>解決方法</h3><p>調整的方向分成兩種類型(CallerService 的 addJob 需要寫入資料、CallerService 的 addJob 資料 rollback)</p>
-<ul>
-<li>CallerService 的 addJob 需要寫入資料</li>
-</ul>
-<ol>
-<li>將 CalleeService 的流程包 try catch，處理好異常行為不要讓 exception 拋出來；transaction 就不會被註記 rollback-only</li>
-<li>將 CalleeService 的 transaction 改成 <code>@Transactional(propagation = Propagation.REQUIRES_NEW)</code><br>如果是不同的 transaction ，CallerService 的 transaction 就不會被註記成 rollback-only ，造成異常<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 被呼叫的 Service</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> oscar51011</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2022年4月22日</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CalleeService</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> JobDaoImpl jobDaoImpl;</span><br><span class="line">	</span><br><span class="line">    <span class="comment">// ( **解決方案** ) 設置為開一個新的 transactional</span></span><br><span class="line">	<span class="meta">@Transactional(propagation = Propagation.REQUIRES_NEW)</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">updateJob</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="type">Job</span> <span class="variable">job</span> <span class="operator">=</span> jobDaoImpl.getJobById(<span class="number">1L</span>);</span><br><span class="line">		job.setDescription(<span class="string">&quot;test2&quot;</span>);</span><br><span class="line">		jobDaoImpl.updateJob(job);</span><br><span class="line">		<span class="comment">// 預期出錯, 檢查會不會rollback</span></span><br><span class="line">		System.out.println(<span class="number">1</span>/<span class="number">0</span>);</span><br><span class="line">	&#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ol>
-<ul>
-<li>CallerService 的 addJob 資料 rollback</li>
-</ul>
-<ol>
-<li>調整業務流程，把 CallerService 的 catch 在 throw exception 出去</li>
-<li>在 CallerService 的 catch 中手動觸發 rollback，讓 method 結束後執行 rollback 讓 DB 還原<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 呼叫流程的服務</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> oscar51011</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2022年4月22日</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CallerService</span> &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> CalleeService calleeService;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> JobDaoImpl jobDaoImpl;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Transactional</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">addJob</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="comment">// insert sql</span></span><br><span class="line">		<span class="type">Job</span> <span class="variable">job</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Job</span>();</span><br><span class="line">		job.setId(<span class="number">3L</span>);</span><br><span class="line">		job.setDescription(<span class="string">&quot;test&quot;</span>);</span><br><span class="line">		jobDaoImpl.addJob(job);</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="comment">// call update sql service</span></span><br><span class="line">			calleeService.updateJob();</span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			System.out.println(<span class="string">&quot;catch Exception&quot;</span>);</span><br><span class="line">			<span class="comment">// ( **解決方案** )設定手動回滾</span></span><br><span class="line">			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();</span><br><span class="line">		&#125;		</span><br><span class="line">		System.out.println(<span class="string">&quot;service done.&quot;</span>);</span><br><span class="line">	&#125;	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ol>
-<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
-<li><a href="https://docs.spring.io/spring-framework/docs/4.2.x/spring-framework-reference/html/transaction.html">Spring- 16.Transaction Management</a></li>
-<li><a href="https://www.cnblogs.com/dirgo/p/11421828.html">Spring事务嵌套引发的血案—Transaction rolled back because it has been marked as rollback-only</a></li>
-<li><a href="https://yunlongn.github.io/2019/05/06/%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%BA%8B%E5%8A%A1%E7%9A%84%E5%9D%91Transaction-rolled-back-because-it-has-been-marked-as-rollback-only/">记一次事务的坑 Transaction rolled back because it has been marked as rollback-only</a></li>
-<li><a href="https://www.796t.com/article.php?id=51988">SpringBoot事務註解@Transactional 事物回滾、手動回滾事物</a></li>
-</ol>
-]]></content>
-      <categories>
-        <category>springboot</category>
-      </categories>
-      <tags>
-        <tag>springboot</tag>
-        <tag>hibernate</tag>
       </tags>
   </entry>
   <entry>
@@ -670,142 +618,124 @@
       </tags>
   </entry>
   <entry>
-    <title>Effective Java Item4 - 使用私有建構子來實現禁止實例化</title>
-    <url>/2022/05/23/effective-java-item4/</url>
-    <content><![CDATA[<p>此為閱讀 Effective Java 3rd 所記錄的學習歷程<br>Item4 : 使用私有建構子來實現禁止實例化</p>
+    <title>Transaction rolled back because it has been marked as rollback-only</title>
+    <url>/2022/04/22/hibernate-transaction-rollback-only-error/</url>
+    <content><![CDATA[<p>最近在公司查詢問題時，心想著對於 Transaction 可能也不是非常了解，<br>再加上常常遇到 <font color=#ff0000><strong>Transaction rolled back because it has been marked as rollback-only</strong></font> 這個問題，<br>因此就花點時間來重現這個問題，並思考怎麼避免。</p>
 <span id="more"></span>
 
-<p>有時候在實作某些固定的邏輯時，會設計成 Utility Class，該類別只有包含 static 的方法 &amp; 變數<br>ex: java.lang.Math , java.util.Arrays</p>
-<ul>
-<li>此類別不需要有其他人去實例化它</li>
-<li>如果不撰寫建構子，java 有預設的 無參數建構子</li>
-</ul>
-<p> 因此撰寫一個 <font color=#ff0000>private constructor</font>，不要讓 compiler 產生預設的 建構子</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Test</span> &#123;</span><br><span class="line">	<span class="comment">// 避免使用反射機制進行實例化</span></span><br><span class="line">	<span class="keyword">private</span> <span class="title function_">Test</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">AssertionError</span>();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="重現問題場景-主要以Service為主-DAO部分就不贅述"><a href="#重現問題場景-主要以Service為主-DAO部分就不贅述" class="headerlink" title="重現問題場景(主要以Service為主, DAO部分就不贅述)"></a>重現問題場景(主要以Service為主, DAO部分就不贅述)</h3><p>Controller 呼叫 CallerService, CallerService 再呼叫 CalleeService, CalleeService 發生錯誤後，<br>rollback 回 CallerService 試圖使用 try catch 把錯誤包起來使 服務繼續執行時會出現這個錯誤訊息。</p>
+<p>呼叫的Controller</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/situation/transactionException&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestController</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> CallerService callerService;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@RequestMapping(&quot;/test&quot;)</span></span><br><span class="line">	<span class="keyword">public</span> String <span class="title function_">test</span><span class="params">()</span> &#123;</span><br><span class="line">		callerService.addJob();</span><br><span class="line">		<span class="keyword">return</span> <span class="string">&quot;ok&quot;</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>書中描述，如果將類別設計成抽象類別是否就可以不被實例化? (答案是無法避免的)</p>
-<ul>
-<li>類別可以被繼承，且子類可以實例化</li>
-<li>有可能誤導developer，是否該類別是被設計成需要繼承的類別</li>
-</ul>
-<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference:"></a>Reference:</h1><ol>
-<li><a href="https://www.blogbrb.com/posts/book/effective-java-item4/">Effective Java Item4 透過私有建構函式來禁止實例化</a></li>
-<li><a href="https://biratkirat.medium.com/learning-effective-java-item-4-4bc457fc5674">Learning Effective Java — Item 4</a></li>
-</ol>
-]]></content>
-      <categories>
-        <category>effectiveJava</category>
-      </categories>
-      <tags>
-        <tag>java</tag>
-        <tag>effectiveJava</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>springboot 整合 mybatis</title>
-    <url>/2022/04/09/springboot-mybatis/</url>
-    <content><![CDATA[<p>Mybatis 為一個 ORM（Object Relational Mapping) 框架，簡單易學<br>接下來藉由一系列步驟，實作 Springboot 搭配 mybatis 取得 database 的資料</p>
-<span id="more"></span>
-
-<h3 id="使用環境"><a href="#使用環境" class="headerlink" title="使用環境"></a>使用環境</h3><ul>
-<li>Springboot 2.5.2</li>
-<li>Mybatis 3.5.5 (使用 mybatis-spring-boot-2.1.3)</li>
-<li>h2 database 便於測試</li>
-</ul>
-<p>對應之pom檔之 dependencies 如下:</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">... 略</span><br><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">  	<span class="comment">&lt;!-- web --&gt;</span></span><br><span class="line">  	<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">	</span><br><span class="line">	<span class="comment">&lt;!-- mybatis --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.mybatis.spring.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.1.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">	</span><br><span class="line">	<span class="comment">&lt;!-- H2 database for demo --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.h2database<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span> </span><br><span class="line">    	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>h2<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">	</span><br><span class="line">	<span class="comment">&lt;!-- test framework --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">  </span><br><span class="line">  <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span> </span><br><span class="line">...略</span><br></pre></td></tr></table></figure>
-
-<h3 id="實作範例"><a href="#實作範例" class="headerlink" title="實作範例"></a>實作範例</h3><ol>
-<li><p><code>application.yml</code> 設定 H2 database 的連線資訊</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line"> <span class="attr">h2:</span></span><br><span class="line">    <span class="attr">console:</span></span><br><span class="line">      <span class="attr">enabled:</span> <span class="literal">true</span></span><br><span class="line">      <span class="attr">path:</span> <span class="string">/h2-console</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p><code>src/main/resources</code> 底下建立 h2 database 的 資料表資料 JOB &amp; 預先寫入預設值<br><code>schema.sql</code></p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 職業類別</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> JOB(</span><br><span class="line">	ID <span class="type">int</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span> AUTO_INCREMENT,</span><br><span class="line">	DESCRIPTION <span class="type">VARCHAR</span>(<span class="number">50</span>) <span class="keyword">NOT</span> <span class="keyword">null</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
-<p><code>data.sql</code></p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * add job</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> JOB(DESCRIPTION)<span class="keyword">VALUES</span>(<span class="string">&#x27;engineer&#x27;</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> JOB(DESCRIPTION)<span class="keyword">VALUES</span>(<span class="string">&#x27;doctor&#x27;</span>);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>新增 entity 物件</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Job</span> &#123;</span><br><span class="line">	<span class="keyword">private</span> Long id;</span><br><span class="line">	<span class="keyword">private</span> String description;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> Long <span class="title function_">getId</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> id;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setId</span><span class="params">(Long id)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.id = id;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> String <span class="title function_">getDescription</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> description;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setDescription</span><span class="params">(String description)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.description = description;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>創建 Mapper 介面</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Mapper</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">JobMapper</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Select(&quot;SELECT * FROM JOB&quot;)</span></span><br><span class="line">    <span class="meta">@Results(&#123;</span></span><br><span class="line"><span class="meta">        @Result(property = &quot;id&quot;,  column = &quot;ID&quot;),</span></span><br><span class="line"><span class="meta">        @Result(property = &quot;description&quot;, column = &quot;DESCRIPTION&quot;)</span></span><br><span class="line"><span class="meta">    &#125;)</span></span><br><span class="line">    List&lt;Job&gt; <span class="title function_">getAll</span><span class="params">()</span>;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Select(&quot;SELECT * FROM JOB WHERE ID =#&#123;id&#125;&quot;)</span></span><br><span class="line">    <span class="meta">@Results(&#123;</span></span><br><span class="line"><span class="meta">        @Result(property = &quot;id&quot;,  column = &quot;ID&quot;),</span></span><br><span class="line"><span class="meta">        @Result(property = &quot;description&quot;, column = &quot;DESCRIPTION&quot;)</span></span><br><span class="line"><span class="meta">    &#125;)</span></span><br><span class="line">	Job <span class="title function_">getById</span><span class="params">(Long id)</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Update(&quot;UPDATE JOB SET DESCRIPTION=#&#123;description&#125; WHERE ID =#&#123;id&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">update</span><span class="params">(Job job)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ol>
-<p>以下注入使用 <code>@Mapper</code> or 統一在 啟動類加上  <code>@MapperScan(&quot;com.demo.mapper&quot;)</code> 針對某個 package 底下的檔案進行掃描，如果已經使用 mapperScan 則不需在每個 mapper 個別下 <code>@Mapper</code></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="meta">@MapperScan(&quot;com.demo.mapper&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SpringbootMybatisApplication</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">		SpringApplication.run(SpringbootMybatisApplication.class, args);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ol start="5">
-<li>撰寫測試情境，利用 <code>@SpringBootTest</code> 來整合測試，是否可以抓取到對應的資料<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@SpringBootTest</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">JobMapperTest</span> &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> JobMapper jobMapper;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="keyword">void</span> <span class="title function_">testGetById</span><span class="params">()</span> &#123;</span><br><span class="line">		System.out.println(jobMapper.getById(<span class="number">2L</span>));</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="keyword">void</span> <span class="title function_">testGetAll</span><span class="params">()</span> &#123;</span><br><span class="line">		List&lt;Job&gt; jobs = jobMapper.getAll();</span><br><span class="line">		System.out.println(jobs);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="keyword">void</span> <span class="title function_">testUpdate</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="type">Job</span> <span class="variable">job</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Job</span>();</span><br><span class="line">		job.setId(<span class="number">2L</span>);</span><br><span class="line">		job.setDescription(<span class="string">&quot;test&quot;</span>);</span><br><span class="line">		jobMapper.update(job);</span><br><span class="line">		assertTrue(<span class="string">&quot;test&quot;</span>.equals(jobMapper.getById(<span class="number">2L</span>).getDescription()));</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-Update的部分用 Assert 斷言驗證值是否有修改。<br>執行後，發現可以取得 DB 的 清單，如下圖:<br><img src="https://bnz05pap002files.storage.live.com/y4m0KKesdK0iQ_EfFtGD5Wz21wDvvEHe0BQsvyyZc7hvrRvhH1fECKkGa_wCu3LTFEggeX49t2QHmUIhFVrgEhxPshsRJEvhQ_JO6Vzdm5m47GSFdtivUxc3dosVGHfDlxMiN7CWZSZaa0PsHh7AltFS4QJyw6Isgz04XBEhX2bV1XeHdb4ZcFE13Vq23XXkutq?width=660&height=292&cropmode=none" alt="mybatis-result"></li>
-</ol>
-<h3 id="使用-XML-的方式撰寫SQL"><a href="#使用-XML-的方式撰寫SQL" class="headerlink" title="使用 XML 的方式撰寫SQL"></a>使用 XML 的方式撰寫SQL</h3><p>除了使用 Annotation 的方式之外，也可以將SQL與java檔案分開獨立撰寫</p>
+<p>主要的服務有兩個</p>
 <ol>
-<li><p><code>application.yml</code> 新增配置 xml 之 package</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment">#mybatis mapper location</span></span><br><span class="line"><span class="attr">mybatis:</span></span><br><span class="line">  <span class="attr">mapper-locations:</span> <span class="string">mapper/*.xml</span>   </span><br></pre></td></tr></table></figure>
-</li>
-<li><p>本篇的 JobMapper 新增方法 (系統會根據method name 對應 xml 的 id tag  ex: <code>&lt;select id=&quot;xxx&quot;&gt;</code> )</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 系統會根據介面的method name 去 application.yml 的 mapper-location 的 XML 中尋找對應的sql</span></span><br><span class="line"><span class="comment">* <span class="doctag">@param</span> id</span></span><br><span class="line"><span class="comment">* <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">Job <span class="title function_">getByIdUseXml</span><span class="params">(Long id)</span>;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>撰寫 xml (其 id 會與 上述的 mapper 中的 method name 對應)</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">mapper</span> <span class="keyword">PUBLIC</span> <span class="string">&quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</span></span></span><br><span class="line"><span class="meta">        <span class="string">&quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;</span>&gt;</span></span><br><span class="line">        </span><br><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">&quot;com.demo.mapper.JobMapper&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;getByIdUseXml&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;Long&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;com.demo.entity.Job&quot;</span>&gt;</span></span><br><span class="line">		SELECT * FROM JOB WHERE ID = #&#123;id&#125;</span><br><span class="line">	<span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li>CallerService<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 呼叫流程的服務</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> oscar51011</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2022年4月22日</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CallerService</span> &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> CalleeService calleeService;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> JobDaoImpl jobDaoImpl;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Transactional</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">addJob</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="comment">// insert sql</span></span><br><span class="line">		<span class="type">Job</span> <span class="variable">job</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Job</span>();</span><br><span class="line">		job.setId(<span class="number">3L</span>);</span><br><span class="line">		job.setDescription(<span class="string">&quot;test&quot;</span>);</span><br><span class="line">		jobDaoImpl.addJob(job);</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="comment">// call update sql service</span></span><br><span class="line">			calleeService.updateJob();</span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			System.out.println(<span class="string">&quot;catch Exception&quot;</span>);</span><br><span class="line">		&#125;		</span><br><span class="line">		System.out.println(<span class="string">&quot;service done.&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>CalleeService<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 被呼叫的 Service</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> oscar51011</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2022年4月22日</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CalleeService</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> JobDaoImpl jobDaoImpl;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Transactional</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">updateJob</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="type">Job</span> <span class="variable">job</span> <span class="operator">=</span> jobDaoImpl.getJobById(<span class="number">1L</span>);</span><br><span class="line">		job.setDescription(<span class="string">&quot;test2&quot;</span>);</span><br><span class="line">		jobDaoImpl.updateJob(job);</span><br><span class="line">		<span class="comment">// 預期出錯, 檢查會不會rollback</span></span><br><span class="line">		System.out.println(<span class="number">1</span>/<span class="number">0</span>);</span><br><span class="line">	&#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
 </ol>
-<p>上述的寫法可以與 annotation 一般產生同樣的效果</p>
+<p>錯誤訊息如附圖:<br><img src="https://bnz05pap002files.storage.live.com/y4mq_PjejYzusEV72n3uKAJ9CzS_8ROfhfUHQPGt1iK14_3n3DRPc7eIK8sbdTs1F1bZn4Jv4vwy70ZeVQCr-I-xGOiL1D_IULG8M6bgRJg-RiZtCv474EyjZS5PKonxiyFtj3_5HChUMY6xFkfCkRUio58VLqNdpsso6f1zW3KfkhGkO3PQNfKjk2mFgOTMDuR?width=660&height=179&cropmode=none" alt="transaction-rollback-only-error.png"></p>
+<p><code>@Transactional</code> 的預設值為 <code>PROPAGATION_REQUIRED</code>，我們來看一下 Spring docs 中的解釋:</p>
+<blockquote>
+<p>When the propagation setting is PROPAGATION_REQUIRED, a logical transaction scope is created for each method upon which the setting is applied. Each such logical transaction scope can determine rollback-only status individually, with an outer transaction scope being logically independent from the inner transaction scope. Of course, in case of standard PROPAGATION_REQUIRED behavior, all these scopes will be mapped to the same physical transaction. So a <font color=#ff0000>rollback-only marker set in the inner transaction scope does affect the outer transaction’s chance to actually commit </font> (as you would expect it to).<br>However, in the case where an inner transaction scope sets the rollback-only marker, the outer transaction has not decided on the rollback itself, and so the rollback (silently triggered by the inner transaction scope) is unexpected. A corresponding <strong>UnexpectedRollbackException</strong> is thrown at that point. This is expected behavior so that the caller of a transaction can never be misled to assume that a commit was performed when it really was not. So if an <font color=#ff0000>inner transaction (of which the outer caller is not aware) silently marks a transaction as rollback-only, the outer caller still calls commit. The outer caller needs to receive an UnexpectedRollbackException to indicate clearly that a rollback was performed instead </font>.<br>(以上段落出自 Ref.1 的 Spring docs 的 16.5.7 Transaction propagation 中的 Required 部分)</p>
+</blockquote>
+<p>當 CallerService 呼叫 CalleeService 時，它們就為同一個 physcal transaction<br>因此當 CalleeService發生異常時，拋出異常，並把 transaction 標記成 rollback-only<br>當 CallerService 走完流程，spring 發現 transaction 已經被標記成 rollback-only，但流程居然走完了，因此就報出錯誤</p>
+<p>如上述描述，我們就接到了 UnexpectedRollbackException，因為它不符合原本該 Transaction Propagation 的機制</p>
+<h3 id="解決方法"><a href="#解決方法" class="headerlink" title="解決方法"></a>解決方法</h3><p>調整的方向分成兩種類型(CallerService 的 addJob 需要寫入資料、CallerService 的 addJob 資料 rollback)</p>
+<ul>
+<li>CallerService 的 addJob 需要寫入資料</li>
+</ul>
+<ol>
+<li>將 CalleeService 的流程包 try catch，處理好異常行為不要讓 exception 拋出來；transaction 就不會被註記 rollback-only</li>
+<li>將 CalleeService 的 transaction 改成 <code>@Transactional(propagation = Propagation.REQUIRES_NEW)</code><br>如果是不同的 transaction ，CallerService 的 transaction 就不會被註記成 rollback-only ，造成異常<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 被呼叫的 Service</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> oscar51011</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2022年4月22日</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CalleeService</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> JobDaoImpl jobDaoImpl;</span><br><span class="line">	</span><br><span class="line">    <span class="comment">// ( **解決方案** ) 設置為開一個新的 transactional</span></span><br><span class="line">	<span class="meta">@Transactional(propagation = Propagation.REQUIRES_NEW)</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">updateJob</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="type">Job</span> <span class="variable">job</span> <span class="operator">=</span> jobDaoImpl.getJobById(<span class="number">1L</span>);</span><br><span class="line">		job.setDescription(<span class="string">&quot;test2&quot;</span>);</span><br><span class="line">		jobDaoImpl.updateJob(job);</span><br><span class="line">		<span class="comment">// 預期出錯, 檢查會不會rollback</span></span><br><span class="line">		System.out.println(<span class="number">1</span>/<span class="number">0</span>);</span><br><span class="line">	&#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<ul>
+<li>CallerService 的 addJob 資料 rollback</li>
+</ul>
+<ol>
+<li>調整業務流程，把 CallerService 的 catch 在 throw exception 出去</li>
+<li>在 CallerService 的 catch 中手動觸發 rollback，讓 method 結束後執行 rollback 讓 DB 還原<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 呼叫流程的服務</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> oscar51011</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2022年4月22日</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CallerService</span> &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> CalleeService calleeService;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> JobDaoImpl jobDaoImpl;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Transactional</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">addJob</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="comment">// insert sql</span></span><br><span class="line">		<span class="type">Job</span> <span class="variable">job</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Job</span>();</span><br><span class="line">		job.setId(<span class="number">3L</span>);</span><br><span class="line">		job.setDescription(<span class="string">&quot;test&quot;</span>);</span><br><span class="line">		jobDaoImpl.addJob(job);</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="comment">// call update sql service</span></span><br><span class="line">			calleeService.updateJob();</span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			System.out.println(<span class="string">&quot;catch Exception&quot;</span>);</span><br><span class="line">			<span class="comment">// ( **解決方案** )設定手動回滾</span></span><br><span class="line">			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();</span><br><span class="line">		&#125;		</span><br><span class="line">		System.out.println(<span class="string">&quot;service done.&quot;</span>);</span><br><span class="line">	&#125;	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
 <h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
-<li><a href="https://autoposter.pixnet.net/blog/post/121469360">spring Boot(六):如何優雅的使用mybatis</a></li>
-<li><a href="https://github.com/mybatis/spring-boot-starter/releases">github - mybatis&#x2F;spring-boot-starter</a></li>
+<li><a href="https://docs.spring.io/spring-framework/docs/4.2.x/spring-framework-reference/html/transaction.html">Spring- 16.Transaction Management</a></li>
+<li><a href="https://www.cnblogs.com/dirgo/p/11421828.html">Spring事务嵌套引发的血案—Transaction rolled back because it has been marked as rollback-only</a></li>
+<li><a href="https://yunlongn.github.io/2019/05/06/%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%BA%8B%E5%8A%A1%E7%9A%84%E5%9D%91Transaction-rolled-back-because-it-has-been-marked-as-rollback-only/">记一次事务的坑 Transaction rolled back because it has been marked as rollback-only</a></li>
+<li><a href="https://www.796t.com/article.php?id=51988">SpringBoot事務註解@Transactional 事物回滾、手動回滾事物</a></li>
 </ol>
 ]]></content>
       <categories>
-        <category>orm</category>
+        <category>springboot</category>
       </categories>
       <tags>
         <tag>springboot</tag>
-        <tag>mybatis</tag>
+        <tag>hibernate</tag>
       </tags>
   </entry>
   <entry>
-    <title>Effective Java Item3 - 使用私有建構子或Enum類型實現Singleton</title>
-    <url>/2022/05/22/effective-java-item3/</url>
-    <content><![CDATA[<p>此為閱讀 Effective Java 3rd 所記錄的學習歷程<br>Item3 : 使用私有建構子或Enum類型實現Singleton</p>
+    <title>Optional 類別基本操作</title>
+    <url>/2022/06/04/java-Optional/</url>
+    <content><![CDATA[<p>在 Java 開發當中，常常會碰到 <font color=#ff0000><strong>NullPointerException</strong></font> 的問題，於是為了明確定義如果遇到可能有 null 的情況需要如何處理 &amp; 優化程式寫法，就多了 Optional 的類別。</p>
+<p>在 <strong>Clean Code</strong> 這本書內的 Character7 錯誤處理中提到:</p>
+<ul>
+<li>不要回傳 null ( 空值 ) - P123</li>
+<li>不要傳遞 null - P124</li>
+</ul>
+<p>使用 null 參數在程式中流通是一件非常不好的做法，會需要額外的檢查 參數是否為 null ，如果有一處忘了檢查往往會有非預期的錯誤產生 ( ex : NullPointerException )</p>
 <span id="more"></span>
 
-<h1 id="使用-private-constructor-常見有兩種-x2F-附加一種優化作法"><a href="#使用-private-constructor-常見有兩種-x2F-附加一種優化作法" class="headerlink" title="使用 private constructor (常見有兩種&#x2F;附加一種優化作法)"></a>使用 private constructor (常見有兩種&#x2F;附加一種優化作法)</h1><ol>
-<li>singleton with public final field</li>
-</ol>
-<ul>
-<li>簡單易懂, 直接使用</li>
-<li>field 為 <font color=#ff0000>public</font><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">PublicFieldSingleton</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">PublicFieldSingleton</span> <span class="variable">INSTANCE</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">PublicFieldSingleton</span>();</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">private</span> <span class="title function_">PublicFieldSingleton</span><span class="params">()</span> &#123;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">demo</span><span class="params">()</span> &#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;PublicFieldSingleton demo.&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<p>在 java8 以前，以往物件的回傳，都需要特別注意去判斷 是否為 null 值，使用 Optional 後，多了一些判斷 null 的 API 可以應用 ex: <strong>isPresent()</strong> 。</p>
+<p>※回傳單一物件的時候，才需要使用Optional，如果是集合的話，直接回傳空的集合即可 ex: List</p>
+<h1 id="將值轉換成-Optional-物件"><a href="#將值轉換成-Optional-物件" class="headerlink" title="將值轉換成 Optional 物件"></a>將值轉換成 Optional 物件</h1><ul>
+<li>Optional.of( T value)</li>
 </ul>
-<ol start="2">
-<li>singleton with static factory</li>
-</ol>
+<p>當 value 不為 null 的時候回傳一個 Optional 物件，如果 value 為 null 會有 NullPointerException</p>
 <ul>
-<li>如果要調整其內容為 non-singleton , 可以不用改變API, 更改factory method實作即可 , 靈活度較高</li>
-<li>field 為 <font color=#ff0000>private</font><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">StaticFactorySingleton</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">StaticFactorySingleton</span> <span class="variable">INSTANCE</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StaticFactorySingleton</span>();</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">private</span> <span class="title function_">StaticFactorySingleton</span><span class="params">()</span> &#123;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> StaticFactorySingleton <span class="title function_">getInstance</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> INSTANCE;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">demo</span><span class="params">()</span> &#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;StaticFactorySingleton demo.&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>Optional.ofNullable( T value ) - 允許傳入 null 值</li>
 </ul>
-<ol start="3">
-<li>因為上述兩種方法, static field 初始化的時機點在 class 載入時期<br>如果在程式執行時期根本沒有用到該singleton實例時, 若該實例建立時<br>成本昂貴的情況下, 就會造成無謂的浪費; 為了避免該情況, 就有了<br>lazy initialization (在第一次實際需要使用時才產生實例)<br>※ 此處就不多加討論多執行緒的情境<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">StaticFoctorylazySingleton</span> &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> StaticFoctorylazySingleton INSTANCE;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> StaticFoctorylazySingleton <span class="title function_">getInstance</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">if</span>(<span class="literal">null</span> == INSTANCE ) &#123;</span><br><span class="line">			INSTANCE = <span class="keyword">new</span> <span class="title class_">StaticFoctorylazySingleton</span>();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> INSTANCE;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">demo</span><span class="params">()</span> &#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;StaticFoctorylazySingleton demo.&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ol>
-<h1 id="使用-Enum"><a href="#使用-Enum" class="headerlink" title="使用 Enum"></a>使用 Enum</h1><ol>
-<li>enum singleton<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> <span class="title class_">EnumSingleton</span> &#123;</span><br><span class="line"></span><br><span class="line">	INSTANCE;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">demo</span><span class="params">()</span> &#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;EnumSingleton demo.&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ol>
+<p>當 value 不為 null 的時候回傳一個 Optional 物件，如果 value 為 null 回傳 Optional.empty()</p>
+<h1 id="判斷-值-是否為-存在"><a href="#判斷-值-是否為-存在" class="headerlink" title="判斷 值 是否為 存在"></a>判斷 值 是否為 存在</h1><ul>
+<li>Optional.isPresent( T value )</li>
+</ul>
+<p>當 value 有值 回傳 true , 反之 false</p>
 <ul>
-<li>enum 的 建構子為私有的，因此使用者無法在執行時期去產生新的實例</li>
-<li>初始化時機為 class 載入時期，enum 會執行建構子<br>因此上述的寫法也可以看成<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">EnumSingleton</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">EnumSingleton</span> <span class="variable">INSTANCE</span>  <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">EnumSingleton</span>();</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">demo</span><span class="params">()</span> &#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;EnumSingleton demo.&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-書上也在單一元素(single-element enum)情況下，使用 Enum 類型為實作 singleton 的最佳辦法。</li>
+<li>ifPresent ( Consumer&lt;? super T&gt; action )</li>
+</ul>
+<p>當判斷 Option 的 value 有值時，帶入 Consumer 進行客製化處理，如範例中加工顯示文字；如果沒有值的話就不做任何事</p>
+<h1 id="取得-Optional-值的方法"><a href="#取得-Optional-值的方法" class="headerlink" title="取得 Optional 值的方法"></a>取得 Optional 值的方法</h1><ul>
+<li>get()</li>
+</ul>
+<p>如果 value 存在則回傳值，如果值不存在會報出錯誤訊息<br>java.util.NoSuchElementException: No value present</p>
+<p><strong>※ 在使用 get() 前，確保先用 isPresent() 檢查是否有值，才不會有錯誤訊息</strong></p>
+<ul>
+<li>orElse( T other )</li>
+</ul>
+<p>此方法濃縮了 isPrsesnt() &amp; get() 的方法，如果 Optional 有值的話顯示值，沒有值的話會帶入 other 給的值</p>
+<ul>
+<li>orElseGet( Supplier&lt;? extends T&gt; other )</li>
+</ul>
+<p>如果 Optional 有值的話顯示值，沒有的話會根據客製化的邏輯帶入 other 的結果 ( 用在複雜情境 )，下述範例根據當下產出的 random 值判斷奇數&#x2F;偶數顯示不同的demo結果</p>
+<ul>
+<li>orElseThrow( Supplier&lt;? extends X&gt; exceptionSupplier )</li>
+</ul>
+<p>如果 Optional 有值的話顯示值，沒有的話可以帶入客製化的 exception ( exceptionSupplier )</p>
+<h1 id="實作範例"><a href="#實作範例" class="headerlink" title="實作範例"></a>實作範例</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 練習 Optional 使用</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> oscar51011</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2022年6月4日</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">OptionalMain</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">		</span><br><span class="line">		System.out.println(<span class="string">&quot;== data not found ( before java 8 ) ==&quot;</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// java8以前 ( 如果 null 則不顯示值)</span></span><br><span class="line">		<span class="type">String</span> <span class="variable">nullValueBeforeJava8</span> <span class="operator">=</span> getMapValue(<span class="string">&quot;four&quot;</span>);</span><br><span class="line">		<span class="keyword">if</span>(nullValueBeforeJava8 != <span class="literal">null</span>)</span><br><span class="line">			System.out.println(<span class="string">&quot;Before java8 value is null: &quot;</span> + nullValueBeforeJava8);</span><br><span class="line">		</span><br><span class="line">		<span class="type">String</span> <span class="variable">value</span> <span class="operator">=</span> getMapValue(<span class="string">&quot;three&quot;</span>);</span><br><span class="line">		<span class="keyword">if</span>(value != <span class="literal">null</span>)</span><br><span class="line">			System.out.println(<span class="string">&quot;Before java8 value is not null: &quot;</span> + value);</span><br><span class="line">		</span><br><span class="line">		System.out.println(<span class="string">&quot;== data not found ( java 8 ) ==&quot;</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">/**</span></span><br><span class="line"><span class="comment">		 * java8以後 沒有值的情況</span></span><br><span class="line"><span class="comment">		 */</span></span><br><span class="line">		Optional&lt;String&gt; nullValueJava8 = getMapValueByOptional(<span class="string">&quot;four&quot;</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// get() 用法</span></span><br><span class="line">		<span class="keyword">if</span>(nullValueJava8.isPresent())</span><br><span class="line">			System.out.println(<span class="string">&quot;java8 Optional get() is not null:&quot;</span> + nullValueJava8.get());</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			System.out.println(<span class="string">&quot;java8 Optional get() is null: &quot;</span> + <span class="string">&quot;mapValueIsNull&quot;</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// orElse() 用法</span></span><br><span class="line">		System.out.println(<span class="string">&quot;java8 Optional orElse() is null: &quot;</span> + nullValueJava8.orElse(<span class="string">&quot;mapValueIsNull&quot;</span>));</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// orElseGet()方法 , 隨機產一個1-100的亂數，根據奇數偶數顯示不同的邏輯</span></span><br><span class="line">		System.out.println(nullValueJava8.orElseGet(()-&gt;&#123;</span><br><span class="line">			<span class="type">Random</span> <span class="variable">rd</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Random</span>();</span><br><span class="line">			<span class="type">int</span> <span class="variable">random</span> <span class="operator">=</span> rd.nextInt(<span class="number">100</span>);</span><br><span class="line">			<span class="keyword">if</span>(random%<span class="number">2</span> == <span class="number">0</span>)</span><br><span class="line">				<span class="keyword">return</span> <span class="string">&quot;java8 Optional orElseGet() null logic : even&quot;</span>;</span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">				<span class="keyword">return</span> <span class="string">&quot;java8 Optional orElseGet() null logic :　odd&quot;</span>;</span><br><span class="line">		&#125;));</span><br><span class="line">			</span><br><span class="line">		<span class="comment">// orElseThrow()方法</span></span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			System.out.println(nullValueJava8.orElseThrow(()-&gt; <span class="keyword">new</span> <span class="title class_">Exception</span>(<span class="string">&quot;custom Exception&quot;</span>)));</span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			System.out.println(<span class="string">&quot;test catch exception:&quot;</span> + e.getMessage());</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		System.out.println(<span class="string">&quot;== data exist ( java 8 )==&quot;</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">/**</span></span><br><span class="line"><span class="comment">		 * java8以後 有值的情況</span></span><br><span class="line"><span class="comment">		 */</span></span><br><span class="line">		Optional&lt;String&gt; valueJava8 = getMapValueByOptional(<span class="string">&quot;three&quot;</span>);</span><br><span class="line">		<span class="keyword">if</span>(valueJava8.isPresent())</span><br><span class="line">			System.out.println(<span class="string">&quot;java8 Optional get() is not null:&quot;</span> + valueJava8.get());</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			System.out.println(<span class="string">&quot;java8 Optional get() is null:&quot;</span> + <span class="string">&quot;mapValueIsNull&quot;</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// orElse() 用法</span></span><br><span class="line">		System.out.println(<span class="string">&quot;java8 Optional orElse() is not null: &quot;</span> + valueJava8.orElse(<span class="string">&quot;mapValueIsNull&quot;</span>));</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// isPresent()用法</span></span><br><span class="line">		valueJava8.ifPresent( parameter -&gt; &#123;</span><br><span class="line">			System.out.println(<span class="string">&quot;java8 Optional ifPresent() is not null:&quot;</span> + parameter);</span><br><span class="line">		&#125;);</span><br><span class="line">	</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 取得map的值，如果沒有判斷 null 的情況，則會有 NullPointerException</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> key</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> String <span class="title function_">getMapValue</span><span class="params">(String key)</span> &#123;</span><br><span class="line">		Map&lt;String, String&gt; map = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">		map.put(<span class="string">&quot;one&quot;</span>, <span class="string">&quot;one&quot;</span>);</span><br><span class="line">		map.put(<span class="string">&quot;two&quot;</span>, <span class="string">&quot;two&quot;</span>);</span><br><span class="line">		map.put(<span class="string">&quot;three&quot;</span>, <span class="string">&quot;three&quot;</span>);</span><br><span class="line">		<span class="type">String</span> <span class="variable">value</span> <span class="operator">=</span> map.get(key);</span><br><span class="line">		<span class="keyword">return</span> value;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> Optional&lt;String&gt; <span class="title function_">getMapValueByOptional</span><span class="params">(String key)</span> &#123;</span><br><span class="line">		Map&lt;String, String&gt; map = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">		map.put(<span class="string">&quot;one&quot;</span>, <span class="string">&quot;one&quot;</span>);</span><br><span class="line">		map.put(<span class="string">&quot;two&quot;</span>, <span class="string">&quot;two&quot;</span>);</span><br><span class="line">		map.put(<span class="string">&quot;three&quot;</span>, <span class="string">&quot;three&quot;</span>);</span><br><span class="line">		<span class="type">String</span> <span class="variable">value</span> <span class="operator">=</span> map.get(key);</span><br><span class="line">		<span class="comment">// 方法1: 判斷null</span></span><br><span class="line">		<span class="comment">//return value == null ? Optional.empty() : Optional.of(value);</span></span><br><span class="line">		<span class="comment">// 方法2: 濃縮上述的方法 如果不為 null則回傳值</span></span><br><span class="line">		<span class="keyword">return</span> Optional.ofNullable(value);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>根據 Ref. 5 有提到，使用 null 或是 Optional 的時機點，可以做個參考</p>
+<ul>
+<li>如果在 private 的 method中，因為只有該 class 有權限訪問，可以很清楚的知道 return用法，<br>如果使用 optional 會增加程式的複雜度</li>
+<li>如果在 public 的 method中，因為有多個 class 需要使用，developer 也會在撰寫時容易忘記<br>去處理 null 的情境，因此建議使用 optional 去提醒</li>
 </ul>
 <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ol>
-<li><a href="https://dzone.com/articles/java-singletons-using-enum">Java Singletons Using Enum</a></li>
-<li><a href="https://stackoverflow.com/questions/26285520/implementing-singleton-with-an-enum-in-java">Implementing Singleton with an Enum (in Java)</a></li>
-<li><a href="https://www.jyt0532.com/2017/10/20/enforce-the-singleton-property-with-a-private-constructor-or-enum/">Effective Java Item3 - 用Enum實作Singleton</a></li>
-<li><a href="https://riptutorial.com/java/example/5741/implement-singleton-pattern-with-a-single-element-enum">Implement Singleton pattern with a single-element enum</a></li>
+<li><a href="https://openhome.cc/Gossip/Java/Optional.html">使用 Optional 取代 null</a></li>
+<li><a href="https://matthung0807.blogspot.com/2021/01/java-optional-intro.html">Java Optional 簡介</a></li>
+<li><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html">Optional (Java Platform SE 8 )</a></li>
+<li><a href="http://blog.tonycube.com/2015/10/java-java8-4-optional.html">Java8 新功能筆記 (4) - Optional</a></li>
+<li><a href="https://medium.com/@abhisheksinghaks77/are-you-correctly-using-optional-collections-and-null-in-your-java-code-5d2b8617d47c">Are you correctly using Optional, Collections, and Null in your Java code ?</a></li>
 </ol>
 ]]></content>
       <categories>
-        <category>effectiveJava</category>
+        <category>java</category>
       </categories>
       <tags>
         <tag>java</tag>
-        <tag>effectiveJava</tag>
       </tags>
   </entry>
   <entry>
@@ -933,6 +863,232 @@ Update的部分用 Assert 斷言驗證值是否有修改。<br>執行後，發�
       </tags>
   </entry>
   <entry>
+    <title>Effective Java Item1 - 使用靜態工廠方法取代建構子</title>
+    <url>/2022/05/19/effective-java-item1/</url>
+    <content><![CDATA[<p>此為閱讀 Effective Java 3rd 所記錄的學習歷程<br>Item1 : 使用靜態工廠方法取代建構子</p>
+<span id="more"></span>
+
+<p>如果要產生一個實例，一般普遍的想法就是使用 public constructor 讓開發人員隨時需要即使用 <em>new</em> 的方式</p>
+<p>但也有另外一種方式，使用靜態工廠方法來提供創造物件的服務</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">   <span class="keyword">private</span> <span class="title function_">Job</span><span class="params">(String title)</span> &#123;</span><br><span class="line">	<span class="built_in">this</span>.title = title;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> Job <span class="title function_">from</span><span class="params">(String title)</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Job</span>(title);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="使用-靜態工廠方法的好處"><a href="#使用-靜態工廠方法的好處" class="headerlink" title="使用 靜態工廠方法的好處"></a>使用 靜態工廠方法的好處</h1><ol>
+<li>有屬於自己的方法名稱，相較於建構子，可讀性高</li>
+<li>避免每次呼叫時，都需要建立一個新的實例<br> -&gt; 可以自行決定需要給新的實例 或是 舊的 ( 設計模式 Singleton )</li>
+<li>可以透過靜態工廠取得子類別實例，並可藉由不同參數，得到不同子類別<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Job</span> &#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> Job <span class="title function_">newInstance</span><span class="params">(String name)</span> &#123;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">if</span>(name.equals(<span class="string">&quot;doctor&quot;</span>)) <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Doctor</span>();</span><br><span class="line">	</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Employee</span>();</span><br><span class="line">	&#125;	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Doctor</span> <span class="keyword">extends</span> <span class="title class_">Job</span> &#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Employee</span> <span class="keyword">extends</span> <span class="title class_">Job</span> &#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li>可以透過靜態工廠取得實作同一介面的實例<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Service</span> &#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> Discount <span class="title function_">getDiscount</span><span class="params">(String type)</span> &#123;</span><br><span class="line">		<span class="keyword">switch</span>(type) &#123;</span><br><span class="line">			<span class="keyword">case</span> <span class="string">&quot;half&quot;</span>: <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">HalfPriceDiscountImpl</span>();</span><br><span class="line">			<span class="keyword">case</span> <span class="string">&quot;limit&quot;</span>: <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">TimeLimitDiscountImpl</span>();</span><br><span class="line">			<span class="keyword">default</span> :  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">MemberDiscountImpl</span>();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h1 id="使用-靜態工廠方法的缺點"><a href="#使用-靜態工廠方法的缺點" class="headerlink" title="使用 靜態工廠方法的缺點"></a>使用 靜態工廠方法的缺點</h1><ol>
+<li>如 建構子為私有，則無法被繼承</li>
+<li>與其他靜態方法無差別，很難在眾多方法中一點看出。</li>
+</ol>
+<p>-&gt; 可用慣用命名行為，使其容易辨認<br>EX: getInstance() : 取得實例<br>    newInstance() : 確保每次取得的實例皆為新的實例<br>    valueOf() : 類別轉換 Integer.valueOf(int i)</p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ol>
+<li><a href="https://www.blogbrb.com/posts/book/effective-java-item1/">Effective Java Item1 以靜態工廠方法代替建構函式</a></li>
+<li><a href="https://www.jyt0532.com/2017/09/20/static-factory-method/">Effective Java Item1 - 靜態工廠方法</a></li>
+<li><a href="https://www.gushiciku.cn/pl/2Pkd/zh-tw">第一條建議：考慮用靜態工廠方法代替構造方法——《Effective Java》讀書筆記</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>effectiveJava</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+        <tag>effectiveJava</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>springboot 整合 mybatis</title>
+    <url>/2022/04/09/springboot-mybatis/</url>
+    <content><![CDATA[<p>Mybatis 為一個 ORM（Object Relational Mapping) 框架，簡單易學<br>接下來藉由一系列步驟，實作 Springboot 搭配 mybatis 取得 database 的資料</p>
+<span id="more"></span>
+
+<h3 id="使用環境"><a href="#使用環境" class="headerlink" title="使用環境"></a>使用環境</h3><ul>
+<li>Springboot 2.5.2</li>
+<li>Mybatis 3.5.5 (使用 mybatis-spring-boot-2.1.3)</li>
+<li>h2 database 便於測試</li>
+</ul>
+<p>對應之pom檔之 dependencies 如下:</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">... 略</span><br><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">  	<span class="comment">&lt;!-- web --&gt;</span></span><br><span class="line">  	<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">	</span><br><span class="line">	<span class="comment">&lt;!-- mybatis --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.mybatis.spring.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.1.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">	</span><br><span class="line">	<span class="comment">&lt;!-- H2 database for demo --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.h2database<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span> </span><br><span class="line">    	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>h2<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">	</span><br><span class="line">	<span class="comment">&lt;!-- test framework --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">  </span><br><span class="line">  <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span> </span><br><span class="line">...略</span><br></pre></td></tr></table></figure>
+
+<h3 id="實作範例"><a href="#實作範例" class="headerlink" title="實作範例"></a>實作範例</h3><ol>
+<li><p><code>application.yml</code> 設定 H2 database 的連線資訊</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line"> <span class="attr">h2:</span></span><br><span class="line">    <span class="attr">console:</span></span><br><span class="line">      <span class="attr">enabled:</span> <span class="literal">true</span></span><br><span class="line">      <span class="attr">path:</span> <span class="string">/h2-console</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>src/main/resources</code> 底下建立 h2 database 的 資料表資料 JOB &amp; 預先寫入預設值<br><code>schema.sql</code></p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 職業類別</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> JOB(</span><br><span class="line">	ID <span class="type">int</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span> AUTO_INCREMENT,</span><br><span class="line">	DESCRIPTION <span class="type">VARCHAR</span>(<span class="number">50</span>) <span class="keyword">NOT</span> <span class="keyword">null</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p><code>data.sql</code></p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * add job</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> JOB(DESCRIPTION)<span class="keyword">VALUES</span>(<span class="string">&#x27;engineer&#x27;</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> JOB(DESCRIPTION)<span class="keyword">VALUES</span>(<span class="string">&#x27;doctor&#x27;</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>新增 entity 物件</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Job</span> &#123;</span><br><span class="line">	<span class="keyword">private</span> Long id;</span><br><span class="line">	<span class="keyword">private</span> String description;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> Long <span class="title function_">getId</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> id;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setId</span><span class="params">(Long id)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.id = id;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> String <span class="title function_">getDescription</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> description;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setDescription</span><span class="params">(String description)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.description = description;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>創建 Mapper 介面</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Mapper</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">JobMapper</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Select(&quot;SELECT * FROM JOB&quot;)</span></span><br><span class="line">    <span class="meta">@Results(&#123;</span></span><br><span class="line"><span class="meta">        @Result(property = &quot;id&quot;,  column = &quot;ID&quot;),</span></span><br><span class="line"><span class="meta">        @Result(property = &quot;description&quot;, column = &quot;DESCRIPTION&quot;)</span></span><br><span class="line"><span class="meta">    &#125;)</span></span><br><span class="line">    List&lt;Job&gt; <span class="title function_">getAll</span><span class="params">()</span>;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Select(&quot;SELECT * FROM JOB WHERE ID =#&#123;id&#125;&quot;)</span></span><br><span class="line">    <span class="meta">@Results(&#123;</span></span><br><span class="line"><span class="meta">        @Result(property = &quot;id&quot;,  column = &quot;ID&quot;),</span></span><br><span class="line"><span class="meta">        @Result(property = &quot;description&quot;, column = &quot;DESCRIPTION&quot;)</span></span><br><span class="line"><span class="meta">    &#125;)</span></span><br><span class="line">	Job <span class="title function_">getById</span><span class="params">(Long id)</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Update(&quot;UPDATE JOB SET DESCRIPTION=#&#123;description&#125; WHERE ID =#&#123;id&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">update</span><span class="params">(Job job)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>以下注入使用 <code>@Mapper</code> or 統一在 啟動類加上  <code>@MapperScan(&quot;com.demo.mapper&quot;)</code> 針對某個 package 底下的檔案進行掃描，如果已經使用 mapperScan 則不需在每個 mapper 個別下 <code>@Mapper</code></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="meta">@MapperScan(&quot;com.demo.mapper&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SpringbootMybatisApplication</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">		SpringApplication.run(SpringbootMybatisApplication.class, args);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>撰寫測試情境，利用 <code>@SpringBootTest</code> 來整合測試，是否可以抓取到對應的資料<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@SpringBootTest</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">JobMapperTest</span> &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> JobMapper jobMapper;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="keyword">void</span> <span class="title function_">testGetById</span><span class="params">()</span> &#123;</span><br><span class="line">		System.out.println(jobMapper.getById(<span class="number">2L</span>));</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="keyword">void</span> <span class="title function_">testGetAll</span><span class="params">()</span> &#123;</span><br><span class="line">		List&lt;Job&gt; jobs = jobMapper.getAll();</span><br><span class="line">		System.out.println(jobs);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="keyword">void</span> <span class="title function_">testUpdate</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="type">Job</span> <span class="variable">job</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Job</span>();</span><br><span class="line">		job.setId(<span class="number">2L</span>);</span><br><span class="line">		job.setDescription(<span class="string">&quot;test&quot;</span>);</span><br><span class="line">		jobMapper.update(job);</span><br><span class="line">		assertTrue(<span class="string">&quot;test&quot;</span>.equals(jobMapper.getById(<span class="number">2L</span>).getDescription()));</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+Update的部分用 Assert 斷言驗證值是否有修改。<br>執行後，發現可以取得 DB 的 清單，如下圖:<br><img src="https://bnz05pap002files.storage.live.com/y4m0KKesdK0iQ_EfFtGD5Wz21wDvvEHe0BQsvyyZc7hvrRvhH1fECKkGa_wCu3LTFEggeX49t2QHmUIhFVrgEhxPshsRJEvhQ_JO6Vzdm5m47GSFdtivUxc3dosVGHfDlxMiN7CWZSZaa0PsHh7AltFS4QJyw6Isgz04XBEhX2bV1XeHdb4ZcFE13Vq23XXkutq?width=660&height=292&cropmode=none" alt="mybatis-result"></li>
+</ol>
+<h3 id="使用-XML-的方式撰寫SQL"><a href="#使用-XML-的方式撰寫SQL" class="headerlink" title="使用 XML 的方式撰寫SQL"></a>使用 XML 的方式撰寫SQL</h3><p>除了使用 Annotation 的方式之外，也可以將SQL與java檔案分開獨立撰寫</p>
+<ol>
+<li><p><code>application.yml</code> 新增配置 xml 之 package</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment">#mybatis mapper location</span></span><br><span class="line"><span class="attr">mybatis:</span></span><br><span class="line">  <span class="attr">mapper-locations:</span> <span class="string">mapper/*.xml</span>   </span><br></pre></td></tr></table></figure>
+</li>
+<li><p>本篇的 JobMapper 新增方法 (系統會根據method name 對應 xml 的 id tag  ex: <code>&lt;select id=&quot;xxx&quot;&gt;</code> )</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 系統會根據介面的method name 去 application.yml 的 mapper-location 的 XML 中尋找對應的sql</span></span><br><span class="line"><span class="comment">* <span class="doctag">@param</span> id</span></span><br><span class="line"><span class="comment">* <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">Job <span class="title function_">getByIdUseXml</span><span class="params">(Long id)</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>撰寫 xml (其 id 會與 上述的 mapper 中的 method name 對應)</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">mapper</span> <span class="keyword">PUBLIC</span> <span class="string">&quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</span></span></span><br><span class="line"><span class="meta">        <span class="string">&quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;</span>&gt;</span></span><br><span class="line">        </span><br><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">&quot;com.demo.mapper.JobMapper&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;getByIdUseXml&quot;</span> <span class="attr">parameterType</span>=<span class="string">&quot;Long&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;com.demo.entity.Job&quot;</span>&gt;</span></span><br><span class="line">		SELECT * FROM JOB WHERE ID = #&#123;id&#125;</span><br><span class="line">	<span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>上述的寫法可以與 annotation 一般產生同樣的效果</p>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
+<li><a href="https://autoposter.pixnet.net/blog/post/121469360">spring Boot(六):如何優雅的使用mybatis</a></li>
+<li><a href="https://github.com/mybatis/spring-boot-starter/releases">github - mybatis&#x2F;spring-boot-starter</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>orm</category>
+      </categories>
+      <tags>
+        <tag>springboot</tag>
+        <tag>mybatis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Effective Java Item4 - 使用私有建構子來實現禁止實例化</title>
+    <url>/2022/05/23/effective-java-item4/</url>
+    <content><![CDATA[<p>此為閱讀 Effective Java 3rd 所記錄的學習歷程<br>Item4 : 使用私有建構子來實現禁止實例化</p>
+<span id="more"></span>
+
+<p>有時候在實作某些固定的邏輯時，會設計成 Utility Class，該類別只有包含 static 的方法 &amp; 變數<br>ex: java.lang.Math , java.util.Arrays</p>
+<ul>
+<li>此類別不需要有其他人去實例化它</li>
+<li>如果不撰寫建構子，java 有預設的 無參數建構子</li>
+</ul>
+<p> 因此撰寫一個 <font color=#ff0000>private constructor</font>，不要讓 compiler 產生預設的 建構子</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Test</span> &#123;</span><br><span class="line">	<span class="comment">// 避免使用反射機制進行實例化</span></span><br><span class="line">	<span class="keyword">private</span> <span class="title function_">Test</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">AssertionError</span>();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>書中描述，如果將類別設計成抽象類別是否就可以不被實例化? (答案是無法避免的)</p>
+<ul>
+<li>類別可以被繼承，且子類可以實例化</li>
+<li>有可能誤導developer，是否該類別是被設計成需要繼承的類別</li>
+</ul>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference:"></a>Reference:</h1><ol>
+<li><a href="https://www.blogbrb.com/posts/book/effective-java-item4/">Effective Java Item4 透過私有建構函式來禁止實例化</a></li>
+<li><a href="https://biratkirat.medium.com/learning-effective-java-item-4-4bc457fc5674">Learning Effective Java — Item 4</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>effectiveJava</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+        <tag>effectiveJava</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Effective Java Item9 - 傾向使用 try-resources 優於 try-finally</title>
+    <url>/2022/05/28/effective-java-item9/</url>
+    <content><![CDATA[<p>此為閱讀 Effective Java 3rd 所記錄的學習歷程<br>Item9 : 傾向使用 try-resources 優於 try-finally </p>
+<span id="more"></span>
+
+<p>Java 有許多 lib 需要使用 close() 來手動關閉資源，像是 FileReader , BufferedReader … etc<br>但如果忘記釋放資源，就會造成 memory leak 的問題。</p>
+<p>在 Java 7 以前，需要使用 try catch finally 處理，如果有多組資源，程式碼會變得冗長</p>
+<h1 id="Before-Try-finally"><a href="#Before-Try-finally" class="headerlink" title="Before: Try-finally"></a>Before: Try-finally</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 字元組 讀檔 Reader</span></span><br><span class="line"><span class="comment">	 * BufferedReader 為 Reader 的擴充</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">readFile</span><span class="params">(String filePath)</span> &#123;</span><br><span class="line">			</span><br><span class="line">		<span class="type">FileReader</span> <span class="variable">fileReader</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">		<span class="type">BufferedReader</span> <span class="variable">br</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			</span><br><span class="line">			fileReader = <span class="keyword">new</span> <span class="title class_">FileReader</span>(filePath);</span><br><span class="line">			br = <span class="keyword">new</span> <span class="title class_">BufferedReader</span>(fileReader);</span><br><span class="line">			</span><br><span class="line">			String line;</span><br><span class="line">			</span><br><span class="line">			<span class="comment">// readline() 會刪除每行結尾的換行然後回傳</span></span><br><span class="line">			<span class="keyword">while</span>( (line = br.readLine()) != <span class="literal">null</span>) &#123;</span><br><span class="line">				System.out.println(line);</span><br><span class="line">			&#125;</span><br><span class="line">			</span><br><span class="line">		&#125; <span class="keyword">catch</span> (FileNotFoundException e) &#123;</span><br><span class="line">			<span class="comment">// 無法找到檔案</span></span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">			<span class="comment">// 讀檔異常</span></span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">	</span><br><span class="line">			<span class="keyword">if</span> ( br != <span class="literal">null</span>) &#123;</span><br><span class="line">				<span class="keyword">try</span> &#123;</span><br><span class="line">					br.close();</span><br><span class="line">				&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">					<span class="comment">// 關閉 bufferedReader 異常</span></span><br><span class="line">					e.printStackTrace();</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">	</span><br><span class="line">			<span class="keyword">if</span> ( fileReader != <span class="literal">null</span>) &#123;</span><br><span class="line">				<span class="keyword">try</span> &#123;</span><br><span class="line">					fileReader.close();</span><br><span class="line">				&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">					<span class="comment">// 關閉 fileReader 異常</span></span><br><span class="line">					e.printStackTrace();</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;		</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="After-Try-with-Resources"><a href="#After-Try-with-Resources" class="headerlink" title="After: Try-with-Resources"></a>After: Try-with-Resources</h1><p>Java 7 之後，出現 try-with-resources 的語法，block 內的物件需要實作 <font color=#ff0000>AutoCloseable 介面 </font><br>在 Java 1.5 出現的 Closable 介面 已經繼承了 AutoCloseable，JVM 在 try 結束後會呼叫 AutoCloseable.close() 釋放資源</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 字元組 讀檔 Reader</span></span><br><span class="line"><span class="comment">	 * BufferedReader 為 Reader 的擴充</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">readFile</span><span class="params">(String filePath)</span> &#123;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// try-with-resources</span></span><br><span class="line">		<span class="keyword">try</span>(</span><br><span class="line">			<span class="type">Reader</span> <span class="variable">reader</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">FileReader</span>(filePath);</span><br><span class="line">			<span class="type">BufferedReader</span> <span class="variable">br</span> <span class="operator">=</span>  <span class="keyword">new</span> <span class="title class_">BufferedReader</span>(reader)</span><br><span class="line">			) &#123;</span><br><span class="line">									</span><br><span class="line">			String line;</span><br><span class="line">			</span><br><span class="line">			<span class="comment">// readline() 會刪除每行結尾的換行然後回傳</span></span><br><span class="line">			<span class="keyword">while</span>( (line = br.readLine()) != <span class="literal">null</span>) &#123;</span><br><span class="line">				System.out.println(line);</span><br><span class="line">			&#125;</span><br><span class="line">			</span><br><span class="line">		&#125; <span class="keyword">catch</span> (FileNotFoundException e) &#123;</span><br><span class="line">			<span class="comment">// 找不到檔案處理</span></span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">			<span class="comment">// 讀檔錯誤處理</span></span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;	</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<p>優點:</p>
+<ul>
+<li>使程式碼變得簡潔</li>
+<li>避免開發人員忘記關閉資源，造成 memory leak</li>
+</ul>
+<p>以上就是 Effective Java Item9 的主要內容。</p>
+<h1 id="try-with-resources延伸-Exception-Suppressed"><a href="#try-with-resources延伸-Exception-Suppressed" class="headerlink" title="try-with-resources延伸 ( Exception Suppressed )"></a>try-with-resources延伸 ( Exception Suppressed )</h1><p>使用 try-with-resources 語法時，如果 close() 的方法出現了例外，但 try block 內的邏輯也出現了例外，<br>我們發現只有出現邏輯的錯誤，java 優先捕捉到了 try block 的異常，但 close 的異常其實並沒有不見，<br>java 7 提供了 <font color=#ff0000>Throwable getSuppressed()</font> 可以用來取出被壓制的 exception</p>
+<p>以下實作一個 AutoCloseable 的物件來實現上述的做法</p>
+<ul>
+<li>實作 AutoCloseable 的服務</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 實作 AutoCloseable ，使其可以使用 try-with-resources</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> oscar51011</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2022年5月28日</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DemoCloseableService</span> <span class="keyword">implements</span> <span class="title class_">AutoCloseable</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">close</span><span class="params">()</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;demo close exception&quot;</span>);</span><br><span class="line">		<span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Exception</span>(<span class="string">&quot;test close exception&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用其 服務，並在 try block 拋出 logic 錯誤</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">AutoCloseableExceptionMain</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			AutoCloseableExceptionMain.test();</span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			 System.out.println(<span class="string">&quot;Logic Exception message:&quot;</span> + e);</span><br><span class="line">			 </span><br><span class="line">			Throwable[] throwables = e.getSuppressed();</span><br><span class="line">			<span class="keyword">for</span>(Throwable t : throwables) &#123;</span><br><span class="line">				System.out.println(<span class="string">&quot;Suppressed Exception message:&quot;</span> + t);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">test</span><span class="params">()</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">		<span class="keyword">try</span>(<span class="type">DemoCloseableService</span> <span class="variable">s</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">DemoCloseableService</span>())&#123;</span><br><span class="line">			System.out.println(<span class="string">&quot;do service&quot;</span>);</span><br><span class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Exception</span>(<span class="string">&quot;logic exception&quot;</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>來查看一下結果，除了 Logic Exception 之外，我們也可以查出 close() 發生的異常。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">do service</span><br><span class="line">demo close exception</span><br><span class="line">Logic Exception message:java.lang.Exception: logic exception</span><br><span class="line">Suppressed Exception message:java.lang.Exception: test close exception</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference:"></a>Reference:</h1><ol>
+<li><a href="https://matthung0807.blogspot.com/2020/04/java-try-with-resources-close-resource.html">Java 使用 try-with-resources 關閉資源</a></li>
+<li><a href="https://www.baeldung.com/java-try-with-resources">Java – Try with Resources</a></li>
+<li><a href="https://www.liaoxuefeng.com/wiki/1252599548343744/1298366902304801">廖雪峰的官方網站-Reader</a></li>
+<li><a href="https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html">The try-with-resources Statement</a></li>
+<li><a href="https://ithelp.ithome.com.tw/articles/10081449">Project Coin - try-with-resource 語法 完</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>effectiveJava</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+        <tag>effectiveJava</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Effective Java Item3 - 使用私有建構子或Enum類型實現Singleton</title>
+    <url>/2022/05/22/effective-java-item3/</url>
+    <content><![CDATA[<p>此為閱讀 Effective Java 3rd 所記錄的學習歷程<br>Item3 : 使用私有建構子或Enum類型實現Singleton</p>
+<span id="more"></span>
+
+<h1 id="使用-private-constructor-常見有兩種-x2F-附加一種優化作法"><a href="#使用-private-constructor-常見有兩種-x2F-附加一種優化作法" class="headerlink" title="使用 private constructor (常見有兩種&#x2F;附加一種優化作法)"></a>使用 private constructor (常見有兩種&#x2F;附加一種優化作法)</h1><ol>
+<li>singleton with public final field</li>
+</ol>
+<ul>
+<li>簡單易懂, 直接使用</li>
+<li>field 為 <font color=#ff0000>public</font><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">PublicFieldSingleton</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">PublicFieldSingleton</span> <span class="variable">INSTANCE</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">PublicFieldSingleton</span>();</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">private</span> <span class="title function_">PublicFieldSingleton</span><span class="params">()</span> &#123;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">demo</span><span class="params">()</span> &#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;PublicFieldSingleton demo.&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<ol start="2">
+<li>singleton with static factory</li>
+</ol>
+<ul>
+<li>如果要調整其內容為 non-singleton , 可以不用改變API, 更改factory method實作即可 , 靈活度較高</li>
+<li>field 為 <font color=#ff0000>private</font><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">StaticFactorySingleton</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">StaticFactorySingleton</span> <span class="variable">INSTANCE</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StaticFactorySingleton</span>();</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">private</span> <span class="title function_">StaticFactorySingleton</span><span class="params">()</span> &#123;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> StaticFactorySingleton <span class="title function_">getInstance</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> INSTANCE;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">demo</span><span class="params">()</span> &#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;StaticFactorySingleton demo.&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<ol start="3">
+<li>因為上述兩種方法, static field 初始化的時機點在 class 載入時期<br>如果在程式執行時期根本沒有用到該singleton實例時, 若該實例建立時<br>成本昂貴的情況下, 就會造成無謂的浪費; 為了避免該情況, 就有了<br>lazy initialization (在第一次實際需要使用時才產生實例)<br>※ 此處就不多加討論多執行緒的情境<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">StaticFoctorylazySingleton</span> &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> StaticFoctorylazySingleton INSTANCE;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> StaticFoctorylazySingleton <span class="title function_">getInstance</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">if</span>(<span class="literal">null</span> == INSTANCE ) &#123;</span><br><span class="line">			INSTANCE = <span class="keyword">new</span> <span class="title class_">StaticFoctorylazySingleton</span>();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> INSTANCE;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">demo</span><span class="params">()</span> &#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;StaticFoctorylazySingleton demo.&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h1 id="使用-Enum"><a href="#使用-Enum" class="headerlink" title="使用 Enum"></a>使用 Enum</h1><ol>
+<li>enum singleton<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> <span class="title class_">EnumSingleton</span> &#123;</span><br><span class="line"></span><br><span class="line">	INSTANCE;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">demo</span><span class="params">()</span> &#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;EnumSingleton demo.&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<ul>
+<li>enum 的 建構子為私有的，因此使用者無法在執行時期去產生新的實例</li>
+<li>初始化時機為 class 載入時期，enum 會執行建構子<br>因此上述的寫法也可以看成<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">EnumSingleton</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">EnumSingleton</span> <span class="variable">INSTANCE</span>  <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">EnumSingleton</span>();</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">demo</span><span class="params">()</span> &#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;EnumSingleton demo.&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+書上也在單一元素(single-element enum)情況下，使用 Enum 類型為實作 singleton 的最佳辦法。</li>
+</ul>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ol>
+<li><a href="https://dzone.com/articles/java-singletons-using-enum">Java Singletons Using Enum</a></li>
+<li><a href="https://stackoverflow.com/questions/26285520/implementing-singleton-with-an-enum-in-java">Implementing Singleton with an Enum (in Java)</a></li>
+<li><a href="https://www.jyt0532.com/2017/10/20/enforce-the-singleton-property-with-a-private-constructor-or-enum/">Effective Java Item3 - 用Enum實作Singleton</a></li>
+<li><a href="https://riptutorial.com/java/example/5741/implement-singleton-pattern-with-a-single-element-enum">Implement Singleton pattern with a single-element enum</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>effectiveJava</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+        <tag>effectiveJava</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>使用 Jenkins 串接 github webhook</title>
     <url>/2022/05/01/jenkins-connect-github-webhook/</url>
     <content><![CDATA[<p>目的: 撰寫基本的 Job，連接 Git Repository 並附上測試結果</p>
@@ -1039,41 +1195,6 @@ Update的部分用 Assert 斷言驗證值是否有修改。<br>執行後，發�
       </tags>
   </entry>
   <entry>
-    <title>Effective Java Item1 - 使用靜態工廠方法取代建構子</title>
-    <url>/2022/05/19/effective-java-item1/</url>
-    <content><![CDATA[<p>此為閱讀 Effective Java 3rd 所記錄的學習歷程<br>Item1 : 使用靜態工廠方法取代建構子</p>
-<span id="more"></span>
-
-<p>如果要產生一個實例，一般普遍的想法就是使用 public constructor 讓開發人員隨時需要即使用 <em>new</em> 的方式</p>
-<p>但也有另外一種方式，使用靜態工廠方法來提供創造物件的服務</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">   <span class="keyword">private</span> <span class="title function_">Job</span><span class="params">(String title)</span> &#123;</span><br><span class="line">	<span class="built_in">this</span>.title = title;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> Job <span class="title function_">from</span><span class="params">(String title)</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Job</span>(title);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="使用-靜態工廠方法的好處"><a href="#使用-靜態工廠方法的好處" class="headerlink" title="使用 靜態工廠方法的好處"></a>使用 靜態工廠方法的好處</h1><ol>
-<li>有屬於自己的方法名稱，相較於建構子，可讀性高</li>
-<li>避免每次呼叫時，都需要建立一個新的實例<br> -&gt; 可以自行決定需要給新的實例 或是 舊的 ( 設計模式 Singleton )</li>
-<li>可以透過靜態工廠取得子類別實例，並可藉由不同參數，得到不同子類別<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Job</span> &#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> Job <span class="title function_">newInstance</span><span class="params">(String name)</span> &#123;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">if</span>(name.equals(<span class="string">&quot;doctor&quot;</span>)) <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Doctor</span>();</span><br><span class="line">	</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Employee</span>();</span><br><span class="line">	&#125;	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Doctor</span> <span class="keyword">extends</span> <span class="title class_">Job</span> &#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Employee</span> <span class="keyword">extends</span> <span class="title class_">Job</span> &#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
-<li>可以透過靜態工廠取得實作同一介面的實例<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Service</span> &#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> Discount <span class="title function_">getDiscount</span><span class="params">(String type)</span> &#123;</span><br><span class="line">		<span class="keyword">switch</span>(type) &#123;</span><br><span class="line">			<span class="keyword">case</span> <span class="string">&quot;half&quot;</span>: <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">HalfPriceDiscountImpl</span>();</span><br><span class="line">			<span class="keyword">case</span> <span class="string">&quot;limit&quot;</span>: <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">TimeLimitDiscountImpl</span>();</span><br><span class="line">			<span class="keyword">default</span> :  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">MemberDiscountImpl</span>();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ol>
-<h1 id="使用-靜態工廠方法的缺點"><a href="#使用-靜態工廠方法的缺點" class="headerlink" title="使用 靜態工廠方法的缺點"></a>使用 靜態工廠方法的缺點</h1><ol>
-<li>如 建構子為私有，則無法被繼承</li>
-<li>與其他靜態方法無差別，很難在眾多方法中一點看出。</li>
-</ol>
-<p>-&gt; 可用慣用命名行為，使其容易辨認<br>EX: getInstance() : 取得實例<br>    newInstance() : 確保每次取得的實例皆為新的實例<br>    valueOf() : 類別轉換 Integer.valueOf(int i)</p>
-<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ol>
-<li><a href="https://www.blogbrb.com/posts/book/effective-java-item1/">Effective Java Item1 以靜態工廠方法代替建構函式</a></li>
-<li><a href="https://www.jyt0532.com/2017/09/20/static-factory-method/">Effective Java Item1 - 靜態工廠方法</a></li>
-<li><a href="https://www.gushiciku.cn/pl/2Pkd/zh-tw">第一條建議：考慮用靜態工廠方法代替構造方法——《Effective Java》讀書筆記</a></li>
-</ol>
-]]></content>
-      <categories>
-        <category>effectiveJava</category>
-      </categories>
-      <tags>
-        <tag>java</tag>
-        <tag>effectiveJava</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>使用 jenkins 撰寫 multiBranch pipeline</title>
     <url>/2022/05/08/jenkins-multibranch-pipeline/</url>
     <content><![CDATA[<p>藉由之前的 <a href="https://oscar51011.github.io/2022/05/07/jenkins-pipeline">使用 jenkins 撰寫 pipeline 腳本完成 springboot 簡易自動化部署
@@ -1116,60 +1237,8 @@ Update的部分用 Assert 斷言驗證值是否有修改。<br>執行後，發�
         <category>jenkins</category>
       </categories>
       <tags>
-        <tag>jenkins</tag>
         <tag>springboot</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Effective Java Item9 - 傾向使用 try-resources 優於 try-finally</title>
-    <url>/2022/05/28/effective-java-item9/</url>
-    <content><![CDATA[<p>此為閱讀 Effective Java 3rd 所記錄的學習歷程<br>Item9 : 傾向使用 try-resources 優於 try-finally </p>
-<span id="more"></span>
-
-<p>Java 有許多 lib 需要使用 close() 來手動關閉資源，像是 FileReader , BufferedReader … etc<br>但如果忘記釋放資源，就會造成 memory leak 的問題。</p>
-<p>在 Java 7 以前，需要使用 try catch finally 處理，如果有多組資源，程式碼會變得冗長</p>
-<h1 id="Before-Try-finally"><a href="#Before-Try-finally" class="headerlink" title="Before: Try-finally"></a>Before: Try-finally</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 字元組 讀檔 Reader</span></span><br><span class="line"><span class="comment">	 * BufferedReader 為 Reader 的擴充</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">readFile</span><span class="params">(String filePath)</span> &#123;</span><br><span class="line">			</span><br><span class="line">		<span class="type">FileReader</span> <span class="variable">fileReader</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">		<span class="type">BufferedReader</span> <span class="variable">br</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			</span><br><span class="line">			fileReader = <span class="keyword">new</span> <span class="title class_">FileReader</span>(filePath);</span><br><span class="line">			br = <span class="keyword">new</span> <span class="title class_">BufferedReader</span>(fileReader);</span><br><span class="line">			</span><br><span class="line">			String line;</span><br><span class="line">			</span><br><span class="line">			<span class="comment">// readline() 會刪除每行結尾的換行然後回傳</span></span><br><span class="line">			<span class="keyword">while</span>( (line = br.readLine()) != <span class="literal">null</span>) &#123;</span><br><span class="line">				System.out.println(line);</span><br><span class="line">			&#125;</span><br><span class="line">			</span><br><span class="line">		&#125; <span class="keyword">catch</span> (FileNotFoundException e) &#123;</span><br><span class="line">			<span class="comment">// 無法找到檔案</span></span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">			<span class="comment">// 讀檔異常</span></span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">	</span><br><span class="line">			<span class="keyword">if</span> ( br != <span class="literal">null</span>) &#123;</span><br><span class="line">				<span class="keyword">try</span> &#123;</span><br><span class="line">					br.close();</span><br><span class="line">				&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">					<span class="comment">// 關閉 bufferedReader 異常</span></span><br><span class="line">					e.printStackTrace();</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">	</span><br><span class="line">			<span class="keyword">if</span> ( fileReader != <span class="literal">null</span>) &#123;</span><br><span class="line">				<span class="keyword">try</span> &#123;</span><br><span class="line">					fileReader.close();</span><br><span class="line">				&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">					<span class="comment">// 關閉 fileReader 異常</span></span><br><span class="line">					e.printStackTrace();</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;		</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="After-Try-with-Resources"><a href="#After-Try-with-Resources" class="headerlink" title="After: Try-with-Resources"></a>After: Try-with-Resources</h1><p>Java 7 之後，出現 try-with-resources 的語法，block 內的物件需要實作 <font color=#ff0000>AutoCloseable 介面 </font><br>在 Java 1.5 出現的 Closable 介面 已經繼承了 AutoCloseable，JVM 在 try 結束後會呼叫 AutoCloseable.close() 釋放資源</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 字元組 讀檔 Reader</span></span><br><span class="line"><span class="comment">	 * BufferedReader 為 Reader 的擴充</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">readFile</span><span class="params">(String filePath)</span> &#123;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// try-with-resources</span></span><br><span class="line">		<span class="keyword">try</span>(</span><br><span class="line">			<span class="type">Reader</span> <span class="variable">reader</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">FileReader</span>(filePath);</span><br><span class="line">			<span class="type">BufferedReader</span> <span class="variable">br</span> <span class="operator">=</span>  <span class="keyword">new</span> <span class="title class_">BufferedReader</span>(reader)</span><br><span class="line">			) &#123;</span><br><span class="line">									</span><br><span class="line">			String line;</span><br><span class="line">			</span><br><span class="line">			<span class="comment">// readline() 會刪除每行結尾的換行然後回傳</span></span><br><span class="line">			<span class="keyword">while</span>( (line = br.readLine()) != <span class="literal">null</span>) &#123;</span><br><span class="line">				System.out.println(line);</span><br><span class="line">			&#125;</span><br><span class="line">			</span><br><span class="line">		&#125; <span class="keyword">catch</span> (FileNotFoundException e) &#123;</span><br><span class="line">			<span class="comment">// 找不到檔案處理</span></span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">			<span class="comment">// 讀檔錯誤處理</span></span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;	</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-
-<p>優點:</p>
-<ul>
-<li>使程式碼變得簡潔</li>
-<li>避免開發人員忘記關閉資源，造成 memory leak</li>
-</ul>
-<p>以上就是 Effective Java Item9 的主要內容。</p>
-<h1 id="try-with-resources延伸-Exception-Suppressed"><a href="#try-with-resources延伸-Exception-Suppressed" class="headerlink" title="try-with-resources延伸 ( Exception Suppressed )"></a>try-with-resources延伸 ( Exception Suppressed )</h1><p>使用 try-with-resources 語法時，如果 close() 的方法出現了例外，但 try block 內的邏輯也出現了例外，<br>我們發現只有出現邏輯的錯誤，java 優先捕捉到了 try block 的異常，但 close 的異常其實並沒有不見，<br>java 7 提供了 <font color=#ff0000>Throwable getSuppressed()</font> 可以用來取出被壓制的 exception</p>
-<p>以下實作一個 AutoCloseable 的物件來實現上述的做法</p>
-<ul>
-<li>實作 AutoCloseable 的服務</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 實作 AutoCloseable ，使其可以使用 try-with-resources</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> oscar51011</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2022年5月28日</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DemoCloseableService</span> <span class="keyword">implements</span> <span class="title class_">AutoCloseable</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">close</span><span class="params">()</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;demo close exception&quot;</span>);</span><br><span class="line">		<span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Exception</span>(<span class="string">&quot;test close exception&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>使用其 服務，並在 try block 拋出 logic 錯誤</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">AutoCloseableExceptionMain</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			AutoCloseableExceptionMain.test();</span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			 System.out.println(<span class="string">&quot;Logic Exception message:&quot;</span> + e);</span><br><span class="line">			 </span><br><span class="line">			Throwable[] throwables = e.getSuppressed();</span><br><span class="line">			<span class="keyword">for</span>(Throwable t : throwables) &#123;</span><br><span class="line">				System.out.println(<span class="string">&quot;Suppressed Exception message:&quot;</span> + t);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">test</span><span class="params">()</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">		<span class="keyword">try</span>(<span class="type">DemoCloseableService</span> <span class="variable">s</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">DemoCloseableService</span>())&#123;</span><br><span class="line">			System.out.println(<span class="string">&quot;do service&quot;</span>);</span><br><span class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Exception</span>(<span class="string">&quot;logic exception&quot;</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>來查看一下結果，除了 Logic Exception 之外，我們也可以查出 close() 發生的異常。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">do service</span><br><span class="line">demo close exception</span><br><span class="line">Logic Exception message:java.lang.Exception: logic exception</span><br><span class="line">Suppressed Exception message:java.lang.Exception: test close exception</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference:"></a>Reference:</h1><ol>
-<li><a href="https://matthung0807.blogspot.com/2020/04/java-try-with-resources-close-resource.html">Java 使用 try-with-resources 關閉資源</a></li>
-<li><a href="https://www.baeldung.com/java-try-with-resources">Java – Try with Resources</a></li>
-<li><a href="https://www.liaoxuefeng.com/wiki/1252599548343744/1298366902304801">廖雪峰的官方網站-Reader</a></li>
-<li><a href="https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html">The try-with-resources Statement</a></li>
-<li><a href="https://ithelp.ithome.com.tw/articles/10081449">Project Coin - try-with-resource 語法 完</a></li>
-</ol>
-]]></content>
-      <categories>
-        <category>effectiveJava</category>
-      </categories>
-      <tags>
-        <tag>java</tag>
-        <tag>effectiveJava</tag>
+        <tag>jenkins</tag>
       </tags>
   </entry>
   <entry>
@@ -1232,8 +1301,8 @@ Update的部分用 Assert 斷言驗證值是否有修改。<br>執行後，發�
         <category>jenkins</category>
       </categories>
       <tags>
-        <tag>jenkins</tag>
         <tag>springboot</tag>
+        <tag>jenkins</tag>
       </tags>
   </entry>
 </search>

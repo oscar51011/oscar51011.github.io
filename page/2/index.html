@@ -183,6 +183,82 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://oscar51011.github.io/2022/05/08/jenkins-multibranch-pipeline/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="oscar51011">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Kai's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/05/08/jenkins-multibranch-pipeline/" class="post-title-link" itemprop="url">使用 jenkins 撰寫 multiBranch pipeline</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-05-08 18:14:12" itemprop="dateCreated datePublished" datetime="2022-05-08T18:14:12+08:00">2022-05-08</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/jenkins/" itemprop="url" rel="index"><span itemprop="name">jenkins</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>藉由之前的 <a href="https://oscar51011.github.io/2022/05/07/jenkins-pipeline">使用 jenkins 撰寫 pipeline 腳本完成 springboot 簡易自動化部署
+</a> 已經知道怎麼撰寫一般的 pipeline<br>但是在實際應用的需求上，開發團隊會在不同的環境(ex: SIT, UAT)進行開發，這樣需要跟對各個分支撰寫腳本</p>
+<p>因此本篇撰寫multibranch pipeline，可以使用一個腳本完成這件事<br>前一篇練習是使用 pipeline script 的方式來撰寫<br>這次也練習 jenkinsfile 的寫法(將 腳本內容 交由版本控制管理)</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/05/08/jenkins-multibranch-pipeline/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://oscar51011.github.io/2022/05/07/jenkins-pipeline/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -500,87 +576,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://oscar51011.github.io/2022/04/09/springboot-mybatis/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="oscar51011">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Kai's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/04/09/springboot-mybatis/" class="post-title-link" itemprop="url">springboot 整合 mybatis</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2022-04-09 23:11:11" itemprop="dateCreated datePublished" datetime="2022-04-09T23:11:11+08:00">2022-04-09</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-04-22 16:14:06" itemprop="dateModified" datetime="2022-04-22T16:14:06+08:00">2022-04-22</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/orm/" itemprop="url" rel="index"><span itemprop="name">orm</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Mybatis 為一個 ORM（Object Relational Mapping) 框架，簡單易學<br>接下來藉由一系列步驟，實作 Springboot 搭配 mybatis 取得 database 的資料</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/04/09/springboot-mybatis/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -650,7 +645,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-count">24</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
