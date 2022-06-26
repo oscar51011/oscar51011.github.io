@@ -27,47 +27,20 @@
       </tags>
   </entry>
   <entry>
-    <title>使用 utterances 在 Hexo 實現留言板功能</title>
-    <url>/2022/03/04/hexo-message-board-utterances/</url>
-    <content><![CDATA[<p>留言版在一般的部落格中一個常見的功能，既然使用Github製作了自己的部落格<br>順勢找了一些文章來新增這個功能</p>
-<p>在參閱了許多 blogger 的文章後發現，比較常用的有以下兩種:</p>
-<ul>
-<li>Disqus<ul>
-<li>需要去 Disqus 官網註冊 - <a href="https://disqus.com/">點我前往</a></li>
-</ul>
-</li>
-<li>utterances<ul>
-<li>與 Github Issues 做連結</li>
-<li>需要登入 Github 才能夠進行留言</li>
-</ul>
-</li>
-</ul>
-<p>目前是打算使用 utterances 來實作 部落格的留言版</p>
+    <title>Hexo 調整資料夾原始碼目錄結構</title>
+    <url>/2022/03/13/hexo-change-page-directory/</url>
+    <content><![CDATA[<p>在預設的 Hexo 設定中，會將新的文章檔案放置於 <code>_posts</code> 的資料夾底下<br>隨的時間的推移，該資料夾會變得越來越雜亂無法管理，因此找了一下網路<br>看看有沒有甚麼方法可以做個簡單區隔，因此有的以下的調整:</p>
 <span id="more"></span>
+<h3 id="預設設定-根目錄的-config-yml"><a href="#預設設定-根目錄的-config-yml" class="headerlink" title="預設設定(根目錄的 _config.yml)"></a>預設設定(根目錄的 _config.yml)</h3><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Writing</span></span><br><span class="line"><span class="attr">new_post_name:</span> <span class="string">:title.md</span> <span class="comment"># File name of new posts</span></span><br><span class="line"><span class="attr">default_layout:</span> <span class="string">post</span></span><br><span class="line"><span class="attr">titlecase:</span> <span class="literal">false</span> <span class="comment"># Transform title into </span></span><br><span class="line"><span class="string">...</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="整合-utterances"><a href="#整合-utterances" class="headerlink" title="整合 utterances"></a>整合 utterances</h3><ol>
-<li>Github 建立 Repository</li>
-<li>安裝 utterances - <a href="https://github.com/apps/utterances">點我前往</a></li>
-</ol>
-<p><img src="https://bnz05pap002files.storage.live.com/y4mf3VZ_TrvLMIzOAvwD5scehh0uCIPUsahla1ouyxXnWeuuT5H3ukvDP7hV0gVb_0gnlFJTWeW9UWGP5LXPyQTBd60fbKgxDlDQK2ADWYI5nD6b0pkEd3hfZjLFwEUWurbgWomh3aeF0BWUvSalsrsnPvcz2e_eKp3TjFC4M0aqJI5wZ9FJsnf7SILGMbJzgbp?width=660&height=261&cropmode=none" alt="utterances-install.png"><br>3. 取得授權，並選擇 步驟1 的 Repository</p>
-<p><img src="https://bnz05pap002files.storage.live.com/y4mB7qi6p5Kb5d77Slb0G_jLXcoBZ6yepW2pKcSxd3Ih7_gQ4SDxI9vNpA-6V9wp_RnBN59jH0ziNmpluQFQDjnM92bizO_e_2jLgYQRxeFb7ps9tjvCvauX62h5gJLcvQsa34THbIPo5P6HAZmuIwMlGX5dwFnHIl9fLbX-dITsVKucorwYtuIJ2I8kmzdq_B5?width=480&height=660&cropmode=none" alt="utterances-select-repository.png"><br>4. 填寫對應的 configuration EX: Repository , Blog Post &amp; issue Mapping , Theme …etc</p>
-<p><img src="https://bnz05pap002files.storage.live.com/y4mZW8hAhicSL9Xi4l83gr-741kqXgXqCBnmEDZ5a_ZVaCNUbsZQGTl456l7dxJUszLljpSitj43aRmX3fA0OUM58mYxGTvKuc0wL0VW-9OPS6YAn1Uz9FqzK0Q8YSWOpCQBiDHVMFUb6E5olX7bVBc-vy_rP5gqLV5Kt1WPC8gXKKIKqjtSVCpSzI9LB2H49DI?width=660&height=622&cropmode=none" alt="utterances-configuration-script.png"><br>5. 在 theme 的 _config.yml 新增參數 (blog 目前是使用 next themes)</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># utterances by 2022-03-04</span></span><br><span class="line"><span class="attr">utterances:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<h3 id="調整後設定-根目錄的-config-yml"><a href="#調整後設定-根目錄的-config-yml" class="headerlink" title="調整後設定(根目錄的 _config.yml)"></a>調整後設定(根目錄的 _config.yml)</h3><p>產生的文章名稱使用 :year :month 依照年月的區分，就不會把所有的文章都全部擺在 <code>_post</code> 底下</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Writing</span></span><br><span class="line"><span class="attr">new_post_name:</span> <span class="string">:year/:month/:title.md</span> <span class="comment"># File name of new posts</span></span><br><span class="line"><span class="attr">default_layout:</span> <span class="string">post</span></span><br><span class="line"><span class="attr">titlecase:</span> <span class="literal">false</span> <span class="comment"># Transform title into </span></span><br><span class="line"><span class="string">...</span></span><br></pre></td></tr></table></figure>
 
-<ol start="6">
-<li>在主題底下 <code>themes\next\layout\_partials</code> 的 comments.swig 中 新增其 srcipt<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="string">新增至</span> &#123;<span class="string">%-</span> <span class="string">if</span> <span class="string">page.comments</span> <span class="string">%</span>&#125; <span class="string">後面</span></span><br><span class="line"></span><br><span class="line">&#123;<span class="string">%</span> <span class="string">if</span> <span class="string">theme.utterances.enable</span> <span class="string">%</span>&#125;</span><br><span class="line">    <span class="string">&lt;div</span> <span class="string">class=&quot;comments&quot;</span> <span class="string">id=&quot;comments&gt;</span></span><br><span class="line">        <span class="string">↓</span> <span class="string">複製上面步驟4</span> <span class="string">utterances</span> <span class="string">中產生的</span> <span class="string">script</span></span><br><span class="line">        <span class="string">&lt;script</span> <span class="string">src=&quot;https://utteranc.es/client.js&quot;</span></span><br><span class="line">            <span class="string">...</span></span><br><span class="line">        <span class="string">&lt;/script&gt;</span></span><br><span class="line">    <span class="string">&lt;/div&gt;</span></span><br><span class="line">  &#123;<span class="string">%-</span> <span class="string">endif</span> <span class="string">%</span>&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
-<li>即可看到留言板出現在文章內了</li>
-</ol>
-<p><img src="https://bnz05pap002files.storage.live.com/y4mi1owUcX16kQYG0y6amhW5TXqG8FlrfdD5PLc08FS7crQCBUFyU0TUJQbw3YSzu8UeSz_ajqZQDOWdxIo5PwIx-HUr_r2__1nn9taGWzzXCWokVufwsWZHApHEC3maMsGRKJxd5Pf3sdT0cW0qVg7dCYdt6IdQ9ie2Z2uetNM-dX_S54E9U7_qVpFRhuWp_wy?width=660&height=313&cropmode=none" alt="utterances-message-board-result.png"></p>
-<h3 id="如何讓留言板不要出現"><a href="#如何讓留言板不要出現" class="headerlink" title="如何讓留言板不要出現"></a>如何讓留言板不要出現</h3><p>因為分類&#x2F;標籤等頁面通常不需要有連言功能<br>在 markdown 的 Front-matter 把 comments 關閉</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">tags</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2022-03-01 20:10:05</span></span><br><span class="line"><span class="attr">type:</span> <span class="string">&quot;tags&quot;</span></span><br><span class="line"><span class="attr">comments:</span> <span class="literal">false</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
-<li><a href="https://annkuoq.github.io/blog/2020-03-09-add-utterances-comment-widget-to-hexo/">在 Hexo 安裝 utterances 留言版</a></li>
-<li><a href="https://medium.com/starbugs/gatsby-%E7%94%A8-utterances-%E6%9B%BF-gatsby-%E7%9A%84-blog-%E7%B6%B2%E7%AB%99%E7%94%B3%E8%A3%9D-github-issue-%E7%95%99%E8%A8%80%E5%8A%9F%E8%83%BD-e8593318e5a3">Gatsby | 用 utterances 替 Gatsby 的 Blog 網站申裝 GitHub Issue 留言功能</a></li>
-<li><a href="https://blog.kyomind.tw/hexo-blog-reply/">Hexo：新增 utterances 留言板與方案選擇思路</a></li>
-<li><a href="https://utteranc.es/">utterances </a></li>
-<li><a href="https://kidneyweakx.com/2019/19log-1026-hexo-com.html">Hexo Next 主題增加評論系統 utterances</a></li>
+<h3 id="驗證結果"><a href="#驗證結果" class="headerlink" title="驗證結果"></a>驗證結果</h3><p>原本的 <code>_post</code> 底下長出了年分&amp;月份，依照發佈時間即可快速分類找到當時所寫的文章</p>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mg2gM94oI68TB6d4KRCHRGcmssTGjYIbPMsElG3Jdav9b3HE9SiSojZUNw5WnvjWEdh8OtUX-b2JStw0q_4_oUb7ZdwxZ6t5FEcIxUMrdKJlhHwsp_EVkva03IYKKA9m6gubKmSJch7Hag0VOm7h01dTGmvE-bkLm3IXhks-2dy-MJk9RwbzMGJIWvMDHiKx8?width=250&height=256&cropmode=none" alt="hexo-directory"></p>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference:"></a>Reference:</h3><ol>
+<li><a href="https://carlos.mynet.tw/%E4%BD%BF%E7%94%A8%E8%B3%87%E6%96%99%E5%A4%BE%E5%88%86%E5%B1%A4%E7%AE%A1%E7%90%86hexo%E6%96%87%E7%AB%A0%E4%B8%94%E4%B8%8D%E5%BD%B1%E9%9F%BF%E6%B0%B8%E4%B9%85%E9%80%A3%E7%B5%90/">使用資料夾分層管理Hexo文章且不影響永久連結</a></li>
+<li><a href="https://mouson.im/Notes/Hexo/make-hexo-post-category-by-folder/">Hexo - 使文章依文章分類為資料夾名稱置放</a></li>
 </ol>
 ]]></content>
       <categories>
@@ -186,20 +159,44 @@
       </tags>
   </entry>
   <entry>
-    <title>Hexo 調整資料夾原始碼目錄結構</title>
-    <url>/2022/03/13/hexo-change-page-directory/</url>
-    <content><![CDATA[<p>在預設的 Hexo 設定中，會將新的文章檔案放置於 <code>_posts</code> 的資料夾底下<br>隨的時間的推移，該資料夾會變得越來越雜亂無法管理，因此找了一下網路<br>看看有沒有甚麼方法可以做個簡單區隔，因此有的以下的調整:</p>
+    <title>Hexo 主題 - NEXT &amp; 新增文章搜尋功能</title>
+    <url>/2022/03/02/hexo-next-theme/</url>
+    <content><![CDATA[<p>紀錄一下，Blog中選定的主題 Next 的安裝經過 &amp; 新增搜尋功能</p>
 <span id="more"></span>
-<h3 id="預設設定-根目錄的-config-yml"><a href="#預設設定-根目錄的-config-yml" class="headerlink" title="預設設定(根目錄的 _config.yml)"></a>預設設定(根目錄的 _config.yml)</h3><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Writing</span></span><br><span class="line"><span class="attr">new_post_name:</span> <span class="string">:title.md</span> <span class="comment"># File name of new posts</span></span><br><span class="line"><span class="attr">default_layout:</span> <span class="string">post</span></span><br><span class="line"><span class="attr">titlecase:</span> <span class="literal">false</span> <span class="comment"># Transform title into </span></span><br><span class="line"><span class="string">...</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="調整後設定-根目錄的-config-yml"><a href="#調整後設定-根目錄的-config-yml" class="headerlink" title="調整後設定(根目錄的 _config.yml)"></a>調整後設定(根目錄的 _config.yml)</h3><p>產生的文章名稱使用 :year :month 依照年月的區分，就不會把所有的文章都全部擺在 <code>_post</code> 底下</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Writing</span></span><br><span class="line"><span class="attr">new_post_name:</span> <span class="string">:year/:month/:title.md</span> <span class="comment"># File name of new posts</span></span><br><span class="line"><span class="attr">default_layout:</span> <span class="string">post</span></span><br><span class="line"><span class="attr">titlecase:</span> <span class="literal">false</span> <span class="comment"># Transform title into </span></span><br><span class="line"><span class="string">...</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="驗證結果"><a href="#驗證結果" class="headerlink" title="驗證結果"></a>驗證結果</h3><p>原本的 <code>_post</code> 底下長出了年分&amp;月份，依照發佈時間即可快速分類找到當時所寫的文章</p>
-<p><img src="https://bnz05pap002files.storage.live.com/y4mg2gM94oI68TB6d4KRCHRGcmssTGjYIbPMsElG3Jdav9b3HE9SiSojZUNw5WnvjWEdh8OtUX-b2JStw0q_4_oUb7ZdwxZ6t5FEcIxUMrdKJlhHwsp_EVkva03IYKKA9m6gubKmSJch7Hag0VOm7h01dTGmvE-bkLm3IXhks-2dy-MJk9RwbzMGJIWvMDHiKx8?width=250&height=256&cropmode=none" alt="hexo-directory"></p>
-<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference:"></a>Reference:</h3><ol>
-<li><a href="https://carlos.mynet.tw/%E4%BD%BF%E7%94%A8%E8%B3%87%E6%96%99%E5%A4%BE%E5%88%86%E5%B1%A4%E7%AE%A1%E7%90%86hexo%E6%96%87%E7%AB%A0%E4%B8%94%E4%B8%8D%E5%BD%B1%E9%9F%BF%E6%B0%B8%E4%B9%85%E9%80%A3%E7%B5%90/">使用資料夾分層管理Hexo文章且不影響永久連結</a></li>
-<li><a href="https://mouson.im/Notes/Hexo/make-hexo-post-category-by-folder/">Hexo - 使文章依文章分類為資料夾名稱置放</a></li>
+<h3 id="安裝主題-Next"><a href="#安裝主題-Next" class="headerlink" title="安裝主題 Next"></a>安裝主題 Next</h3><ol>
+<li><p>Github clone hexo-theme-next project - <a href="https://github.com/theme-next/hexo-theme-next">點我前往</a></p>
+</li>
+<li><p>在 themes folder 底下建立 next 資料夾並將上述下載的資料 copy 進該資料夾</p>
+</li>
+<li><p>修改 根目錄 的 _config.xml 內容，從預設的 landscape 改成 next</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Extensions</span></span><br><span class="line"><span class="comment">## Plugins: https://hexo.io/plugins/</span></span><br><span class="line"><span class="comment">## Themes: https://hexo.io/themes/</span></span><br><span class="line"><span class="attr">theme:</span> <span class="string">next</span></span><br></pre></td></tr></table></figure></li>
+<li><p>設定檔有2個，一個是配製 Hexo設定，另一個是針對 Next 主題進行配置</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="string">根目錄:</span> <span class="string">_config.yml</span></span><br><span class="line"><span class="string">Next主題:</span> <span class="string">themes/_config.yml</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Next 主題底下有 4種樣式 (設定於 themes 底下的 _config.xml)</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Schemes</span></span><br><span class="line"><span class="comment">#scheme: Muse</span></span><br><span class="line"><span class="attr">scheme:</span> <span class="string">Mist</span></span><br><span class="line"><span class="comment">#scheme: Pisces</span></span><br><span class="line"><span class="comment">#scheme: Gemini</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="開啟-分類-x2F-標籤-功能"><a href="#開啟-分類-x2F-標籤-功能" class="headerlink" title="開啟 分類 &#x2F; 標籤 功能"></a>開啟 分類 &#x2F; 標籤 功能</h3><ul>
+<li>新增 layout 為 page 的文章 ( 一般文章預設為 post)<br><code>hexo new page categories</code> ( type 為 “categories” )<br><code>hexo new page tags</code> ( type 為 “tags” )</li>
+<li>一般文章撰寫時於文章 Front-matter 定義 分類 &#x2F; 標籤 屬性<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">Hexo</span> <span class="string">主題</span> <span class="bullet">-</span> <span class="string">NEXT</span> <span class="string">&amp;</span> <span class="string">新增文章搜尋功能</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2022-03-02 06:55:34</span></span><br><span class="line"><span class="attr">tags:</span> </span><br><span class="line"><span class="bullet">-</span> <span class="string">hexo</span></span><br><span class="line"><span class="attr">categories:</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">blog</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure></li>
+<li>開啟 Next 主題 menu 得以顯示於介面<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">home:</span> <span class="string">/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-home</span></span><br><span class="line">  <span class="comment"># about: /about/ || fa fa-user</span></span><br><span class="line">  <span class="attr">tags:</span> <span class="string">/tags/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-tags</span></span><br><span class="line">  <span class="attr">categories:</span> <span class="string">/categories/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-th</span></span><br><span class="line">  <span class="attr">archives:</span> <span class="string">/archives/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-archive</span></span><br><span class="line">  <span class="comment">#schedule: /schedule/ || fa fa-calendar</span></span><br><span class="line">  <span class="comment">#sitemap: /sitemap.xml || fa fa-sitemap</span></span><br><span class="line">  <span class="comment">#commonweal: /404/ || fa fa-heartbeat</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="新增-搜尋功能"><a href="#新增-搜尋功能" class="headerlink" title="新增 搜尋功能"></a>新增 搜尋功能</h3><ol>
+<li>下載套件 <code>npm install hexo-generator-searchdb --save</code></li>
+<li>根目錄 _config.xml 新增設定<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment">#Local Search / created by 2022-03-02</span></span><br><span class="line"><span class="attr">search:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">path:</span> <span class="string">search.xml</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">field:</span> <span class="string">post</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">format:</span> <span class="string">html</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">content:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure></li>
+<li>主題目錄 _config.xml 開啟 local_search 功能<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Local Search</span></span><br><span class="line"><span class="comment"># Dependencies: https://github.com/theme-next/hexo-generator-searchdb</span></span><br><span class="line"><span class="attr">local_search:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="新增-文章閱讀進度-功能"><a href="#新增-文章閱讀進度-功能" class="headerlink" title="新增 文章閱讀進度 功能"></a>新增 文章閱讀進度 功能</h3><p>將 scrollpercent 從 false 改成 true</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">back2top:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># Back to top in sidebar.</span></span><br><span class="line">  <span class="attr">sidebar:</span> <span class="literal">false</span></span><br><span class="line">  <span class="comment"># Scroll percent label in b2t button.</span></span><br><span class="line">  <span class="attr">scrollpercent:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<p>效果如下:</p>
+<p><img src="https://bnz05pap002files.storage.live.com/y4m1yGLaD3UGbwtXQPefduFnckR3CCidf2SWItddjqzSCA3KdyVLMXnZpx-If2Tl3tWkszjYeEMyotdRXWNIo_iQY_INtR5O0J48eqrMs_1nY9WVie0VKY4hJXYo208GuzkoFHi84ZTce-qnv7Bb6I_Hql7VNLpeIWiQOmib2hAYjdqnt-aDFR2FmDO-C_PuLxP?width=233&height=256&cropmode=none" alt="hexo_page_scrollpercent.png"></p>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
+<li><a href="https://github.com/theme-next/hexo-generator-searchdb">Github Repository : hexo-generator-searchdb</a></li>
+<li><a href="https://ithelp.ithome.com.tw/articles/10248214">(20) 試著學 Hexo - NexT 主題篇 - 可以安裝的套件</a></li>
+<li><a href="https://blog.csdn.net/as480133937/article/details/100138838">Hexo-Next 主题博客个性化配置超详细，超全面(两万字)</a></li>
+<li><a href="https://ithelp.ithome.com.tw/articles/10257569">建立自己Blog系列(三) Hexo next theme 介紹</a></li>
+<li><a href="https://github.com/theme-next/hexo-theme-next">Github Repository : hexo-theme-next</a></li>
 </ol>
 ]]></content>
       <categories>
@@ -207,6 +204,118 @@
       </categories>
       <tags>
         <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用 utterances 在 Hexo 實現留言板功能</title>
+    <url>/2022/03/04/hexo-message-board-utterances/</url>
+    <content><![CDATA[<p>留言版在一般的部落格中一個常見的功能，既然使用Github製作了自己的部落格<br>順勢找了一些文章來新增這個功能</p>
+<p>在參閱了許多 blogger 的文章後發現，比較常用的有以下兩種:</p>
+<ul>
+<li>Disqus<ul>
+<li>需要去 Disqus 官網註冊 - <a href="https://disqus.com/">點我前往</a></li>
+</ul>
+</li>
+<li>utterances<ul>
+<li>與 Github Issues 做連結</li>
+<li>需要登入 Github 才能夠進行留言</li>
+</ul>
+</li>
+</ul>
+<p>目前是打算使用 utterances 來實作 部落格的留言版</p>
+<span id="more"></span>
+
+<h3 id="整合-utterances"><a href="#整合-utterances" class="headerlink" title="整合 utterances"></a>整合 utterances</h3><ol>
+<li>Github 建立 Repository</li>
+<li>安裝 utterances - <a href="https://github.com/apps/utterances">點我前往</a></li>
+</ol>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mf3VZ_TrvLMIzOAvwD5scehh0uCIPUsahla1ouyxXnWeuuT5H3ukvDP7hV0gVb_0gnlFJTWeW9UWGP5LXPyQTBd60fbKgxDlDQK2ADWYI5nD6b0pkEd3hfZjLFwEUWurbgWomh3aeF0BWUvSalsrsnPvcz2e_eKp3TjFC4M0aqJI5wZ9FJsnf7SILGMbJzgbp?width=660&height=261&cropmode=none" alt="utterances-install.png"><br>3. 取得授權，並選擇 步驟1 的 Repository</p>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mB7qi6p5Kb5d77Slb0G_jLXcoBZ6yepW2pKcSxd3Ih7_gQ4SDxI9vNpA-6V9wp_RnBN59jH0ziNmpluQFQDjnM92bizO_e_2jLgYQRxeFb7ps9tjvCvauX62h5gJLcvQsa34THbIPo5P6HAZmuIwMlGX5dwFnHIl9fLbX-dITsVKucorwYtuIJ2I8kmzdq_B5?width=480&height=660&cropmode=none" alt="utterances-select-repository.png"><br>4. 填寫對應的 configuration EX: Repository , Blog Post &amp; issue Mapping , Theme …etc</p>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mZW8hAhicSL9Xi4l83gr-741kqXgXqCBnmEDZ5a_ZVaCNUbsZQGTl456l7dxJUszLljpSitj43aRmX3fA0OUM58mYxGTvKuc0wL0VW-9OPS6YAn1Uz9FqzK0Q8YSWOpCQBiDHVMFUb6E5olX7bVBc-vy_rP5gqLV5Kt1WPC8gXKKIKqjtSVCpSzI9LB2H49DI?width=660&height=622&cropmode=none" alt="utterances-configuration-script.png"><br>5. 在 theme 的 _config.yml 新增參數 (blog 目前是使用 next themes)</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># utterances by 2022-03-04</span></span><br><span class="line"><span class="attr">utterances:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>在主題底下 <code>themes\next\layout\_partials</code> 的 comments.swig 中 新增其 srcipt<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="string">新增至</span> &#123;<span class="string">%-</span> <span class="string">if</span> <span class="string">page.comments</span> <span class="string">%</span>&#125; <span class="string">後面</span></span><br><span class="line"></span><br><span class="line">&#123;<span class="string">%</span> <span class="string">if</span> <span class="string">theme.utterances.enable</span> <span class="string">%</span>&#125;</span><br><span class="line">    <span class="string">&lt;div</span> <span class="string">class=&quot;comments&quot;</span> <span class="string">id=&quot;comments&gt;</span></span><br><span class="line">        <span class="string">↓</span> <span class="string">複製上面步驟4</span> <span class="string">utterances</span> <span class="string">中產生的</span> <span class="string">script</span></span><br><span class="line">        <span class="string">&lt;script</span> <span class="string">src=&quot;https://utteranc.es/client.js&quot;</span></span><br><span class="line">            <span class="string">...</span></span><br><span class="line">        <span class="string">&lt;/script&gt;</span></span><br><span class="line">    <span class="string">&lt;/div&gt;</span></span><br><span class="line">  &#123;<span class="string">%-</span> <span class="string">endif</span> <span class="string">%</span>&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li>即可看到留言板出現在文章內了</li>
+</ol>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mi1owUcX16kQYG0y6amhW5TXqG8FlrfdD5PLc08FS7crQCBUFyU0TUJQbw3YSzu8UeSz_ajqZQDOWdxIo5PwIx-HUr_r2__1nn9taGWzzXCWokVufwsWZHApHEC3maMsGRKJxd5Pf3sdT0cW0qVg7dCYdt6IdQ9ie2Z2uetNM-dX_S54E9U7_qVpFRhuWp_wy?width=660&height=313&cropmode=none" alt="utterances-message-board-result.png"></p>
+<h3 id="如何讓留言板不要出現"><a href="#如何讓留言板不要出現" class="headerlink" title="如何讓留言板不要出現"></a>如何讓留言板不要出現</h3><p>因為分類&#x2F;標籤等頁面通常不需要有連言功能<br>在 markdown 的 Front-matter 把 comments 關閉</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">tags</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2022-03-01 20:10:05</span></span><br><span class="line"><span class="attr">type:</span> <span class="string">&quot;tags&quot;</span></span><br><span class="line"><span class="attr">comments:</span> <span class="literal">false</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
+<li><a href="https://annkuoq.github.io/blog/2020-03-09-add-utterances-comment-widget-to-hexo/">在 Hexo 安裝 utterances 留言版</a></li>
+<li><a href="https://medium.com/starbugs/gatsby-%E7%94%A8-utterances-%E6%9B%BF-gatsby-%E7%9A%84-blog-%E7%B6%B2%E7%AB%99%E7%94%B3%E8%A3%9D-github-issue-%E7%95%99%E8%A8%80%E5%8A%9F%E8%83%BD-e8593318e5a3">Gatsby | 用 utterances 替 Gatsby 的 Blog 網站申裝 GitHub Issue 留言功能</a></li>
+<li><a href="https://blog.kyomind.tw/hexo-blog-reply/">Hexo：新增 utterances 留言板與方案選擇思路</a></li>
+<li><a href="https://utteranc.es/">utterances </a></li>
+<li><a href="https://kidneyweakx.com/2019/19log-1026-hexo-com.html">Hexo Next 主題增加評論系統 utterances</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>blog</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java Annotation(標註)</title>
+    <url>/2022/03/05/java-annotation/</url>
+    <content><![CDATA[<p>Java 從 JDK5 開使支援了 Annotation 功能，可以提供在編譯時期提示 or 執行時期讀取的資訊。</p>
+<span id="more"></span>
+
+<h3 id="標準標註"><a href="#標準標註" class="headerlink" title="標準標註"></a>標準標註</h3><ol>
+<li>@override : 提供 compiler 提醒被標註的 method 必須為 父類別 or 介面所定義之方法</li>
+<li>@Deprecated : 提供 compiler 提醒被標註的 method 已經過時，建議不要再呼叫它</li>
+<li>@SuppressWarnings: 抑制警告訊息 ( 可使用參數 value &#x3D; { args1, args2 …etc } 定義抑制警告類型 )</li>
+<li>@FunctionalInterface: 協助檢查 interface 是否滿足 lambda 的型態 ( 為 java8 時所新增 )</li>
+</ol>
+<h3 id="元標註-meta-annotation"><a href="#元標註-meta-annotation" class="headerlink" title="元標註(meta-annotation)"></a>元標註(meta-annotation)</h3><p>標註使用 meta-annotation 為其他 annotation 做說明<br>meta-annotation 種類如下:</p>
+<ol>
+<li>@Target: 限定 Annotation 使用位置 ( ElementType )</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ANNOTATION_TYPE: meta-annotation為此類型，用來修飾註解</span><br><span class="line">METHOD: 修飾 method EX: springMVC 的 <span class="meta">@GATEMAPPING</span></span><br><span class="line">TYPE: 修飾class, interface, <span class="keyword">enum</span>, annotation  EX: java8 的 <span class="meta">@FunctionalInterface</span></span><br><span class="line">FIELD: 修飾成員變數 EX: java.persistence 的 <span class="meta">@Column</span> </span><br><span class="line">PARAMETER: 修飾方法參數 EX: springMVC 的 <span class="meta">@PathVariable</span></span><br><span class="line">CONSTRUCTOR: 修飾構造器 EX: spring 的 <span class="meta">@Autowired</span></span><br><span class="line">LOCAL_VARIABLE: 修飾區域變數 EX: spring 檢核參數的 <span class="meta">@NotNull</span> 可以用在多個場域</span><br><span class="line">PACKAGE: 修飾 <span class="keyword">package</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>@Retention: 定義了 Annotation 生命週期 ( RetentionPolicy )</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">SOURCE: 只會出現在程式碼中，編譯後不會出現在class檔中 </span><br><span class="line">CLASS: 出現在程式碼中，且會編譯進class檔中，但運行期無任何效果 ( 此類型為 <span class="keyword">default</span> )</span><br><span class="line">RUNTIME: 從程式碼至到運行期間都會存在，可以使用 Reflection 機制取得 annotation 的訊息</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li><p>@Documented: 使用 javadoc 命令生成API檔案時，如要要將標注資料加入文檔，才需要加上此註解</p>
+</li>
+<li><p>@Inherited: 具有繼承性，代表子類別可以拿到父類別的註解訊息<br>※ 只有 class-level annotation 可以使用, method-level 則無法</p>
+</li>
+<li><p>@Repeatable (java1.8新增): 在 JDK8 之前，annotation 某個位置只能出現一次，不能重複使用；但這個功能可以讓 annotation 在同個地方出現多次</p>
+</li>
+</ol>
+<h3 id="自定義標註"><a href="#自定義標註" class="headerlink" title="自定義標註"></a>自定義標註</h3><ul>
+<li>需要使用 <em><strong>@interface</strong></em></li>
+<li>定義屬性，若命名為 value 時，使用時可省略屬性名稱</li>
+<li>屬性需有預設值時，可以使用 <em><strong>default</strong></em> 關鍵字</li>
+<li>欲在執行時期取得 標註資訊，可使用 <em><strong>java Reflection 機制</strong></em></li>
+</ul>
+<p>自定義 annotation 範例:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">@Target(ElementType.METHOD)</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> CustomAnnotation &#123;</span><br><span class="line"></span><br><span class="line">	String[] value();</span><br><span class="line"></span><br><span class="line">	String <span class="title function_">message</span><span class="params">()</span> <span class="keyword">default</span> <span class="string">&quot;none&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用一個 Main 方法 利用 Java Reflaction 取得 Annotation 的值</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">AnnotationMain</span> &#123;</span><br><span class="line">	</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> NoSuchMethodException, SecurityException &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="type">AnnotationMain</span> <span class="variable">main</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">AnnotationMain</span>();</span><br><span class="line">        main.test();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@CustomAnnotation(value = &#123;&quot;test&quot;, &quot;test2&quot;&#125;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">test</span><span class="params">()</span> <span class="keyword">throws</span> NoSuchMethodException, SecurityException &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 使用反射機制取得 method 上的標註</span></span><br><span class="line">        <span class="type">CustomAnnotation</span> <span class="variable">customAnnotation</span> <span class="operator">=</span> AnnotationMain.class.getMethod(<span class="string">&quot;test&quot;</span>).getAnnotation(CustomAnnotation.class);</span><br><span class="line">        </span><br><span class="line">        String[] values = customAnnotation.value();</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 取得 value</span></span><br><span class="line">        System.out.println(<span class="string">&quot;value:&quot;</span>);</span><br><span class="line">        <span class="keyword">for</span>(String value: values) </span><br><span class="line">            System.out.println(value);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 取得 messsage</span></span><br><span class="line">        System.out.println(<span class="string">&quot;message: &quot;</span> + customAnnotation.message());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>執行後會印出相對應的結果，印出 標註上的 value清單 &amp; message 的預設值 none</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">value:</span><br><span class="line">test</span><br><span class="line">test2</span><br><span class="line">message: none</span><br></pre></td></tr></table></figure>
+
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
+<li><a href="https://kucw.github.io/blog/2018/6/java-annotation/">古古’s Blog Java - annotation 的使用</a></li>
+<li><a href="https://openhome.cc/Gossip/Java/Annotation.html">常用標準標註</a></li>
+<li><a href="https://openhome.cc/Gossip/Java/CustomizeAnnotation.html">自訂標註</a></li>
+<li><a href="https://openhome.cc/Gossip/Java/ReadAnnotation.html">讀取標註資訊</a></li>
+<li><a href="https://openhome.cc/Gossip/CodeData/JDK8/Annotation.html">【JDK8】Annotation 功能增強</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>java</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
       </tags>
   </entry>
   <entry>
@@ -311,115 +420,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Java Annotation(標註)</title>
-    <url>/2022/03/05/java-annotation/</url>
-    <content><![CDATA[<p>Java 從 JDK5 開使支援了 Annotation 功能，可以提供在編譯時期提示 or 執行時期讀取的資訊。</p>
-<span id="more"></span>
-
-<h3 id="標準標註"><a href="#標準標註" class="headerlink" title="標準標註"></a>標準標註</h3><ol>
-<li>@override : 提供 compiler 提醒被標註的 method 必須為 父類別 or 介面所定義之方法</li>
-<li>@Deprecated : 提供 compiler 提醒被標註的 method 已經過時，建議不要再呼叫它</li>
-<li>@SuppressWarnings: 抑制警告訊息 ( 可使用參數 value &#x3D; { args1, args2 …etc } 定義抑制警告類型 )</li>
-<li>@FunctionalInterface: 協助檢查 interface 是否滿足 lambda 的型態 ( 為 java8 時所新增 )</li>
-</ol>
-<h3 id="元標註-meta-annotation"><a href="#元標註-meta-annotation" class="headerlink" title="元標註(meta-annotation)"></a>元標註(meta-annotation)</h3><p>標註使用 meta-annotation 為其他 annotation 做說明<br>meta-annotation 種類如下:</p>
-<ol>
-<li>@Target: 限定 Annotation 使用位置 ( ElementType )</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ANNOTATION_TYPE: meta-annotation為此類型，用來修飾註解</span><br><span class="line">METHOD: 修飾 method EX: springMVC 的 <span class="meta">@GATEMAPPING</span></span><br><span class="line">TYPE: 修飾class, interface, <span class="keyword">enum</span>, annotation  EX: java8 的 <span class="meta">@FunctionalInterface</span></span><br><span class="line">FIELD: 修飾成員變數 EX: java.persistence 的 <span class="meta">@Column</span> </span><br><span class="line">PARAMETER: 修飾方法參數 EX: springMVC 的 <span class="meta">@PathVariable</span></span><br><span class="line">CONSTRUCTOR: 修飾構造器 EX: spring 的 <span class="meta">@Autowired</span></span><br><span class="line">LOCAL_VARIABLE: 修飾區域變數 EX: spring 檢核參數的 <span class="meta">@NotNull</span> 可以用在多個場域</span><br><span class="line">PACKAGE: 修飾 <span class="keyword">package</span></span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>@Retention: 定義了 Annotation 生命週期 ( RetentionPolicy )</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">SOURCE: 只會出現在程式碼中，編譯後不會出現在class檔中 </span><br><span class="line">CLASS: 出現在程式碼中，且會編譯進class檔中，但運行期無任何效果 ( 此類型為 <span class="keyword">default</span> )</span><br><span class="line">RUNTIME: 從程式碼至到運行期間都會存在，可以使用 Reflection 機制取得 annotation 的訊息</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li><p>@Documented: 使用 javadoc 命令生成API檔案時，如要要將標注資料加入文檔，才需要加上此註解</p>
-</li>
-<li><p>@Inherited: 具有繼承性，代表子類別可以拿到父類別的註解訊息<br>※ 只有 class-level annotation 可以使用, method-level 則無法</p>
-</li>
-<li><p>@Repeatable (java1.8新增): 在 JDK8 之前，annotation 某個位置只能出現一次，不能重複使用；但這個功能可以讓 annotation 在同個地方出現多次</p>
-</li>
-</ol>
-<h3 id="自定義標註"><a href="#自定義標註" class="headerlink" title="自定義標註"></a>自定義標註</h3><ul>
-<li>需要使用 <em><strong>@interface</strong></em></li>
-<li>定義屬性，若命名為 value 時，使用時可省略屬性名稱</li>
-<li>屬性需有預設值時，可以使用 <em><strong>default</strong></em> 關鍵字</li>
-<li>欲在執行時期取得 標註資訊，可使用 <em><strong>java Reflection 機制</strong></em></li>
-</ul>
-<p>自定義 annotation 範例:</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">@Target(ElementType.METHOD)</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> CustomAnnotation &#123;</span><br><span class="line"></span><br><span class="line">	String[] value();</span><br><span class="line"></span><br><span class="line">	String <span class="title function_">message</span><span class="params">()</span> <span class="keyword">default</span> <span class="string">&quot;none&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>使用一個 Main 方法 利用 Java Reflaction 取得 Annotation 的值</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">AnnotationMain</span> &#123;</span><br><span class="line">	</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> NoSuchMethodException, SecurityException &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="type">AnnotationMain</span> <span class="variable">main</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">AnnotationMain</span>();</span><br><span class="line">        main.test();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@CustomAnnotation(value = &#123;&quot;test&quot;, &quot;test2&quot;&#125;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">test</span><span class="params">()</span> <span class="keyword">throws</span> NoSuchMethodException, SecurityException &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 使用反射機制取得 method 上的標註</span></span><br><span class="line">        <span class="type">CustomAnnotation</span> <span class="variable">customAnnotation</span> <span class="operator">=</span> AnnotationMain.class.getMethod(<span class="string">&quot;test&quot;</span>).getAnnotation(CustomAnnotation.class);</span><br><span class="line">        </span><br><span class="line">        String[] values = customAnnotation.value();</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 取得 value</span></span><br><span class="line">        System.out.println(<span class="string">&quot;value:&quot;</span>);</span><br><span class="line">        <span class="keyword">for</span>(String value: values) </span><br><span class="line">            System.out.println(value);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 取得 messsage</span></span><br><span class="line">        System.out.println(<span class="string">&quot;message: &quot;</span> + customAnnotation.message());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>執行後會印出相對應的結果，印出 標註上的 value清單 &amp; message 的預設值 none</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">value:</span><br><span class="line">test</span><br><span class="line">test2</span><br><span class="line">message: none</span><br></pre></td></tr></table></figure>
-
-<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
-<li><a href="https://kucw.github.io/blog/2018/6/java-annotation/">古古’s Blog Java - annotation 的使用</a></li>
-<li><a href="https://openhome.cc/Gossip/Java/Annotation.html">常用標準標註</a></li>
-<li><a href="https://openhome.cc/Gossip/Java/CustomizeAnnotation.html">自訂標註</a></li>
-<li><a href="https://openhome.cc/Gossip/Java/ReadAnnotation.html">讀取標註資訊</a></li>
-<li><a href="https://openhome.cc/Gossip/CodeData/JDK8/Annotation.html">【JDK8】Annotation 功能增強</a></li>
-</ol>
-]]></content>
-      <categories>
-        <category>java</category>
-      </categories>
-      <tags>
-        <tag>java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hexo 主題 - NEXT &amp; 新增文章搜尋功能</title>
-    <url>/2022/03/02/hexo-next-theme/</url>
-    <content><![CDATA[<p>紀錄一下，Blog中選定的主題 Next 的安裝經過 &amp; 新增搜尋功能</p>
-<span id="more"></span>
-
-<h3 id="安裝主題-Next"><a href="#安裝主題-Next" class="headerlink" title="安裝主題 Next"></a>安裝主題 Next</h3><ol>
-<li><p>Github clone hexo-theme-next project - <a href="https://github.com/theme-next/hexo-theme-next">點我前往</a></p>
-</li>
-<li><p>在 themes folder 底下建立 next 資料夾並將上述下載的資料 copy 進該資料夾</p>
-</li>
-<li><p>修改 根目錄 的 _config.xml 內容，從預設的 landscape 改成 next</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Extensions</span></span><br><span class="line"><span class="comment">## Plugins: https://hexo.io/plugins/</span></span><br><span class="line"><span class="comment">## Themes: https://hexo.io/themes/</span></span><br><span class="line"><span class="attr">theme:</span> <span class="string">next</span></span><br></pre></td></tr></table></figure></li>
-<li><p>設定檔有2個，一個是配製 Hexo設定，另一個是針對 Next 主題進行配置</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="string">根目錄:</span> <span class="string">_config.yml</span></span><br><span class="line"><span class="string">Next主題:</span> <span class="string">themes/_config.yml</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Next 主題底下有 4種樣式 (設定於 themes 底下的 _config.xml)</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Schemes</span></span><br><span class="line"><span class="comment">#scheme: Muse</span></span><br><span class="line"><span class="attr">scheme:</span> <span class="string">Mist</span></span><br><span class="line"><span class="comment">#scheme: Pisces</span></span><br><span class="line"><span class="comment">#scheme: Gemini</span></span><br></pre></td></tr></table></figure></li>
-</ol>
-<h3 id="開啟-分類-x2F-標籤-功能"><a href="#開啟-分類-x2F-標籤-功能" class="headerlink" title="開啟 分類 &#x2F; 標籤 功能"></a>開啟 分類 &#x2F; 標籤 功能</h3><ul>
-<li>新增 layout 為 page 的文章 ( 一般文章預設為 post)<br><code>hexo new page categories</code> ( type 為 “categories” )<br><code>hexo new page tags</code> ( type 為 “tags” )</li>
-<li>一般文章撰寫時於文章 Front-matter 定義 分類 &#x2F; 標籤 屬性<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">title:</span> <span class="string">Hexo</span> <span class="string">主題</span> <span class="bullet">-</span> <span class="string">NEXT</span> <span class="string">&amp;</span> <span class="string">新增文章搜尋功能</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2022-03-02 06:55:34</span></span><br><span class="line"><span class="attr">tags:</span> </span><br><span class="line"><span class="bullet">-</span> <span class="string">hexo</span></span><br><span class="line"><span class="attr">categories:</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">blog</span></span><br><span class="line"><span class="meta">---</span></span><br></pre></td></tr></table></figure></li>
-<li>開啟 Next 主題 menu 得以顯示於介面<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">home:</span> <span class="string">/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-home</span></span><br><span class="line">  <span class="comment"># about: /about/ || fa fa-user</span></span><br><span class="line">  <span class="attr">tags:</span> <span class="string">/tags/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-tags</span></span><br><span class="line">  <span class="attr">categories:</span> <span class="string">/categories/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-th</span></span><br><span class="line">  <span class="attr">archives:</span> <span class="string">/archives/</span> <span class="string">||</span> <span class="string">fa</span> <span class="string">fa-archive</span></span><br><span class="line">  <span class="comment">#schedule: /schedule/ || fa fa-calendar</span></span><br><span class="line">  <span class="comment">#sitemap: /sitemap.xml || fa fa-sitemap</span></span><br><span class="line">  <span class="comment">#commonweal: /404/ || fa fa-heartbeat</span></span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="新增-搜尋功能"><a href="#新增-搜尋功能" class="headerlink" title="新增 搜尋功能"></a>新增 搜尋功能</h3><ol>
-<li>下載套件 <code>npm install hexo-generator-searchdb --save</code></li>
-<li>根目錄 _config.xml 新增設定<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment">#Local Search / created by 2022-03-02</span></span><br><span class="line"><span class="attr">search:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">path:</span> <span class="string">search.xml</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">field:</span> <span class="string">post</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">format:</span> <span class="string">html</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">content:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure></li>
-<li>主題目錄 _config.xml 開啟 local_search 功能<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Local Search</span></span><br><span class="line"><span class="comment"># Dependencies: https://github.com/theme-next/hexo-generator-searchdb</span></span><br><span class="line"><span class="attr">local_search:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure></li>
-</ol>
-<h3 id="新增-文章閱讀進度-功能"><a href="#新增-文章閱讀進度-功能" class="headerlink" title="新增 文章閱讀進度 功能"></a>新增 文章閱讀進度 功能</h3><p>將 scrollpercent 從 false 改成 true</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">back2top:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># Back to top in sidebar.</span></span><br><span class="line">  <span class="attr">sidebar:</span> <span class="literal">false</span></span><br><span class="line">  <span class="comment"># Scroll percent label in b2t button.</span></span><br><span class="line">  <span class="attr">scrollpercent:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-<p>效果如下:</p>
-<p><img src="https://bnz05pap002files.storage.live.com/y4m1yGLaD3UGbwtXQPefduFnckR3CCidf2SWItddjqzSCA3KdyVLMXnZpx-If2Tl3tWkszjYeEMyotdRXWNIo_iQY_INtR5O0J48eqrMs_1nY9WVie0VKY4hJXYo208GuzkoFHi84ZTce-qnv7Bb6I_Hql7VNLpeIWiQOmib2hAYjdqnt-aDFR2FmDO-C_PuLxP?width=233&height=256&cropmode=none" alt="hexo_page_scrollpercent.png"></p>
-<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
-<li><a href="https://github.com/theme-next/hexo-generator-searchdb">Github Repository : hexo-generator-searchdb</a></li>
-<li><a href="https://ithelp.ithome.com.tw/articles/10248214">(20) 試著學 Hexo - NexT 主題篇 - 可以安裝的套件</a></li>
-<li><a href="https://blog.csdn.net/as480133937/article/details/100138838">Hexo-Next 主题博客个性化配置超详细，超全面(两万字)</a></li>
-<li><a href="https://ithelp.ithome.com.tw/articles/10257569">建立自己Blog系列(三) Hexo next theme 介紹</a></li>
-<li><a href="https://github.com/theme-next/hexo-theme-next">Github Repository : hexo-theme-next</a></li>
-</ol>
-]]></content>
-      <categories>
-        <category>blog</category>
-      </categories>
-      <tags>
-        <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Springboot 讀取 yaml 設定檔參數</title>
     <url>/2022/03/12/springboot-load-yaml-file/</url>
     <content><![CDATA[<p>讀取客製化設定檔參數，會需要使用 @PropertySource annotation，但該標註只適用於 properties，<br>如果副檔名為 YAML 檔案，會無法解析而造成錯誤，如果要讀取該類型檔案，需要做出以下調整:</p>
@@ -503,47 +503,6 @@
       </tags>
   </entry>
   <entry>
-    <title>簡介 Git flow &amp; Github flow</title>
-    <url>/2022/06/08/gitflow-githubflow-introduction/</url>
-    <content><![CDATA[<p>使用 git 作為版本控制來工作也一段時間了，近期看了某些文章發現一些名詞 git flow ， 花了點時間看了一下解釋。<br>才發現自己不知不覺也一直在使用，因此也來記錄一下筆記。</p>
-<span id="more"></span>
-
-<h1 id="Github-Flow"><a href="#Github-Flow" class="headerlink" title="Github Flow"></a>Github Flow</h1><ol>
-<li>主線分支為 master</li>
-<li>開立分支 branch</li>
-<li>儲存 commit </li>
-<li>發起 Pull Request (另一名developer可以進行代碼審查，也可以回絕請求，請其重新調整)</li>
-<li>Merge 回 master 且 刪除 分支branch</li>
-</ol>
-<p><img src="https://dsm01pap006files.storage.live.com/y4mNpNY6l76n-IlaDOMlQaULdqDVChKBc1c0j7IMDwOdWNMCa4KnHZfFIJEqSE5ajSghv_DSsZe17OWsAg2l4KIYssXBxITYzPnoJy5Y_OoLNeRNSE4G6krd_s9dqRGGyjFwAQomoXq4A3P2MnX93yyjhwj8G8U-xOc9y3CcCgH0Z1t8hbLRlHX-_7o3RTzjRJO?width=1064&height=362&cropmode=none" alt="github-flow.png"></p>
-<h1 id="Git-Flow"><a href="#Git-Flow" class="headerlink" title="Git Flow"></a>Git Flow</h1><ol>
-<li>主線分支有兩個 master (正式上線版本) &#x2F; developer (最新開發主分支) branch</li>
-<li>功能分支有三個 feature (功能分支) &#x2F; hotfix (緊急線上問題修復分支)&#x2F; release(待上線測試版本) branch</li>
-</ol>
-<ul>
-<li><p>功能開發(feature) &#x2F; 版本上線前測試 (release):<br>以功能開發而言，從 dev 切出分支個別開發，開發完後 merge 回 dev 分支，等所有 dev 該版本功能皆進<br>入 dev 版本後，會另切出 release 分支， release 分支進行測試，如有問題由該分支修復 bug ，等測試<br>完成後會 merge 回 master &amp; dev 分支； master 分支的程式進行上線。</p>
-</li>
-<li><p>緊急問題修復(hotfix)<br>線上有問題會從 master 開一個分支進行修復且測試，測試完成會 merge 回 master 進行小版本的上線，且<br>也會同步 merger 回 dev 避免後續 下一版本開發完成時，merge 回 master 時又會再次出現問題。</p>
-</li>
-</ul>
-<p><img src="https://dsm01pap006files.storage.live.com/y4mqqwJY4avprtMRtVDZ0W3NhjJQihpMiFnk62pBsGTtEyZ1DqN5eJHfVFJNGndE2U2Nprx6uPsBoPHAL4SzojkhjiPqeqC3fGjeqUxzBAQh0DkWgg_w-Jr3AT4tyGqtFnuhg6MxAiMpOHM-exfE-g5ANjzrKMyXKJu8gw1qgv3yLUlrjBxJ2ZWqTT5bN2Rxnh6?width=841&height=660&cropmode=none" alt="git-flow.png"></p>
-<h1 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h1><p>目前公司在使用的為 Git Flow &amp; Github Flow 兩種工作模式的混合體(多分支+PR確保程式品質)，因為有多人開發 + 版本迭代的關係。<br>基本上還是要看 各個團隊的實際需求來量身訂做開發模式的規則。</p>
-<p>另外在 網路上還有查到一種工作流程為 Gitlab Flow (因比較不像是目前工作使用，就暫時不去贅述)</p>
-<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ol>
-<li><a href="https://ithelp.ithome.com.tw/articles/10281080">Day29｜常見的三種工作流程 - Git flow、GitHub Flow 與 Gitlab Flow</a></li>
-<li><a href="https://ithelp.ithome.com.tw/articles/10277278">【Day19】Git 版本控制 - 多人協作 GitHub Flow</a></li>
-<li><a href="https://medium.com/@lf2lf2111/%E4%B8%89%E7%A8%AE%E7%89%88%E6%8E%A7%E6%B5%81%E7%A8%8B-29c82f5d4469">三種版控流程- git flow vs github flow vs gitlab flow</a></li>
-<li><a href="https://gitbook.tw/chapters/gitflow/using-git-flow">使用 Git Flow</a></li>
-</ol>
-]]></content>
-      <categories>
-        <category>git</category>
-      </categories>
-      <tags>
-        <tag>git</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>使用 Springboot + Mockito 完成單元測試</title>
     <url>/2022/03/09/springboot-mockito-mock-test/</url>
     <content><![CDATA[<p>Mockito 為一個廣泛使用的測試框架，當開發時如果有遇到依賴注入的情境時，往往都會啟動Server，注入實體來進行測試，但這樣的方式即為整合測試 ; 因為當 A 服務呼叫 B 服務，如果 B 服務的內容每次都不一樣，這樣會造成測試結果往往會失敗。</p>
@@ -605,206 +564,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Effective Java Item15 - 使類別 &amp; 成員 的 可訪問性最小化</title>
-    <url>/2022/06/26/effective-java-item15/</url>
-    <content><![CDATA[<p>設計一個模組是否良好的重要因素在於對於外部組件而言，是否隱藏內部數據&amp;實作細節(即為封裝 or 信息隱藏)。<br>其好處為降低 兩個模組之間的耦合，使其可以獨立開發 &amp; 測試。</p>
-<p>Java 提供了 控制訪問 ( access control ) 的 機制決定了 類別 &amp; 成員的 可訪問性 ( accessibility)。</p>
-<span id="more"></span>
-
-<h1 id="訪問級別-4-種"><a href="#訪問級別-4-種" class="headerlink" title="訪問級別( 4 種 )"></a>訪問級別( 4 種 )</h1><ol>
-<li>private: 只有自己類別的成員可以存取</li>
-<li>package-private: 在該class所屬之package底下的所有class都可以使用它，跨package的class則不行<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">   String <span class="title function_">packageprivateService</span><span class="params">()</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="string">&quot;packageprivateService&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li>protected: 除了 自己 &amp; 同package的存取權限外，子類別也可以存取</li>
-<li>public : 所有人都可以存取</li>
-</ol>
-<p>※ 在設計時除了public API 外，其他成員盡量都設定為 private。</p>
-<h1 id="注意事項"><a href="#注意事項" class="headerlink" title="注意事項"></a>注意事項</h1><ul>
-<li>類別成員變數不要設為 public </li>
-<li>類別變數為 static final 的 primitive (int) or immutable object( String )時可設成 public<br>(規則使用 大寫字母 + 單詞之間底線隔開)<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">THRESHOLD</span> <span class="operator">=</span> <span class="number">5</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">TEST_MESSAGE</span> <span class="operator">=</span> <span class="string">&quot;TEST&quot;</span>;</span><br></pre></td></tr></table></figure></li>
-<li>若為非 primitive or immutable 的常數, 使用 public static final 時，client 還是可以去修改其 記憶體位置的內容<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> Thing[] VALUES = &#123; ... &#125;;</span><br></pre></td></tr></table></figure></li>
-</ul>
-<p>要解決上述問題有兩種方式:</p>
-<ol>
-<li><p>將其變成 private , 並將其轉成不可改變的list輸出</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Thing[] VALUES = &#123; ... &#125;;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> List&lt;Thing&gt; VALUES = Collections.unmodifiableList(Arrays.asList(VALUES));</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>將其變成 private , 並將其使用 clone() 的方式回傳</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Thing[] VALUES = &#123; ... &#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> TEST[] value() &#123;</span><br><span class="line">		<span class="keyword">return</span> VALUES.clone();</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure></li>
-</ol>
-<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ol>
-<li><a href="https://matthung0807.blogspot.com/2020/04/effective-java-3e-item-15.html">Effective Java 3e - Item 15: Minimize the accessibility of classes and members 筆記</a></li>
-<li><a href="https://www.jyt0532.com/2018/04/21/minimize-the-accessibility-of-classes-and-members/">Effective Java Item15 - 使類和成員的可訪問性最小化</a></li>
-</ol>
-]]></content>
-      <categories>
-        <category>effectiveJava</category>
-      </categories>
-      <tags>
-        <tag>java</tag>
-        <tag>effectiveJava</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java-字串編碼</title>
-    <url>/2022/06/05/java-String-encoding/</url>
-    <content><![CDATA[<p>最近在公事上有遇到關於中文字編碼的問題，查了一下原因 &amp; 讀了一下 String 相關使用方法做個筆記</p>
-<span id="more"></span>
-
-<h1 id="情境描述"><a href="#情境描述" class="headerlink" title="情境描述"></a>情境描述</h1><p>有一個與外部系統進行資料串接的需求，我們的編碼是 UTF-8 ，對方的系統為 MS950<br>但串接的過程一直發生對方收到的資料為亂碼，因此檢查了一下原本的程式，發現問題出在這行寫法。</p>
-<p><code>new String(&quot;文字&quot;.getBytes(), &quot;MS950&quot;)</code></p>
-<p>上述這行程式包含了 String 個 constructor &amp; getBytes() 用法，因此點進去看了一下 <font color=#ff0000>String.class</font> 的描述</p>
-<ul>
-<li>getBytes() &#x2F; getBytes(String charsetName) : 將 字串 轉換成 對應編碼的 byte 陣列</li>
-</ul>
-<blockquote>
-<p>Encodes this {@code String} into a sequence of bytes using the named charset, storing the result into a new byte array.</p>
-</blockquote>
-<ul>
-<li>new String (byte btye[],String charsetName) : 將 byte 陣列轉回 字串</li>
-</ul>
-<blockquote>
-<p>Constructs a new {@code String} by decoding the specified array of bytes using the specified {@linkplain java.nio.charset.Charset charset}.</p>
-</blockquote>
-<p>上面看乍似是一個對稱的寫法，但是 getBytes 如果沒有帶參數的話，會去取得 JVM 預設的 charset<br>我們的系統是 UTF-8 ，因此上述的寫法就是 把我們的文字用 UTF-8 編碼方式轉成 byte 陣列，但卻<br>是用 MS950 的編碼表去做解碼，這樣找不到對應的資料就會出現亂碼的情況。</p>
-<h1 id="解決方向"><a href="#解決方向" class="headerlink" title="解決方向"></a>解決方向</h1><p>因此這個需求如果是 我們系統 UTF-8 ，對方為 MS950 的情況，我們使用 MS950 的方式將字串轉成<br>byte 陣列傳給對方，對方再使用 MS950 的方式 將其轉回文字即可。</p>
-<h1 id="程式範例"><a href="#程式範例" class="headerlink" title="程式範例"></a>程式範例</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">StringEncodingMain</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> UnsupportedEncodingException &#123;</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line">		System.out.println(<span class="string">&quot;JVM 預設編碼:&quot;</span> + Charset.defaultCharset());</span><br><span class="line">		<span class="type">String</span> <span class="variable">city</span> <span class="operator">=</span> <span class="string">&quot;臺北&quot;</span>;</span><br><span class="line">		<span class="comment">// 錯誤使用情境</span></span><br><span class="line">		System.out.println( <span class="keyword">new</span> <span class="title class_">String</span>(<span class="string">&quot;文字&quot;</span>.getBytes(), <span class="string">&quot;MS950&quot;</span>));</span><br><span class="line">		</span><br><span class="line">		System.out.println(<span class="string">&quot;=====&quot;</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 使用 UTF-8 互轉</span></span><br><span class="line">		<span class="type">byte</span>[] byteArrayUTF8 = city.getBytes();</span><br><span class="line">		System.out.println( <span class="keyword">new</span> <span class="title class_">String</span>(byteArrayUTF8, <span class="string">&quot;UTF-8&quot;</span>));</span><br><span class="line">		</span><br><span class="line">		System.out.println(<span class="string">&quot;=====&quot;</span>);</span><br><span class="line">				</span><br><span class="line">		<span class="comment">// 使用 MS950 互轉</span></span><br><span class="line">		<span class="type">byte</span>[] byteArrayMS950 = city.getBytes(<span class="string">&quot;MS950&quot;</span>);</span><br><span class="line">		System.out.println( <span class="keyword">new</span> <span class="title class_">String</span>(byteArrayMS950, <span class="string">&quot;MS950&quot;</span>));	</span><br><span class="line">	&#125;</span><br><span class="line">&#125;	</span><br></pre></td></tr></table></figure>
-
-<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ol>
-<li><a href="https://openhome.cc/Gossip/Encoding/String.html">Java 的字串</a></li>
-<li><a href="https://codertw.com/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/642854/#outline__8">從String.getBytes理解Java編碼和解碼</a></li>
-</ol>
-]]></content>
-      <categories>
-        <category>java</category>
-      </categories>
-      <tags>
-        <tag>java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Servlet Filter 使用</title>
-    <url>/2022/04/04/servlet-filter/</url>
-    <content><![CDATA[<p>為 Servlet 中的其中一種高級特性 , 可用於 servlet 以外對於 request &amp; resposne 進行過濾, 甚至是修改其內容<br>Filter 可以同時存在很多個 , 多個 Filter 就組成了 FilterChain</p>
-<p><img src="https://bnz05pap002files.storage.live.com/y4mWO6JRUFd29vWlVMojv_Zk5aHsoU-QryrWBDS6-yVashakMDUhYIlun5KMeuO18q6ljkEVtpcbWFwIWMuCwGdPp1hhqHXdQ4Vvv1LvGaB1eCkp6-NBxrwdtrlSpbRf1JTUO0x1ketfWGcd4FWnEDMMDMXeKJ9wcYGSGUqIZGbTIMJTSCXXYodmZjej2oSu2om?width=621&height=271&cropmode=none" alt="servlet-filter.png"></p>
-<span id="more"></span>
-
-<h3 id="前置作業"><a href="#前置作業" class="headerlink" title="前置作業"></a>前置作業</h3><ol>
-<li>使用 Maven :  <code>pom.xml</code> 引入 servlet-api<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line">&lt;dependencies&gt;</span><br><span class="line">  &lt;!-- Servlet --&gt;</span><br><span class="line">  &lt;dependency&gt;</span><br><span class="line">      &lt;groupId&gt;javax.servlet&lt;/groupId&gt;</span><br><span class="line">      &lt;artifactId&gt;javax.servlet-api&lt;/artifactId&gt;</span><br><span class="line">      &lt;version&gt;4.0.1&lt;/version&gt;</span><br><span class="line">      &lt;scope&gt;provided&lt;/scope&gt;</span><br><span class="line">  &lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">&lt;/dependencies&gt;</span><br><span class="line">...</span><br></pre></td></tr></table></figure></li>
-</ol>
-<h3 id="Filter-實現"><a href="#Filter-實現" class="headerlink" title="Filter 實現"></a>Filter 實現</h3><ol>
-<li>Filter 需要實現 javax.servlet.Filter 介面 ( 該介面有3個方法 )</li>
-</ol>
-<ul>
-<li>init(FilterConfig filterConfig)</li>
-<li>doFilter(ServletRequest request, ServletResponse response, FilterChain chain)</li>
-<li>destory()</li>
-</ul>
-<p>其中 init() &amp; destory() 只會被呼叫一次 (<strong>The default implementation takes no action</strong>),<br>而 doFilter() 每次請求時都會被呼叫</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestFilter</span> <span class="keyword">implements</span> <span class="title class_">Filter</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">doFilter</span><span class="params">(ServletRequest request, ServletResponse response, FilterChain chain)</span> <span class="keyword">throws</span> IOException, ServletException &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;project filter&quot;</span>);</span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">        * 撰寫處裡的邏輯</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">        chain.doFilter(request, response);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>設定配置 ( 使用 xml or annotation )<br>(方法一) 在 <code>web.xml</code> 需要進行設定 ( Servlet 2.5 )<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">web-app</span> <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://Java.sun.com/xml/ns/javaee&quot;</span> <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&quot;</span> <span class="attr">version</span>=<span class="string">&quot;2.5&quot;</span>&gt;</span></span><br><span class="line">...</span><br><span class="line">  <span class="tag">&lt;<span class="name">filter</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>testFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">filter-class</span>&gt;</span>com.demo.filter.TestFilter<span class="tag">&lt;/<span class="name">filter-class</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">filter</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>testFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/*<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">dispatcher</span>&gt;</span>REQUEST<span class="tag">&lt;/<span class="name">dispatcher</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line">...</span><br><span class="line"><span class="tag">&lt;/<span class="name">web-app</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
-</ol>
-<ul>
-<li><code>&lt;filter&gt;</code> 跟 <code>&lt;filter-mapping&gt;</code> 的名字必須匹配</li>
-<li><code>&lt;url-pattern&gt;</code> 設定 URL規則 , 可以使用 <code>*</code> (萬用字元)</li>
-<li><code>&lt;dispatcher&gt;</code> 設定到達 servlet 的方式, 有4種 &#x3D;&gt; REQUEST <strong>(預設)</strong>, FORWARD, INCLUDE, ERROR ( 根據不同情境使用)</li>
-<li>若有設定 <code>&lt;url-pattern&gt;</code> &amp; <code>&lt;dispatcher&gt;</code> , 它們兩者的條件要<strong>同時符合</strong>, 該 Filter 才會生效</li>
-</ul>
-<p>(方法二) 除了 xml 之外 , 也可以使用 @WebFilter() 的方式 ( Servlet 3.0 才有)</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@WebFilter(&quot;/*&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestFilter</span> <span class="keyword">implements</span> <span class="title class_">Filter</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">doFilter</span><span class="params">(ServletRequest request, ServletResponse response, FilterChain chain)</span> <span class="keyword">throws</span> IOException, ServletException &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;project filter&quot;</span>);</span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">        * 撰寫處裡的邏輯</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">        chain.doFilter(request, response);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="Filter-執行順序"><a href="#Filter-執行順序" class="headerlink" title="Filter 執行順序"></a>Filter 執行順序</h3><ul>
-<li>如果都是設定 xml 的情況下 , 由 <code>web.xml</code> 中的 <code>&lt;filter-mapping&gt;</code> 宣告順序依序執行</li>
-<li>如果都是設定 <code>@WebFilter</code> 的情況下 , 由 ClassName 的順序來執行<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SecondaryFilter.java</span><br><span class="line">ThirdFilter.java</span><br></pre></td></tr></table></figure></li>
-<li>如果混用的情況底下 , 會先依照 <code>web.xml</code> 的宣告順序後, 再依照 ClassName 的方式</li>
-</ul>
-<p>基本上一個專案最好統一一種方式處理</p>
-<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
-<li><a href="https://openhome.cc/Gossip/ServletJSP/Filter.html">關於過濾器</a></li>
-<li><a href="https://www.concretepage.com/java-ee/jsp-servlet/how-to-use-filter-in-servlet-3-with-webfilter-annotation">How to Use Filter in Servlet 3 with @WebFilter Annotation</a></li>
-<li><a href="https://openhome.cc/Gossip/ServletJSP/FilterImplSetting.html">Filter 的實作與設定</a></li>
-<li><a href="http://allenwu.logdown.com/posts/220574-filter-annotation-execution-order">Filter Annotation 執行順序</a></li>
-<li><a href="https://www.twblogs.net/a/5b7dafda2b71773f4f185e7a">【Servlet】Filter深入講解及實例研究</a></li>
-</ol>
-]]></content>
-      <categories>
-        <category>servlet</category>
-      </categories>
-      <tags>
-        <tag>servlet</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Optional 類別基本操作</title>
-    <url>/2022/06/04/java-Optional/</url>
-    <content><![CDATA[<p>在 Java 開發當中，常常會碰到 <font color=#ff0000><strong>NullPointerException</strong></font> 的問題，於是為了明確定義如果遇到可能有 null 的情況需要如何處理 &amp; 優化程式寫法，就多了 Optional 的類別。</p>
-<p>在 <strong>Clean Code</strong> 這本書內的 Character7 錯誤處理中提到:</p>
-<ul>
-<li>不要回傳 null ( 空值 ) - P123</li>
-<li>不要傳遞 null - P124</li>
-</ul>
-<p>使用 null 參數在程式中流通是一件非常不好的做法，會需要額外的檢查 參數是否為 null ，如果有一處忘了檢查往往會有非預期的錯誤產生 ( ex : NullPointerException )</p>
-<span id="more"></span>
-
-<p>在 java8 以前，以往物件的回傳，都需要特別注意去判斷 是否為 null 值，使用 Optional 後，多了一些判斷 null 的 API 可以應用 ex: <strong>isPresent()</strong> 。</p>
-<p>※回傳單一物件的時候，才需要使用Optional，如果是集合的話，直接回傳空的集合即可 ex: List</p>
-<h1 id="將值轉換成-Optional-物件"><a href="#將值轉換成-Optional-物件" class="headerlink" title="將值轉換成 Optional 物件"></a>將值轉換成 Optional 物件</h1><ul>
-<li>Optional.of( T value)</li>
-</ul>
-<p>當 value 不為 null 的時候回傳一個 Optional 物件，如果 value 為 null 會有 NullPointerException</p>
-<ul>
-<li>Optional.ofNullable( T value ) - 允許傳入 null 值</li>
-</ul>
-<p>當 value 不為 null 的時候回傳一個 Optional 物件，如果 value 為 null 回傳 Optional.empty()</p>
-<h1 id="判斷-值-是否為-存在"><a href="#判斷-值-是否為-存在" class="headerlink" title="判斷 值 是否為 存在"></a>判斷 值 是否為 存在</h1><ul>
-<li>Optional.isPresent( T value )</li>
-</ul>
-<p>當 value 有值 回傳 true , 反之 false</p>
-<ul>
-<li>ifPresent ( Consumer&lt;? super T&gt; action )</li>
-</ul>
-<p>當判斷 Option 的 value 有值時，帶入 Consumer 進行客製化處理，如範例中加工顯示文字；如果沒有值的話就不做任何事</p>
-<h1 id="取得-Optional-值的方法"><a href="#取得-Optional-值的方法" class="headerlink" title="取得 Optional 值的方法"></a>取得 Optional 值的方法</h1><ul>
-<li>get()</li>
-</ul>
-<p>如果 value 存在則回傳值，如果值不存在會報出錯誤訊息<br>java.util.NoSuchElementException: No value present</p>
-<p><strong>※ 在使用 get() 前，確保先用 isPresent() 檢查是否有值，才不會有錯誤訊息</strong></p>
-<ul>
-<li>orElse( T other )</li>
-</ul>
-<p>此方法濃縮了 isPrsesnt() &amp; get() 的方法，如果 Optional 有值的話顯示值，沒有值的話會帶入 other 給的值</p>
-<ul>
-<li>orElseGet( Supplier&lt;? extends T&gt; other )</li>
-</ul>
-<p>如果 Optional 有值的話顯示值，沒有的話會根據客製化的邏輯帶入 other 的結果 ( 用在複雜情境 )，下述範例根據當下產出的 random 值判斷奇數&#x2F;偶數顯示不同的demo結果</p>
-<ul>
-<li>orElseThrow( Supplier&lt;? extends X&gt; exceptionSupplier )</li>
-</ul>
-<p>如果 Optional 有值的話顯示值，沒有的話可以帶入客製化的 exception ( exceptionSupplier )</p>
-<h1 id="實作範例"><a href="#實作範例" class="headerlink" title="實作範例"></a>實作範例</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 練習 Optional 使用</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> oscar51011</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2022年6月4日</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">OptionalMain</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">		</span><br><span class="line">		System.out.println(<span class="string">&quot;== data not found ( before java 8 ) ==&quot;</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// java8以前 ( 如果 null 則不顯示值)</span></span><br><span class="line">		<span class="type">String</span> <span class="variable">nullValueBeforeJava8</span> <span class="operator">=</span> getMapValue(<span class="string">&quot;four&quot;</span>);</span><br><span class="line">		<span class="keyword">if</span>(nullValueBeforeJava8 != <span class="literal">null</span>)</span><br><span class="line">			System.out.println(<span class="string">&quot;Before java8 value is null: &quot;</span> + nullValueBeforeJava8);</span><br><span class="line">		</span><br><span class="line">		<span class="type">String</span> <span class="variable">value</span> <span class="operator">=</span> getMapValue(<span class="string">&quot;three&quot;</span>);</span><br><span class="line">		<span class="keyword">if</span>(value != <span class="literal">null</span>)</span><br><span class="line">			System.out.println(<span class="string">&quot;Before java8 value is not null: &quot;</span> + value);</span><br><span class="line">		</span><br><span class="line">		System.out.println(<span class="string">&quot;== data not found ( java 8 ) ==&quot;</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">/**</span></span><br><span class="line"><span class="comment">		 * java8以後 沒有值的情況</span></span><br><span class="line"><span class="comment">		 */</span></span><br><span class="line">		Optional&lt;String&gt; nullValueJava8 = getMapValueByOptional(<span class="string">&quot;four&quot;</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// get() 用法</span></span><br><span class="line">		<span class="keyword">if</span>(nullValueJava8.isPresent())</span><br><span class="line">			System.out.println(<span class="string">&quot;java8 Optional get() is not null:&quot;</span> + nullValueJava8.get());</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			System.out.println(<span class="string">&quot;java8 Optional get() is null: &quot;</span> + <span class="string">&quot;mapValueIsNull&quot;</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// orElse() 用法</span></span><br><span class="line">		System.out.println(<span class="string">&quot;java8 Optional orElse() is null: &quot;</span> + nullValueJava8.orElse(<span class="string">&quot;mapValueIsNull&quot;</span>));</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// orElseGet()方法 , 隨機產一個1-100的亂數，根據奇數偶數顯示不同的邏輯</span></span><br><span class="line">		System.out.println(nullValueJava8.orElseGet(()-&gt;&#123;</span><br><span class="line">			<span class="type">Random</span> <span class="variable">rd</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Random</span>();</span><br><span class="line">			<span class="type">int</span> <span class="variable">random</span> <span class="operator">=</span> rd.nextInt(<span class="number">100</span>);</span><br><span class="line">			<span class="keyword">if</span>(random%<span class="number">2</span> == <span class="number">0</span>)</span><br><span class="line">				<span class="keyword">return</span> <span class="string">&quot;java8 Optional orElseGet() null logic : even&quot;</span>;</span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">				<span class="keyword">return</span> <span class="string">&quot;java8 Optional orElseGet() null logic :　odd&quot;</span>;</span><br><span class="line">		&#125;));</span><br><span class="line">			</span><br><span class="line">		<span class="comment">// orElseThrow()方法</span></span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			System.out.println(nullValueJava8.orElseThrow(()-&gt; <span class="keyword">new</span> <span class="title class_">Exception</span>(<span class="string">&quot;custom Exception&quot;</span>)));</span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			System.out.println(<span class="string">&quot;test catch exception:&quot;</span> + e.getMessage());</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		System.out.println(<span class="string">&quot;== data exist ( java 8 )==&quot;</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">/**</span></span><br><span class="line"><span class="comment">		 * java8以後 有值的情況</span></span><br><span class="line"><span class="comment">		 */</span></span><br><span class="line">		Optional&lt;String&gt; valueJava8 = getMapValueByOptional(<span class="string">&quot;three&quot;</span>);</span><br><span class="line">		<span class="keyword">if</span>(valueJava8.isPresent())</span><br><span class="line">			System.out.println(<span class="string">&quot;java8 Optional get() is not null:&quot;</span> + valueJava8.get());</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			System.out.println(<span class="string">&quot;java8 Optional get() is null:&quot;</span> + <span class="string">&quot;mapValueIsNull&quot;</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// orElse() 用法</span></span><br><span class="line">		System.out.println(<span class="string">&quot;java8 Optional orElse() is not null: &quot;</span> + valueJava8.orElse(<span class="string">&quot;mapValueIsNull&quot;</span>));</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// isPresent()用法</span></span><br><span class="line">		valueJava8.ifPresent( parameter -&gt; &#123;</span><br><span class="line">			System.out.println(<span class="string">&quot;java8 Optional ifPresent() is not null:&quot;</span> + parameter);</span><br><span class="line">		&#125;);</span><br><span class="line">	</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 取得map的值，如果沒有判斷 null 的情況，則會有 NullPointerException</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> key</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> String <span class="title function_">getMapValue</span><span class="params">(String key)</span> &#123;</span><br><span class="line">		Map&lt;String, String&gt; map = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">		map.put(<span class="string">&quot;one&quot;</span>, <span class="string">&quot;one&quot;</span>);</span><br><span class="line">		map.put(<span class="string">&quot;two&quot;</span>, <span class="string">&quot;two&quot;</span>);</span><br><span class="line">		map.put(<span class="string">&quot;three&quot;</span>, <span class="string">&quot;three&quot;</span>);</span><br><span class="line">		<span class="type">String</span> <span class="variable">value</span> <span class="operator">=</span> map.get(key);</span><br><span class="line">		<span class="keyword">return</span> value;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> Optional&lt;String&gt; <span class="title function_">getMapValueByOptional</span><span class="params">(String key)</span> &#123;</span><br><span class="line">		Map&lt;String, String&gt; map = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">		map.put(<span class="string">&quot;one&quot;</span>, <span class="string">&quot;one&quot;</span>);</span><br><span class="line">		map.put(<span class="string">&quot;two&quot;</span>, <span class="string">&quot;two&quot;</span>);</span><br><span class="line">		map.put(<span class="string">&quot;three&quot;</span>, <span class="string">&quot;three&quot;</span>);</span><br><span class="line">		<span class="type">String</span> <span class="variable">value</span> <span class="operator">=</span> map.get(key);</span><br><span class="line">		<span class="comment">// 方法1: 判斷null</span></span><br><span class="line">		<span class="comment">//return value == null ? Optional.empty() : Optional.of(value);</span></span><br><span class="line">		<span class="comment">// 方法2: 濃縮上述的方法 如果不為 null則回傳值</span></span><br><span class="line">		<span class="keyword">return</span> Optional.ofNullable(value);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>根據 Ref. 5 有提到，使用 null 或是 Optional 的時機點，可以做個參考</p>
-<ul>
-<li>如果在 private 的 method中，因為只有該 class 有權限訪問，可以很清楚的知道 return用法，<br>如果使用 optional 會增加程式的複雜度</li>
-<li>如果在 public 的 method中，因為有多個 class 需要使用，developer 也會在撰寫時容易忘記<br>去處理 null 的情境，因此建議使用 optional 去提醒</li>
-</ul>
-<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ol>
-<li><a href="https://openhome.cc/Gossip/Java/Optional.html">使用 Optional 取代 null</a></li>
-<li><a href="https://matthung0807.blogspot.com/2021/01/java-optional-intro.html">Java Optional 簡介</a></li>
-<li><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html">Optional (Java Platform SE 8 )</a></li>
-<li><a href="http://blog.tonycube.com/2015/10/java-java8-4-optional.html">Java8 新功能筆記 (4) - Optional</a></li>
-<li><a href="https://medium.com/@abhisheksinghaks77/are-you-correctly-using-optional-collections-and-null-in-your-java-code-5d2b8617d47c">Are you correctly using Optional, Collections, and Null in your Java code ?</a></li>
-</ol>
-]]></content>
-      <categories>
-        <category>java</category>
-      </categories>
-      <tags>
-        <tag>java</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Transaction rolled back because it has been marked as rollback-only</title>
     <url>/2022/04/22/hibernate-transaction-rollback-only-error/</url>
     <content><![CDATA[<p>最近在公司查詢問題時，心想著對於 Transaction 可能也不是非常了解，<br>再加上常常遇到 <font color=#ff0000><strong>Transaction rolled back because it has been marked as rollback-only</strong></font> 這個問題，<br>因此就花點時間來重現這個問題，並思考怎麼避免。</p>
@@ -854,92 +613,6 @@
       <tags>
         <tag>springboot</tag>
         <tag>hibernate</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java XML 解析 - JAXB API</title>
-    <url>/2022/06/14/java-xml-parser-jaxb/</url>
-    <content><![CDATA[<p>最近公司需求，有遇到 XML 解析的問題，公司有使用了 JAXB API，因此寫了範例紀錄一下.</p>
-<span id="more"></span>
-
-<ul>
-<li>從 XML String 轉 Java Bean (使用 Unmarshaller 類別)</li>
-<li>從 Java Bean 轉 XML String (使用 Marshaller 類別)</li>
-<li>定義 Java Bean (使用 annotation)</li>
-</ul>
-<p>@XmlRootElement: xml 的 根元素 ex: <code>&lt;test&gt;</code><br>@XmlElement: xml 的 元素 ex: <code>&lt;req&gt;</code><br>@XmlAccessorType: 定義那些成員變數是可以被轉換的 ( ex: FIELD)<br>@XmlTransient: 用來解決 public method 的 名稱衝突<br>@XmlAttribute: 元素的屬性成員 ex: <code>&lt;req one=&quot;o1&quot;&gt;</code> 的 one</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">test</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">req</span> <span class="attr">one</span>=<span class="string">&quot;o1&quot;</span> <span class="attr">two</span>=<span class="string">&quot;t2&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">resp</span> <span class="attr">first</span>=<span class="string">&quot;f1&quot;</span> <span class="attr">second</span>=<span class="string">&quot;s1&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">test</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-
-<h1 id="程式範例"><a href="#程式範例" class="headerlink" title="程式範例"></a>程式範例</h1><ul>
-<li><p>定義 Java Bean (XML Root)</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@XmlRootElement(name = &quot;test&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Test</span> &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@XmlElement</span></span><br><span class="line">	<span class="keyword">private</span> Req req;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@XmlElement</span></span><br><span class="line">	<span class="keyword">private</span> Resp resp;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@XmlTransient</span></span><br><span class="line">	<span class="keyword">public</span> Req <span class="title function_">getReq</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> req;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setReq</span><span class="params">(Req req)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.req = req;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@XmlTransient</span></span><br><span class="line">	<span class="keyword">public</span> Resp <span class="title function_">getResp</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> resp;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setResp</span><span class="params">(Resp resp)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.resp = resp;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p>定義 Java Bean (XML 元素)</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@XmlAccessorType(XmlAccessType.FIELD)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Req</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@XmlAttribute(name = &quot;one&quot;)</span></span><br><span class="line">	<span class="keyword">private</span> String one;</span><br><span class="line">		</span><br><span class="line">    <span class="meta">@XmlAttribute(name = &quot;two&quot;)</span></span><br><span class="line">	<span class="keyword">private</span> String two;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> String <span class="title function_">getOne</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> one;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setOne</span><span class="params">(String one)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.one = one;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> String <span class="title function_">getTwo</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> two;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setTwo</span><span class="params">(String two)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.two = two;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p>定義 Java Bean (XML 元素)</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@XmlAccessorType(XmlAccessType.FIELD)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Resp</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@XmlAttribute(name = &quot;first&quot;)</span></span><br><span class="line">	<span class="keyword">private</span> String first;</span><br><span class="line">	</span><br><span class="line">    <span class="meta">@XmlAttribute(name = &quot;second&quot;)</span></span><br><span class="line">	<span class="keyword">private</span> String second;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> String <span class="title function_">getFirst</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> first;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setFirst</span><span class="params">(String first)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.first = first;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> String <span class="title function_">getSecond</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> second;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setSecond</span><span class="params">(String second)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.second = second;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-</li>
-<li><p>XML String 與 Java Bean 轉換</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 解析 XML 字串的方法 : JAXB</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> oscar51011</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2022年6月14日</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> XMLStreamException, ParserConfigurationException, SAXException, IOException, JAXBException &#123;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 從 XML String 轉成 Bean</span></span><br><span class="line">		<span class="type">String</span> <span class="variable">xmlString</span> <span class="operator">=</span> <span class="string">&quot;&lt;?xml version=&#x27;1.0&#x27; encoding=&#x27;UTF-8&#x27; standalone=\&quot;yes\&quot;?&gt;&lt;test&gt;&lt;req one=&#x27;one&#x27; two=&#x27;two2&#x27;/&gt;&lt;resp first=&#x27;first&#x27; second=&#x27;second2&#x27;/&gt;&lt;/test&gt;&quot;</span>;	</span><br><span class="line">		<span class="type">Test</span> <span class="variable">test</span> <span class="operator">=</span> parseXmltoBeanByJAXB(xmlString, Test.class);</span><br><span class="line">		System.out.println(test.getReq().getOne());</span><br><span class="line">		System.out.println(test.getReq().getTwo());</span><br><span class="line">		System.out.println(test.getResp().getFirst());</span><br><span class="line">		System.out.println(test.getResp().getSecond());</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 從 Bean 轉成 XML String</span></span><br><span class="line">		<span class="type">Test</span> <span class="variable">test2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Test</span>();</span><br><span class="line">		<span class="type">Req</span> <span class="variable">req</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Req</span>();</span><br><span class="line">		req.setOne(<span class="string">&quot;o1&quot;</span>);</span><br><span class="line">		req.setTwo(<span class="string">&quot;t2&quot;</span>);</span><br><span class="line">		<span class="type">Resp</span> <span class="variable">resp</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Resp</span>();</span><br><span class="line">		resp.setFirst(<span class="string">&quot;f1&quot;</span>);</span><br><span class="line">		resp.setSecond(<span class="string">&quot;s1&quot;</span>);</span><br><span class="line">		test2.setReq(req);</span><br><span class="line">		test2.setResp(resp);</span><br><span class="line">		</span><br><span class="line">		<span class="type">String</span> <span class="variable">resultXml</span> <span class="operator">=</span> parseBeantoXmlStringByJAXB(test2);</span><br><span class="line">		System.out.println(resultXml);</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 從 XML String 轉成 Bean</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> &lt;T&gt;</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> xmlString</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> clazz</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@throws</span> JAXBException</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="meta">@SuppressWarnings(&quot;unchecked&quot;)</span></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> &lt;T&gt; T <span class="title function_">parseXmltoBeanByJAXB</span><span class="params">(String xmlString, Class&lt;T&gt; clazz)</span> <span class="keyword">throws</span> JAXBException &#123;</span><br><span class="line">		<span class="type">InputStream</span> <span class="variable">targetStream</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ByteArrayInputStream</span>(xmlString.getBytes());		</span><br><span class="line">		<span class="type">JAXBContext</span> <span class="variable">context</span> <span class="operator">=</span> JAXBContext.newInstance(clazz);</span><br><span class="line">		<span class="type">Unmarshaller</span> <span class="variable">unmarshaller</span> <span class="operator">=</span> context.createUnmarshaller();</span><br><span class="line">		<span class="keyword">return</span> (T) unmarshaller.unmarshal(targetStream);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 從 Bean 轉成 XML String</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> &lt;T&gt;</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> object</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@throws</span> JAXBException</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> &lt;T&gt; String <span class="title function_">parseBeantoXmlStringByJAXB</span><span class="params">(T object)</span> <span class="keyword">throws</span> JAXBException &#123;</span><br><span class="line">		<span class="type">JAXBContext</span> <span class="variable">context</span> <span class="operator">=</span> JAXBContext.newInstance(object.getClass());</span><br><span class="line">		<span class="type">Marshaller</span> <span class="variable">marshaller</span> <span class="operator">=</span> context.createMarshaller();</span><br><span class="line">		<span class="type">StringWriter</span> <span class="variable">sw</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringWriter</span>();</span><br><span class="line">		marshaller.marshal(object, sw);</span><br><span class="line">		<span class="keyword">return</span> sw.toString();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h1 id="延伸議題"><a href="#延伸議題" class="headerlink" title="延伸議題"></a>延伸議題</h1><ol>
-<li><p>使用 JAXB API時有遇到attribute 內的值如果長度太長會有問題:<br><font color=#ff0000>javax.xml.stream.XMLStreamException: Maximum attribute size limit (524288) exceeded</font></p>
-<ul>
-<li>目前自己處理的方法是使用<font color=#ff0000>字串處理</font>把過大的 attribute 額外處理</li>
-<li>可以找相關套件去修改預設值，自己尚未實作，提供一個方向參考(Ref. 3)</li>
-</ul>
-</li>
-<li><p>JAXB API 在 Java9 就已經棄用了，如果有使用比較新的Java版本，無法使用 (Ref. 4)</p>
-</li>
-</ol>
-<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ol>
-<li><a href="https://www.baeldung.com/jaxb">Guide to JAXB</a></li>
-<li><a href="https://ithelp.ithome.com.tw/articles/10109119">使用JAXB-JAXBContext將POJO轉換成XML格式</a></li>
-<li><a href="https://stackoverflow.com/questions/52879100/woodstox-via-simplexml-attribute-limits-how-to-set-them">Woodstox via SimpleXML attribute limits - how to set them?</a></li>
-<li><a href="https://stackoverflow.com/questions/52502189/java-11-package-javax-xml-bind-does-not-exist">https://stackoverflow.com/questions/52502189/java-11-package-javax-xml-bind-does-not-exist</a></li>
-</ol>
-]]></content>
-      <categories>
-        <category>java</category>
-      </categories>
-      <tags>
-        <tag>java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Effective Java Item1 - 使用靜態工廠方法取代建構子</title>
-    <url>/2022/05/19/effective-java-item1/</url>
-    <content><![CDATA[<p>此為閱讀 Effective Java 3rd 所記錄的學習歷程<br>Item1 : 使用靜態工廠方法取代建構子</p>
-<span id="more"></span>
-
-<p>如果要產生一個實例，一般普遍的想法就是使用 public constructor 讓開發人員隨時需要即使用 <em>new</em> 的方式</p>
-<p>但也有另外一種方式，使用靜態工廠方法來提供創造物件的服務</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">   <span class="keyword">private</span> <span class="title function_">Job</span><span class="params">(String title)</span> &#123;</span><br><span class="line">	<span class="built_in">this</span>.title = title;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> Job <span class="title function_">from</span><span class="params">(String title)</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Job</span>(title);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="使用-靜態工廠方法的好處"><a href="#使用-靜態工廠方法的好處" class="headerlink" title="使用 靜態工廠方法的好處"></a>使用 靜態工廠方法的好處</h1><ol>
-<li>有屬於自己的方法名稱，相較於建構子，可讀性高</li>
-<li>避免每次呼叫時，都需要建立一個新的實例<br> -&gt; 可以自行決定需要給新的實例 或是 舊的 ( 設計模式 Singleton )</li>
-<li>可以透過靜態工廠取得子類別實例，並可藉由不同參數，得到不同子類別<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Job</span> &#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> Job <span class="title function_">newInstance</span><span class="params">(String name)</span> &#123;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">if</span>(name.equals(<span class="string">&quot;doctor&quot;</span>)) <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Doctor</span>();</span><br><span class="line">	</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Employee</span>();</span><br><span class="line">	&#125;	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Doctor</span> <span class="keyword">extends</span> <span class="title class_">Job</span> &#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Employee</span> <span class="keyword">extends</span> <span class="title class_">Job</span> &#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
-<li>可以透過靜態工廠取得實作同一介面的實例<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Service</span> &#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> Discount <span class="title function_">getDiscount</span><span class="params">(String type)</span> &#123;</span><br><span class="line">		<span class="keyword">switch</span>(type) &#123;</span><br><span class="line">			<span class="keyword">case</span> <span class="string">&quot;half&quot;</span>: <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">HalfPriceDiscountImpl</span>();</span><br><span class="line">			<span class="keyword">case</span> <span class="string">&quot;limit&quot;</span>: <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">TimeLimitDiscountImpl</span>();</span><br><span class="line">			<span class="keyword">default</span> :  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">MemberDiscountImpl</span>();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ol>
-<h1 id="使用-靜態工廠方法的缺點"><a href="#使用-靜態工廠方法的缺點" class="headerlink" title="使用 靜態工廠方法的缺點"></a>使用 靜態工廠方法的缺點</h1><ol>
-<li>如 建構子為私有，則無法被繼承</li>
-<li>與其他靜態方法無差別，很難在眾多方法中一點看出。</li>
-</ol>
-<p>-&gt; 可用慣用命名行為，使其容易辨認<br>EX: getInstance() : 取得實例<br>    newInstance() : 確保每次取得的實例皆為新的實例<br>    valueOf() : 類別轉換 Integer.valueOf(int i)</p>
-<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ol>
-<li><a href="https://www.blogbrb.com/posts/book/effective-java-item1/">Effective Java Item1 以靜態工廠方法代替建構函式</a></li>
-<li><a href="https://www.jyt0532.com/2017/09/20/static-factory-method/">Effective Java Item1 - 靜態工廠方法</a></li>
-<li><a href="https://www.gushiciku.cn/pl/2Pkd/zh-tw">第一條建議：考慮用靜態工廠方法代替構造方法——《Effective Java》讀書筆記</a></li>
-</ol>
-]]></content>
-      <categories>
-        <category>effectiveJava</category>
-      </categories>
-      <tags>
-        <tag>java</tag>
-        <tag>effectiveJava</tag>
       </tags>
   </entry>
   <entry>
@@ -1064,6 +737,41 @@
       </categories>
       <tags>
         <tag>springboot</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Effective Java Item1 - 使用靜態工廠方法取代建構子</title>
+    <url>/2022/05/19/effective-java-item1/</url>
+    <content><![CDATA[<p>此為閱讀 Effective Java 3rd 所記錄的學習歷程<br>Item1 : 使用靜態工廠方法取代建構子</p>
+<span id="more"></span>
+
+<p>如果要產生一個實例，一般普遍的想法就是使用 public constructor 讓開發人員隨時需要即使用 <em>new</em> 的方式</p>
+<p>但也有另外一種方式，使用靜態工廠方法來提供創造物件的服務</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">   <span class="keyword">private</span> <span class="title function_">Job</span><span class="params">(String title)</span> &#123;</span><br><span class="line">	<span class="built_in">this</span>.title = title;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> Job <span class="title function_">from</span><span class="params">(String title)</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Job</span>(title);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="使用-靜態工廠方法的好處"><a href="#使用-靜態工廠方法的好處" class="headerlink" title="使用 靜態工廠方法的好處"></a>使用 靜態工廠方法的好處</h1><ol>
+<li>有屬於自己的方法名稱，相較於建構子，可讀性高</li>
+<li>避免每次呼叫時，都需要建立一個新的實例<br> -&gt; 可以自行決定需要給新的實例 或是 舊的 ( 設計模式 Singleton )</li>
+<li>可以透過靜態工廠取得子類別實例，並可藉由不同參數，得到不同子類別<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Job</span> &#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> Job <span class="title function_">newInstance</span><span class="params">(String name)</span> &#123;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">if</span>(name.equals(<span class="string">&quot;doctor&quot;</span>)) <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Doctor</span>();</span><br><span class="line">	</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Employee</span>();</span><br><span class="line">	&#125;	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Doctor</span> <span class="keyword">extends</span> <span class="title class_">Job</span> &#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Employee</span> <span class="keyword">extends</span> <span class="title class_">Job</span> &#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li>可以透過靜態工廠取得實作同一介面的實例<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Service</span> &#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> Discount <span class="title function_">getDiscount</span><span class="params">(String type)</span> &#123;</span><br><span class="line">		<span class="keyword">switch</span>(type) &#123;</span><br><span class="line">			<span class="keyword">case</span> <span class="string">&quot;half&quot;</span>: <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">HalfPriceDiscountImpl</span>();</span><br><span class="line">			<span class="keyword">case</span> <span class="string">&quot;limit&quot;</span>: <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">TimeLimitDiscountImpl</span>();</span><br><span class="line">			<span class="keyword">default</span> :  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">MemberDiscountImpl</span>();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h1 id="使用-靜態工廠方法的缺點"><a href="#使用-靜態工廠方法的缺點" class="headerlink" title="使用 靜態工廠方法的缺點"></a>使用 靜態工廠方法的缺點</h1><ol>
+<li>如 建構子為私有，則無法被繼承</li>
+<li>與其他靜態方法無差別，很難在眾多方法中一點看出。</li>
+</ol>
+<p>-&gt; 可用慣用命名行為，使其容易辨認<br>EX: getInstance() : 取得實例<br>    newInstance() : 確保每次取得的實例皆為新的實例<br>    valueOf() : 類別轉換 Integer.valueOf(int i)</p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ol>
+<li><a href="https://www.blogbrb.com/posts/book/effective-java-item1/">Effective Java Item1 以靜態工廠方法代替建構函式</a></li>
+<li><a href="https://www.jyt0532.com/2017/09/20/static-factory-method/">Effective Java Item1 - 靜態工廠方法</a></li>
+<li><a href="https://www.gushiciku.cn/pl/2Pkd/zh-tw">第一條建議：考慮用靜態工廠方法代替構造方法——《Effective Java》讀書筆記</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>effectiveJava</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+        <tag>effectiveJava</tag>
       </tags>
   </entry>
   <entry>
@@ -1305,6 +1013,110 @@ Update的部分用 Assert 斷言驗證值是否有修改。<br>執行後，發�
       </tags>
   </entry>
   <entry>
+    <title>Effective Java Item15 - 使類別 &amp; 成員 的 可訪問性最小化</title>
+    <url>/2022/06/26/effective-java-item15/</url>
+    <content><![CDATA[<p>設計一個模組是否良好的重要因素在於對於外部組件而言，是否隱藏內部數據&amp;實作細節(即為封裝 or 信息隱藏)。<br>其好處為降低 兩個模組之間的耦合，使其可以獨立開發 &amp; 測試。</p>
+<p>Java 提供了 控制訪問 ( access control ) 的 機制決定了 類別 &amp; 成員的 可訪問性 ( accessibility)。</p>
+<span id="more"></span>
+
+<h1 id="訪問級別-4-種"><a href="#訪問級別-4-種" class="headerlink" title="訪問級別( 4 種 )"></a>訪問級別( 4 種 )</h1><ol>
+<li>private: 只有自己類別的成員可以存取</li>
+<li>package-private: 在該class所屬之package底下的所有class都可以使用它，跨package的class則不行<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">   String <span class="title function_">packageprivateService</span><span class="params">()</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="string">&quot;packageprivateService&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>protected: 除了 自己 &amp; 同package的存取權限外，子類別也可以存取</li>
+<li>public : 所有人都可以存取</li>
+</ol>
+<p>※ 在設計時除了public API 外，其他成員盡量都設定為 private。</p>
+<h1 id="注意事項"><a href="#注意事項" class="headerlink" title="注意事項"></a>注意事項</h1><ul>
+<li>類別成員變數不要設為 public </li>
+<li>類別變數為 static final 的 primitive (int) or immutable object( String )時可設成 public<br>(規則使用 大寫字母 + 單詞之間底線隔開)<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">THRESHOLD</span> <span class="operator">=</span> <span class="number">5</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">TEST_MESSAGE</span> <span class="operator">=</span> <span class="string">&quot;TEST&quot;</span>;</span><br></pre></td></tr></table></figure></li>
+<li>若為非 primitive or immutable 的常數, 使用 public static final 時，client 還是可以去修改其 記憶體位置的內容<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> Thing[] VALUES = &#123; ... &#125;;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>要解決上述問題有兩種方式:</p>
+<ol>
+<li><p>將其變成 private , 並將其轉成不可改變的list輸出</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Thing[] VALUES = &#123; ... &#125;;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> List&lt;Thing&gt; VALUES = Collections.unmodifiableList(Arrays.asList(VALUES));</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>將其變成 private , 並將其使用 clone() 的方式回傳</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Thing[] VALUES = &#123; ... &#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> TEST[] value() &#123;</span><br><span class="line">		<span class="keyword">return</span> VALUES.clone();</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ol>
+<li><a href="https://matthung0807.blogspot.com/2020/04/effective-java-3e-item-15.html">Effective Java 3e - Item 15: Minimize the accessibility of classes and members 筆記</a></li>
+<li><a href="https://www.jyt0532.com/2018/04/21/minimize-the-accessibility-of-classes-and-members/">Effective Java Item15 - 使類和成員的可訪問性最小化</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>effectiveJava</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+        <tag>effectiveJava</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用 jenkins 撰寫 pipeline 腳本完成 springboot 簡易自動化部署</title>
+    <url>/2022/05/07/jenkins-pipeline/</url>
+    <content><![CDATA[<p>本篇記錄撰寫 pipeline 完成簡易 springboot 的打包部署流程<br>並記錄在官網中使用到的一些 pipeline syntax</p>
+<span id="more"></span>
+
+<h3 id="前置作業"><a href="#前置作業" class="headerlink" title="前置作業"></a>前置作業</h3><ol>
+<li>準備兩台 VM (一台裝 jenkins VM, 一台用來部署VM)</li>
+<li>使用 docker啟動一個 Jenkins </li>
+<li>docker jenkins VM配置 ssh 設定使 主機跳轉時不用輸入帳號密碼<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta"># </span><span class="language-bash">jenkins VM 建立 ssh key</span></span><br><span class="line">ssh-keygen -t rsa -b 4096</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">進入 docker jenkins 的 .ssh 資料夾</span></span><br><span class="line">cd /root/.ssh</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">取得 public key</span> </span><br><span class="line">cat id_rsa.pub</span><br></pre></td></tr></table></figure></li>
+<li>部署 VM 進入 <code>.ssh</code> 資料夾下 建立 <code>authorized_keys</code> 檔案 , 並把上述 public key 複製<br>設定完後，從 docker jenkins ssh 進 部署VM 確認是否可以正常執行</li>
+<li>建置一個可運行的 springboot 專案</li>
+<li>使用 docker啟動一個 Jenkins </li>
+<li>jenkins 安裝 maven plugin<br>Dashboard &gt; 管理 jenkins &gt; Global Tool Configuration &gt; 點擊 maven 安裝 (選擇版本&amp;勾選自動安裝)</li>
+<li>jenkins credentials 配置連接 github 之設定</li>
+</ol>
+<h3 id="自動化流程"><a href="#自動化流程" class="headerlink" title="自動化流程"></a>自動化流程</h3><ol>
+<li>清空該job的workspace</li>
+<li>取得github上對應的repository</li>
+<li>在jenkins主機上進行打包</li>
+<li>使用 linux 指令將 springboot jar 檔送到部署主機上</li>
+<li>通知流程 ( print 結束字樣)</li>
+</ol>
+<h1 id="Jenkins-pipeline-Code-撰寫"><a href="#Jenkins-pipeline-Code-撰寫" class="headerlink" title="Jenkins pipeline Code 撰寫"></a>Jenkins pipeline Code 撰寫</h1><ol>
+<li>Jenkins 有提供 pipeline Syntax 產生器可以使用<br>Dashboard &gt; 自己開的 job &gt; Pipeline Syntax</li>
+</ol>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mlgGj36sPhIhYlEke5YQiOGEnHlVx5Yn6c7Gsta8LOTrDGCd1hJTDGDB9uuot5oCVL0tBt1parZEAJ4JKBLZyKUasat3v5WhTxqcqa9kEAgKvEIzowxE0IontSJPMYAXj_LMkSLpDNteYPU5_X6nREetiFiy9oKu7xXxQ-8IEdGRk2dDJzsB0iRxH2Y9jOj1u?width=1024&height=629&cropmode=none" alt="pipeline-syntax.png"></p>
+<ol start="2">
+<li><p>Jenkins 有提供 enviroment 可以設定系統參數 &amp; parameter 可以定義參數，讓user根據不同情境處理Job</p>
+</li>
+<li><p>新增作業 &gt; 選擇 Pipeline Job &gt; 點選組態 ( 開始撰寫自己的第一個 pipeline job)<br>pipeline Definition 有兩種，本篇使用 <font color=#ff0000>pipeline script</font></p>
+</li>
+</ol>
+<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">pipeline &#123;</span><br><span class="line">    agent any</span><br><span class="line">    </span><br><span class="line">    environment &#123;</span><br><span class="line">        remoteUser = <span class="string">&#x27;填入部署VM帳號&#x27;</span></span><br><span class="line">        remoteIp = <span class="string">&#x27;填入部署VM IP&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    parameters &#123;</span><br><span class="line">        choice(</span><br><span class="line">          <span class="symbol">description:</span> <span class="string">&#x27;你需要選擇哪個環境執行 ?&#x27;</span>,</span><br><span class="line">          <span class="symbol">name:</span> <span class="string">&#x27;profile&#x27;</span>,</span><br><span class="line">          <span class="symbol">choices:</span> [<span class="string">&#x27;dev&#x27;</span>, <span class="string">&#x27;uat&#x27;</span>]</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    stages &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 步驟1: 清空資料夾</span></span><br><span class="line">        stage(<span class="string">&#x27;deleteDir&#x27;</span>)&#123;</span><br><span class="line">            steps&#123;</span><br><span class="line">                deleteDir()</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 步驟2: checkout github code</span></span><br><span class="line">        stage(<span class="string">&#x27;checkout&#x27;</span>)&#123;</span><br><span class="line">           steps&#123;</span><br><span class="line">              checkout([<span class="attr">$class:</span> <span class="string">&#x27;GitSCM&#x27;</span>, <span class="attr">branches:</span> [[<span class="attr">name:</span> <span class="string">&#x27;*/master&#x27;</span>]], <span class="attr">extensions:</span> [], <span class="attr">userRemoteConfigs:</span> [[<span class="attr">credentialsId:</span> <span class="string">&#x27;VM_USER&#x27;</span>, <span class="attr">url:</span> <span class="string">&#x27;填入需要取得之Git repository&#x27;</span>]]])</span><br><span class="line">           &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 步驟3: 專案打包成jar</span></span><br><span class="line">        stage(<span class="string">&#x27;build&#x27;</span>)&#123;</span><br><span class="line">            steps&#123;</span><br><span class="line">                withMaven(<span class="attr">maven:</span> <span class="string">&#x27;maven-3.3.9&#x27;</span>) &#123;</span><br><span class="line">                    sh <span class="string">&#x27;mvn clean package -DskipTests&#x27;</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 步驟4: 專案部署到另一台server , 並啟動</span></span><br><span class="line">        stage(<span class="string">&#x27;deploy&#x27;</span>) &#123;</span><br><span class="line">            steps &#123;</span><br><span class="line">                </span><br><span class="line">                sh <span class="string">&quot;scp web/target/gameballWeb.jar $&#123;env.remoteUser&#125;@$&#123;env.remoteIp&#125;:/home/oscar51011/project&quot;</span></span><br><span class="line">                echo <span class="string">&#x27;執行環境: $&#123;profile&#125;&#x27;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        stage(<span class="string">&#x27;notify&#x27;</span>) &#123;</span><br><span class="line">            steps &#123;</span><br><span class="line">                sh <span class="string">&quot;echo &#x27;job done!&#x27;&quot;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125; </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="驗證結果"><a href="#驗證結果" class="headerlink" title="驗證結果"></a>驗證結果</h1><ol>
+<li>手動執行 Build</li>
+</ol>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mW9A3gzWWOuCD5IMKBvwWlZhxgpIOt3ABwb_JlX77O6G9qwifU9Aiy0JLBwJ9-zEd6mxPdA8k8hfLfdjtYh1AZgFctCq5P1a-y2ufGYafPxAwODxTPZ961aztqJFT2htszB_xJ7XfR20HohKm5M9pRx6bg8EFgP5ydOT0IOG-3xHpTF01KaIt6OS9QQseeyq1?width=660&height=306&cropmode=none" alt="pipeline-parameter.png"></p>
+<ol start="2">
+<li>執行完後即可看到 pipeline 的結果</li>
+</ol>
+<p><img src="https://bnz05pap002files.storage.live.com/y4muOlGasqRI4TNMjFnarl9n4OTtvqKbCcQjAE67pKYAaf8HHyHG4okSmxpm_Hk17--LBzeHRD8RFpTXrel9A0cghCIsGifcABGqxpx1R9bV50ojMDZN4yLzkjJLHW_sMpTcglls2VXQk82Bp3p3J17EoHXlOPrV3ch5PzhsUY1El00MKuy7_RrFWFc9uVcF1A1?width=1024&height=297&cropmode=none" alt="pipeline-result.png"></p>
+<h3 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h3><p>以上就是初步撰寫第一個 pipeline 腳本的流程，但本篇還有很多部分有進步空間，紀錄一下後續延伸方向。</p>
+<ul>
+<li>研究 pipeline script from SCM </li>
+<li>研究 如果在背景執行 springboot 專案，且可以優雅的 shutdown</li>
+<li>研究 單元測試，在 CICD 中單元測試也是重要的一環</li>
+<li>研究 健康檢查機制(部署完成後，通常都會需要做健康檢查，確認專案是否有成功啟動)</li>
+<li>備份舊版本資料，以利後續出問題時可以復原退回前版</li>
+</ul>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ol>
+<li><a href="https://www.baeldung.com/ops/jenkins-pipelines">Intro to Jenkins 2 and the Power of Pipelines</a></li>
+<li><a href="https://www.jenkins.io/doc/book/pipeline/syntax/">Jenkins - Pipeline Syntax</a></li>
+<li><a href="https://www.jenkins.io/doc/book/pipeline/getting-started/">Jenkins - Getting started with Pipeline</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>jenkins</category>
+      </categories>
+      <tags>
+        <tag>jenkins</tag>
+        <tag>springboot</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>使用 Jenkins 串接 github webhook</title>
     <url>/2022/05/01/jenkins-connect-github-webhook/</url>
     <content><![CDATA[<p>目的: 撰寫基本的 Job，連接 Git Repository 並附上測試結果</p>
@@ -1411,67 +1223,282 @@ Update的部分用 Assert 斷言驗證值是否有修改。<br>執行後，發�
       </tags>
   </entry>
   <entry>
-    <title>使用 jenkins 撰寫 pipeline 腳本完成 springboot 簡易自動化部署</title>
-    <url>/2022/05/07/jenkins-pipeline/</url>
-    <content><![CDATA[<p>本篇記錄撰寫 pipeline 完成簡易 springboot 的打包部署流程<br>並記錄在官網中使用到的一些 pipeline syntax</p>
+    <title>Servlet Filter 使用</title>
+    <url>/2022/04/04/servlet-filter/</url>
+    <content><![CDATA[<p>為 Servlet 中的其中一種高級特性 , 可用於 servlet 以外對於 request &amp; resposne 進行過濾, 甚至是修改其內容<br>Filter 可以同時存在很多個 , 多個 Filter 就組成了 FilterChain</p>
+<p><img src="https://bnz05pap002files.storage.live.com/y4mWO6JRUFd29vWlVMojv_Zk5aHsoU-QryrWBDS6-yVashakMDUhYIlun5KMeuO18q6ljkEVtpcbWFwIWMuCwGdPp1hhqHXdQ4Vvv1LvGaB1eCkp6-NBxrwdtrlSpbRf1JTUO0x1ketfWGcd4FWnEDMMDMXeKJ9wcYGSGUqIZGbTIMJTSCXXYodmZjej2oSu2om?width=621&height=271&cropmode=none" alt="servlet-filter.png"></p>
 <span id="more"></span>
 
 <h3 id="前置作業"><a href="#前置作業" class="headerlink" title="前置作業"></a>前置作業</h3><ol>
-<li>準備兩台 VM (一台裝 jenkins VM, 一台用來部署VM)</li>
-<li>使用 docker啟動一個 Jenkins </li>
-<li>docker jenkins VM配置 ssh 設定使 主機跳轉時不用輸入帳號密碼<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta"># </span><span class="language-bash">jenkins VM 建立 ssh key</span></span><br><span class="line">ssh-keygen -t rsa -b 4096</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">進入 docker jenkins 的 .ssh 資料夾</span></span><br><span class="line">cd /root/.ssh</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">取得 public key</span> </span><br><span class="line">cat id_rsa.pub</span><br></pre></td></tr></table></figure></li>
-<li>部署 VM 進入 <code>.ssh</code> 資料夾下 建立 <code>authorized_keys</code> 檔案 , 並把上述 public key 複製<br>設定完後，從 docker jenkins ssh 進 部署VM 確認是否可以正常執行</li>
-<li>建置一個可運行的 springboot 專案</li>
-<li>使用 docker啟動一個 Jenkins </li>
-<li>jenkins 安裝 maven plugin<br>Dashboard &gt; 管理 jenkins &gt; Global Tool Configuration &gt; 點擊 maven 安裝 (選擇版本&amp;勾選自動安裝)</li>
-<li>jenkins credentials 配置連接 github 之設定</li>
+<li>使用 Maven :  <code>pom.xml</code> 引入 servlet-api<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line">&lt;dependencies&gt;</span><br><span class="line">  &lt;!-- Servlet --&gt;</span><br><span class="line">  &lt;dependency&gt;</span><br><span class="line">      &lt;groupId&gt;javax.servlet&lt;/groupId&gt;</span><br><span class="line">      &lt;artifactId&gt;javax.servlet-api&lt;/artifactId&gt;</span><br><span class="line">      &lt;version&gt;4.0.1&lt;/version&gt;</span><br><span class="line">      &lt;scope&gt;provided&lt;/scope&gt;</span><br><span class="line">  &lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">&lt;/dependencies&gt;</span><br><span class="line">...</span><br></pre></td></tr></table></figure></li>
 </ol>
-<h3 id="自動化流程"><a href="#自動化流程" class="headerlink" title="自動化流程"></a>自動化流程</h3><ol>
-<li>清空該job的workspace</li>
-<li>取得github上對應的repository</li>
-<li>在jenkins主機上進行打包</li>
-<li>使用 linux 指令將 springboot jar 檔送到部署主機上</li>
-<li>通知流程 ( print 結束字樣)</li>
+<h3 id="Filter-實現"><a href="#Filter-實現" class="headerlink" title="Filter 實現"></a>Filter 實現</h3><ol>
+<li>Filter 需要實現 javax.servlet.Filter 介面 ( 該介面有3個方法 )</li>
 </ol>
-<h1 id="Jenkins-pipeline-Code-撰寫"><a href="#Jenkins-pipeline-Code-撰寫" class="headerlink" title="Jenkins pipeline Code 撰寫"></a>Jenkins pipeline Code 撰寫</h1><ol>
-<li>Jenkins 有提供 pipeline Syntax 產生器可以使用<br>Dashboard &gt; 自己開的 job &gt; Pipeline Syntax</li>
-</ol>
-<p><img src="https://bnz05pap002files.storage.live.com/y4mlgGj36sPhIhYlEke5YQiOGEnHlVx5Yn6c7Gsta8LOTrDGCd1hJTDGDB9uuot5oCVL0tBt1parZEAJ4JKBLZyKUasat3v5WhTxqcqa9kEAgKvEIzowxE0IontSJPMYAXj_LMkSLpDNteYPU5_X6nREetiFiy9oKu7xXxQ-8IEdGRk2dDJzsB0iRxH2Y9jOj1u?width=1024&height=629&cropmode=none" alt="pipeline-syntax.png"></p>
-<ol start="2">
-<li><p>Jenkins 有提供 enviroment 可以設定系統參數 &amp; parameter 可以定義參數，讓user根據不同情境處理Job</p>
-</li>
-<li><p>新增作業 &gt; 選擇 Pipeline Job &gt; 點選組態 ( 開始撰寫自己的第一個 pipeline job)<br>pipeline Definition 有兩種，本篇使用 <font color=#ff0000>pipeline script</font></p>
-</li>
-</ol>
-<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">pipeline &#123;</span><br><span class="line">    agent any</span><br><span class="line">    </span><br><span class="line">    environment &#123;</span><br><span class="line">        remoteUser = <span class="string">&#x27;填入部署VM帳號&#x27;</span></span><br><span class="line">        remoteIp = <span class="string">&#x27;填入部署VM IP&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    parameters &#123;</span><br><span class="line">        choice(</span><br><span class="line">          <span class="symbol">description:</span> <span class="string">&#x27;你需要選擇哪個環境執行 ?&#x27;</span>,</span><br><span class="line">          <span class="symbol">name:</span> <span class="string">&#x27;profile&#x27;</span>,</span><br><span class="line">          <span class="symbol">choices:</span> [<span class="string">&#x27;dev&#x27;</span>, <span class="string">&#x27;uat&#x27;</span>]</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    stages &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 步驟1: 清空資料夾</span></span><br><span class="line">        stage(<span class="string">&#x27;deleteDir&#x27;</span>)&#123;</span><br><span class="line">            steps&#123;</span><br><span class="line">                deleteDir()</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 步驟2: checkout github code</span></span><br><span class="line">        stage(<span class="string">&#x27;checkout&#x27;</span>)&#123;</span><br><span class="line">           steps&#123;</span><br><span class="line">              checkout([<span class="attr">$class:</span> <span class="string">&#x27;GitSCM&#x27;</span>, <span class="attr">branches:</span> [[<span class="attr">name:</span> <span class="string">&#x27;*/master&#x27;</span>]], <span class="attr">extensions:</span> [], <span class="attr">userRemoteConfigs:</span> [[<span class="attr">credentialsId:</span> <span class="string">&#x27;VM_USER&#x27;</span>, <span class="attr">url:</span> <span class="string">&#x27;填入需要取得之Git repository&#x27;</span>]]])</span><br><span class="line">           &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 步驟3: 專案打包成jar</span></span><br><span class="line">        stage(<span class="string">&#x27;build&#x27;</span>)&#123;</span><br><span class="line">            steps&#123;</span><br><span class="line">                withMaven(<span class="attr">maven:</span> <span class="string">&#x27;maven-3.3.9&#x27;</span>) &#123;</span><br><span class="line">                    sh <span class="string">&#x27;mvn clean package -DskipTests&#x27;</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 步驟4: 專案部署到另一台server , 並啟動</span></span><br><span class="line">        stage(<span class="string">&#x27;deploy&#x27;</span>) &#123;</span><br><span class="line">            steps &#123;</span><br><span class="line">                </span><br><span class="line">                sh <span class="string">&quot;scp web/target/gameballWeb.jar $&#123;env.remoteUser&#125;@$&#123;env.remoteIp&#125;:/home/oscar51011/project&quot;</span></span><br><span class="line">                echo <span class="string">&#x27;執行環境: $&#123;profile&#125;&#x27;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        stage(<span class="string">&#x27;notify&#x27;</span>) &#123;</span><br><span class="line">            steps &#123;</span><br><span class="line">                sh <span class="string">&quot;echo &#x27;job done!&#x27;&quot;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125; </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="驗證結果"><a href="#驗證結果" class="headerlink" title="驗證結果"></a>驗證結果</h1><ol>
-<li>手動執行 Build</li>
-</ol>
-<p><img src="https://bnz05pap002files.storage.live.com/y4mW9A3gzWWOuCD5IMKBvwWlZhxgpIOt3ABwb_JlX77O6G9qwifU9Aiy0JLBwJ9-zEd6mxPdA8k8hfLfdjtYh1AZgFctCq5P1a-y2ufGYafPxAwODxTPZ961aztqJFT2htszB_xJ7XfR20HohKm5M9pRx6bg8EFgP5ydOT0IOG-3xHpTF01KaIt6OS9QQseeyq1?width=660&height=306&cropmode=none" alt="pipeline-parameter.png"></p>
-<ol start="2">
-<li>執行完後即可看到 pipeline 的結果</li>
-</ol>
-<p><img src="https://bnz05pap002files.storage.live.com/y4muOlGasqRI4TNMjFnarl9n4OTtvqKbCcQjAE67pKYAaf8HHyHG4okSmxpm_Hk17--LBzeHRD8RFpTXrel9A0cghCIsGifcABGqxpx1R9bV50ojMDZN4yLzkjJLHW_sMpTcglls2VXQk82Bp3p3J17EoHXlOPrV3ch5PzhsUY1El00MKuy7_RrFWFc9uVcF1A1?width=1024&height=297&cropmode=none" alt="pipeline-result.png"></p>
-<h3 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h3><p>以上就是初步撰寫第一個 pipeline 腳本的流程，但本篇還有很多部分有進步空間，紀錄一下後續延伸方向。</p>
 <ul>
-<li>研究 pipeline script from SCM </li>
-<li>研究 如果在背景執行 springboot 專案，且可以優雅的 shutdown</li>
-<li>研究 單元測試，在 CICD 中單元測試也是重要的一環</li>
-<li>研究 健康檢查機制(部署完成後，通常都會需要做健康檢查，確認專案是否有成功啟動)</li>
-<li>備份舊版本資料，以利後續出問題時可以復原退回前版</li>
+<li>init(FilterConfig filterConfig)</li>
+<li>doFilter(ServletRequest request, ServletResponse response, FilterChain chain)</li>
+<li>destory()</li>
 </ul>
-<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ol>
-<li><a href="https://www.baeldung.com/ops/jenkins-pipelines">Intro to Jenkins 2 and the Power of Pipelines</a></li>
-<li><a href="https://www.jenkins.io/doc/book/pipeline/syntax/">Jenkins - Pipeline Syntax</a></li>
-<li><a href="https://www.jenkins.io/doc/book/pipeline/getting-started/">Jenkins - Getting started with Pipeline</a></li>
+<p>其中 init() &amp; destory() 只會被呼叫一次 (<strong>The default implementation takes no action</strong>),<br>而 doFilter() 每次請求時都會被呼叫</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestFilter</span> <span class="keyword">implements</span> <span class="title class_">Filter</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">doFilter</span><span class="params">(ServletRequest request, ServletResponse response, FilterChain chain)</span> <span class="keyword">throws</span> IOException, ServletException &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;project filter&quot;</span>);</span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">        * 撰寫處裡的邏輯</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">        chain.doFilter(request, response);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>設定配置 ( 使用 xml or annotation )<br>(方法一) 在 <code>web.xml</code> 需要進行設定 ( Servlet 2.5 )<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">web-app</span> <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://Java.sun.com/xml/ns/javaee&quot;</span> <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&quot;</span> <span class="attr">version</span>=<span class="string">&quot;2.5&quot;</span>&gt;</span></span><br><span class="line">...</span><br><span class="line">  <span class="tag">&lt;<span class="name">filter</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>testFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">filter-class</span>&gt;</span>com.demo.filter.TestFilter<span class="tag">&lt;/<span class="name">filter-class</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">filter</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>testFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/*<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">dispatcher</span>&gt;</span>REQUEST<span class="tag">&lt;/<span class="name">dispatcher</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line">...</span><br><span class="line"><span class="tag">&lt;/<span class="name">web-app</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<ul>
+<li><code>&lt;filter&gt;</code> 跟 <code>&lt;filter-mapping&gt;</code> 的名字必須匹配</li>
+<li><code>&lt;url-pattern&gt;</code> 設定 URL規則 , 可以使用 <code>*</code> (萬用字元)</li>
+<li><code>&lt;dispatcher&gt;</code> 設定到達 servlet 的方式, 有4種 &#x3D;&gt; REQUEST <strong>(預設)</strong>, FORWARD, INCLUDE, ERROR ( 根據不同情境使用)</li>
+<li>若有設定 <code>&lt;url-pattern&gt;</code> &amp; <code>&lt;dispatcher&gt;</code> , 它們兩者的條件要<strong>同時符合</strong>, 該 Filter 才會生效</li>
+</ul>
+<p>(方法二) 除了 xml 之外 , 也可以使用 @WebFilter() 的方式 ( Servlet 3.0 才有)</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@WebFilter(&quot;/*&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestFilter</span> <span class="keyword">implements</span> <span class="title class_">Filter</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">doFilter</span><span class="params">(ServletRequest request, ServletResponse response, FilterChain chain)</span> <span class="keyword">throws</span> IOException, ServletException &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;project filter&quot;</span>);</span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">        * 撰寫處裡的邏輯</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">        chain.doFilter(request, response);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Filter-執行順序"><a href="#Filter-執行順序" class="headerlink" title="Filter 執行順序"></a>Filter 執行順序</h3><ul>
+<li>如果都是設定 xml 的情況下 , 由 <code>web.xml</code> 中的 <code>&lt;filter-mapping&gt;</code> 宣告順序依序執行</li>
+<li>如果都是設定 <code>@WebFilter</code> 的情況下 , 由 ClassName 的順序來執行<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SecondaryFilter.java</span><br><span class="line">ThirdFilter.java</span><br></pre></td></tr></table></figure></li>
+<li>如果混用的情況底下 , 會先依照 <code>web.xml</code> 的宣告順序後, 再依照 ClassName 的方式</li>
+</ul>
+<p>基本上一個專案最好統一一種方式處理</p>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
+<li><a href="https://openhome.cc/Gossip/ServletJSP/Filter.html">關於過濾器</a></li>
+<li><a href="https://www.concretepage.com/java-ee/jsp-servlet/how-to-use-filter-in-servlet-3-with-webfilter-annotation">How to Use Filter in Servlet 3 with @WebFilter Annotation</a></li>
+<li><a href="https://openhome.cc/Gossip/ServletJSP/FilterImplSetting.html">Filter 的實作與設定</a></li>
+<li><a href="http://allenwu.logdown.com/posts/220574-filter-annotation-execution-order">Filter Annotation 執行順序</a></li>
+<li><a href="https://www.twblogs.net/a/5b7dafda2b71773f4f185e7a">【Servlet】Filter深入講解及實例研究</a></li>
 </ol>
 ]]></content>
       <categories>
-        <category>jenkins</category>
+        <category>servlet</category>
       </categories>
       <tags>
-        <tag>jenkins</tag>
-        <tag>springboot</tag>
+        <tag>servlet</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>簡介 Git flow &amp; Github flow</title>
+    <url>/2022/06/08/gitflow-githubflow-introduction/</url>
+    <content><![CDATA[<p>使用 git 作為版本控制來工作也一段時間了，近期看了某些文章發現一些名詞 git flow ， 花了點時間看了一下解釋。<br>才發現自己不知不覺也一直在使用，因此也來記錄一下筆記。</p>
+<span id="more"></span>
+
+<h1 id="Github-Flow"><a href="#Github-Flow" class="headerlink" title="Github Flow"></a>Github Flow</h1><ol>
+<li>主線分支為 master</li>
+<li>開立分支 branch</li>
+<li>儲存 commit </li>
+<li>發起 Pull Request (另一名developer可以進行代碼審查，也可以回絕請求，請其重新調整)</li>
+<li>Merge 回 master 且 刪除 分支branch</li>
+</ol>
+<p><img src="https://dsm01pap006files.storage.live.com/y4mNpNY6l76n-IlaDOMlQaULdqDVChKBc1c0j7IMDwOdWNMCa4KnHZfFIJEqSE5ajSghv_DSsZe17OWsAg2l4KIYssXBxITYzPnoJy5Y_OoLNeRNSE4G6krd_s9dqRGGyjFwAQomoXq4A3P2MnX93yyjhwj8G8U-xOc9y3CcCgH0Z1t8hbLRlHX-_7o3RTzjRJO?width=1064&height=362&cropmode=none" alt="github-flow.png"></p>
+<h1 id="Git-Flow"><a href="#Git-Flow" class="headerlink" title="Git Flow"></a>Git Flow</h1><ol>
+<li>主線分支有兩個 master (正式上線版本) &#x2F; developer (最新開發主分支) branch</li>
+<li>功能分支有三個 feature (功能分支) &#x2F; hotfix (緊急線上問題修復分支)&#x2F; release(待上線測試版本) branch</li>
+</ol>
+<ul>
+<li><p>功能開發(feature) &#x2F; 版本上線前測試 (release):<br>以功能開發而言，從 dev 切出分支個別開發，開發完後 merge 回 dev 分支，等所有 dev 該版本功能皆進<br>入 dev 版本後，會另切出 release 分支， release 分支進行測試，如有問題由該分支修復 bug ，等測試<br>完成後會 merge 回 master &amp; dev 分支； master 分支的程式進行上線。</p>
+</li>
+<li><p>緊急問題修復(hotfix)<br>線上有問題會從 master 開一個分支進行修復且測試，測試完成會 merge 回 master 進行小版本的上線，且<br>也會同步 merger 回 dev 避免後續 下一版本開發完成時，merge 回 master 時又會再次出現問題。</p>
+</li>
+</ul>
+<p><img src="https://dsm01pap006files.storage.live.com/y4mqqwJY4avprtMRtVDZ0W3NhjJQihpMiFnk62pBsGTtEyZ1DqN5eJHfVFJNGndE2U2Nprx6uPsBoPHAL4SzojkhjiPqeqC3fGjeqUxzBAQh0DkWgg_w-Jr3AT4tyGqtFnuhg6MxAiMpOHM-exfE-g5ANjzrKMyXKJu8gw1qgv3yLUlrjBxJ2ZWqTT5bN2Rxnh6?width=841&height=660&cropmode=none" alt="git-flow.png"></p>
+<h1 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h1><p>目前公司在使用的為 Git Flow &amp; Github Flow 兩種工作模式的混合體(多分支+PR確保程式品質)，因為有多人開發 + 版本迭代的關係。<br>基本上還是要看 各個團隊的實際需求來量身訂做開發模式的規則。</p>
+<p>另外在 網路上還有查到一種工作流程為 Gitlab Flow (因比較不像是目前工作使用，就暫時不去贅述)</p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ol>
+<li><a href="https://ithelp.ithome.com.tw/articles/10281080">Day29｜常見的三種工作流程 - Git flow、GitHub Flow 與 Gitlab Flow</a></li>
+<li><a href="https://ithelp.ithome.com.tw/articles/10277278">【Day19】Git 版本控制 - 多人協作 GitHub Flow</a></li>
+<li><a href="https://medium.com/@lf2lf2111/%E4%B8%89%E7%A8%AE%E7%89%88%E6%8E%A7%E6%B5%81%E7%A8%8B-29c82f5d4469">三種版控流程- git flow vs github flow vs gitlab flow</a></li>
+<li><a href="https://gitbook.tw/chapters/gitflow/using-git-flow">使用 Git Flow</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>git</category>
+      </categories>
+      <tags>
+        <tag>git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Effective Java Item16 - 在 public 的 類別中，使用 get/set 方法 而非 公開成員變數</title>
+    <url>/2022/06/26/effective-java-item16/</url>
+    <content><![CDATA[<p>類別在被外部呼叫時，使用 getter &#x2F; setter 的方法取得成員變數，保留彈性以利將來可以調整內部使用方法，<br>如果直接開放外部直接使用，要調整時會是一個災難。</p>
+<span id="more"></span>
+
+<p>java 中有些類別被稱為 Degenerate class，用來集中變數屬性</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Point</span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">double</span> x;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">double</span> y;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上述寫法是可以在任何地方被直接取得&amp;改變的，因此會造成維護上的困難。<br>改成 getter &#x2F; setter 的寫法如下:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Point</span> &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">private</span> <span class="type">double</span> x;</span><br><span class="line">	<span class="keyword">private</span> <span class="type">double</span> y;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="type">double</span> <span class="title function_">getX</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> x;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setX</span><span class="params">(<span class="type">double</span> x)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.x = x;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">public</span> <span class="type">double</span> <span class="title function_">getY</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> y;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setY</span><span class="params">(<span class="type">double</span> y)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.y = y;</span><br><span class="line">	&#125;	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>※ Java 中有幾個類別也有違反該主題的案例，像是 <code>java.awt</code> 中的 <code>Point</code> 跟 <code>Dimension</code> 類別，<br>但同時也存在一些性能問題；提醒我們不要這樣使用，避免造成後續維護的麻煩。</p>
+<p>如果真的需要公開成員變數，也要將其設為<font color=#ff0000>不可變(final)</font>，<br>以下為書中的範例，每個產生的 instance 都為一個其固定的時間。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Public class with exposed immutable fields - questionable</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">class</span> <span class="title class_">Time</span> &#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">HOURS_PER_DAY</span> <span class="operator">=</span> <span class="number">24</span>;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">MINUTES_PER_HOUR</span> <span class="operator">=</span> <span class="number">60</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">final</span> <span class="type">int</span> hour;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">final</span> <span class="type">int</span> minute;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="title function_">Time</span><span class="params">(<span class="type">int</span> hour, <span class="type">int</span> minute)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (hour &lt; <span class="number">0</span> || hour &gt;= HOURS_PER_DAY)</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;Hour: &quot;</span> + hour);</span><br><span class="line">    <span class="keyword">if</span> (minute &lt; <span class="number">0</span> || minute &gt;= MINUTES_PER_HOUR)</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;Min: &quot;</span> + minute);</span><br><span class="line">    <span class="built_in">this</span>.hour = hour;</span><br><span class="line">    <span class="built_in">this</span>.minute = minute;</span><br><span class="line">  &#125;</span><br><span class="line">  ... <span class="comment">// Remainder omitted</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+]]></content>
+      <categories>
+        <category>effectiveJava</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+        <tag>effectiveJava</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Optional 類別基本操作</title>
+    <url>/2022/06/04/java-Optional/</url>
+    <content><![CDATA[<p>在 Java 開發當中，常常會碰到 <font color=#ff0000><strong>NullPointerException</strong></font> 的問題，於是為了明確定義如果遇到可能有 null 的情況需要如何處理 &amp; 優化程式寫法，就多了 Optional 的類別。</p>
+<p>在 <strong>Clean Code</strong> 這本書內的 Character7 錯誤處理中提到:</p>
+<ul>
+<li>不要回傳 null ( 空值 ) - P123</li>
+<li>不要傳遞 null - P124</li>
+</ul>
+<p>使用 null 參數在程式中流通是一件非常不好的做法，會需要額外的檢查 參數是否為 null ，如果有一處忘了檢查往往會有非預期的錯誤產生 ( ex : NullPointerException )</p>
+<span id="more"></span>
+
+<p>在 java8 以前，以往物件的回傳，都需要特別注意去判斷 是否為 null 值，使用 Optional 後，多了一些判斷 null 的 API 可以應用 ex: <strong>isPresent()</strong> 。</p>
+<p>※回傳單一物件的時候，才需要使用Optional，如果是集合的話，直接回傳空的集合即可 ex: List</p>
+<h1 id="將值轉換成-Optional-物件"><a href="#將值轉換成-Optional-物件" class="headerlink" title="將值轉換成 Optional 物件"></a>將值轉換成 Optional 物件</h1><ul>
+<li>Optional.of( T value)</li>
+</ul>
+<p>當 value 不為 null 的時候回傳一個 Optional 物件，如果 value 為 null 會有 NullPointerException</p>
+<ul>
+<li>Optional.ofNullable( T value ) - 允許傳入 null 值</li>
+</ul>
+<p>當 value 不為 null 的時候回傳一個 Optional 物件，如果 value 為 null 回傳 Optional.empty()</p>
+<h1 id="判斷-值-是否為-存在"><a href="#判斷-值-是否為-存在" class="headerlink" title="判斷 值 是否為 存在"></a>判斷 值 是否為 存在</h1><ul>
+<li>Optional.isPresent( T value )</li>
+</ul>
+<p>當 value 有值 回傳 true , 反之 false</p>
+<ul>
+<li>ifPresent ( Consumer&lt;? super T&gt; action )</li>
+</ul>
+<p>當判斷 Option 的 value 有值時，帶入 Consumer 進行客製化處理，如範例中加工顯示文字；如果沒有值的話就不做任何事</p>
+<h1 id="取得-Optional-值的方法"><a href="#取得-Optional-值的方法" class="headerlink" title="取得 Optional 值的方法"></a>取得 Optional 值的方法</h1><ul>
+<li>get()</li>
+</ul>
+<p>如果 value 存在則回傳值，如果值不存在會報出錯誤訊息<br>java.util.NoSuchElementException: No value present</p>
+<p><strong>※ 在使用 get() 前，確保先用 isPresent() 檢查是否有值，才不會有錯誤訊息</strong></p>
+<ul>
+<li>orElse( T other )</li>
+</ul>
+<p>此方法濃縮了 isPrsesnt() &amp; get() 的方法，如果 Optional 有值的話顯示值，沒有值的話會帶入 other 給的值</p>
+<ul>
+<li>orElseGet( Supplier&lt;? extends T&gt; other )</li>
+</ul>
+<p>如果 Optional 有值的話顯示值，沒有的話會根據客製化的邏輯帶入 other 的結果 ( 用在複雜情境 )，下述範例根據當下產出的 random 值判斷奇數&#x2F;偶數顯示不同的demo結果</p>
+<ul>
+<li>orElseThrow( Supplier&lt;? extends X&gt; exceptionSupplier )</li>
+</ul>
+<p>如果 Optional 有值的話顯示值，沒有的話可以帶入客製化的 exception ( exceptionSupplier )</p>
+<h1 id="實作範例"><a href="#實作範例" class="headerlink" title="實作範例"></a>實作範例</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 練習 Optional 使用</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> oscar51011</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2022年6月4日</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">OptionalMain</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">		</span><br><span class="line">		System.out.println(<span class="string">&quot;== data not found ( before java 8 ) ==&quot;</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// java8以前 ( 如果 null 則不顯示值)</span></span><br><span class="line">		<span class="type">String</span> <span class="variable">nullValueBeforeJava8</span> <span class="operator">=</span> getMapValue(<span class="string">&quot;four&quot;</span>);</span><br><span class="line">		<span class="keyword">if</span>(nullValueBeforeJava8 != <span class="literal">null</span>)</span><br><span class="line">			System.out.println(<span class="string">&quot;Before java8 value is null: &quot;</span> + nullValueBeforeJava8);</span><br><span class="line">		</span><br><span class="line">		<span class="type">String</span> <span class="variable">value</span> <span class="operator">=</span> getMapValue(<span class="string">&quot;three&quot;</span>);</span><br><span class="line">		<span class="keyword">if</span>(value != <span class="literal">null</span>)</span><br><span class="line">			System.out.println(<span class="string">&quot;Before java8 value is not null: &quot;</span> + value);</span><br><span class="line">		</span><br><span class="line">		System.out.println(<span class="string">&quot;== data not found ( java 8 ) ==&quot;</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">/**</span></span><br><span class="line"><span class="comment">		 * java8以後 沒有值的情況</span></span><br><span class="line"><span class="comment">		 */</span></span><br><span class="line">		Optional&lt;String&gt; nullValueJava8 = getMapValueByOptional(<span class="string">&quot;four&quot;</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// get() 用法</span></span><br><span class="line">		<span class="keyword">if</span>(nullValueJava8.isPresent())</span><br><span class="line">			System.out.println(<span class="string">&quot;java8 Optional get() is not null:&quot;</span> + nullValueJava8.get());</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			System.out.println(<span class="string">&quot;java8 Optional get() is null: &quot;</span> + <span class="string">&quot;mapValueIsNull&quot;</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// orElse() 用法</span></span><br><span class="line">		System.out.println(<span class="string">&quot;java8 Optional orElse() is null: &quot;</span> + nullValueJava8.orElse(<span class="string">&quot;mapValueIsNull&quot;</span>));</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// orElseGet()方法 , 隨機產一個1-100的亂數，根據奇數偶數顯示不同的邏輯</span></span><br><span class="line">		System.out.println(nullValueJava8.orElseGet(()-&gt;&#123;</span><br><span class="line">			<span class="type">Random</span> <span class="variable">rd</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Random</span>();</span><br><span class="line">			<span class="type">int</span> <span class="variable">random</span> <span class="operator">=</span> rd.nextInt(<span class="number">100</span>);</span><br><span class="line">			<span class="keyword">if</span>(random%<span class="number">2</span> == <span class="number">0</span>)</span><br><span class="line">				<span class="keyword">return</span> <span class="string">&quot;java8 Optional orElseGet() null logic : even&quot;</span>;</span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">				<span class="keyword">return</span> <span class="string">&quot;java8 Optional orElseGet() null logic :　odd&quot;</span>;</span><br><span class="line">		&#125;));</span><br><span class="line">			</span><br><span class="line">		<span class="comment">// orElseThrow()方法</span></span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			System.out.println(nullValueJava8.orElseThrow(()-&gt; <span class="keyword">new</span> <span class="title class_">Exception</span>(<span class="string">&quot;custom Exception&quot;</span>)));</span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			System.out.println(<span class="string">&quot;test catch exception:&quot;</span> + e.getMessage());</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		System.out.println(<span class="string">&quot;== data exist ( java 8 )==&quot;</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">/**</span></span><br><span class="line"><span class="comment">		 * java8以後 有值的情況</span></span><br><span class="line"><span class="comment">		 */</span></span><br><span class="line">		Optional&lt;String&gt; valueJava8 = getMapValueByOptional(<span class="string">&quot;three&quot;</span>);</span><br><span class="line">		<span class="keyword">if</span>(valueJava8.isPresent())</span><br><span class="line">			System.out.println(<span class="string">&quot;java8 Optional get() is not null:&quot;</span> + valueJava8.get());</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			System.out.println(<span class="string">&quot;java8 Optional get() is null:&quot;</span> + <span class="string">&quot;mapValueIsNull&quot;</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// orElse() 用法</span></span><br><span class="line">		System.out.println(<span class="string">&quot;java8 Optional orElse() is not null: &quot;</span> + valueJava8.orElse(<span class="string">&quot;mapValueIsNull&quot;</span>));</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// isPresent()用法</span></span><br><span class="line">		valueJava8.ifPresent( parameter -&gt; &#123;</span><br><span class="line">			System.out.println(<span class="string">&quot;java8 Optional ifPresent() is not null:&quot;</span> + parameter);</span><br><span class="line">		&#125;);</span><br><span class="line">	</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 取得map的值，如果沒有判斷 null 的情況，則會有 NullPointerException</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> key</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> String <span class="title function_">getMapValue</span><span class="params">(String key)</span> &#123;</span><br><span class="line">		Map&lt;String, String&gt; map = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">		map.put(<span class="string">&quot;one&quot;</span>, <span class="string">&quot;one&quot;</span>);</span><br><span class="line">		map.put(<span class="string">&quot;two&quot;</span>, <span class="string">&quot;two&quot;</span>);</span><br><span class="line">		map.put(<span class="string">&quot;three&quot;</span>, <span class="string">&quot;three&quot;</span>);</span><br><span class="line">		<span class="type">String</span> <span class="variable">value</span> <span class="operator">=</span> map.get(key);</span><br><span class="line">		<span class="keyword">return</span> value;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> Optional&lt;String&gt; <span class="title function_">getMapValueByOptional</span><span class="params">(String key)</span> &#123;</span><br><span class="line">		Map&lt;String, String&gt; map = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">		map.put(<span class="string">&quot;one&quot;</span>, <span class="string">&quot;one&quot;</span>);</span><br><span class="line">		map.put(<span class="string">&quot;two&quot;</span>, <span class="string">&quot;two&quot;</span>);</span><br><span class="line">		map.put(<span class="string">&quot;three&quot;</span>, <span class="string">&quot;three&quot;</span>);</span><br><span class="line">		<span class="type">String</span> <span class="variable">value</span> <span class="operator">=</span> map.get(key);</span><br><span class="line">		<span class="comment">// 方法1: 判斷null</span></span><br><span class="line">		<span class="comment">//return value == null ? Optional.empty() : Optional.of(value);</span></span><br><span class="line">		<span class="comment">// 方法2: 濃縮上述的方法 如果不為 null則回傳值</span></span><br><span class="line">		<span class="keyword">return</span> Optional.ofNullable(value);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>根據 Ref. 5 有提到，使用 null 或是 Optional 的時機點，可以做個參考</p>
+<ul>
+<li>如果在 private 的 method中，因為只有該 class 有權限訪問，可以很清楚的知道 return用法，<br>如果使用 optional 會增加程式的複雜度</li>
+<li>如果在 public 的 method中，因為有多個 class 需要使用，developer 也會在撰寫時容易忘記<br>去處理 null 的情境，因此建議使用 optional 去提醒</li>
+</ul>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ol>
+<li><a href="https://openhome.cc/Gossip/Java/Optional.html">使用 Optional 取代 null</a></li>
+<li><a href="https://matthung0807.blogspot.com/2021/01/java-optional-intro.html">Java Optional 簡介</a></li>
+<li><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html">Optional (Java Platform SE 8 )</a></li>
+<li><a href="http://blog.tonycube.com/2015/10/java-java8-4-optional.html">Java8 新功能筆記 (4) - Optional</a></li>
+<li><a href="https://medium.com/@abhisheksinghaks77/are-you-correctly-using-optional-collections-and-null-in-your-java-code-5d2b8617d47c">Are you correctly using Optional, Collections, and Null in your Java code ?</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>java</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java-字串編碼</title>
+    <url>/2022/06/05/java-String-encoding/</url>
+    <content><![CDATA[<p>最近在公事上有遇到關於中文字編碼的問題，查了一下原因 &amp; 讀了一下 String 相關使用方法做個筆記</p>
+<span id="more"></span>
+
+<h1 id="情境描述"><a href="#情境描述" class="headerlink" title="情境描述"></a>情境描述</h1><p>有一個與外部系統進行資料串接的需求，我們的編碼是 UTF-8 ，對方的系統為 MS950<br>但串接的過程一直發生對方收到的資料為亂碼，因此檢查了一下原本的程式，發現問題出在這行寫法。</p>
+<p><code>new String(&quot;文字&quot;.getBytes(), &quot;MS950&quot;)</code></p>
+<p>上述這行程式包含了 String 個 constructor &amp; getBytes() 用法，因此點進去看了一下 <font color=#ff0000>String.class</font> 的描述</p>
+<ul>
+<li>getBytes() &#x2F; getBytes(String charsetName) : 將 字串 轉換成 對應編碼的 byte 陣列</li>
+</ul>
+<blockquote>
+<p>Encodes this {@code String} into a sequence of bytes using the named charset, storing the result into a new byte array.</p>
+</blockquote>
+<ul>
+<li>new String (byte btye[],String charsetName) : 將 byte 陣列轉回 字串</li>
+</ul>
+<blockquote>
+<p>Constructs a new {@code String} by decoding the specified array of bytes using the specified {@linkplain java.nio.charset.Charset charset}.</p>
+</blockquote>
+<p>上面看乍似是一個對稱的寫法，但是 getBytes 如果沒有帶參數的話，會去取得 JVM 預設的 charset<br>我們的系統是 UTF-8 ，因此上述的寫法就是 把我們的文字用 UTF-8 編碼方式轉成 byte 陣列，但卻<br>是用 MS950 的編碼表去做解碼，這樣找不到對應的資料就會出現亂碼的情況。</p>
+<h1 id="解決方向"><a href="#解決方向" class="headerlink" title="解決方向"></a>解決方向</h1><p>因此這個需求如果是 我們系統 UTF-8 ，對方為 MS950 的情況，我們使用 MS950 的方式將字串轉成<br>byte 陣列傳給對方，對方再使用 MS950 的方式 將其轉回文字即可。</p>
+<h1 id="程式範例"><a href="#程式範例" class="headerlink" title="程式範例"></a>程式範例</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">StringEncodingMain</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> UnsupportedEncodingException &#123;</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line">		System.out.println(<span class="string">&quot;JVM 預設編碼:&quot;</span> + Charset.defaultCharset());</span><br><span class="line">		<span class="type">String</span> <span class="variable">city</span> <span class="operator">=</span> <span class="string">&quot;臺北&quot;</span>;</span><br><span class="line">		<span class="comment">// 錯誤使用情境</span></span><br><span class="line">		System.out.println( <span class="keyword">new</span> <span class="title class_">String</span>(<span class="string">&quot;文字&quot;</span>.getBytes(), <span class="string">&quot;MS950&quot;</span>));</span><br><span class="line">		</span><br><span class="line">		System.out.println(<span class="string">&quot;=====&quot;</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 使用 UTF-8 互轉</span></span><br><span class="line">		<span class="type">byte</span>[] byteArrayUTF8 = city.getBytes();</span><br><span class="line">		System.out.println( <span class="keyword">new</span> <span class="title class_">String</span>(byteArrayUTF8, <span class="string">&quot;UTF-8&quot;</span>));</span><br><span class="line">		</span><br><span class="line">		System.out.println(<span class="string">&quot;=====&quot;</span>);</span><br><span class="line">				</span><br><span class="line">		<span class="comment">// 使用 MS950 互轉</span></span><br><span class="line">		<span class="type">byte</span>[] byteArrayMS950 = city.getBytes(<span class="string">&quot;MS950&quot;</span>);</span><br><span class="line">		System.out.println( <span class="keyword">new</span> <span class="title class_">String</span>(byteArrayMS950, <span class="string">&quot;MS950&quot;</span>));	</span><br><span class="line">	&#125;</span><br><span class="line">&#125;	</span><br></pre></td></tr></table></figure>
+
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ol>
+<li><a href="https://openhome.cc/Gossip/Encoding/String.html">Java 的字串</a></li>
+<li><a href="https://codertw.com/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/642854/#outline__8">從String.getBytes理解Java編碼和解碼</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>java</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Java XML 解析 - JAXB API</title>
+    <url>/2022/06/14/java-xml-parser-jaxb/</url>
+    <content><![CDATA[<p>最近公司需求，有遇到 XML 解析的問題，公司有使用了 JAXB API，因此寫了範例紀錄一下.</p>
+<span id="more"></span>
+
+<ul>
+<li>從 XML String 轉 Java Bean (使用 Unmarshaller 類別)</li>
+<li>從 Java Bean 轉 XML String (使用 Marshaller 類別)</li>
+<li>定義 Java Bean (使用 annotation)</li>
+</ul>
+<p>@XmlRootElement: xml 的 根元素 ex: <code>&lt;test&gt;</code><br>@XmlElement: xml 的 元素 ex: <code>&lt;req&gt;</code><br>@XmlAccessorType: 定義那些成員變數是可以被轉換的 ( ex: FIELD)<br>@XmlTransient: 用來解決 public method 的 名稱衝突<br>@XmlAttribute: 元素的屬性成員 ex: <code>&lt;req one=&quot;o1&quot;&gt;</code> 的 one</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">test</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">req</span> <span class="attr">one</span>=<span class="string">&quot;o1&quot;</span> <span class="attr">two</span>=<span class="string">&quot;t2&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">resp</span> <span class="attr">first</span>=<span class="string">&quot;f1&quot;</span> <span class="attr">second</span>=<span class="string">&quot;s1&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">test</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+<h1 id="程式範例"><a href="#程式範例" class="headerlink" title="程式範例"></a>程式範例</h1><ul>
+<li><p>定義 Java Bean (XML Root)</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@XmlRootElement(name = &quot;test&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Test</span> &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@XmlElement</span></span><br><span class="line">	<span class="keyword">private</span> Req req;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@XmlElement</span></span><br><span class="line">	<span class="keyword">private</span> Resp resp;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@XmlTransient</span></span><br><span class="line">	<span class="keyword">public</span> Req <span class="title function_">getReq</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> req;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setReq</span><span class="params">(Req req)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.req = req;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@XmlTransient</span></span><br><span class="line">	<span class="keyword">public</span> Resp <span class="title function_">getResp</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> resp;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setResp</span><span class="params">(Resp resp)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.resp = resp;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>定義 Java Bean (XML 元素)</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@XmlAccessorType(XmlAccessType.FIELD)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Req</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@XmlAttribute(name = &quot;one&quot;)</span></span><br><span class="line">	<span class="keyword">private</span> String one;</span><br><span class="line">		</span><br><span class="line">    <span class="meta">@XmlAttribute(name = &quot;two&quot;)</span></span><br><span class="line">	<span class="keyword">private</span> String two;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> String <span class="title function_">getOne</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> one;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setOne</span><span class="params">(String one)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.one = one;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> String <span class="title function_">getTwo</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> two;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setTwo</span><span class="params">(String two)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.two = two;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>定義 Java Bean (XML 元素)</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@XmlAccessorType(XmlAccessType.FIELD)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Resp</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@XmlAttribute(name = &quot;first&quot;)</span></span><br><span class="line">	<span class="keyword">private</span> String first;</span><br><span class="line">	</span><br><span class="line">    <span class="meta">@XmlAttribute(name = &quot;second&quot;)</span></span><br><span class="line">	<span class="keyword">private</span> String second;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> String <span class="title function_">getFirst</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> first;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setFirst</span><span class="params">(String first)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.first = first;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> String <span class="title function_">getSecond</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> second;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setSecond</span><span class="params">(String second)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.second = second;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+</li>
+<li><p>XML String 與 Java Bean 轉換</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 解析 XML 字串的方法 : JAXB</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> oscar51011</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2022年6月14日</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> XMLStreamException, ParserConfigurationException, SAXException, IOException, JAXBException &#123;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 從 XML String 轉成 Bean</span></span><br><span class="line">		<span class="type">String</span> <span class="variable">xmlString</span> <span class="operator">=</span> <span class="string">&quot;&lt;?xml version=&#x27;1.0&#x27; encoding=&#x27;UTF-8&#x27; standalone=\&quot;yes\&quot;?&gt;&lt;test&gt;&lt;req one=&#x27;one&#x27; two=&#x27;two2&#x27;/&gt;&lt;resp first=&#x27;first&#x27; second=&#x27;second2&#x27;/&gt;&lt;/test&gt;&quot;</span>;	</span><br><span class="line">		<span class="type">Test</span> <span class="variable">test</span> <span class="operator">=</span> parseXmltoBeanByJAXB(xmlString, Test.class);</span><br><span class="line">		System.out.println(test.getReq().getOne());</span><br><span class="line">		System.out.println(test.getReq().getTwo());</span><br><span class="line">		System.out.println(test.getResp().getFirst());</span><br><span class="line">		System.out.println(test.getResp().getSecond());</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 從 Bean 轉成 XML String</span></span><br><span class="line">		<span class="type">Test</span> <span class="variable">test2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Test</span>();</span><br><span class="line">		<span class="type">Req</span> <span class="variable">req</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Req</span>();</span><br><span class="line">		req.setOne(<span class="string">&quot;o1&quot;</span>);</span><br><span class="line">		req.setTwo(<span class="string">&quot;t2&quot;</span>);</span><br><span class="line">		<span class="type">Resp</span> <span class="variable">resp</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Resp</span>();</span><br><span class="line">		resp.setFirst(<span class="string">&quot;f1&quot;</span>);</span><br><span class="line">		resp.setSecond(<span class="string">&quot;s1&quot;</span>);</span><br><span class="line">		test2.setReq(req);</span><br><span class="line">		test2.setResp(resp);</span><br><span class="line">		</span><br><span class="line">		<span class="type">String</span> <span class="variable">resultXml</span> <span class="operator">=</span> parseBeantoXmlStringByJAXB(test2);</span><br><span class="line">		System.out.println(resultXml);</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 從 XML String 轉成 Bean</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> &lt;T&gt;</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> xmlString</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> clazz</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@throws</span> JAXBException</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="meta">@SuppressWarnings(&quot;unchecked&quot;)</span></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> &lt;T&gt; T <span class="title function_">parseXmltoBeanByJAXB</span><span class="params">(String xmlString, Class&lt;T&gt; clazz)</span> <span class="keyword">throws</span> JAXBException &#123;</span><br><span class="line">		<span class="type">InputStream</span> <span class="variable">targetStream</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ByteArrayInputStream</span>(xmlString.getBytes());		</span><br><span class="line">		<span class="type">JAXBContext</span> <span class="variable">context</span> <span class="operator">=</span> JAXBContext.newInstance(clazz);</span><br><span class="line">		<span class="type">Unmarshaller</span> <span class="variable">unmarshaller</span> <span class="operator">=</span> context.createUnmarshaller();</span><br><span class="line">		<span class="keyword">return</span> (T) unmarshaller.unmarshal(targetStream);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 從 Bean 轉成 XML String</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> &lt;T&gt;</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> object</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@throws</span> JAXBException</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> &lt;T&gt; String <span class="title function_">parseBeantoXmlStringByJAXB</span><span class="params">(T object)</span> <span class="keyword">throws</span> JAXBException &#123;</span><br><span class="line">		<span class="type">JAXBContext</span> <span class="variable">context</span> <span class="operator">=</span> JAXBContext.newInstance(object.getClass());</span><br><span class="line">		<span class="type">Marshaller</span> <span class="variable">marshaller</span> <span class="operator">=</span> context.createMarshaller();</span><br><span class="line">		<span class="type">StringWriter</span> <span class="variable">sw</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringWriter</span>();</span><br><span class="line">		marshaller.marshal(object, sw);</span><br><span class="line">		<span class="keyword">return</span> sw.toString();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h1 id="延伸議題"><a href="#延伸議題" class="headerlink" title="延伸議題"></a>延伸議題</h1><ol>
+<li><p>使用 JAXB API時有遇到attribute 內的值如果長度太長會有問題:<br><font color=#ff0000>javax.xml.stream.XMLStreamException: Maximum attribute size limit (524288) exceeded</font></p>
+<ul>
+<li>目前自己處理的方法是使用<font color=#ff0000>字串處理</font>把過大的 attribute 額外處理</li>
+<li>可以找相關套件去修改預設值，自己尚未實作，提供一個方向參考(Ref. 3)</li>
+</ul>
+</li>
+<li><p>JAXB API 在 Java9 就已經棄用了，如果有使用比較新的Java版本，無法使用 (Ref. 4)</p>
+</li>
+</ol>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ol>
+<li><a href="https://www.baeldung.com/jaxb">Guide to JAXB</a></li>
+<li><a href="https://ithelp.ithome.com.tw/articles/10109119">使用JAXB-JAXBContext將POJO轉換成XML格式</a></li>
+<li><a href="https://stackoverflow.com/questions/52879100/woodstox-via-simplexml-attribute-limits-how-to-set-them">Woodstox via SimpleXML attribute limits - how to set them?</a></li>
+<li><a href="https://stackoverflow.com/questions/52502189/java-11-package-javax-xml-bind-does-not-exist">https://stackoverflow.com/questions/52502189/java-11-package-javax-xml-bind-does-not-exist</a></li>
+</ol>
+]]></content>
+      <categories>
+        <category>java</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
       </tags>
   </entry>
 </search>
