@@ -183,6 +183,81 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://oscar51011.github.io/2022/03/17/hexo-add-draft-article/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="oscar51011">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Kai's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/03/17/hexo-add-draft-article/" class="post-title-link" itemprop="url">Hexo 撰寫草稿</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-03-17 00:19:38" itemprop="dateCreated datePublished" datetime="2022-03-17T00:19:38+08:00">2022-03-17</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/blog/" itemprop="url" rel="index"><span itemprop="name">blog</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>一般使用建立文章指令為 <code>hexo new [layout] &lt;title&gt;</code><br>其用處為在 <code>source\_post</code> (跟目錄的 <code>_config.yml</code> 有預設 layout: post)<br>產生且後續使用<code>hexo generate</code>轉至 <code>public</code> 資料夾並且發佈至 github<br>但如果有未完成的文章，也會被一併發佈。</p>
+<p>這時候，HEXO 提供的撰寫草稿功能就很方便了，指令如下:</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/03/17/hexo-add-draft-article/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://oscar51011.github.io/2022/03/13/hexo-change-page-directory/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -493,92 +568,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://oscar51011.github.io/2022/03/09/springboot-mockito-mock-test/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="oscar51011">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Kai's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/03/09/springboot-mockito-mock-test/" class="post-title-link" itemprop="url">使用 Springboot + Mockito 完成單元測試</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2022-03-09 22:04:59" itemprop="dateCreated datePublished" datetime="2022-03-09T22:04:59+08:00">2022-03-09</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-12 00:32:29" itemprop="dateModified" datetime="2022-03-12T00:32:29+08:00">2022-03-12</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/testing/" itemprop="url" rel="index"><span itemprop="name">testing</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Mockito 為一個廣泛使用的測試框架，當開發時如果有遇到依賴注入的情境時，往往都會啟動Server，注入實體來進行測試，但這樣的方式即為整合測試 ; 因為當 A 服務呼叫 B 服務，如果 B 服務的內容每次都不一樣，這樣會造成測試結果往往會失敗。</p>
-<p>Mock 測試即為建立假的物件 ; 以 A 服務 呼叫 B 服務來說，我們把 B 服務做 mock，讓回傳的結果固定，就可以專心測試 A 服務的 情境，而不會因為 B 來影響每一次測試的結果</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/03/09/springboot-mockito-mock-test/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -644,7 +637,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-count">31</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

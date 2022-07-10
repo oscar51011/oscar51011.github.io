@@ -20,21 +20,21 @@
     var CONFIG = {"hostname":"oscar51011.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="此為閱讀 Effective Java 3rd 所記錄的學習歷程Item16 : 在 public 的 類別中，使用 get&#x2F;set 方法 而非 公開成員變數 類別在被外部呼叫時，使用 getter &#x2F; setter 的方法取得成員變數，保留彈性以利將來可以調整內部使用方法，如果直接開放外部直接使用，要調整時會是一個災難。">
+  <meta name="description" content="此為閱讀 Effective Java 3rd 所記錄的學習歷程Item27 : 消除非受檢的警告以下範例參考書中說明. 盡可能消除每一個非受檢警告, 避免運行時出現 Class-Cast-Exception 異常">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Effective Java Item16 - 在 public 的 類別中，使用 get&#x2F;set 方法 而非 公開成員變數">
-<meta property="og:url" content="https://oscar51011.github.io/2022/06/26/effective-java-item16/index.html">
+<meta property="og:title" content="Effective Java Ite27 - 消除非受檢的警告">
+<meta property="og:url" content="https://oscar51011.github.io/2022/07/10/effective-java-item27/index.html">
 <meta property="og:site_name" content="Kai&#39;s Blog">
-<meta property="og:description" content="此為閱讀 Effective Java 3rd 所記錄的學習歷程Item16 : 在 public 的 類別中，使用 get&#x2F;set 方法 而非 公開成員變數 類別在被外部呼叫時，使用 getter &#x2F; setter 的方法取得成員變數，保留彈性以利將來可以調整內部使用方法，如果直接開放外部直接使用，要調整時會是一個災難。">
+<meta property="og:description" content="此為閱讀 Effective Java 3rd 所記錄的學習歷程Item27 : 消除非受檢的警告以下範例參考書中說明. 盡可能消除每一個非受檢警告, 避免運行時出現 Class-Cast-Exception 異常">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2022-06-26T02:30:42.000Z">
-<meta property="article:modified_time" content="2022-06-26T12:20:27.966Z">
+<meta property="article:published_time" content="2022-07-10T02:35:21.000Z">
+<meta property="article:modified_time" content="2022-07-10T02:35:21.491Z">
 <meta property="article:author" content="oscar51011">
 <meta property="article:tag" content="java">
 <meta property="article:tag" content="effectiveJava">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://oscar51011.github.io/2022/06/26/effective-java-item16/">
+<link rel="canonical" href="https://oscar51011.github.io/2022/07/10/effective-java-item27/">
 
 
 <script id="page-configurations">
@@ -47,7 +47,7 @@
   };
 </script>
 
-  <title>Effective Java Item16 - 在 public 的 類別中，使用 get/set 方法 而非 公開成員變數 | Kai's Blog</title>
+  <title>Effective Java Ite27 - 消除非受檢的警告 | Kai's Blog</title>
   
 
 
@@ -190,7 +190,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://oscar51011.github.io/2022/06/26/effective-java-item16/">
+    <link itemprop="mainEntityOfPage" href="https://oscar51011.github.io/2022/07/10/effective-java-item27/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -203,7 +203,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Effective Java Item16 - 在 public 的 類別中，使用 get/set 方法 而非 公開成員變數
+          Effective Java Ite27 - 消除非受檢的警告
         </h1>
 
         <div class="post-meta">
@@ -212,9 +212,8 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2022-06-26 10:30:42 / Modified: 20:20:27" itemprop="dateCreated datePublished" datetime="2022-06-26T10:30:42+08:00">2022-06-26</time>
+              <time title="Created: 2022-07-10 10:35:21" itemprop="dateCreated datePublished" datetime="2022-07-10T10:35:21+08:00">2022-07-10</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -237,22 +236,36 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>此為閱讀 Effective Java 3rd 所記錄的學習歷程<br>Item16 : 在 public 的 類別中，使用 get&#x2F;set 方法 而非 公開成員變數</p>
-<p>類別在被外部呼叫時，使用 getter &#x2F; setter 的方法取得成員變數，保留彈性以利將來可以調整內部使用方法，<br>如果直接開放外部直接使用，要調整時會是一個災難。</p>
+        <p>此為閱讀 Effective Java 3rd 所記錄的學習歷程<br>Item27 : 消除非受檢的警告<br>以下範例參考書中說明.</p>
+<p>盡可能消除每一個非受檢警告, 避免運行時出現 Class-Cast-Exception 異常</p>
 <span id="more"></span>
 
-<p>java 中有些類別被稱為 Degenerate class，用來集中變數屬性</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Point</span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">double</span> x;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">double</span> y;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="使用泛型編譯器警告"><a href="#使用泛型編譯器警告" class="headerlink" title="使用泛型編譯器警告"></a>使用泛型編譯器警告</h1><p>在使用泛型時會遇到許多編譯器警告:</p>
+<ul>
+<li>非受檢強制轉換警告 ( unchecked cast waring )</li>
+<li>非受檢方法調用警告 ( unchecked method invocation warnings     )</li>
+<li>非受檢參數化可變參數類型警告 ( unchecked parameterized varag type warnings )</li>
+<li>非受檢轉換警告 ( unchecked conversion warnings )</li>
+</ul>
+<h1 id="簡易警告排除"><a href="#簡易警告排除" class="headerlink" title="簡易警告排除"></a>簡易警告排除</h1><p>有些非受檢警告容易處理</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set&lt;Lark&gt; exaltation = <span class="keyword">new</span> <span class="title class_">HashSet</span>();</span><br></pre></td></tr></table></figure>
+<p>此時編譯器會噴出警告:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Type safety: The expression of type HashSet needs unchecked conversion to conform to Set&lt;Foo&gt;</span><br></pre></td></tr></table></figure>
+<p>此時加上 <code>&lt;&gt;</code> 即可解決這個警告</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set&lt;Lark&gt; exaltation = <span class="keyword">new</span> <span class="title class_">HashSet</span>&lt;&gt;();</span><br></pre></td></tr></table></figure>
 
-<p>上述寫法是可以在任何地方被直接取得&amp;改變的，因此會造成維護上的困難。<br>改成 getter &#x2F; setter 的寫法如下:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Point</span> &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">private</span> <span class="type">double</span> x;</span><br><span class="line">	<span class="keyword">private</span> <span class="type">double</span> y;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="type">double</span> <span class="title function_">getX</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> x;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setX</span><span class="params">(<span class="type">double</span> x)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.x = x;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">public</span> <span class="type">double</span> <span class="title function_">getY</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> y;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setY</span><span class="params">(<span class="type">double</span> y)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.y = y;</span><br><span class="line">	&#125;	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>※ Java 中有幾個類別也有違反該主題的案例，像是 <code>java.awt</code> 中的 <code>Point</code> 跟 <code>Dimension</code> 類別，<br>但同時也存在一些性能問題；提醒我們不要這樣使用，避免造成後續維護的麻煩。</p>
-<p>如果真的需要公開成員變數，也要將其設為<font color=#ff0000>不可變(final)</font>，<br>以下為書中的範例，每個產生的 instance 都為一個其固定的時間。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Public class with exposed immutable fields - questionable</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">class</span> <span class="title class_">Time</span> &#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">HOURS_PER_DAY</span> <span class="operator">=</span> <span class="number">24</span>;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">MINUTES_PER_HOUR</span> <span class="operator">=</span> <span class="number">60</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">final</span> <span class="type">int</span> hour;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">final</span> <span class="type">int</span> minute;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="title function_">Time</span><span class="params">(<span class="type">int</span> hour, <span class="type">int</span> minute)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (hour &lt; <span class="number">0</span> || hour &gt;= HOURS_PER_DAY)</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;Hour: &quot;</span> + hour);</span><br><span class="line">    <span class="keyword">if</span> (minute &lt; <span class="number">0</span> || minute &gt;= MINUTES_PER_HOUR)</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;Min: &quot;</span> + minute);</span><br><span class="line">    <span class="built_in">this</span>.hour = hour;</span><br><span class="line">    <span class="built_in">this</span>.minute = minute;</span><br><span class="line">  &#125;</span><br><span class="line">  ... <span class="comment">// Remainder omitted</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
+<h1 id="使用註解禁止警告"><a href="#使用註解禁止警告" class="headerlink" title="使用註解禁止警告"></a>使用註解禁止警告</h1><p>如果無法消除警告, 在確認且可證明發出警告的程式是正常的,<br>可以使用<code>@SuppressWarings(&quot;unchecked&quot;)</code> 註解來禁止這條警告</p>
+<ul>
+<li>盡量在範圍越小的地方使用該註解(不要在class level上使用該 annotation)</li>
+</ul>
+<p>以之前練習將 XML String 轉換成 物件的程式為例:<br>我需要將 XML String 轉換成外部自定義的DTO格式, 因此使用了泛型</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> &lt;T&gt; T <span class="title function_">parseXmltoBeanByJAXB</span><span class="params">(String xmlString, Class&lt;T&gt; clazz)</span> <span class="keyword">throws</span> JAXBException &#123;</span><br><span class="line">		<span class="type">InputStream</span> <span class="variable">targetStream</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ByteArrayInputStream</span>(xmlString.getBytes());		</span><br><span class="line">		<span class="type">JAXBContext</span> <span class="variable">context</span> <span class="operator">=</span> JAXBContext.newInstance(clazz);</span><br><span class="line">		<span class="type">Unmarshaller</span> <span class="variable">unmarshaller</span> <span class="operator">=</span> context.createUnmarshaller();</span><br><span class="line">		<span class="keyword">return</span> (T) unmarshaller.unmarshal(targetStream);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p>編譯器會發出以下警告:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Type safety: Unchecked cast from Object to T</span><br></pre></td></tr></table></figure>
+<p>但編譯器認為這樣的轉型是有風險的, 既然我們認為沒有問題, 因此就加上 <code>@SuppressWarings(&quot;unchecked&quot;)</code></p>
+<p>可惜不能夠直接在 return 語句加上該annotation, 因此我們可以使用一個區域變數來裝載 需要回傳的物件, 並加上 annotation</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> &lt;T&gt; T <span class="title function_">parseXmltoBeanByJAXB</span><span class="params">(String xmlString, Class&lt;T&gt; clazz)</span> <span class="keyword">throws</span> JAXBException &#123;</span><br><span class="line">		<span class="type">InputStream</span> <span class="variable">targetStream</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ByteArrayInputStream</span>(xmlString.getBytes());		</span><br><span class="line">		<span class="type">JAXBContext</span> <span class="variable">context</span> <span class="operator">=</span> JAXBContext.newInstance(clazz);</span><br><span class="line">		<span class="type">Unmarshaller</span> <span class="variable">unmarshaller</span> <span class="operator">=</span> context.createUnmarshaller();</span><br><span class="line">		<span class="comment">// adding local variable to reduce scope of SuppressWarnings</span></span><br><span class="line">		<span class="comment">// 我們希望將JAXB轉換回的物件轉型成自訂義DTO</span></span><br><span class="line">		<span class="meta">@SuppressWarnings(&quot;unchecked&quot;)</span> <span class="type">T</span> <span class="variable">result</span> <span class="operator">=</span> (T) unmarshaller.unmarshal(targetStream);</span><br><span class="line">		<span class="keyword">return</span> result;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p>以上為這篇的筆記內容</p>
 
     </div>
 
@@ -272,13 +285,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2022/06/26/effective-java-item15/" rel="prev" title="Effective Java Item15 - 使類別 & 成員 的 可訪問性最小化">
-      <i class="fa fa-chevron-left"></i> Effective Java Item15 - 使類別 & 成員 的 可訪問性最小化
+    <a href="/2022/07/09/effective-java-item26/" rel="prev" title="Effective Java Ite26 - 使用泛型時, 不要使用原生類別">
+      <i class="fa fa-chevron-left"></i> Effective Java Ite26 - 使用泛型時, 不要使用原生類別
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2022/07/09/effective-java-item26/" rel="next" title="Effective Java Ite26 - 使用泛型時, 不要使用原生類別">
-      Effective Java Ite26 - 使用泛型時, 不要使用原生類別 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -347,6 +357,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%B3%9B%E5%9E%8B%E7%B7%A8%E8%AD%AF%E5%99%A8%E8%AD%A6%E5%91%8A"><span class="nav-number">1.</span> <span class="nav-text">使用泛型編譯器警告</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B0%A1%E6%98%93%E8%AD%A6%E5%91%8A%E6%8E%92%E9%99%A4"><span class="nav-number">2.</span> <span class="nav-text">簡易警告排除</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E8%A8%BB%E8%A7%A3%E7%A6%81%E6%AD%A2%E8%AD%A6%E5%91%8A"><span class="nav-number">3.</span> <span class="nav-text">使用註解禁止警告</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
