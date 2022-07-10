@@ -20,16 +20,18 @@
     var CONFIG = {"hostname":"oscar51011.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="此為閱讀 Effective Java 3rd 所記錄的學習歷程Item26 : 使用泛型時, 不要使用原生類別以下範例為書中說明.">
+  <meta name="description" content="此為閱讀 Effective Java 3rd 所記錄的學習歷程Item26 : 使用泛型時, 不要使用原生類別以下範例參考書中說明.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Effective Java Ite26 - 使用泛型時, 不要使用原生類別">
 <meta property="og:url" content="https://oscar51011.github.io/2022/07/09/effective-java-item26/index.html">
 <meta property="og:site_name" content="Kai&#39;s Blog">
-<meta property="og:description" content="此為閱讀 Effective Java 3rd 所記錄的學習歷程Item26 : 使用泛型時, 不要使用原生類別以下範例為書中說明.">
+<meta property="og:description" content="此為閱讀 Effective Java 3rd 所記錄的學習歷程Item26 : 使用泛型時, 不要使用原生類別以下範例參考書中說明.">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-07-09T10:35:10.000Z">
-<meta property="article:modified_time" content="2022-07-09T12:15:06.639Z">
+<meta property="article:modified_time" content="2022-07-10T01:02:45.287Z">
 <meta property="article:author" content="oscar51011">
+<meta property="article:tag" content="java">
+<meta property="article:tag" content="effectiveJava">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="https://oscar51011.github.io/2022/07/09/effective-java-item26/">
@@ -210,9 +212,24 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2022-07-09 18:35:10 / Modified: 20:15:06" itemprop="dateCreated datePublished" datetime="2022-07-09T18:35:10+08:00">2022-07-09</time>
+              <time title="Created: 2022-07-09 18:35:10" itemprop="dateCreated datePublished" datetime="2022-07-09T18:35:10+08:00">2022-07-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-10 09:02:45" itemprop="dateModified" datetime="2022-07-10T09:02:45+08:00">2022-07-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/effectiveJava/" itemprop="url" rel="index"><span itemprop="name">effectiveJava</span></a>
+                </span>
             </span>
 
           
@@ -226,7 +243,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>此為閱讀 Effective Java 3rd 所記錄的學習歷程<br>Item26 : 使用泛型時, 不要使用原生類別<br>以下範例為書中說明.</p>
+        <p>此為閱讀 Effective Java 3rd 所記錄的學習歷程<br>Item26 : 使用泛型時, 不要使用原生類別<br>以下範例參考書中說明.</p>
 <span id="more"></span>
 <h1 id="使用泛型前"><a href="#使用泛型前" class="headerlink" title="使用泛型前"></a>使用泛型前</h1><p>在 java 新增泛型之前, 我們會使用這樣的寫法:</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">	<span class="type">List</span> <span class="variable">nameList</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">	nameList.add(<span class="string">&quot;Tom&quot;</span>);</span><br><span class="line">	nameList.add(<span class="string">&quot;John&quot;</span>);</span><br><span class="line">	<span class="comment">// 如果加入此行, 在運行時期才會發現出錯</span></span><br><span class="line">	nameList.add(<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">Iterator</span> <span class="variable">i</span> <span class="operator">=</span> nameList.iterator(); i.hasNext();)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">name</span> <span class="operator">=</span> (String)i.next();</span><br><span class="line">        System.out.println(name);</span><br><span class="line">    &#125;		</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -266,6 +283,10 @@
     
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/java/" rel="tag"># java</a>
+              <a href="/tags/effectiveJava/" rel="tag"># effectiveJava</a>
+          </div>
 
         
 
