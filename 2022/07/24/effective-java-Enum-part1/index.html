@@ -28,7 +28,7 @@
 <meta property="og:description" content="此為閱讀 Effective Java 3rd 所記錄的學習歷程Item34 : 使用 Enum 取代 int 常數Item35 : 使用 instance parameter 取代 enum ordinal() 方法Item37 : 使用 EnumMap 取代 ordinal indexing 以下範例參考書中說明.">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-07-24T13:20:24.000Z">
-<meta property="article:modified_time" content="2022-07-24T13:20:24.228Z">
+<meta property="article:modified_time" content="2022-07-24T13:27:05.051Z">
 <meta property="article:author" content="oscar51011">
 <meta property="article:tag" content="java">
 <meta property="article:tag" content="effectiveJava">
@@ -212,8 +212,9 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
+              
 
-              <time title="Created: 2022-07-24 21:20:24" itemprop="dateCreated datePublished" datetime="2022-07-24T21:20:24+08:00">2022-07-24</time>
+              <time title="Created: 2022-07-24 21:20:24 / Modified: 21:27:05" itemprop="dateCreated datePublished" datetime="2022-07-24T21:20:24+08:00">2022-07-24</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -240,7 +241,7 @@
 <p>以下範例參考書中說明.</p>
 <span id="more"></span>
 
-<h1 id="使用-instance-fields-取代-ordinals"><a href="#使用-instance-fields-取代-ordinals" class="headerlink" title="使用 instance fields 取代 ordinals"></a>使用 instance fields 取代 ordinals</h1><p>Enum 本身就會自帶一個 <code>int</code> 變數, 其有一個 <code>ordinal()</code> 方法可以取得該變數的排列順序，盡量不要使用該參數<br>在業務邏輯中，會造成維護上的困難，如果加入一個新的參數可能會改變原本的值。</p>
+<h1 id="使用-instance-fields-取代-ordinals"><a href="#使用-instance-fields-取代-ordinals" class="headerlink" title="使用 instance fields 取代 ordinals"></a>使用 instance fields 取代 ordinals</h1><p>Enum 本身就會自帶一個 <code>int</code> 變數, 其有一個 <code>ordinal()</code> 方法可以取得該變數的排列順序，<br>盡量不要使用該參數在業務邏輯中，會造成維護上的困難，如果加入一個新的參數可能會改變原本的值。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> <span class="title class_">Enumable</span> &#123;</span><br><span class="line">	NEW ,SOLO, DUET, TRIO;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> <span class="title class_">EnumableNew</span> &#123;</span><br><span class="line">	NEW(<span class="number">3</span>),SOLE(<span class="number">0</span>), DUET(<span class="number">1</span>), TRIO(<span class="number">2</span>);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> <span class="type">int</span> number;</span><br><span class="line">	</span><br><span class="line">	EnumableNew(<span class="type">int</span> number)&#123;</span><br><span class="line">		<span class="built_in">this</span>.number = number;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getNumber</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> number;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>使用印出值的方式，可以發現，加入新的參數 NEW 後，原本的 SOLO 值就被影響到了</p>
