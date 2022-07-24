@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"oscar51011.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="此為閱讀 Effective Java 3rd 所記錄的學習歷程Item34 : 使用 Enum 取代 int 常數Item35 : 使用 instance parameter 取代 enum ordinal() 方法Item37 : 使用 EnumMap 取代 ordinal indexing 以下範例參考書中說明.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Effective Java - Enum 撰寫優化 - part1">
+<meta property="og:url" content="https://oscar51011.github.io/2022/07/24/effective-java-Enum-part1/index.html">
+<meta property="og:site_name" content="Kai&#39;s Blog">
+<meta property="og:description" content="此為閱讀 Effective Java 3rd 所記錄的學習歷程Item34 : 使用 Enum 取代 int 常數Item35 : 使用 instance parameter 取代 enum ordinal() 方法Item37 : 使用 EnumMap 取代 ordinal indexing 以下範例參考書中說明.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-07-24T13:20:24.000Z">
+<meta property="article:modified_time" content="2022-07-24T13:20:24.228Z">
+<meta property="article:author" content="oscar51011">
+<meta property="article:tag" content="java">
+<meta property="article:tag" content="effectiveJava">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://oscar51011.github.io/2022/07/24/effective-java-Enum-part1/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Effective Java - Enum 撰寫優化 - part1 | Kai's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Kai's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://oscar51011.github.io/2022/07/24/effective-java-Enum-part1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="oscar51011">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Kai's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Effective Java - Enum 撰寫優化 - part1
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-07-24 21:20:24" itemprop="dateCreated datePublished" datetime="2022-07-24T21:20:24+08:00">2022-07-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/effectiveJava/" itemprop="url" rel="index"><span itemprop="name">effectiveJava</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>此為閱讀 Effective Java 3rd 所記錄的學習歷程<br>Item34 : 使用 Enum 取代 int 常數<br>Item35 : 使用 instance parameter 取代 enum ordinal() 方法<br>Item37 : 使用 EnumMap 取代 ordinal indexing</p>
+<p>以下範例參考書中說明.</p>
+<span id="more"></span>
+
+<h1 id="使用-instance-fields-取代-ordinals"><a href="#使用-instance-fields-取代-ordinals" class="headerlink" title="使用 instance fields 取代 ordinals"></a>使用 instance fields 取代 ordinals</h1><p>Enum 本身就會自帶一個 <code>int</code> 變數, 其有一個 <code>ordinal()</code> 方法可以取得該變數的排列順序，盡量不要使用該參數<br>在業務邏輯中，會造成維護上的困難，如果加入一個新的參數可能會改變原本的值。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> <span class="title class_">Enumable</span> &#123;</span><br><span class="line">	NEW ,SOLO, DUET, TRIO;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> <span class="title class_">EnumableNew</span> &#123;</span><br><span class="line">	NEW(<span class="number">3</span>),SOLE(<span class="number">0</span>), DUET(<span class="number">1</span>), TRIO(<span class="number">2</span>);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> <span class="type">int</span> number;</span><br><span class="line">	</span><br><span class="line">	EnumableNew(<span class="type">int</span> number)&#123;</span><br><span class="line">		<span class="built_in">this</span>.number = number;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getNumber</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> number;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用印出值的方式，可以發現，加入新的參數 NEW 後，原本的 SOLO 值就被影響到了</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Before add Enumable <span class="keyword">new</span> <span class="title class_">item</span> - SOLO value:<span class="number">0</span></span><br><span class="line">Before add EnumableNew <span class="keyword">new</span> <span class="title class_">item</span> - SOLO value:<span class="number">0</span></span><br><span class="line">After add Enumable <span class="keyword">new</span> <span class="title class_">item</span> - SOLO value:<span class="number">1</span></span><br><span class="line">After add Enumable <span class="keyword">new</span> <span class="title class_">item</span> - SOLO value:<span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="使用-Enum-取代-int-常數"><a href="#使用-Enum-取代-int-常數" class="headerlink" title="使用 Enum 取代 int 常數"></a>使用 Enum 取代 int 常數</h1><ul>
+<li>提供安全性(提供編譯時期型別檢查)</li>
+<li>提供可讀性(因為當java程式編譯後，常數會被轉成數字，而使用Enum後，就算編譯後也是會顯示對應的屬性名稱)</li>
+</ul>
+<ol>
+<li>使用兩種方式定義參數:<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">FruitConstant</span> &#123;</span><br><span class="line">	<span class="comment">// APPLE</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">APPLE_FUJI</span> <span class="operator">=</span> <span class="number">10</span>;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">APPLE_PIPPIN</span> <span class="operator">=</span> <span class="number">20</span>;</span><br><span class="line">	<span class="comment">// ORANGE</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">ORANGE_NAVEL</span> <span class="operator">=</span> <span class="number">50</span>;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">ORANGE_TEMPLE</span> <span class="operator">=</span> <span class="number">60</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定義蘋果類型&amp;價格</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> <span class="title class_">Apple</span> &#123;</span><br><span class="line">	FUJI(<span class="number">10</span>), PIPPIN(<span class="number">20</span>);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> <span class="type">int</span> price;</span><br><span class="line">	</span><br><span class="line">	Apple(<span class="type">int</span> price)&#123;</span><br><span class="line">		<span class="built_in">this</span>.price = price;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getPrice</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> price;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 定義橙類型&amp;價格</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> <span class="title class_">Orange</span> &#123;</span><br><span class="line">	NAVEL(<span class="number">50</span>), TEMPLE(<span class="number">60</span>);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">final</span> <span class="type">int</span> price;</span><br><span class="line">	</span><br><span class="line">	Orange(<span class="type">int</span> price)&#123;</span><br><span class="line">		<span class="built_in">this</span>.price = price;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getPrice</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> price;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>提供服務:<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public class Service &#123;</span><br><span class="line">	public static int addTwoOrangePriceByEnumInput(Orange orange1,Orange orange2) &#123;</span><br><span class="line">		return orange1.getPrice() + orange2.getPrice();</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	public static int addTwoOrangePriceByIntInput(int orange1, int orange2) &#123;</span><br><span class="line">		return orange1 + orange2;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>測試結果<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 編譯時期不報錯，但業務邏輯是錯誤的 (將蘋果的參數丟進橙的方法)</span></span><br><span class="line">System.out.println(<span class="string">&quot;Orange Price - constant value:&quot;</span> + Service.addTwoOrangePriceByIntInput(FruitConstant.APPLE_FUJI, FruitConstant.ORANGE_NAVEL));</span><br><span class="line"><span class="comment">// 編譯時期不報錯，但業務邏輯是正確的</span></span><br><span class="line">System.out.println(<span class="string">&quot;Orange Price - Enum:&quot;</span> + Service.addTwoOrangePriceByEnumInput(Orange.NAVEL, Orange.TEMPLE));</span><br><span class="line"><span class="comment">// 編譯時期報錯，因為業務邏輯是錯誤的</span></span><br><span class="line">System.out.println(<span class="string">&quot;Orange Price - Enum:&quot;</span> + Service.addTwoOrangePriceByEnumInput(Apple.FUJI, Orange.TEMPLE));</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h1 id="使用-EnumMap-取代-ordinal-indexing"><a href="#使用-EnumMap-取代-ordinal-indexing" class="headerlink" title="使用 EnumMap 取代 ordinal indexing"></a>使用 EnumMap 取代 ordinal indexing</h1><p>有時候會使用 <code>ordinal()</code> 來對 Array 或 List 做迴圈，以下列範例為例:<br>一個公司在招募員工，根據其不同的職務內容進行分類:</p>
+<ol>
+<li><p>員工物件 &amp; 職務類別Enum</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> <span class="title class_">EngineerLevel</span> &#123;</span><br><span class="line">	STAFF,INTERN, JUNIOR, SENIOR;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Engineer</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> String name;</span><br><span class="line">	<span class="keyword">private</span> EngineerLevel level;</span><br><span class="line">	</span><br><span class="line">	Engineer(String name, EngineerLevel level) &#123;</span><br><span class="line">		<span class="built_in">super</span>();</span><br><span class="line">		<span class="built_in">this</span>.name = name;</span><br><span class="line">		<span class="built_in">this</span>.level = level;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> String <span class="title function_">getName</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> name;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setName</span><span class="params">(String name)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.name = name;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> EngineerLevel <span class="title function_">getLevel</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> level;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setLevel</span><span class="params">(EngineerLevel level)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.level = level;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>使用 Array + ordinal() 的方式處理</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Engineer&gt; engineers = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">engineers.add(<span class="keyword">new</span> <span class="title class_">Engineer</span>(<span class="string">&quot;Tom&quot;</span>, EngineerLevel.INTERN));</span><br><span class="line">engineers.add(<span class="keyword">new</span> <span class="title class_">Engineer</span>(<span class="string">&quot;John&quot;</span>, EngineerLevel.JUNIOR));</span><br><span class="line">engineers.add(<span class="keyword">new</span> <span class="title class_">Engineer</span>(<span class="string">&quot;Terry&quot;</span>, EngineerLevel.JUNIOR));</span><br><span class="line">engineers.add(<span class="keyword">new</span> <span class="title class_">Engineer</span>(<span class="string">&quot;Oscar&quot;</span>, EngineerLevel.SENIOR));</span><br><span class="line"></span><br><span class="line">Set&lt;Engineer&gt;[] devTeams2 = <span class="keyword">new</span> <span class="title class_">HashSet</span>[EngineerLevel.values().length];</span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>; i&lt; devTeams2.length; i++)</span><br><span class="line">  devTeams2[i] = <span class="keyword">new</span> <span class="title class_">HashSet</span>&lt;&gt;();</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(Engineer engineer : engineers) &#123;</span><br><span class="line">  devTeams2[engineer.getLevel().ordinal()].add(engineer);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 取出數量</span></span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span> ; i &lt; devTeams2.length ; i++) &#123;</span><br><span class="line">  System.out.println( EngineerLevel.values()[i] + <span class="string">&quot;:&quot;</span> + devTeams2[i].size() );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>這樣的做法可以解決需求，但是 Array 的 index 對應到的職務類別，使用上需要明確知道對應關係，<br>不然很有可能容易出錯，如果有新增一個職務類別的話，ordinal() 可能會有可能變動而造成影響，<br>因此有另一種方式可以達到同樣的效果。</p>
+</li>
+<li><p>使用 <code>EnumMap</code> 來改寫，可以使程式越簡潔清楚:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Engineer&gt; engineers = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">engineers.add(<span class="keyword">new</span> <span class="title class_">Engineer</span>(<span class="string">&quot;Tom&quot;</span>, EngineerLevel.INTERN));</span><br><span class="line">engineers.add(<span class="keyword">new</span> <span class="title class_">Engineer</span>(<span class="string">&quot;John&quot;</span>, EngineerLevel.JUNIOR));</span><br><span class="line">engineers.add(<span class="keyword">new</span> <span class="title class_">Engineer</span>(<span class="string">&quot;Terry&quot;</span>, EngineerLevel.JUNIOR));</span><br><span class="line">engineers.add(<span class="keyword">new</span> <span class="title class_">Engineer</span>(<span class="string">&quot;Oscar&quot;</span>, EngineerLevel.SENIOR));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化</span></span><br><span class="line">Map&lt;EngineerLevel, Set&lt;Engineer&gt;&gt; devTeams  =<span class="keyword">new</span> <span class="title class_">EnumMap</span>&lt;&gt;(EngineerLevel.class);</span><br><span class="line"><span class="keyword">for</span>(EngineerLevel levelgroup : EngineerLevel.values()) &#123;</span><br><span class="line">  devTeams.put(levelgroup, <span class="keyword">new</span> <span class="title class_">HashSet</span>&lt;&gt;());</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 員工分級</span></span><br><span class="line"><span class="keyword">for</span>(Engineer engineer : engineers) &#123;</span><br><span class="line">  devTeams.get(engineer.getLevel()).add(engineer);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 取出數量</span></span><br><span class="line"><span class="keyword">for</span>(EngineerLevel level : devTeams.keySet()) &#123;</span><br><span class="line">  System.out.println( level.toString() + <span class="string">&quot;:&quot;</span> + devTeams.get(level).size());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>本篇總結: 在使用 Enum 時，盡量不要使用 <code>ordinal()</code> 進行處理。</p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ol>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/liuyonglong/p/3561581.html">java之类型安全的枚举</a></li>
+<li><a target="_blank" rel="noopener" href="https://ahdak.github.io/blog/effective-java-part-5/">Effective Java - 3rd Edition - Enums and Annotations</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/java/" rel="tag"># java</a>
+              <a href="/tags/effectiveJava/" rel="tag"># effectiveJava</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/07/10/effective-java-item27/" rel="prev" title="Effective Java Item27 - 消除非受檢的警告">
+      <i class="fa fa-chevron-left"></i> Effective Java Item27 - 消除非受檢的警告
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+  
+    <div class="comments" calss="comments">
+      <script src="https://utteranc.es/client.js"
+          repo="oscar51011/oscar51011.github.io.comment"
+          issue-term="pathname"
+          theme="github-light"
+          crossorigin="anonymous"
+          async>
+      </script>
+    </div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-instance-fields-%E5%8F%96%E4%BB%A3-ordinals"><span class="nav-number">1.</span> <span class="nav-text">使用 instance fields 取代 ordinals</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-Enum-%E5%8F%96%E4%BB%A3-int-%E5%B8%B8%E6%95%B8"><span class="nav-number">2.</span> <span class="nav-text">使用 Enum 取代 int 常數</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-EnumMap-%E5%8F%96%E4%BB%A3-ordinal-indexing"><span class="nav-number">3.</span> <span class="nav-text">使用 EnumMap 取代 ordinal indexing</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">oscar51011</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/oscar51011" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;oscar51011" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/oscar51011@gmail.com" title="E-Mail → oscar51011@gmail.com"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">oscar51011</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
