@@ -20,21 +20,22 @@
     var CONFIG = {"hostname":"oscar51011.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="此為閱讀 Effective Java 3rd 所記錄的學習歷程Item16 : 在 public 的 類別中，使用 get&#x2F;set 方法 而非 公開成員變數 類別在被外部呼叫時，使用 getter &#x2F; setter 的方法取得成員變數，保留彈性以利將來可以調整內部使用方法，如果直接開放外部直接使用，要調整時會是一個災難。">
+  <meta name="description" content="最近開始學習使用 Springboot3 的版本, 搭配以往的 Swagger 工具來產出對應的 API 文件時, 報出了錯誤 1Springfox Type javax.servlet.http.HttpServletRequest not present  之前在使用Swagger2.x是引用springfox, 但其不支援 springboot3 所使用之 jakartaEE. 因此我們改用">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Effective Java Item16 - 在 public 的 類別中，使用 get&#x2F;set 方法 而非 公開成員變數">
-<meta property="og:url" content="https://oscar51011.github.io/2022/06/26/effective-java-item16/index.html">
+<meta property="og:title" content="springboot3整合swagger3產出API開發文件">
+<meta property="og:url" content="https://oscar51011.github.io/2023/02/28/springboot3-swagger-api/index.html">
 <meta property="og:site_name" content="Kai&#39;s Blog">
-<meta property="og:description" content="此為閱讀 Effective Java 3rd 所記錄的學習歷程Item16 : 在 public 的 類別中，使用 get&#x2F;set 方法 而非 公開成員變數 類別在被外部呼叫時，使用 getter &#x2F; setter 的方法取得成員變數，保留彈性以利將來可以調整內部使用方法，如果直接開放外部直接使用，要調整時會是一個災難。">
+<meta property="og:description" content="最近開始學習使用 Springboot3 的版本, 搭配以往的 Swagger 工具來產出對應的 API 文件時, 報出了錯誤 1Springfox Type javax.servlet.http.HttpServletRequest not present  之前在使用Swagger2.x是引用springfox, 但其不支援 springboot3 所使用之 jakartaEE. 因此我們改用">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2022-06-26T02:30:42.000Z">
-<meta property="article:modified_time" content="2022-06-26T12:20:27.966Z">
+<meta property="og:image" content="https://bnz05pap002files.storage.live.com/y4mriB5Apzx4JcQsqYFcxktT8GOycIwl4qDyajThcruNY_7aQgdKnqJxWFVAJ-hqeBv-wdhhcybUXSAt882PiHxBnqtPo8XPqkvEk4c5lBb3C6xnh7mGQJ-rpUEd4qKLs0jnoTw1LKchuDNvyer97u-m06bvnQr-JwcsCaI9WqQUwTg04zl3uALyeea9er4R7d8?width=660&height=329&cropmode=none">
+<meta property="article:published_time" content="2023-02-28T12:18:34.000Z">
+<meta property="article:modified_time" content="2023-02-28T12:18:34.656Z">
 <meta property="article:author" content="oscar51011">
-<meta property="article:tag" content="java">
-<meta property="article:tag" content="effectiveJava">
+<meta property="article:tag" content="springboot">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://bnz05pap002files.storage.live.com/y4mriB5Apzx4JcQsqYFcxktT8GOycIwl4qDyajThcruNY_7aQgdKnqJxWFVAJ-hqeBv-wdhhcybUXSAt882PiHxBnqtPo8XPqkvEk4c5lBb3C6xnh7mGQJ-rpUEd4qKLs0jnoTw1LKchuDNvyer97u-m06bvnQr-JwcsCaI9WqQUwTg04zl3uALyeea9er4R7d8?width=660&height=329&cropmode=none">
 
-<link rel="canonical" href="https://oscar51011.github.io/2022/06/26/effective-java-item16/">
+<link rel="canonical" href="https://oscar51011.github.io/2023/02/28/springboot3-swagger-api/">
 
 
 <script id="page-configurations">
@@ -47,7 +48,7 @@
   };
 </script>
 
-  <title>Effective Java Item16 - 在 public 的 類別中，使用 get/set 方法 而非 公開成員變數 | Kai's Blog</title>
+  <title>springboot3整合swagger3產出API開發文件 | Kai's Blog</title>
   
 
 
@@ -190,7 +191,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://oscar51011.github.io/2022/06/26/effective-java-item16/">
+    <link itemprop="mainEntityOfPage" href="https://oscar51011.github.io/2023/02/28/springboot3-swagger-api/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -203,7 +204,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Effective Java Item16 - 在 public 的 類別中，使用 get/set 方法 而非 公開成員變數
+          springboot3整合swagger3產出API開發文件
         </h1>
 
         <div class="post-meta">
@@ -212,9 +213,8 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2022-06-26 10:30:42 / Modified: 20:20:27" itemprop="dateCreated datePublished" datetime="2022-06-26T10:30:42+08:00">2022-06-26</time>
+              <time title="Created: 2023-02-28 20:18:34" itemprop="dateCreated datePublished" datetime="2023-02-28T20:18:34+08:00">2023-02-28</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -222,7 +222,7 @@
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/effectiveJava/" itemprop="url" rel="index"><span itemprop="name">effectiveJava</span></a>
+                  <a href="/categories/springboot/" itemprop="url" rel="index"><span itemprop="name">springboot</span></a>
                 </span>
             </span>
 
@@ -237,22 +237,36 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>此為閱讀 Effective Java 3rd 所記錄的學習歷程<br>Item16 : 在 public 的 類別中，使用 get&#x2F;set 方法 而非 公開成員變數</p>
-<p>類別在被外部呼叫時，使用 getter &#x2F; setter 的方法取得成員變數，保留彈性以利將來可以調整內部使用方法，<br>如果直接開放外部直接使用，要調整時會是一個災難。</p>
+        <p>最近開始學習使用 Springboot3 的版本, 搭配以往的 Swagger 工具來產出對應的 API 文件時, 報出了錯誤</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Springfox Type javax.servlet.http.HttpServletRequest not present</span><br></pre></td></tr></table></figure>
+
+<p>之前在使用Swagger2.x是引用springfox, 但其不支援 springboot3 所使用之 jakartaEE.</p>
+<p>因此我們改用 springdoc 套件來實作 springboot</p>
+<p>以下為基本使用方法:</p>
 <span id="more"></span>
 
-<p>java 中有些類別被稱為 Degenerate class，用來集中變數屬性</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Point</span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">double</span> x;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">double</span> y;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>引入 springdoc 的 dependencies:</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">  <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springdoc<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>springdoc-openapi-starter-webmvc-ui<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.0.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<p>上述寫法是可以在任何地方被直接取得&amp;改變的，因此會造成維護上的困難。<br>改成 getter &#x2F; setter 的寫法如下:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Point</span> &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">private</span> <span class="type">double</span> x;</span><br><span class="line">	<span class="keyword">private</span> <span class="type">double</span> y;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="type">double</span> <span class="title function_">getX</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> x;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setX</span><span class="params">(<span class="type">double</span> x)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.x = x;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">public</span> <span class="type">double</span> <span class="title function_">getY</span><span class="params">()</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> y;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setY</span><span class="params">(<span class="type">double</span> y)</span> &#123;</span><br><span class="line">		<span class="built_in">this</span>.y = y;</span><br><span class="line">	&#125;	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>引入後一個基本的導入就已經完成了, 接著我們可以用以下的 URL 去測試是否有成功<br>Swagger UI page: <code>http://server:port/context-path/swagger-ui.html</code><br>OpenAPI description: <code>http://server:port/context-path/v3/api-docs</code><br>server &#x2F; port &#x2F; context-path 可以在 application.properties 設定</p>
+<ol start="2">
+<li>介面配置:</li>
+</ol>
+<ul>
+<li>如同swagger一樣可撰寫設定去更改介面顯示</li>
+<li>如有不同功能需要做分卷區分的時候可以使用 <code>GroupedOpenApi</code> 針對不同的條件做分類<br>(如以下範例就是使用 不同的 url 的路徑做區分)</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Swagger3的配置</span><br><span class="line"> * </span><br><span class="line"> * @author oscar51011</span><br><span class="line"> *</span><br><span class="line"> */</span><br><span class="line">@Configuration</span><br><span class="line">public class HospitalSwagger3Config &#123;</span><br><span class="line"></span><br><span class="line">	@Bean</span><br><span class="line">	public OpenAPI openAPIconfig() &#123;</span><br><span class="line">		return new OpenAPI().info(new Info().title(&quot;醫院服務&quot;).description(&quot;處理醫院模組功能&quot;));</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">    @Bean</span><br><span class="line">	public GroupedOpenApi publicApi() &#123;</span><br><span class="line">		return GroupedOpenApi.builder().group(&quot;hospital&quot;).pathsToMatch(&quot;/hospital/**&quot;).build();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@Bean</span><br><span class="line">	public GroupedOpenApi adminApi() &#123;</span><br><span class="line">		return GroupedOpenApi.builder().group(&quot;hospital2&quot;).pathsToMatch(&quot;/hospital2/**&quot;).build();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>※ Java 中有幾個類別也有違反該主題的案例，像是 <code>java.awt</code> 中的 <code>Point</code> 跟 <code>Dimension</code> 類別，<br>但同時也存在一些性能問題；提醒我們不要這樣使用，避免造成後續維護的麻煩。</p>
-<p>如果真的需要公開成員變數，也要將其設為<font color=#ff0000>不可變(final)</font>，<br>以下為書中的範例，每個產生的 instance 都為一個其固定的時間。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Public class with exposed immutable fields - questionable</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">class</span> <span class="title class_">Time</span> &#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">HOURS_PER_DAY</span> <span class="operator">=</span> <span class="number">24</span>;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">MINUTES_PER_HOUR</span> <span class="operator">=</span> <span class="number">60</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">final</span> <span class="type">int</span> hour;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">final</span> <span class="type">int</span> minute;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="title function_">Time</span><span class="params">(<span class="type">int</span> hour, <span class="type">int</span> minute)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (hour &lt; <span class="number">0</span> || hour &gt;= HOURS_PER_DAY)</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;Hour: &quot;</span> + hour);</span><br><span class="line">    <span class="keyword">if</span> (minute &lt; <span class="number">0</span> || minute &gt;= MINUTES_PER_HOUR)</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;Min: &quot;</span> + minute);</span><br><span class="line">    <span class="built_in">this</span>.hour = hour;</span><br><span class="line">    <span class="built_in">this</span>.minute = minute;</span><br><span class="line">  &#125;</span><br><span class="line">  ... <span class="comment">// Remainder omitted</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
+<p><img src="https://bnz05pap002files.storage.live.com/y4mriB5Apzx4JcQsqYFcxktT8GOycIwl4qDyajThcruNY_7aQgdKnqJxWFVAJ-hqeBv-wdhhcybUXSAt882PiHxBnqtPo8XPqkvEk4c5lBb3C6xnh7mGQJ-rpUEd4qKLs0jnoTw1LKchuDNvyer97u-m06bvnQr-JwcsCaI9WqQUwTg04zl3uALyeea9er4R7d8?width=660&height=329&cropmode=none" alt="swagger3-ui-page.png"></p>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference:"></a>Reference:</h3><ol>
+<li><a target="_blank" rel="noopener" href="https://cwiki.apache.org/confluence/display/GEODE/Migration+from+springfox+to+springdoc">Migration from springfox to springdoc</a></li>
+<li><a target="_blank" rel="noopener" href="https://springdoc.org/v2/#spring-webmvc-support">springdoc-openapi v2.0.2</a></li>
+<li><a target="_blank" rel="noopener" href="https://springdoc.org/v2/#migrating-from-springfox">Migrating from SpringFox</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/xiao2shiqi/p/16383896.html">springdoc-openapi的基本使用</a></li>
+</ol>
 
     </div>
 
@@ -262,8 +276,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/java/" rel="tag"># java</a>
-              <a href="/tags/effectiveJava/" rel="tag"># effectiveJava</a>
+              <a href="/tags/springboot/" rel="tag"># springboot</a>
           </div>
 
         
@@ -272,13 +285,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2022/06/26/effective-java-item15/" rel="prev" title="Effective Java Item15 - 使類別 & 成員 的 可訪問性最小化">
-      <i class="fa fa-chevron-left"></i> Effective Java Item15 - 使類別 & 成員 的 可訪問性最小化
+    <a href="/2022/07/24/effective-java-Enum-part1/" rel="prev" title="Effective Java - Enum 撰寫優化 - part1">
+      <i class="fa fa-chevron-left"></i> Effective Java - Enum 撰寫優化 - part1
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2022/07/09/effective-java-item26/" rel="next" title="Effective Java Ite26 - 使用泛型時, 不要使用原生類別">
-      Effective Java Ite26 - 使用泛型時, 不要使用原生類別 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -347,6 +357,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Reference"><span class="nav-number">1.</span> <span class="nav-text">Reference:</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
