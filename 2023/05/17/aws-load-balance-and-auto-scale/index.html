@@ -20,15 +20,20 @@
     var CONFIG = {"hostname":"oscar51011.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Kai&#39;s Blog">
-<meta property="og:url" content="https://oscar51011.github.io/categories/git/index.html">
+  <meta name="description" content="討論AWS如何做到1.高可用性(High Availability): 可以分佈在至少2個AZ，可以做異地備援(防災disaster)2.可擴展性(Scalability): 提供更大負載能力    - 分成垂直(Vertical)擴展 : 加大 instance 的等級(但終究有硬體限制)    - 水平(Horizontal)擴展: 加多 instance 的數量3.彈性(Elasticity">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AWS學習之旅(5) - 負載均衡&amp;自動擴展">
+<meta property="og:url" content="https://oscar51011.github.io/2023/05/17/aws-load-balance-and-auto-scale/index.html">
 <meta property="og:site_name" content="Kai&#39;s Blog">
+<meta property="og:description" content="討論AWS如何做到1.高可用性(High Availability): 可以分佈在至少2個AZ，可以做異地備援(防災disaster)2.可擴展性(Scalability): 提供更大負載能力    - 分成垂直(Vertical)擴展 : 加大 instance 的等級(但終究有硬體限制)    - 水平(Horizontal)擴展: 加多 instance 的數量3.彈性(Elasticity">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-05-16T16:00:03.000Z">
+<meta property="article:modified_time" content="2023-05-16T16:00:03.624Z">
 <meta property="article:author" content="oscar51011">
+<meta property="article:tag" content="aws">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://oscar51011.github.io/categories/git/">
+<link rel="canonical" href="https://oscar51011.github.io/2023/05/17/aws-load-balance-and-auto-scale/">
 
 
 <script id="page-configurations">
@@ -36,12 +41,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'en'
   };
 </script>
 
-  <title>Category: git | Kai's Blog</title>
+  <title>AWS學習之旅(5) - 負載均衡&自動擴展 | Kai's Blog</title>
   
 
 
@@ -177,57 +182,143 @@
         <div class="content-wrap">
           
 
-          <div class="content category">
+          <div class="content post posts-expand">
             
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <h2 class="collection-header">git
-          <small>Category</small>
-        </h2>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://oscar51011.github.io/2023/05/17/aws-load-balance-and-auto-scale/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="oscar51011">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Kai's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          AWS學習之旅(5) - 負載均衡&自動擴展
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-05-17 00:00:03" itemprop="dateCreated datePublished" datetime="2023-05-17T00:00:03+08:00">2023-05-17</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/aws/" itemprop="url" rel="index"><span itemprop="name">aws</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2022</span>
+        <p>討論AWS如何做到<br>1.高可用性(High Availability): 可以分佈在至少2個AZ，可以做異地備援(防災disaster)<br>2.可擴展性(Scalability): 提供更大負載能力<br>    - 分成垂直(Vertical)擴展 : 加大 instance 的等級(但終究有硬體限制)<br>    - 水平(Horizontal)擴展: 加多 instance 的數量<br>3.彈性(Elasticity): 意味著可自動擴展<br>4.敏捷性(Agility): 可快速獲得資源</p>
+<span id="more"></span>
+
+<h1 id="Elastic-Load-Balancer-ELB"><a href="#Elastic-Load-Balancer-ELB" class="headerlink" title="Elastic Load Balancer (ELB)"></a>Elastic Load Balancer (ELB)</h1><ul>
+<li>為 managed load Balancer，AWS提供以下三點服務:<ul>
+<li>確保可運行的環境</li>
+<li>會自動升級跟維護</li>
+<li>只需要少量的配置</li>
+</ul>
+</li>
+<li>ELB的種類目前有 4 種<ul>
+<li>Application Load Balancer: Http&#x2F;Https&#x2F;gRPC (Layer 7)<br>  &#x3D;&gt; 可提供static DNS(URL)</li>
+<li>Network Load Balancer: TCP&#x2F;UDP (Layer 4)<br>  &#x3D;&gt; 若有高效能的需求可以使用它<br>  &#x3D;&gt; 可提供static IP</li>
+<li>Gateway Load Balacner: 監聽封包，並轉傳流量 (Layer 3)<br>  &#x3D;&gt; 可作為3rd party security virtual appliances 來作封包檢查</li>
+</ul>
+</li>
+</ul>
+<h1 id="Auto-Scaling-Group-ASG"><a href="#Auto-Scaling-Group-ASG" class="headerlink" title="Auto Scaling Group (ASG)"></a>Auto Scaling Group (ASG)</h1><ul>
+<li>可自動新增&#x2F;刪減 EC2 instance 數量</li>
+<li>可以檢查&#x2F;替換 不堪使用的 EC2</li>
+</ul>
+<p>步驟:</p>
+<ol>
+<li>建立 EC2 templates</li>
+<li>綁定 Load Balancer</li>
+</ol>
+<p>擴展的策略有4種:</p>
+<ol>
+<li>manual Scaling: 手動配置需要多少EC2</li>
+<li>Dynamic Scaling:<ul>
+<li>simple&#x2F;step Scaling: 用 CloudWatch 監控若超過&#x2F;低於threshold則新增&#x2F;刪減instance數量</li>
+<li>target tracking scaling: 檢查在 ASG 內平均的CPU量超過threshold則新增instance數量</li>
+</ul>
+</li>
+<li>Scheduled Scaling: 特定活動 (EX: 雙11購物節)</li>
+<li>Predictive Scaling: 使用Machine Learning來預測流量 (time-based pattern)</li>
+</ol>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
+<li><a target="_blank" rel="noopener" href="https://www.udemy.com/course/aws-certified-cloud-practitioner-new/">Udemy - [NEW] Ultimate AWS Certified Cloud Practitioner - 2023</a></li>
+</ol>
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+    
+    
+    
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2022-06-08T00:22:06+08:00"
-              content="2022-06-08">
-          06-08
-        </time>
-      </div>
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/aws/" rel="tag"># aws</a>
+          </div>
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2022/06/08/gitflow-githubflow-introduction/" itemprop="url">
-            <span itemprop="name">簡介 Git flow & Github flow</span>
-          </a>
-      </div>
+        
 
-    </header>
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/05/14/aws-instance-storage/" rel="prev" title="AWS學習之旅(4) - Instance storage">
+      <i class="fa fa-chevron-left"></i> AWS學習之旅(4) - Instance storage
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
   </article>
-
-    </div>
-  </div>
   
   
-  
-
   
 
 
 
           </div>
           
+  
+    <div class="comments" calss="comments">
+      <script src="https://utteranc.es/client.js"
+          repo="oscar51011/oscar51011.github.io.comment"
+          issue-term="pathname"
+          theme="github-light"
+          crossorigin="anonymous"
+          async>
+      </script>
+    </div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -274,6 +365,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Elastic-Load-Balancer-ELB"><span class="nav-number">1.</span> <span class="nav-text">Elastic Load Balancer (ELB)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Auto-Scaling-Group-ASG"><span class="nav-number">2.</span> <span class="nav-text">Auto Scaling Group (ASG)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Reference"><span class="nav-number">2.0.1.</span> <span class="nav-text">Reference</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
