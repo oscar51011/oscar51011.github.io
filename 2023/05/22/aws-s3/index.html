@@ -20,15 +20,20 @@
     var CONFIG = {"hostname":"oscar51011.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Kai&#39;s Blog">
-<meta property="og:url" content="https://oscar51011.github.io/archives/2022/03/page/2/index.html">
+  <meta name="description" content="S3 的東西有點多且雜，先做個初步的筆記以利後續回憶">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AWS學習之旅(6) - S3">
+<meta property="og:url" content="https://oscar51011.github.io/2023/05/22/aws-s3/index.html">
 <meta property="og:site_name" content="Kai&#39;s Blog">
+<meta property="og:description" content="S3 的東西有點多且雜，先做個初步的筆記以利後續回憶">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-05-22T15:05:19.000Z">
+<meta property="article:modified_time" content="2023-05-22T15:05:19.899Z">
 <meta property="article:author" content="oscar51011">
+<meta property="article:tag" content="aws">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://oscar51011.github.io/archives/2022/03/page/2/">
+<link rel="canonical" href="https://oscar51011.github.io/2023/05/22/aws-s3/">
 
 
 <script id="page-configurations">
@@ -36,12 +41,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'en'
   };
 </script>
 
-  <title>Archive | Kai's Blog</title>
+  <title>AWS學習之旅(6) - S3 | Kai's Blog</title>
   
 
 
@@ -177,80 +182,151 @@
         <div class="content-wrap">
           
 
-          <div class="content archive">
+          <div class="content post posts-expand">
             
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        
-        <span class="collection-header">OK! 38 posts in total. Keep on posting.</span>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://oscar51011.github.io/2023/05/22/aws-s3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="oscar51011">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Kai's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          AWS學習之旅(6) - S3
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-05-22 23:05:19" itemprop="dateCreated datePublished" datetime="2023-05-22T23:05:19+08:00">2023-05-22</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/aws/" itemprop="url" rel="index"><span itemprop="name">aws</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2022</span>
+        <p>S3 的東西有點多且雜，先做個初步的筆記以利後續回憶</p>
+<span id="more"></span>
+
+<p>S3時常用於儲存&amp;備份<br>S3讓用戶將 object (file) 儲存在 bucket (directories) 裡</p>
+<ul>
+<li>有 唯一可識別的名稱</li>
+<li>bucket 為 region level</li>
+</ul>
+<h1 id="Object"><a href="#Object" class="headerlink" title="Object"></a>Object</h1><ul>
+<li>有Key，其組成方式: <font color=#ff0000>prefix</font> + <font color=#0000C6>object name</font><br>&#x3D;&gt; s3:&#x2F;&#x2F;bucketName&#x2F;<font color=#ff0000>folder1&#x2F;folder2</font>&#x2F;<font color=#0000C6>fileName.txt</font></li>
+<li>最大容量: 5TB</li>
+</ul>
+<h1 id="Security-Policy"><a href="#Security-Policy" class="headerlink" title="Security Policy"></a>Security Policy</h1><ul>
+<li>User Based: IAM Policy (讓特定使用者使用)</li>
+<li>Resource Based: bucket Policy ( 為 Json-base Policy)</li>
+</ul>
+<h1 id="Versioning-x2F-Replication"><a href="#Versioning-x2F-Replication" class="headerlink" title="Versioning &#x2F; Replication"></a>Versioning &#x2F; Replication</h1><ul>
+<li>為 bucket level</li>
+<li>用途: 避免誤刪可以還原</li>
+</ul>
+<p>使用 Replication 的前提是要有打開 Versioning<br>有兩種:</p>
+<ul>
+<li>Cross-Region Replication(CRR)</li>
+<li>Same-Region Replication(SRR)</li>
+</ul>
+<h1 id="S3-Storage-Classes"><a href="#S3-Storage-Classes" class="headerlink" title="S3 Storage Classes"></a>S3 Storage Classes</h1><ul>
+<li><p>S3 Standard - General Purpose<br>&#x3D;&gt; 用於CDN、大數據分析 … etc</p>
+</li>
+<li><p>S3 Intelligent Teiring (讓AWS幫你決定要用甚麼策略)<br>&#x3D;&gt; 可能要負擔監控費用&amp;自動分層的費用</p>
+</li>
+<li><p>S3 Standard-Infrequent Access(IA)<br>&#x3D;&gt; 用於災難恢復&amp;備份</p>
+</li>
+<li><p>S3 One Zone-Infrequent Access(IA)<br>&#x3D;&gt; 只存在一個AZ，若AZ被破壞可能造成資料丟失</p>
+</li>
+</ul>
+<p>下述用於歸檔 or 備份</p>
+<ul>
+<li>S3 Glacier Instant Retrieval</li>
+<li>S3 Glacier Flexable Retrieval</li>
+<li>S3 Glacier Deep Archive</li>
+</ul>
+<p>可以用 lifecycle rule 設定規則在多久時間沒使用時放到不常用的區域</p>
+<h1 id="Snow-Family"><a href="#Snow-Family" class="headerlink" title="Snow Family"></a>Snow Family</h1><p>可攜式物理設備，用於 data migration &amp; edge compution(不一定有網路的地方 ex: 船&#x2F;冰川)<br>如果資料量很大的話，使用物理設備傳輸是一個比較好的選擇</p>
+<p>Data migration: snowcone 、 snowball edge 、 snowmobile<br>Edge computiong: snowcone 、 snowball edge</p>
+<p>snowcone: 裝置小 &#x2F; 可攜帶<br>snowball edge: 傳輸 petabtye 等級的資料 (PB)<br>snowmobile: 傳輸 exbytes 等級的資料 (EB)</p>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ol>
+<li><a target="_blank" rel="noopener" href="https://www.udemy.com/course/aws-certified-cloud-practitioner-new/">Udemy - [NEW] Ultimate AWS Certified Cloud Practitioner - 2023</a></li>
+</ol>
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+    
+    
+    
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2022-03-02T06:55:34+08:00"
-              content="2022-03-02">
-          03-02
-        </time>
-      </div>
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/aws/" rel="tag"># aws</a>
+          </div>
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2022/03/02/hexo-next-theme/" itemprop="url">
-            <span itemprop="name">Hexo 主題 - NEXT & 新增文章搜尋功能</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2022-03-01T22:25:44+08:00"
-              content="2022-03-01">
-          03-01
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2022/03/01/hexo-github-blog-initial/" itemprop="url">
-            <span itemprop="name">利用Hexo + Github.io 建立自己的Blog</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
+        
 
 
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/05/21/java-outOfMemory-tomcat/" rel="prev" title="服務部署tomcat運行發生Out Of Memory時的處理方法">
+      <i class="fa fa-chevron-left"></i> 服務部署tomcat運行發生Out Of Memory時的處理方法
+    </a></div>
+      <div class="post-nav-item"></div>
     </div>
-  </div>
+      </footer>
+    
+  </article>
   
   
   
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/archives/2022/03/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/archives/2022/03/">1</a><span class="page-number current">2</span>
-  </nav>
 
 
 
           </div>
           
+  
+    <div class="comments" calss="comments">
+      <script src="https://utteranc.es/client.js"
+          repo="oscar51011/oscar51011.github.io.comment"
+          issue-term="pathname"
+          theme="github-light"
+          crossorigin="anonymous"
+          async>
+      </script>
+    </div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -297,6 +373,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Object"><span class="nav-number">1.</span> <span class="nav-text">Object</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Security-Policy"><span class="nav-number">2.</span> <span class="nav-text">Security Policy</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Versioning-x2F-Replication"><span class="nav-number">3.</span> <span class="nav-text">Versioning &#x2F; Replication</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#S3-Storage-Classes"><span class="nav-number">4.</span> <span class="nav-text">S3 Storage Classes</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Snow-Family"><span class="nav-number">5.</span> <span class="nav-text">Snow Family</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Reference"><span class="nav-number">5.0.1.</span> <span class="nav-text">Reference</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
